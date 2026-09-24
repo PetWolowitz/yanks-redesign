@@ -75,7 +75,10 @@ Conseguenza: anche se il backend avesse un problema, il sito resta in piedi.
 - Orari: solo in `src/data/venue.ts`, usati da orologio, footer, pagina Visit e
   dati strutturati
 - Testi: solo nei file di lingua
-- Prezzi: solo nel database per lo shop; il sito li legge, non li ricopia
+- Prodotti: scritti a mano solo in `merch.ts` (slug, categoria, prezzo, taglie,
+  `limited`); il database si genera col seed. In modalità live l'autorità sul
+  prezzo è il database, e il frontend non usa i prezzi di `merch.ts`
+- Nomi e descrizioni dei prodotti: nei file di lingua, sotto `shop.products.<slug>`
 - Componenti riusati: una scheda prodotto, non tre varianti simili
 
 **YAGNI — non costruire quello che non serve ancora**

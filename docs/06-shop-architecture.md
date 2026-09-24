@@ -22,7 +22,7 @@ Browser
   ├── POST /api/checkout        Turnstile → validazione → totale dal DB
   │                             → ordine "pending" → sessione Stripe
   ├── POST /api/stripe-webhook  firma verificata → ordine "paid" → giacenze
-  └── GET  /api/order/[token]   stato ordine tramite link firmato
+  └── POST /api/order           stato ordine: id e token nel body
 
 Cloudflare Workers + D1   ·   Stripe Checkout (test)   ·   Turnstile
 ```
@@ -81,8 +81,11 @@ CREATE TABLE shipping_addresses (
 );
 ```
 
-- Nomi e descrizioni dei prodotti stanno nei file di lingua, non nel database:
-  il database tiene solo quello che cambia (prezzi e giacenze)
+- Nomi e descrizioni dei prodotti stanno nei file di lingua, sotto
+  `shop.products.<slug>.name` e `.description`, non nel database: il database
+  tiene solo quello che cambia (prezzi e giacenze)
+- Il database si genera col seed da `merch.ts`, ma **in modalità live è lui
+  l'autorità sul prezzo**: il server calcola i totali solo da lì
 - I vincoli `CHECK` sono la seconda linea di difesa dopo la validazione
 - **Mai in tabella**: numeri di carta, CVV, password, IBAN
 - SQL sempre con parametri: `db.prepare('… WHERE id = ?').bind(id)`. Mai stringhe
@@ -98,9 +101,14 @@ CREATE TABLE shipping_addresses (
 4. Il cliente paga su Stripe e torna alla pagina di conferma
 5. `api/stripe-webhook`: verifica la firma, e solo allora ordine `paid` e giacenze
    scalate, in un'unica transazione
-6. Pagina di stato con link firmato: `/en/order/abc123?t=…`
+6. Pagina di stato: `/[lang]/shop/order#id=…&t=…`. La pagina legge id e token
+   dal fragment e chiama `POST /api/order` con entrambi nel body
 
-Il token del link si salva **solo come hash**: se il database uscisse, i link non
+**Perché nel fragment.** La parte dopo `#` non viene mai inviata al server:
+il token non finisce nei log di Cloudflare, né nell'intestazione `Referer`. E
+passa nel body di una `POST`, non nell'indirizzo.
+
+Il token si salva **solo come hash**: se il database uscisse, i link non
 funzionerebbero comunque.
 
 ## Sicurezza — le regole
@@ -138,8 +146,11 @@ funzionerebbero comunque.
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
   Cross-Origin-Opener-Policy: same-origin
 ```
-Punto di partenza, da verificare in sviluppo: se Astro inserisce script inline,
-si passa agli hash invece di allargare la policy. `'unsafe-inline'` sugli stili
+Punto di partenza, da verificare in sviluppo. Uno script inline c'è di sicuro:
+quello nell'`<head>` che imposta il tema prima del rendering. Si autorizza
+aggiungendo il suo hash (`'sha256-…'`) a `script-src`; se lo script cambia,
+l'hash va ricalcolato. Lo stesso vale per altri script inline di Astro: si passa
+agli hash invece di allargare la policy. `'unsafe-inline'` sugli stili
 va tolto se la build lo consente. Le eccezioni per Instagram e Maps servono solo
 agli embed caricati al click. Verifica finale su securityheaders.com.
 
@@ -196,8 +207,10 @@ Regole che tengono in piedi il contratto:
   lo segnala subito
 - **Le regole di validazione stanno in `validate.ts`**, usate dal form per
   l'esperienza utente e dal server per la sicurezza. Scritte una volta sola
-- **I prodotti si scrivono una volta sola** in `merch.ts`: lo script di seed ne
-  genera il contenuto del database
+- **I prodotti si scrivono una volta sola** in `merch.ts` (slug, categoria,
+  prezzo, taglie, `limited`): lo script di seed ne genera il contenuto del
+  database. In modalità live il frontend non usa i prezzi di `merch.ts`: li
+  riceve da `getProducts()`, che legge il database
 
 ## Ordine di costruzione
 1. **Fase 1**: tipi, `ShopApi`, `mock.ts`, `validate.ts` con i test

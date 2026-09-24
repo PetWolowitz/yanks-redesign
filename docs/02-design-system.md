@@ -56,9 +56,13 @@ colore aggiunto e lega il tutto al mare.
 - Nessun gradiente
 
 **Dark mode**
-- Scura in automatico dopo le 20:00 ora di Amsterdam
-- Interruttore sempre in header; la scelta dell'utente vince sull'automatismo e
-  si ricorda
+- Ordine di scelta del tema: prima la scelta salvata dall'utente, poi l'orario
+  `Europe/Amsterdam`, scuro dalle 20:00 alle 08:00
+- Interruttore sempre in header; la scelta dell'utente si ricorda e vince
+  sull'automatismo
+- Il tema lo imposta uno script inline nell'`<head>` prima del rendering, per
+  evitare il lampo del tema sbagliato. Autorizzato nella CSP tramite hash (vedi
+  `06-shop-architecture.md`)
 - Foto e video più contrastati sul fondo scuro
 - Lighthouse su entrambi i temi
 

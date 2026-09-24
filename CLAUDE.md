@@ -48,10 +48,20 @@ Dettagli in `docs/04-build-plan.md`.
 4. Collegamento: `PUBLIC_SHOP_MODE` da `mock` a `live`
 
 Lo shop **non è opzionale**. Regole del contratto:
+- `ShopApi` ha **tre funzioni**: `getProducts()`, `createCheckout(req)`,
+  `getOrder(id, token)`
 - nessun componente chiama `fetch`: tutto passa da `ShopApi`
 - tipi condivisi in `src/lib/shop/types.ts` tra frontend ed endpoint
 - validazione solo in `src/lib/shop/validate.ts`, usata da form e server
-- prodotti scritti una volta in `merch.ts`, il seed del database si genera da lì
+- `merch.ts` è l'**unica fonte scritta a mano** dei prodotti: solo slug,
+  categoria, prezzo, taglie, `limited`. Il seed del database si genera da lì
+- **In modalità live l'autorità sul prezzo è il database**: il server calcola i
+  totali solo da lì, e il frontend non usa i prezzi di `merch.ts`
+- nomi e descrizioni dei prodotti nei file di lingua, sotto
+  `shop.products.<slug>.name` e `shop.products.<slug>.description`
+- pagina ordine: `/[lang]/shop/order#id=…&t=…`. Il token sta nel fragment, quindi
+  non arriva mai al server né nei log; la pagina chiama `POST /api/order` con id e
+  token nel body
 
 ## Principi — non negoziabili
 - **KISS**: la soluzione più semplice che funziona. Niente librerie per cose che
@@ -94,9 +104,14 @@ I loro rosso e oro, ammorbiditi. Valori completi in `docs/02-design-system.md`.
 | `--gold` | `#E3BE72` | `#E3BE72` |
 | `--sage` | `#6E8F85` | `#8FB0A5` |
 
-**Dark mode obbligatoria.** Parte scura dopo le 20:00 ora di Amsterdam,
-interruttore sempre in header, scelta dell'utente ricordata. Colori ritarati uno
-per uno, mai invertiti in automatico.
+**Dark mode obbligatoria.** Interruttore sempre in header. Colori ritarati uno
+per uno, mai invertiti in automatico. Il tema si sceglie in quest'ordine:
+1. la scelta salvata dall'utente, se c'è
+2. altrimenti l'orario `Europe/Amsterdam`: scuro dalle 20:00 alle 08:00
+
+Il tema lo imposta uno **script inline nell'`<head>`, prima del rendering**, così
+la pagina non lampeggia col tema sbagliato. Lo script è autorizzato nella CSP
+**tramite hash**, mai con `'unsafe-inline'`.
 
 ## Orologio a tre stati — elemento firma
 Verificato di persona:

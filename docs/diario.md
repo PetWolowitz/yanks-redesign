@@ -17,4 +17,23 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
-## (prima voce qui)
+## 2026-09-24 — Prima della Fase 0, allineamento documenti
+Fatto:        letti CLAUDE.md e docs/. Risolte cinque incongruenze aggiornando
+              CLAUDE.md, 02, 03, 04, 05, 06, 09. Nessun codice dell'applicazione
+Decisioni:    1. ShopApi ha tre funzioni: getProducts, createCheckout, getOrder
+              2. merch.ts unica fonte scritta a mano (slug, categoria, prezzo,
+                 taglie, limited), DB generato col seed; in live l'autorità sul
+                 prezzo è il DB e il frontend non usa i prezzi di merch.ts
+              3. nomi e descrizioni in i18n: shop.products.<slug>.name/.description
+              4. pagina ordine /[lang]/shop/order#id=…&t=…, token nel fragment;
+                 la pagina chiama POST /api/order con id e token nel body
+              5. tema: scelta salvata, poi orario Amsterdam (scuro 20:00–08:00);
+                 script inline nell'head prima del rendering, hash nella CSP
+Problemi:     - l'MCP cloudflare-docs non si è connesso (timeout): da ricontrollare
+              - da decidere in Fase 3: come arrivano id e token alla pagina ordine
+                dopo Stripe (nel success_url passerebbero da Stripe)
+              - in live i prezzi del catalogo arrivano solo via getProducts(),
+                quindi senza JavaScript non si vedono: va bene o serve un ripiego?
+Prossimo:     Fase 0 di docs/04-build-plan.md, prima il piano
+Ramo/commit:  docs/decisioni-contratto — "Docs: decisioni su ShopApi, prezzi,
+              nomi prodotti, pagina ordine e tema"

@@ -32,7 +32,8 @@ località balneare olandese, aperto fino alle tre.
 - *Font del locale* → script cromato e display atletico: il linguaggio delle
   insegne americane da cui prende il nome
 - *Colori ammorbiditi* → il loro rosso e oro, portati verso terracotta e miele
-- *Dark mode automatica dopo le 20:00* → metà dei visitatori apre il sito di notte
+- *Dark mode automatica dalle 20:00 alle 08:00*, ora di Amsterdam, salvo scelta
+  diversa dell'utente → metà dei visitatori apre il sito di notte
 - *Bibite raggruppate* → 40 righe con lo stesso prezzo non sono un menu
 - *Uso responsabile in evidenza* → era il contenuto migliore, nascosto
 - *Sei lingue* → Zandvoort vive di turisti tedeschi, belgi, francesi

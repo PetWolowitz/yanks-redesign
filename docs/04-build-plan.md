@@ -125,6 +125,9 @@ Obiettivo: tutto ciò che sito e shop condividono, prima di qualsiasi pagina.
 - [ ] `tokens.css`: colori dei due temi, scala tipografica, spaziature, con `@theme`
 - [ ] `fonts.css`: `@font-face` dei quattro font, `font-display: swap`, fallback
 - [ ] Layout `Base.astro`: `<html lang>`, meta, `hreflang`, tema chiaro e scuro
+- [ ] Script inline nell'`<head>` che imposta il tema prima del rendering: prima
+      la scelta salvata, poi l'orario `Europe/Amsterdam` (scuro dalle 20:00 alle
+      08:00). Il suo hash va nella CSP di `public/_headers`
 
 **Lingue**
 - [ ] `nl.json`, `en.json`, `de.json` con le stesse chiavi
@@ -140,9 +143,12 @@ Obiettivo: tutto ciò che sito e shop condividono, prima di qualsiasi pagina.
 **Il contratto dello shop** — il pezzo che rende possibile il lavoro in parallelo
 - [ ] `lib/shop/types.ts`: `Product`, `Variant`, `CartItem`, `CheckoutRequest`,
       `CheckoutResponse`, `OrderStatus`
-- [ ] `lib/shop/api.ts`: l'interfaccia `ShopApi` con quattro funzioni:
+- [ ] `lib/shop/api.ts`: l'interfaccia `ShopApi` con tre funzioni:
       `getProducts()`, `createCheckout(req)`, `getOrder(id, token)`,
       e la scelta tra implementazione finta e vera in base a `PUBLIC_SHOP_MODE`
+- [ ] `data/merch.ts`: solo slug, categoria, prezzo, taglie, `limited`. Nomi e
+      descrizioni nei file di lingua, sotto `shop.products.<slug>.name` e
+      `.description`
 - [ ] `lib/shop/mock.ts`: implementazione finta che legge `merch.ts`, simula le
       giacenze e restituisce un ordine "pagato" dopo un finto reindirizzamento
 - [ ] `lib/shop/validate.ts`: le regole di validazione di email, indirizzo e
@@ -194,7 +200,8 @@ Tutto passa da `ShopApi`. **Nessun componente chiama `fetch` direttamente.**
       laterale, contatore nell'header aggiornato in tutte le pagine
 - [ ] Checkout: form con email e indirizzo, validazione da `validate.ts`,
       spazio per Turnstile, riepilogo
-- [ ] Pagina di stato ordine
+- [ ] Pagina di stato ordine `/[lang]/shop/order#id=…&t=…`: legge id e token dal
+      fragment e chiama `getOrder(id, token)`
 - [ ] Errori chiari: prodotto esaurito, campo sbagliato, servizio non raggiungibile
 
 **Fatto quando**: in modalità finta si può fare un acquisto completo, dal
@@ -220,7 +227,7 @@ Leggere `06-shop-architecture.md` prima di iniziare.
       `pending` → sessione Stripe
 - [ ] `api/stripe-webhook`: firma verificata → ordine `paid` e giacenze scalate
       in un'unica transazione, idempotente
-- [ ] `api/order`: stato tramite token, confrontato come hash
+- [ ] `api/order`: `POST` con id e token nel body, token confrontato come hash
 
 **Stripe e Turnstile**
 - [ ] Account Stripe in modalità test, chiavi nei segreti di Cloudflare
@@ -258,7 +265,8 @@ Leggere `08-animazioni-risorse.md` prima.
 - [ ] Meta per pagina e per lingua, Open Graph, `hreflang`
 - [ ] JSON-LD `LocalBusiness` generato da `venue.ts`
 - [ ] Sitemap
-- [ ] CSP rifinita: niente `unsafe-inline` dove si può evitare
+- [ ] CSP rifinita: niente `unsafe-inline` dove si può evitare; hash dello script
+      del tema aggiornato
 - [ ] Verifica su securityheaders.com
 - [ ] `npm audit`
 - [ ] Lighthouse su entrambi i temi: 90+ prestazioni, 95+ accessibilità
