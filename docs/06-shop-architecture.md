@@ -84,8 +84,10 @@ CREATE TABLE shipping_addresses (
 - Nomi e descrizioni dei prodotti stanno nei file di lingua, sotto
   `shop.products.<slug>.name` e `.description`, non nel database: il database
   tiene solo quello che cambia (prezzi e giacenze)
-- Il database si genera col seed da `merch.ts`, ma **in modalità live è lui
-  l'autorità sul prezzo**: il server calcola i totali solo da lì
+- Il database si genera col seed da `merch.ts`, e **l'addebito si calcola solo
+  da lì**. I prezzi mostrati nel catalogo sono scritti nell'HTML statico in build,
+  sempre da `merch.ts`: un prezzo si cambia modificando `merch.ts`, rifacendo il
+  seed e ripubblicando, così le due copie restano uguali
 - I vincoli `CHECK` sono la seconda linea di difesa dopo la validazione
 - **Mai in tabella**: numeri di carta, CVV, password, IBAN
 - SQL sempre con parametri: `db.prepare('… WHERE id = ?').bind(id)`. Mai stringhe
@@ -97,16 +99,27 @@ CREATE TABLE shipping_addresses (
 2. Checkout: email, indirizzo, verifica Turnstile invisibile
 3. `api/checkout`: verifica Turnstile lato server, valida i campi, **legge i
    prezzi dal database e ricalcola il totale**, controlla le giacenze, crea
-   l'ordine `pending`, crea la sessione Stripe
-4. Il cliente paga su Stripe e torna alla pagina di conferma
+   l'ordine `pending`, crea la sessione Stripe con `success_url` uguale a
+   `/[lang]/shop/order`, **senza parametri**. Risponde con id, token e
+   l'indirizzo della pagina di Stripe
+4. Il browser salva id e token in `sessionStorage` (dentro `try/catch`), poi va
+   su Stripe. Il cliente paga e torna alla pagina ordine
 5. `api/stripe-webhook`: verifica la firma, e solo allora ordine `paid` e giacenze
    scalate, in un'unica transazione
-6. Pagina di stato: `/[lang]/shop/order#id=…&t=…`. La pagina legge id e token
-   dal fragment e chiama `POST /api/order` con entrambi nel body
+6. Pagina ordine `/[lang]/shop/order`: legge id e token da `sessionStorage` e
+   chiama `getOrder` (`POST /api/order`, id e token nel body)
+   - se l'ordine è ancora `pending` mostra "pagamento in verifica" e ricontrolla
+     per qualche secondo: il webhook può arrivare dopo il cliente
+   - se `sessionStorage` è vuoto (altra scheda, altro dispositivo) rimanda al
+     link nell'email di conferma, che porta `#id=…&t=…` nel fragment
 
-**Perché nel fragment.** La parte dopo `#` non viene mai inviata al server:
-il token non finisce nei log di Cloudflare, né nell'intestazione `Referer`. E
-passa nel body di una `POST`, non nell'indirizzo.
+**Perché il token non passa da Stripe.** Se fosse nel `success_url`, Stripe lo
+conoscerebbe e lo conserverebbe nella sessione di pagamento. Così resta tra il
+nostro server e il browser del cliente.
+
+**Perché nel fragment, nel link dell'email.** La parte dopo `#` non viene mai
+inviata al server: il token non finisce nei log di Cloudflare, né
+nell'intestazione `Referer`. E passa nel body di una `POST`, non nell'indirizzo.
 
 Il token si salva **solo come hash**: se il database uscisse, i link non
 funzionerebbero comunque.
@@ -209,8 +222,11 @@ Regole che tengono in piedi il contratto:
   l'esperienza utente e dal server per la sicurezza. Scritte una volta sola
 - **I prodotti si scrivono una volta sola** in `merch.ts` (slug, categoria,
   prezzo, taglie, `limited`): lo script di seed ne genera il contenuto del
-  database. In modalità live il frontend non usa i prezzi di `merch.ts`: li
-  riceve da `getProducts()`, che legge il database
+  database, e i prezzi scritti nell'HTML statico in build. `getProducts()`
+  serve al frontend per la disponibilità; l'addebito lo calcola il server dal
+  database
+- **Senza JavaScript il catalogo si legge**, prezzi compresi. Per comprare serve
+  JS: carrello e checkout lo dicono con un messaggio `<noscript>`
 
 ## Ordine di costruzione
 1. **Fase 1**: tipi, `ShopApi`, `mock.ts`, `validate.ts` con i test

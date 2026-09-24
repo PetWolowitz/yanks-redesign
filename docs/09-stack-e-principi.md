@@ -76,8 +76,9 @@ Conseguenza: anche se il backend avesse un problema, il sito resta in piedi.
   dati strutturati
 - Testi: solo nei file di lingua
 - Prodotti: scritti a mano solo in `merch.ts` (slug, categoria, prezzo, taglie,
-  `limited`); il database si genera col seed. In modalità live l'autorità sul
-  prezzo è il database, e il frontend non usa i prezzi di `merch.ts`
+  `limited`). Da lì escono i prezzi nell'HTML statico e il seed del database.
+  Un prezzo si cambia solo lì, poi seed e nuova pubblicazione. L'addebito lo
+  calcola il server dal database
 - Nomi e descrizioni dei prodotti: nei file di lingua, sotto `shop.products.<slug>`
 - Componenti riusati: una scheda prodotto, non tre varianti simili
 
@@ -86,8 +87,10 @@ Conseguenza: anche se il backend avesse un problema, il sito resta in piedi.
 - Le lingue 4, 5 e 6 arrivano quando le prime tre funzionano
 
 **Progressive enhancement**
-- Senza JavaScript il sito si legge tutto: menu, orari, indirizzo, recensioni
-- Il JavaScript aggiunge orologio in tempo reale, animazioni, carrello
+- Senza JavaScript il sito si legge tutto: menu, orari, indirizzo, recensioni,
+  catalogo dello shop con i prezzi
+- Il JavaScript aggiunge orologio in tempo reale, animazioni, disponibilità dei
+  prodotti, carrello e acquisto. Per comprare serve JS: lo dice un `<noscript>`
 
 **Fail safe**
 - Se l'orologio non parte, si vede l'orario scritto

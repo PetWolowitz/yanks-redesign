@@ -194,14 +194,22 @@ Due rami di git, uno per binario. Si alterna tra i due, una sessione alla volta.
 Tutto passa da `ShopApi`. **Nessun componente chiama `fetch` direttamente.**
 
 - [ ] Catalogo `/[lang]/shop/`: per categoria, limited edition e mystery box
-      in evidenza, stato di disponibilità onesto
+      in evidenza. Prezzi scritti nell'HTML statico in build da `merch.ts`; il
+      JS aggiorna solo la disponibilità con `getProducts()`
+- [ ] Senza JS il catalogo si legge; carrello e checkout mostrano un messaggio
+      `<noscript>`: per comprare serve JavaScript
 - [ ] Scheda prodotto `/[lang]/shop/[slug]`: foto, taglie, quantità, aggiunta
 - [ ] Carrello: modulo `cart.ts` con `localStorage` dentro `try/catch`, pannello
       laterale, contatore nell'header aggiornato in tutte le pagine
 - [ ] Checkout: form con email e indirizzo, validazione da `validate.ts`,
       spazio per Turnstile, riepilogo
-- [ ] Pagina di stato ordine `/[lang]/shop/order#id=…&t=…`: legge id e token dal
-      fragment e chiama `getOrder(id, token)`
+- [ ] Checkout: `createCheckout` restituisce id e token, salvati in
+      `sessionStorage` (dentro `try/catch`) prima del redirect
+- [ ] Pagina di stato ordine `/[lang]/shop/order`: legge id e token da
+      `sessionStorage`, oppure dal fragment `#id=…&t=…` del link nell'email, e
+      chiama `getOrder(id, token)`. Se non trova niente, rimanda al link
+      nell'email. Se l'ordine è `pending`, "pagamento in verifica" e nuovo
+      controllo per qualche secondo
 - [ ] Errori chiari: prodotto esaurito, campo sbagliato, servizio non raggiungibile
 
 **Fatto quando**: in modalità finta si può fare un acquisto completo, dal
@@ -224,7 +232,8 @@ Leggere `06-shop-architecture.md` prima di iniziare.
 - [ ] `api/products`: prodotti attivi e giacenze
 - [ ] `api/checkout`: Turnstile verificato lato server → `validate.ts` → prezzi
       letti dal database → totale ricalcolato → giacenze controllate → ordine
-      `pending` → sessione Stripe
+      `pending` → sessione Stripe con `success_url` senza parametri → risposta
+      con id, token e indirizzo di Stripe
 - [ ] `api/stripe-webhook`: firma verificata → ordine `paid` e giacenze scalate
       in un'unica transazione, idempotente
 - [ ] `api/order`: `POST` con id e token nel body, token confrontato come hash

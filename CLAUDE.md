@@ -55,13 +55,23 @@ Lo shop **non è opzionale**. Regole del contratto:
 - validazione solo in `src/lib/shop/validate.ts`, usata da form e server
 - `merch.ts` è l'**unica fonte scritta a mano** dei prodotti: solo slug,
   categoria, prezzo, taglie, `limited`. Il seed del database si genera da lì
-- **In modalità live l'autorità sul prezzo è il database**: il server calcola i
-  totali solo da lì, e il frontend non usa i prezzi di `merch.ts`
+- **I prezzi mostrati sono nell'HTML statico**, scritti in build da `merch.ts`.
+  Un prezzo si cambia solo modificando `merch.ts`, rifacendo il seed e
+  ripubblicando. Il JavaScript aggiorna solo la disponibilità
+- **L'addebito lo calcola sempre il server dal database**, mai dai prezzi
+  arrivati dal browser
+- senza JavaScript il catalogo si legge tutto; per comprare serve JS, e carrello
+  e checkout lo dicono con un messaggio `<noscript>`
 - nomi e descrizioni dei prodotti nei file di lingua, sotto
   `shop.products.<slug>.name` e `shop.products.<slug>.description`
-- pagina ordine: `/[lang]/shop/order#id=…&t=…`. Il token sta nel fragment, quindi
-  non arriva mai al server né nei log; la pagina chiama `POST /api/order` con id e
-  token nel body
+- pagina ordine: `/[lang]/shop/order`. **Il token non passa mai da Stripe**:
+  `createCheckout` restituisce id e token, il browser li salva in
+  `sessionStorage` prima del redirect, e il `success_url` è la pagina ordine
+  senza parametri. La pagina legge da `sessionStorage` e chiama `getOrder`
+  (`POST /api/order`, id e token nel body). Se `sessionStorage` è vuoto rimanda
+  al link nell'email di conferma, che porta `#id=…&t=…` nel fragment. Se l'ordine
+  è ancora `pending` mostra "pagamento in verifica" e ricontrolla per qualche
+  secondo
 
 ## Principi — non negoziabili
 - **KISS**: la soluzione più semplice che funziona. Niente librerie per cose che

@@ -89,8 +89,10 @@ Il prezzo unico si scrive una volta in testa al gruppo. Prezzi di tosti e pizza:
 // Elenco rilevato da shop.yanks.nl, prezzi in euro.
 // In src/data/merch.ts ogni prodotto tiene solo: slug, categoria, prezzo, taglie, limited.
 // I nomi qui sotto vanno nei file di lingua, sotto shop.products.<slug>.name
-// (e .description). merch.ts è l'unica fonte scritta a mano: il seed del
-// database si genera da lì. In modalità live l'autorità sul prezzo è il database.
+// (e .description). merch.ts è l'unica fonte scritta a mano: da lì escono i
+// prezzi scritti nell'HTML statico in build e il seed del database. Un prezzo si
+// cambia solo qui, poi seed e nuova pubblicazione. L'addebito lo calcola il
+// server dal database.
 smoking: [
   { name: "Yanks Djeep Lighter", price: 3.50 },
   { name: "Yanks Clipper", price: 4.00 },
