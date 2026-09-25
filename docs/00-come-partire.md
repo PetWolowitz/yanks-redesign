@@ -277,7 +277,7 @@ fidi della cartella. Rispondi di sì.
 ```
 /mcp
 ```
-Devi vedere `astro-docs`, `cloudflare-docs` e `playwright` connessi. Se uno non
+Devi vedere `astro-docs` e `playwright` connessi. Se uno non
 lo è, leggi `docs/10-mcp-e-collegamenti.md`.
 
 **Non usare `/init`**: crea un CLAUDE.md da zero e il tuo è già pronto.

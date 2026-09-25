@@ -17,6 +17,22 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-09-25 — Prima della Fase 0, tolto l'MCP cloudflare-docs
+Fatto:        rimosso cloudflare-docs da .mcp.json (e dalla lista locale in
+              .claude/settings.local.json, fuori da git). Aggiornati
+              CLAUDE.md, docs/00 e docs/10
+Decisioni:    CHIUSO — MCP cloudflare-docs: il server risponde "Dynamic Client
+              Registration rejected (HTTP 404)", incompatibilità client/server
+              non risolvibile da noi. La documentazione Cloudflare si legge dal
+              web: developers.cloudflare.com/<prodotto>/llms.txt come indice,
+              pagine in Markdown con index.md. Resta obbligatorio verificare
+              lì prima di scrivere config per Workers, D1, Turnstile, wrangler
+Problemi:     - ancora aperto: email di conferma obbligatoria o no, e con quale
+                strumento (vedi voce precedente)
+Prossimo:     Fase 0 di docs/04-build-plan.md, prima il piano
+Ramo/commit:  docs/rimuovi-cloudflare-mcp — "Docs: tolto MCP cloudflare-docs,
+              documentazione Cloudflare dal web", poi merge su main
+
 ## 2026-09-24 — Prima della Fase 0, chiusi i due problemi aperti
 Fatto:        aggiornati CLAUDE.md, 03, 04, 06, 09 con le due decisioni sotto.
               Nessun codice dell'applicazione
