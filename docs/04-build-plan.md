@@ -34,11 +34,18 @@ verdi e un commit. Non si passa oltre con qualcosa di rotto.
 Obiettivo: un sito vuoto ma online, con tutti i controlli automatici attivi.
 
 **Integrazioni**
+Versioni esatte installate nella Fase 0 (settembre 2026):
 ```bash
-npx astro add cloudflare
-npm install tailwindcss @tailwindcss/vite gsap
-npm install -D vitest @astrojs/check typescript wrangler
+npm install @astrojs/cloudflare@14.3.3 tailwindcss@4.3.3 @tailwindcss/vite@4.3.3
+npm install -D vitest@5.0.1 @astrojs/check@0.9.10 typescript@6.0.3 wrangler@4.140.0
 ```
+- `typescript` resta alla 6: `@astrojs/check` 0.9.10 accetta solo la 5 o la 6
+- `gsap` si installa nella fase delle animazioni, non prima
+- con npm 11.0.0 l'installazione di Vitest si blocca per un bug di npm
+  (`Cannot read properties of null (reading 'edgesOut')`): si usa un npm più
+  recente, per esempio `npx npm@11.20.0 install`, mai `--legacy-peer-deps`
+- `workerd` (arriva con wrangler) è in `allowScripts` di `package.json`, come
+  `esbuild`
 
 **Configurazione di Astro**
 ```js
@@ -49,7 +56,8 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   site: 'https://yanks-redesign.TUO-SOTTODOMINIO.workers.dev',
-  adapter: cloudflare(),
+  adapter: cloudflare({ imageService: 'compile' }),
+  session: false,
   i18n: {
     locales: ['nl', 'en', 'de'],
     defaultLocale: 'en',
@@ -59,6 +67,13 @@ export default defineConfig({
 })
 ```
 
+- `imageService: 'compile'`: le immagini si convertono in build. Senza,
+  l'adapter 14 usa il servizio Cloudflare Images a ogni richiesta
+- `session: false`: niente sessioni, quindi l'adapter non crea l'archivio KV
+- `/` rimanda a `/en/` con `src/pages/index.astro` (`Astro.redirect`). Non si
+  usa `redirectToDefaultLocale`, che in build va in conflitto con quel file, e
+  il file serve comunque ad `astro check`
+
 Tailwind v4 **non usa `tailwind.config.js` né PostCSS**. Le pagine sono statiche
 per impostazione predefinita; solo gli endpoint in `src/pages/api/` dichiarano
 `export const prerender = false`.
@@ -66,8 +81,8 @@ per impostazione predefinita; solo gli endpoint in `src/pages/api/` dichiarano
 **File di progetto**
 ```
 .npmrc           save-exact=true
-.node-version    22
-.env             PUBLIC_SHOP_MODE=mock        (valori pubblici, non segreti)
+.node-version    24                           (major di `node -v`, pari, >= 22.12)
+.env             PUBLIC_SHOP_MODE=mock        (da decidere in Fase 1: .env è nel .gitignore)
 .dev.vars        segreti locali                (nel .gitignore)
 tsconfig.json    "extends": "astro/tsconfigs/strict"
 ```
@@ -103,14 +118,17 @@ CLAUDE.md
 ```
 
 **Da fare**
-- [ ] `.gitignore`: `node_modules`, `dist`, `.env`, `.dev.vars`, `.wrangler`
-- [ ] `wrangler.jsonc` con nome del Worker e data di compatibilità
-- [ ] `public/_headers` con le intestazioni di sicurezza (testo in `06`)
-- [ ] Una pagina provvisoria `/en/` con scritto "Yanks — in costruzione"
-- [ ] `.github/workflows/check.yml`: `npm ci` → `astro check` → `vitest run` →
-      `astro build`
-- [ ] `.github/dependabot.yml`: npm, settimanale, aggiornamenti raggruppati
-- [ ] Repository GitHub e deploy su Cloudflare collegato
+- [x] `.gitignore`: `node_modules`, `dist`, `.env`, `.dev.vars`, `.wrangler`
+- [x] `wrangler.jsonc` con nome del Worker e data di compatibilità
+- [x] `public/_headers` con le intestazioni di sicurezza (testo in `06`)
+- [x] Una pagina provvisoria `/en/` con scritto "Yanks — in costruzione"
+- [x] `.github/workflows/check.yml`: `npm ci` → `astro check` → `vitest run` →
+      `astro build`, con `permissions: contents: read` e cache npm.
+      `vitest run --passWithNoTests` finché non ci sono test (togliere in Fase 1)
+- [x] `.github/dependabot.yml`: npm, settimanale, aggiornamenti raggruppati
+- [x] Repository GitHub
+- [ ] Deploy su Cloudflare collegato (Pietro, docs/00 passo 4.6), poi `site`
+      in `astro.config.mjs` con l'indirizzo vero
 
 **Fatto quando**: l'indirizzo `.workers.dev` mostra la pagina provvisoria, e su
 GitHub il controllo automatico è verde.

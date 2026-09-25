@@ -17,6 +17,39 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-09-25 — Fase 0, progetto e controlli (manca il deploy)
+Fatto:        pacchetti a versione esatta (@astrojs/cloudflare 14.3.3,
+              tailwindcss e @tailwindcss/vite 4.3.3, vitest 5.0.1,
+              @astrojs/check 0.9.10, typescript 6.0.3, wrangler 4.140.0).
+              astro.config.mjs, wrangler.jsonc, .npmrc, .node-version (24),
+              public/_headers, pagina /en/ provvisoria, "/" → "/en/",
+              workflow check.yml, dependabot.yml. Tolti i file d'esempio.
+              astro check 0 errori, vitest ok (nessun test), build 2 pagine.
+              Anteprima nel motore di Cloudflare: le 6 intestazioni arrivano,
+              screenshot a 390 e 1440 px ok, console pulita
+Decisioni:    - typescript 6.0.3, non 7: @astrojs/check accetta solo 5 o 6
+              - gsap rimandato alla fase delle animazioni
+              - imageService 'compile' (immagini in build, niente Cloudflare
+                Images a pagamento) e session: false (niente KV)
+              - "/" con Astro.redirect in src/pages/index.astro, senza
+                redirectToDefaultLocale (conflitto in build)
+              - workerd in allowScripts accanto a esbuild
+              - workflow: permissions contents read, setup-node con
+                .node-version e cache npm, actions v7
+              - PUBLIC_SHOP_MODE rimandato alla Fase 1
+Problemi:     - npm 11.0.0 sul PC va in errore installando Vitest ("edgesOut"):
+                usato npx npm@11.20.0. Conviene aggiornare npm sul PC
+              - site in astro.config.mjs è provvisorio fino al deploy
+Promemoria Fase 3:
+              - public/_headers vale solo per gli asset statici. Le risposte
+                degli endpoint /api/ devono impostare le intestazioni di
+                sicurezza nel codice
+              - togliere --passWithNoTests appena arrivano i test (Fase 1)
+Prossimo:     Pietro collega Cloudflare (docs/00, passo 4.6), poi site con
+              l'indirizzo vero; poi Fase 1
+Ramo/commit:  sito/fase-0 — "Fase 0: Astro, Cloudflare, Tailwind, controlli,
+              sicurezza", poi merge su main
+
 ## 2026-09-25 — Prima della Fase 0, si resta su Astro 7
 Fatto:        "Astro 6" → "Astro 7" in CLAUDE.md, 00, 09, 10. Versione esatta
               in package.json: "astro": "7.3.5" (tolto il ^), lock allineato
