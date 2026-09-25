@@ -7,3 +7,8 @@ updates:
     groups:
       dipendenze:
         patterns: ["*"]
+    ignore:
+      # @astrojs/check 0.9.10 accetta solo TypeScript 5 o 6.
+      # Togliere quando supporterà TypeScript 7 (promemoria nel diario).
+      - dependency-name: typescript
+        update-types: ["version-update:semver-major"]

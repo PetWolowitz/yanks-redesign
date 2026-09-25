@@ -17,6 +17,22 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-09-25 — Fase 0, Dependabot e TypeScript 7
+Fatto:        in .github/dependabot.yml le versioni major di typescript sono
+              ignorate. Chiusa la PR #1 di Dependabot (typescript 6.0.3 →
+              7.0.2) con un commento che spiega il motivo
+Decisioni:    si resta su TypeScript 6.0.3: @astrojs/check 0.9.10 accetta solo
+              TypeScript 5 o 6, e con la 7 `npm ci` fallisce (ERESOLVE). I
+              controlli su GitHub l'hanno bloccata come dovevano
+Problemi:     nessuno nuovo
+Promemoria:   togliere l'eccezione su typescript in dependabot.yml quando
+              @astrojs/check supporterà TypeScript 7 (controllare il suo
+              peerDependencies con `npm view @astrojs/check peerDependencies`)
+Prossimo:     Pietro collega Cloudflare (docs/00, passo 4.6), poi site con
+              l'indirizzo vero; poi Fase 1
+Ramo/commit:  sito/dependabot-typescript — "Dependabot: ignora le major di
+              TypeScript", poi merge su main
+
 ## 2026-09-25 — Fase 0, progetto e controlli (manca il deploy)
 Fatto:        pacchetti a versione esatta (@astrojs/cloudflare 14.3.3,
               tailwindcss e @tailwindcss/vite 4.3.3, vitest 5.0.1,
