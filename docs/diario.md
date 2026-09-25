@@ -17,6 +17,28 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-09-25 — Prima della Fase 0, token HMAC e Resend senza MCP
+Fatto:        aggiornati CLAUDE.md, 06, 09, 10 e, per coerenza, 04 (la riga
+              "token confrontato come hash" era diventata sbagliata)
+Decisioni:    1. CHIUSO — token d'accesso all'ordine:
+                 base64url(HMAC-SHA256(ORDER_TOKEN_SECRET,
+                 "order-access:v1:" + public_id)), lunghezza piena. Verifica
+                 solo con crypto.subtle.verify, mai ===. Solo Web Crypto.
+                 Tolta la colonna access_token_hash. Segreto di almeno 32 byte,
+                 comando per generarlo in docs/06. Limite documentato: niente
+                 revoca per singolo ordine, cambiare il segreto invalida tutti
+                 i link
+              2. CHIUSO — Resend fuori da .mcp.json e non installato: basta la
+                 dashboard. In docs/10 resta una riga, si valuterà se servirà
+Problemi:     - astro installato è 7.3.5 (^7.3.5 in package.json), i documenti
+                dicono Astro 6: da decidere prima della Fase 0. Il ^ va tolto
+                comunque (versioni esatte)
+Prossimo:     decidere Astro 6 o 7, poi Fase 0 di docs/04-build-plan.md
+              (Parte 4 di docs/00), prima il piano. Cloudflare si collega
+              dopo, al passo 4.6
+Ramo/commit:  docs/token-hmac — "Docs: token d'accesso HMAC, Resend senza MCP",
+              poi merge su main
+
 ## 2026-09-25 — Prima della Fase 0, email di conferma obbligatoria
 Fatto:        aggiornati CLAUDE.md, 04, 06, 09, 10. Aggiunti .dev.vars e
               .wrangler/ al .gitignore (erano previsti in Fase 0, ma la chiave

@@ -129,6 +129,9 @@ online.
 - lo stato dell'orologio alle 01:00, 02:00, 02:15, 02:45, 03:00, 07:59, 08:00
 - il calcolo del totale del carrello lato server
 - l'email di conferma: il link porta id e token nel fragment, mai nella query
+- il token d'accesso all'ordine: calcolato e verificato con la stessa regola;
+  rifiutato se cambia l'id, se è troncato o se è stato firmato con un altro
+  segreto
 - che i tre file di lingua abbiano le stesse chiavi
 
 Niente test sui componenti grafici: per quelli basta guardarli.
@@ -142,6 +145,10 @@ Dettagli in `06-shop-architecture.md`. In sintesi:
 - validazione lato server di ogni input
 - totale sempre ricalcolato sul server
 - webhook Stripe con verifica della firma
+- token d'accesso all'ordine = HMAC-SHA256 di `ORDER_TOKEN_SECRET` su
+  `"order-access:v1:" + id`, verificato con `crypto.subtle.verify` in tempo
+  costante. Solo Web Crypto, niente nel database. Limite: niente revoca per
+  singolo ordine, cambiare il segreto invalida tutti i link
 - email di conferma inviata dal webhook con `RESEND_API_KEY` dai segreti; se
   fallisce l'ordine resta valido e l'errore va nei log, senza token
 - Turnstile sul checkout

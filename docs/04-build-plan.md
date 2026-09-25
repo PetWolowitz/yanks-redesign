@@ -239,7 +239,9 @@ Leggere `06-shop-architecture.md` prima di iniziare.
 - [ ] `api/stripe-webhook`: firma verificata → ordine `paid` e giacenze scalate
       in un'unica transazione, idempotente → poi email di conferma con Resend
       (`fetch`, `Idempotency-Key`); se fallisce, ordine valido ed errore nei log
-- [ ] `api/order`: `POST` con id e token nel body, token confrontato come hash
+- [ ] `lib/shop/token.ts`: token HMAC-SHA256 con Web Crypto, con i test
+- [ ] `api/order`: `POST` con id e token nel body, token verificato con
+      `crypto.subtle.verify` (tempo costante), mai con `===`
 
 **Stripe e Turnstile**
 - [ ] Account Stripe in modalità test, chiavi nei segreti di Cloudflare
@@ -247,6 +249,8 @@ Leggere `06-shop-architecture.md` prima di iniziare.
 - [ ] Sito Turnstile creato, chiavi nei segreti
 - [ ] Account Resend, `RESEND_API_KEY` nei segreti e in `.dev.vars`,
       `EMAIL_FROM=onboarding@resend.dev` (modalità di prova)
+- [ ] `ORDER_TOKEN_SECRET` generato (comando in `06-shop-architecture.md`),
+      valori diversi nei segreti e in `.dev.vars`
 
 **Test obbligatori**
 - [ ] Un prezzo modificato dal browser non cambia l'addebito
@@ -256,6 +260,8 @@ Leggere `06-shop-architecture.md` prima di iniziare.
 - [ ] Una quantità superiore alla giacenza viene rifiutata
 - [ ] Con Resend che risponde errore l'ordine resta `paid` e il webhook
       risponde 200; nei log non compare il token
+- [ ] Un token troncato, di un altro ordine o firmato con un altro segreto
+      viene rifiutato con la stessa risposta di un ordine inesistente
 
 ## Fase 4 — Collegamento (1 ora)
 
