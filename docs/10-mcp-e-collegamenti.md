@@ -10,7 +10,7 @@ ufficiali dei produttori, e si aggiungono nella fase in cui servono.
 
 | MCP | A cosa serve | Quando | Account |
 |---|---|---|---|
-| **Astro Docs** | documentazione di Astro 6 sempre aggiornata | da subito | no |
+| **Astro Docs** | documentazione di Astro 7 sempre aggiornata | da subito | no |
 | **Playwright** | Claude apre il sito in un browser e lo guarda davvero | da subito | no |
 | **Stripe** | documentazione e pagamenti di prova | Fase 3 | sì, **solo modalità test** |
 

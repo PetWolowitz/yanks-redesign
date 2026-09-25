@@ -17,6 +17,19 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-09-25 — Prima della Fase 0, si resta su Astro 7
+Fatto:        "Astro 6" → "Astro 7" in CLAUDE.md, 00, 09, 10. Versione esatta
+              in package.json: "astro": "7.3.5" (tolto il ^), lock allineato
+Decisioni:    CHIUSO — si resta su Astro 7.3.5, già installato. Verificato
+              sulla guida ufficiale "Upgrade to Astro v7": Vite 8 e compilatore
+              in Rust, nessun impatto su un progetto nuovo. Node richiesto
+              22.12 o superiore (installato 24.21.0)
+Problemi:     nessuno aperto
+Prossimo:     Fase 0 di docs/04-build-plan.md, prima il piano con pacchetti e
+              versioni esatte
+Ramo/commit:  docs/astro-7 — "Docs: si resta su Astro 7, versione esatta",
+              poi merge su main
+
 ## 2026-09-25 — Prima della Fase 0, token HMAC e Resend senza MCP
 Fatto:        aggiornati CLAUDE.md, 06, 09, 10 e, per coerenza, 04 (la riga
               "token confrontato come hash" era diventata sbagliata)

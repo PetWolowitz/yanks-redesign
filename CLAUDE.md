@@ -26,7 +26,7 @@ Se due documenti si contraddicono, vale questo file. Segnalalo invece di sceglie
 ## Stack
 Motivazioni complete in `docs/09-stack-e-principi.md`.
 
-- **Astro 6** con **TypeScript strict**. Tutte le pagine pre-generate in build,
+- **Astro 7** con **TypeScript strict**. Tutte le pagine pre-generate in build,
   una per lingua. Solo `/api/*` gira sul server
 - **Tailwind CSS v4** con `@tailwindcss/vite`. **Niente `tailwind.config.js` e
   niente PostCSS**: i token stanno in CSS con `@theme`
