@@ -7,7 +7,7 @@ dipendenze, pochi punti di rottura, sito veloce e trovabile.
 
 | Livello | Scelta | Perché |
 |---|---|---|
-| Framework | **Astro 6** | Genera HTML statico per ogni pagina e lingua: SEO piena, zero JavaScript di default, JS solo dove serve |
+| Framework | **Astro 7** | Genera HTML statico per ogni pagina e lingua: SEO piena, zero JavaScript di default, JS solo dove serve |
 | Linguaggio | **TypeScript strict** | Gli errori saltano fuori mentre scrivi, non in produzione |
 | Stile | **Tailwind CSS v4** + `@tailwindcss/vite` | Token in un solo file CSS, niente configurazione separata |
 | Interattività | **TypeScript puro** in `<script>` e custom element | Niente framework UI: orologio, carrello e cursore non ne hanno bisogno |
@@ -108,7 +108,7 @@ Conseguenza: anche se il backend avesse un problema, il sito resta in piedi.
 3. **`package-lock.json` sempre nel repository**
 4. **Mai `npm audit fix --force`** e mai `--legacy-peer-deps`: rompono le cose
    invece di aggiustarle
-5. **Node 22 o superiore**, richiesto da Astro 6. Versione fissata in
+5. **Node 22.12 o superiore**, richiesto da Astro 7. Versione fissata in
    `.node-version` e in `package.json` alla voce `engines`
 6. **Un aggiornamento alla volta**, con test e build prima del commit
 7. **Dependabot** raggruppa gli aggiornamenti una volta a settimana: li approvi

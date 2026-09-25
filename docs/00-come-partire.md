@@ -57,8 +57,8 @@ PowerShell perché la riga inizia con `PS C:\`.
 
 ### 1.1 — Node.js 22 o superiore
 
-**Cosa fa**: Node esegue gli strumenti di sviluppo. Astro 6 richiede la versione
-22 o successiva.
+**Cosa fa**: Node esegue gli strumenti di sviluppo. Astro 7 richiede la versione
+22.12 o successiva.
 
 ```powershell
 node -v
