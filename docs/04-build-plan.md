@@ -127,8 +127,9 @@ CLAUDE.md
       `vitest run --passWithNoTests` finché non ci sono test (togliere in Fase 1)
 - [x] `.github/dependabot.yml`: npm, settimanale, aggiornamenti raggruppati
 - [x] Repository GitHub
-- [ ] Deploy su Cloudflare collegato (Pietro, docs/00 passo 4.6), poi `site`
-      in `astro.config.mjs` con l'indirizzo vero
+- [x] Deploy su Cloudflare collegato (Pietro, docs/00 passo 4.6), `site` in
+      `astro.config.mjs` con l'indirizzo vero:
+      `https://yanks-redesign.pietro-costa25.workers.dev`
 
 **Fatto quando**: l'indirizzo `.workers.dev` mostra la pagina provvisoria, e su
 GitHub il controllo automatico è verde.

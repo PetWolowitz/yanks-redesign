@@ -5,8 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  // Indirizzo definitivo da inserire dopo il primo deploy (docs/00, passo 4.6)
-  site: 'https://yanks-redesign.workers.dev',
+  site: 'https://yanks-redesign.pietro-costa25.workers.dev',
   // Immagini convertite in build: le pagine sono tutte statiche (docs/09)
   adapter: cloudflare({ imageService: 'compile' }),
   // Niente sessioni: l'adapter non crea l'archivio KV che non ci serve
