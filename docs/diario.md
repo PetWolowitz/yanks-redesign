@@ -17,6 +17,46 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-09-25 — Documenti, fonti di Zandvoort e merch senza accessori
+Fatto:        docs/03: tolta gmb-2026-274642 (pubblicazione della stessa
+              politica di Wageningen); aggiunta e verificata CVDR625741,
+              Coffeeshopbeleid 2019 di Zandvoort, separata dall'esempio di
+              Wageningen. Merch: tolti Glass Tips, Rolling Tray, Metal Grinder,
+              3D Grinder, Mini Bong. docs/05, punto 7: al posto del menu
+              cannabis, integrazione con i sistemi del locale solo per
+              informazioni non promozionali, previa verifica con il comune
+Decisioni:    - Zandvoort, criterio A: "behalve een summiere aanduiding van de
+                lokaliteit mag géén reclame worden gemaakt". Chiusura possibile
+                per "openlijke en/of opdringerige reclame". Keurmerk Zandvoortse
+                Coffeeshops: adesione volontaria, non cambia requisiti né
+                chiusura; se Yanks lo abbia è DA VERIFICARE
+              - Stripe (Prohibited and restricted businesses, aggiornata
+                22-09-2026): vietati gli articoli per produrre o usare droghe,
+                i prodotti a base di cannabis e "i dispensari di cannabis e le
+                attività correlate"
+              - restano abbigliamento, accendini, portasigarette, posacenere,
+                mystery box
+Problemi:     da decidere con Pietro, NON modificati:
+              a. docs/03, "Regole d'ingresso": dice "Turisti ammessi, il
+                 criterio di residenza non viene applicato, verificato di
+                 persona". La politica di Zandvoort vigente (CVDR625741) ha il
+                 criterio I: "uitsluitend toegankelijk voor Ingezetenen van
+                 Nederland". Il sito non può affermare il contrario di un
+                 regolamento pubblicato
+              b. docs/03: venue ha cannabisMenuUrl e "il menu resta sul
+                 servizio esterno, raggiungibile con un link". Un link al menu
+                 della cannabis contrasta con la regola 1
+              c. Stripe vieta anche "le attività correlate" ai dispensari di
+                 cannabis: per un uso reale lo shop merch di un coffeeshop
+                 potrebbe non essere accettato. In modalità test non cambia
+                 niente; da scrivere nel portfolio accanto alla verifica con il
+                 comune
+Prossimo:     decisioni sui punti sopra; poi, sul ramo sito/fase-1-lingue,
+              h2/h3 in maiuscolo e preload di Martian Mono (approvati), poi
+              Fase 1 punto 2 (i18n)
+Ramo/commit:  docs/fonti-zandvoort-merch — "Docs: fonti di Zandvoort e merch
+              senza accessori", poi merge su main
+
 ## 2026-09-25 — Documenti, vincoli legali dei coffeeshop
 Fatto:        sezione "Vincoli legali dei coffeeshop" in docs/03, paragrafo
               nelle decisioni del caso studio in docs/05, riga in CLAUDE.md

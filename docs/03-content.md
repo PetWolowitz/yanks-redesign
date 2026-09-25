@@ -39,14 +39,33 @@ La **A** (*geen affichering*) vieta ogni reclame, oltre a una semplice
 indicazione sul locale. Alcuni comuni la interpretano in modo largo: loghi,
 adesivi, listini prezzi, luci verdi.
 
-Fonti: i regolamenti comunali su lokaleregelgeving.overheid.nl e
-zoek.officielebekendmakingen.nl. Esempi:
-- **CVDR762705** — *Coffeeshopbeleid gemeente Wageningen 2026*, in vigore dal
-  1° luglio 2026, art. 3: *"Geen affichering; reclame, anders dan een aanduiding
-  op de betreffende lokaliteit, is verboden."* (verificato). È un esempio di un
-  altro comune, non la regola di Zandvoort
-- **gmb-2026-274642** su zoek.officielebekendmakingen.nl — **DA VERIFICARE**:
-  la pagina non si è aperta (errore SSL), contenuto non controllato
+Fonti: i regolamenti comunali su lokaleregelgeving.overheid.nl.
+
+**Zandvoort — la regola che vale per Yanks** (verificata il 25-09-2026)
+*Coffeeshopbeleid 2019 gemeente Zandvoort*, **CVDR625741**, in vigore dal
+1° gennaio 2019 e ancora vigente ("geldend van 05-07-2019 t/m heden"):
+- **Criterio A**: *"Geen Affichering; behalve een summiere aanduiding van de
+  lokaliteit mag géén reclame worden gemaakt."* Solo una indicazione sommaria
+  del locale, nessuna reclame. A differenza di Wageningen non elenca esempi
+  (loghi, luci, siti web): il confine si chiarisce solo con il comune
+- **Chiusura** (cap. 3, punto 5): un coffeeshop può essere chiuso *"indien er
+  openlijke en/of opdringerige reclame wordt gevoerd voor het gebruik van of de
+  handel in verdovende middelen"*
+- **Keurmerk Zandvoortse Coffeeshops** (cap. 2): un marchio di qualità a cui i
+  coffeeshop di Zandvoort possono aderire, per mostrare un'impresa
+  "verantwoord en veilig". Aggiunge misure su rispetto dei criteri AHOJGI,
+  attenzione al cliente, formazione del personale; si assegna per un periodo
+  (per esempio due anni) con un controllo annuale. **Non cambia** i requisiti
+  di apertura né i criteri di chiusura; il futuro *Handhavingsbeleid* potrebbe
+  prevedere sanzioni più leggere per chi lo ha. Il documento non dice se Yanks
+  lo abbia: **DA VERIFICARE** prima di citarlo sul sito
+- Altro: al massimo **2 coffeeshop** in centro a Zandvoort; niente alcol nei
+  coffeeshop (regola nazionale dal 2007)
+
+**Wageningen — solo un esempio di come un altro comune scrive la regola**
+*Coffeeshopbeleid gemeente Wageningen 2026*, **CVDR762705**, in vigore dal
+1° luglio 2026, art. 3: *"Geen affichering; reclame, anders dan een aanduiding
+op de betreffende lokaliteit, is verboden."* Non si applica a Zandvoort
 
 **Regole per il concept**
 1. **Nessun prodotto di cannabis, prezzo o immagine di cannabis sul sito.** Il
@@ -56,6 +75,8 @@ zoek.officielebekendmakingen.nl. Esempi:
 3. **Lo shop merch è la parte più delicata**: l'applicazione delle regole varia
    da comune a comune. Nel portfolio va scritto che per un uso reale serve una
    verifica con il comune di Zandvoort
+4. **Nello shop niente accessori legati alla cannabis** (grinder, bong, rolling
+   tray, glass tips): oltre al punto 1, li vieta anche Stripe (sezione Merch)
 
 ## Punti di forza da comunicare
 1. **Aperto 08:00–02:45 tutti i giorni**, dalle 02:00 solo asporto
@@ -123,13 +144,8 @@ smoking: [
   { name: "Yanks Clipper", price: 4.00 },
   { name: "Yanks Torch Lighter", price: 5.00 },
   { name: "Yanks Metal Cigarette Case", price: 6.00 },
-  { name: "Yanks Glass Tips", price: 7.00 },
-  { name: "Yanks Rolling Tray", price: 12.50 },
-  { name: "Yanks Metal Grinder", price: 15.00 },
-  { name: "3D Yanks Grinder", price: 17.50 },
   { name: "Yanks Ceramic Ashtray", price: 17.50 },
   { name: "Yanks Metal Ashtray – Zandvoort Edition", price: 17.50 },
-  { name: "Yanks Mini Bong / Water Pipe", price: 25.00 },
 ],
 clothing: [
   { name: "Yanks Indian T-shirt", price: 35.00 },
@@ -144,6 +160,21 @@ special: [
   { name: "Yanks Mystery Box", price: 80.00, limited: 50 },
 ],
 ```
+
+**Esclusi dallo shop del concept: gli accessori legati alla cannabis.** Tolti
+Yanks Glass Tips, Yanks Rolling Tray, Yanks Metal Grinder, 3D Yanks Grinder e
+Yanks Mini Bong / Water Pipe, anche se in vendita su shop.yanks.nl. Due motivi:
+- sono accessori per consumare cannabis, e il sito non la promuove (Vincoli
+  legali, regola 1)
+- **Stripe non li ammette.** Nella pagina ufficiale *Prohibited and restricted
+  businesses* (stripe.com/legal/restricted-businesses, aggiornata il
+  22-09-2026, letta il 25-09-2026), tra le attività vietate, sotto "qualsiasi
+  prodotto e servizio illecito": *attrezzature e articoli destinati alla
+  produzione o all'uso di droghe* (drug paraphernalia). Nella sezione
+  "Marijuana" vieta anche i prodotti a base di cannabis e *"i dispensari di
+  cannabis e le attività correlate"*
+
+Restano: abbigliamento, accendini, portasigarette, posacenere, mystery box.
 
 **Esclusi dallo shop del concept: i semi.** La vendita e la spedizione di semi
 all'estero hanno regole diverse per ogni paese, e in diversi paesi dell'Unione è

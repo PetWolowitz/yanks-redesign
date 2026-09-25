@@ -63,8 +63,9 @@ Prima e dopo affiancati. Lighthouse su entrambi i temi. Link al sito e al repo.
 
 **7. Cosa farei con un cliente vero**
 Fotografo professionista, testi scritti col proprietario, licenze dei font,
-verifica legale delle regole d'ingresso, collegamento al sistema del menu
-cannabis, traduzioni riviste da madrelingua.
+verifica legale delle regole d'ingresso, integrazione con i sistemi del locale
+solo per informazioni non promozionali (orari, eventi, disponibilità del
+merch), previa verifica con il comune, traduzioni riviste da madrelingua.
 
 ## Il disclaimer
 Nel footer e in cima al caso studio:
