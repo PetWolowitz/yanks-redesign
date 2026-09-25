@@ -88,6 +88,15 @@ Lo shop **non è opzionale**. Regole del contratto:
 - **secondo paracadute**: la pagina ordine mostra il link completo, fragment
   compreso, con un pulsante "Copia link". Senza JS o senza appunti il link resta
   selezionabile a mano
+- **token d'accesso all'ordine**: non si conserva, si ricalcola.
+  `token = base64url(HMAC-SHA256(ORDER_TOKEN_SECRET, "order-access:v1:" + id))`,
+  lunghezza piena, mai troncato. Lo calcolano checkout e webhook con la stessa
+  funzione; `api/order` lo verifica **solo con `crypto.subtle.verify`** (tempo
+  costante), **mai con `===`**. Solo Web Crypto, nessuna dipendenza. Nel
+  database niente token né hash (`access_token_hash` non esiste).
+  `ORDER_TOKEN_SECRET`: almeno 32 byte casuali, nei segreti Cloudflare e in
+  `.dev.vars`. Limite accettato: niente revoca per singolo ordine; cambiare il
+  segreto invalida tutti i link
 
 ## Principi — non negoziabili
 - **KISS**: la soluzione più semplice che funziona. Niente librerie per cose che
@@ -216,19 +225,18 @@ con il pulsante "Carica contenuto". Così il sito resta senza banner cookie.
   codice che arriva al browser.**
 
 ## MCP disponibili
-`astro-docs` e `playwright` sono in `.mcp.json`; `stripe` e `resend` accedono
-all'account di Pietro, quindi si installano a livello personale e non stanno
-nel repository (vedi `docs/10-mcp-e-collegamenti.md`). Usali, non sono
-decorativi:
+`astro-docs` e `playwright` sono in `.mcp.json`; `stripe` accede all'account di
+Pietro, quindi si installa a livello personale e non sta nel repository (vedi
+`docs/10-mcp-e-collegamenti.md`). Usali, non sono decorativi:
 - **astro-docs** — prima di scrivere configurazione o API di Astro, verifica
   sulla documentazione della versione installata. Non fidarti della memoria
 - **playwright** — dopo ogni modifica visibile, apri la pagina e guardala a
   390 px e a 1440 px, nei due temi. Verifica i flussi dello shop cliccando
 - **stripe** (dalla Fase 3, solo modalità test)
-- **resend** (dalla Fase 3): per controllare le email inviate e i log delle
-  richieste. **Mai per scrivere il codice dell'invio**, che resta un `fetch`
-  all'API REST. Documentazione Resend dal web: indice in
-  `https://resend.com/docs/llms.txt`
+
+**Resend: niente MCP**, per ora basta la dashboard. Documentazione dal web,
+indice in `https://resend.com/docs/llms.txt`: verificala prima di scrivere il
+codice dell'invio.
 
 **Documentazione Cloudflare: dal web, non da MCP.** L'MCP `cloudflare-docs` è
 stato tolto (il server rifiuta la registrazione del client). La regola resta:

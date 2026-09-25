@@ -67,7 +67,6 @@ CREATE TABLE orders (
   status TEXT NOT NULL CHECK (status IN ('pending','paid','shipped','cancelled')),
   total_cents INTEGER NOT NULL,
   stripe_session_id TEXT UNIQUE,
-  access_token_hash TEXT NOT NULL,
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 CREATE TABLE order_items (
@@ -180,14 +179,60 @@ indirizzo del cliente (per esempio `ordini@yanks.nl`) e le email arrivano a
 chiunque. Il codice non cambia: cambia solo il valore di `from`, che per questo
 sta in una variabile d'ambiente (`EMAIL_FROM`), non nel codice.
 
-**Da decidere prima della Fase 3: da dove prende il token il webhook.** Il
-link nell'email contiene il token, ma nel database c'è solo il suo hash, e il
-webhook non vede `sessionStorage`. Proposta, da confermare con Pietro: il
-token non è casuale ma è `HMAC-SHA256(ORDER_TOKEN_SECRET, public_id)`, calcolato
-con `crypto.subtle` sia dal checkout sia dal webhook. `ORDER_TOKEN_SECRET` è un
-segreto in più; `api/order` ricalcola l'HMAC e lo confronta, e la colonna
-`access_token_hash` non serve più. Un database rubato da solo continua a non
-aprire nessun ordine.
+## Il token d'accesso all'ordine — HMAC
+
+**Il problema.** Il webhook deve mettere il token nel link dell'email, ma non
+vede `sessionStorage` e non può leggerlo da nessuna parte. Quindi il token non
+si conserva: **si ricalcola**.
+
+**La regola.**
+```
+token = base64url( HMAC-SHA256( ORDER_TOKEN_SECRET, "order-access:v1:" + public_id ) )
+```
+- `public_id` è l'id dell'ordine che vede il browser
+- il prefisso `order-access:v1:` dice a cosa serve la firma e ne fissa la
+  versione: se un giorno la regola cambia, si passa a `v2`
+- **lunghezza piena**: tutti i 32 byte dell'HMAC, 43 caratteri in base64url,
+  **mai troncato**
+- lo calcolano, con la stessa funzione, `api/checkout` (per rispondere al
+  browser) e `api/stripe-webhook` (per il link nell'email). Una sola funzione in
+  `src/lib/shop/token.ts`, testata con Vitest
+- **solo Web Crypto** (`crypto.subtle`), che nei Workers c'è già. Nessuna
+  dipendenza
+
+**La verifica, in `api/order`.** Si decodifica il token da base64url; se non è
+valido o non è lungo 32 byte, si rifiuta. Poi
+`crypto.subtle.verify('HMAC', chiave, token, "order-access:v1:" + public_id)`,
+che confronta **in tempo costante**. **Mai** ricalcolare e confrontare con
+`===`: un confronto normale si ferma al primo carattere diverso, e dal tempo
+di risposta si può indovinare il token un pezzo alla volta. Token sbagliato e
+ordine inesistente danno la stessa risposta generica.
+
+**Nel database non c'è niente del token**: la colonna `access_token_hash` non
+esiste più. Un database rubato da solo non apre nessun ordine, perché senza il
+segreto i token non si calcolano.
+
+**Il segreto `ORDER_TOKEN_SECRET`.** Almeno 32 byte casuali. Si genera con Node,
+in PowerShell:
+```powershell
+node -e "console.log(require('node:crypto').randomBytes(32).toString('base64url'))"
+```
+Il valore uscito va nei segreti di Cloudflare e in locale in `.dev.vars`:
+```powershell
+npx wrangler secret put ORDER_TOKEN_SECRET
+```
+```
+# .dev.vars
+ORDER_TOKEN_SECRET=<il valore generato>
+```
+Due valori diversi per locale e produzione. Mai nel codice, mai con prefisso
+`PUBLIC_`, mai nei log.
+
+**Il limite, da sapere.** Non c'è revoca per singolo ordine: un link finito
+nelle mani sbagliate resta valido. L'unica revoca è **cambiare il segreto**, e
+questo invalida **tutti** i link di tutti gli ordini, compresi quelli nelle
+email già inviate. Per un concept con ordini di prova va bene; per un cliente
+vero, se servisse la revoca singola, si aggiungerebbe una colonna nel database.
 
 **Perché il token non passa da Stripe.** Se fosse nel `success_url`, Stripe lo
 conoscerebbe e lo conserverebbe nella sessione di pagamento. Così resta tra il
@@ -196,9 +241,6 @@ nostro server e il browser del cliente.
 **Perché nel fragment, nel link dell'email.** La parte dopo `#` non viene mai
 inviata al server: il token non finisce nei log di Cloudflare, né
 nell'intestazione `Referer`. E passa nel body di una `POST`, non nell'indirizzo.
-
-Il token si salva **solo come hash**: se il database uscisse, i link non
-funzionerebbero comunque.
 
 ## Sicurezza — le regole
 
@@ -209,7 +251,8 @@ funzionerebbero comunque.
 2. **È pagato solo quando lo dice il webhook, con firma verificata.** Il ritorno
    del cliente sulla pagina di conferma non prova niente
 3. **I segreti non stanno mai nel codice.** Chiavi Stripe, firma del webhook,
-   chiave Turnstile e chiave Resend nelle variabili cifrate di Cloudflare. In locale in
+   chiave Turnstile, chiave Resend e `ORDER_TOKEN_SECRET` nelle variabili
+   cifrate di Cloudflare. In locale in
    `.dev.vars`, escluso da git dal primo commit
 4. **Validazione lato server di tutto**: email, CAP, paese da una lista chiusa,
    quantità intere tra 1 e 10, lunghezze massime su ogni campo

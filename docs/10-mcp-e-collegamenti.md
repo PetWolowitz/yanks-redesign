@@ -13,11 +13,12 @@ ufficiali dei produttori, e si aggiungono nella fase in cui servono.
 | **Astro Docs** | documentazione di Astro 6 sempre aggiornata | da subito | no |
 | **Playwright** | Claude apre il sito in un browser e lo guarda davvero | da subito | no |
 | **Stripe** | documentazione e pagamenti di prova | Fase 3 | sì, **solo modalità test** |
-| **Resend** | controllare le email di conferma inviate e i log delle richieste | Fase 3 | sì, account gratuito |
 
-Astro Docs e Playwright stanno in `.mcp.json`, nel repository. Stripe e Resend
-accedono al tuo account: si installano a livello personale e non vanno nel
-repository.
+Astro Docs e Playwright stanno in `.mcp.json`, nel repository. Stripe accede al
+tuo account: si installa a livello personale e non va nel repository.
+
+**Resend: niente MCP per ora.** Per le email di conferma basta la dashboard di
+Resend; se nella Fase 3 servirà, si valuterà allora.
 
 **GitHub non ha bisogno di un MCP**: si usa la riga di comando ufficiale `gh`,
 che Claude Code sa già usare. Più semplice e meno cose che si possono rompere.
@@ -31,10 +32,6 @@ che Claude Code sa già usare. Più semplice e meno cose che si possono rompere.
   su desktop, clicca i pulsanti, verifica che il carrello funzioni
 - **Stripe**, nella Fase 3, per consultare la documentazione e controllare i
   pagamenti di prova senza aprire la dashboard
-- **Resend**, nella Fase 3, per vedere se l'email di conferma è partita e cosa
-  ha risposto l'API quando fallisce. **Solo per controllare**: il codice
-  dell'invio resta una `fetch` all'API REST, senza pacchetti. L'MCP di Resend
-  può anche inviare email: Claude non lo usa per quello
 
 ## Cloudflare: documentazione dal web, niente MCP
 L'MCP ufficiale `cloudflare-docs` è stato provato e tolto da `.mcp.json`: il
@@ -89,21 +86,6 @@ claude mcp add --transport http stripe https://mcp.stripe.com/
 ```
 Poi dentro Claude Code `/mcp`, scegli `stripe` e fai l'accesso. Verifica che la
 dashboard di Stripe sia **in modalità test** prima di collegarlo.
-
-### Resend (solo nella Fase 3)
-Anche questo è personale: accede al tuo account Resend, non va nel repository.
-È il server ufficiale ospitato da Resend:
-```powershell
-claude mcp add --transport http resend https://mcp.resend.com/mcp
-```
-Poi dentro Claude Code `/mcp`, scegli `resend` e fai l'accesso col browser.
-
-La documentazione di Resend si legge dal web, come quella di Cloudflare: indice
-in `https://resend.com/docs/llms.txt`, ogni pagina in Markdown aggiungendo `.md`
-all'indirizzo (per esempio `https://resend.com/docs/api-reference/emails/send-email.md`).
-
-La chiave per il codice (`RESEND_API_KEY`) è un'altra cosa: si crea nel pannello
-di Resend e va nei segreti di Cloudflare e in `.dev.vars`, mai in `.mcp.json`.
 
 ### GitHub con `gh`
 ```powershell
