@@ -46,7 +46,10 @@ prodotto, prezzo o immagine di cannabis, menu solo food e drink, tono
 informativo invece che promozionale. È anche il motivo per cui molti siti di
 coffeeshop sono volutamente minimi: non è trascuratezza, è prudenza. Lo shop
 merch è la parte più delicata, perché ogni comune applica le regole a modo suo:
-per un uso reale servirebbe una verifica con il comune di Zandvoort. Dettagli e
+per un uso reale servirebbe una verifica con il comune di Zandvoort. E
+servirebbe anche verificare l'accettazione con il provider di pagamento: Stripe
+esclude le attività legate alla cannabis ("i dispensari di cannabis e le
+attività correlate"), anche se il merch è solo gadget. Dettagli e
 fonti in `03-content.md`, sezione "Vincoli legali dei coffeeshop".
 
 **5. La parte tecnica**
