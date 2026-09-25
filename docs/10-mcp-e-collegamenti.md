@@ -11,7 +11,6 @@ ufficiali dei produttori, e si aggiungono nella fase in cui servono.
 | MCP | A cosa serve | Quando | Account |
 |---|---|---|---|
 | **Astro Docs** | documentazione di Astro 6 sempre aggiornata | da subito | no |
-| **Cloudflare Docs** | documentazione di Workers, D1, Turnstile | da subito | no |
 | **Playwright** | Claude apre il sito in un browser e lo guarda davvero | da subito | no |
 | **Stripe** | documentazione e pagamenti di prova | Fase 3 | sì, **solo modalità test** |
 
@@ -19,18 +18,36 @@ ufficiali dei produttori, e si aggiungono nella fase in cui servono.
 che Claude Code sa già usare. Più semplice e meno cose che si possono rompere.
 
 ## Perché proprio questi
-- **Astro Docs e Cloudflare Docs** risolvono il problema che abbiamo già visto
-  con Tailwind: istruzioni vecchie prese per buone. Con questi Claude Code legge
-  la documentazione di oggi prima di scrivere codice
+- **Astro Docs** risolve il problema che abbiamo già visto con Tailwind:
+  istruzioni vecchie prese per buone. Con questo Claude Code legge la
+  documentazione di oggi prima di scrivere codice
 - **Playwright** è quello che cambia di più: invece di scrivere codice alla cieca,
   Claude apre `localhost:4321`, guarda la pagina, controlla il layout su mobile e
   su desktop, clicca i pulsanti, verifica che il carrello funzioni
 - **Stripe**, nella Fase 3, per consultare la documentazione e controllare i
   pagamenti di prova senza aprire la dashboard
 
+## Cloudflare: documentazione dal web, niente MCP
+L'MCP ufficiale `cloudflare-docs` è stato provato e tolto da `.mcp.json`: il
+server rifiuta la connessione di Claude Code con l'errore *"Dynamic Client
+Registration rejected (HTTP 404)"*. È un'incompatibilità tra client e server,
+non risolvibile da noi.
+
+La regola non cambia: **prima di scrivere configurazione per Workers, D1,
+Turnstile e `wrangler`, Claude Code verifica sulla documentazione aggiornata**.
+Solo che la legge dal web:
+- ogni prodotto ha un indice in formato testo:
+  `https://developers.cloudflare.com/<prodotto>/llms.txt`
+  (per esempio `/workers/llms.txt`, `/d1/llms.txt`, `/turnstile/llms.txt`)
+- ogni pagina ha la versione Markdown, più leggera da leggere, aggiungendo
+  `index.md` all'indirizzo (per esempio
+  `https://developers.cloudflare.com/d1/get-started/index.md`)
+
+Se un giorno il server viene sistemato, si può riaggiungere a `.mcp.json`.
+
 ## Installazione
 
-### Astro Docs, Cloudflare Docs e Playwright
+### Astro Docs e Playwright
 Sono già configurati nel file **`.mcp.json`** che trovi nel kit. Va nella
 cartella principale del progetto, accanto a `CLAUDE.md`.
 
@@ -47,7 +64,7 @@ server del progetto. Rispondi di sì.
 ```
 /mcp
 ```
-Devi vedere `astro-docs`, `cloudflare-docs` e `playwright` come connessi.
+Devi vedere `astro-docs` e `playwright` come connessi.
 
 Da PowerShell, in alternativa:
 ```powershell
