@@ -17,6 +17,24 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-09-25 — Fase 1, lingue (IN CORSO, non ancora su main)
+Fatto:        src/i18n/locales.ts (unica lista delle lingue, usata anche da
+              astro.config.mjs), en/nl/de.json a chiavi piatte, t.ts,
+              pagina src/pages/[lang]/index.astro (/nl/, /en/, /de/),
+              Base.astro con canonical, hreflang e x-default,
+              tests/i18n.test.ts. Nello stesso ramo: script verify, ruoli dei
+              font (h2/h3 maiuscolo, preload Martian Mono), struttura della
+              navigazione in docs/02. npm run verify verde, 11 test su 11
+Decisioni:    chiavi piatte; hreflang calcolati dall'URL reale della pagina
+              (con barra finale), non dagli helper di astro:i18n
+Problemi:     - testi nl e de scritti da Claude: DA RILEGGERE DA UN
+                MADRELINGUA PRIMA DI MOSTRARE IL SITO
+              - manca la verifica Playwright (3 lingue, 390/1440, due temi):
+                sessione interrotta per limite d'uso
+Prossimo:     verifica Playwright, poi merge su main, push, controllo CI
+Ramo/commit:  sito/fase-1-lingue — "Fase 1: lingue, verify e ruoli dei font"
+              (non ancora unito)
+
 ## 2026-09-25 — Documenti, regole d'ingresso e provider di pagamento
 Fatto:        chiusi i tre contrasti della voce precedente. docs/03: regole
               d'ingresso riscritte, tolti cannabisMenuUrl e il link al menu
@@ -133,7 +151,8 @@ Problemi:     - Chrome a volte avvisa che il preload di Literata "non è stato
                 non lo richiede di nuovo). Non è un errore; da riguardare con
                 Lighthouse in Fase 6
               - Indian e Yankee Clipper ancora .ttf: woff2 in Fase 6
-              - `npm test` in locale richiede prima `npm run build`
+              - in locale i controlli si lanciano con `npm run verify`
+                (astro check → build → test), aggiunto nel ramo del punto 2
 Prossimo:     Fase 1, punto 2: i18n (nl/en/de, t.ts, test delle chiavi,
               hreflang in Base.astro, struttura delle pagine), prima il piano
 Ramo/commit:  sito/fase-1-stile — "Fase 1: token, font e tema con hash nella

@@ -335,15 +335,15 @@ npm run dev
 ```
 Apri `http://localhost:4321/en/`: deve comparire "Yanks — in costruzione".
 
-Poi i controlli:
+Poi i controlli, tutti in un comando:
 ```powershell
-npx astro check
-npx vitest run
-npm run build
+npm run verify
 ```
+`verify` esegue in ordine `astro check` (tipi ed errori), la build e i test.
+L'ordine conta: il test della CSP legge le pagine generate dalla build, quindi
+`npm test` da solo, senza una build fresca, controlla pagine vecchie.
 
-**Devi vedere**: nessun errore in nessuno dei tre. `astro check` e `vitest`
-possono dire che ci sono zero test: va bene, arriveranno nella Fase 1.
+**Devi vedere**: nessun errore in nessuno dei tre passi.
 
 ### 4.4 — Commit
 
@@ -436,7 +436,7 @@ vedi subito su cosa stai lavorando.
 5. **Verifica tu**: `npm run dev` e guarda la pagina davvero. Anche da telefono,
    con `npm run dev -- --host` e l'indirizzo che compare (telefono sulla stessa
    rete wifi)
-6. **Controlli**: `npx astro check`, `npx vitest run`, `npm run build`
+6. **Controlli**: `npm run verify` (tipi, build e test, in quest'ordine)
 7. **Fatti spiegare** il pezzo più importante:
    ```
    Spiegami getOpenStatus riga per riga, come a un principiante capace.
@@ -524,8 +524,9 @@ una carta di prova di Stripe. Guidami passo passo.
 |---|---|
 | `npm run dev` | Sito in locale su `localhost:4321` |
 | `npm run build` | Build di prova, come la farà Cloudflare |
-| `npx astro check` | Controlla i tipi e gli errori |
-| `npx vitest run` | Esegue i test |
+| `npm run verify` | Tutti i controlli: `astro check`, build e test, in quest'ordine |
+| `npx astro check` | Solo il controllo dei tipi e degli errori |
+| `npx vitest run` | Solo i test (dopo una build: il test della CSP legge `dist/`) |
 | `git status` | Mostra cosa è cambiato dall'ultimo commit |
 | `git log --oneline` | Elenco dei commit |
 | `git switch main` | Torna al ramo principale |

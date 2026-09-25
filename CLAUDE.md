@@ -115,11 +115,16 @@ Lo shop **non è opzionale**. Regole del contratto:
 - Da evitare: clipart a tema usata come riempitivo. Il segno forte è il logo
 
 ## Tipografia — quattro ruoli
-1. **Script — Indian** (Billy Argel): marchio, nome, richiami caldi. Mai paragrafi
-2. **Display — Yankee Clipper** (Iconian): titoli di sezione, etichette, hero.
-   **Mai per testo lungo**: in un paragrafo o in un menu è illeggibile
-3. **Testo** — Literata (OFL, woff2 locale)
-4. **Dati** — Martian Mono (OFL, woff2 locale) per orari, prezzi, indirizzo
+Token in `tokens.css`, dettagli in `docs/02-design-system.md`.
+1. **Titolo — Indian** (Billy Argel), `font-title`: h1 e titoli hero. **Solo
+   titoli brevi, mai frasi lunghe**. Non ha `– — ‘ ’ “ ” …`: negli h1 non usarli
+2. **Intestazione — Yankee Clipper** (Iconian), `font-heading`: h2 e h3,
+   **sempre in maiuscolo** (la "u" e la "ß" minuscole si leggono male).
+   **Mai per testo lungo**
+3. **Interfaccia — Martian Mono** (OFL, woff2 locale), `font-ui`: navigazione,
+   pulsanti, etichette, prezzi, orari. Font predefinito del `body`
+4. **Prosa — Literata** (OFL, woff2 locale), `font-prose`: **solo i paragrafi
+   lunghi**
 
 Indian e Yankee Clipper sono **gratuiti solo per uso personale**: per un cliente
 vero serve la licenza commerciale. Caricati in locale con `@font-face` e

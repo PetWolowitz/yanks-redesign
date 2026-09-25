@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import cloudflare from '@astrojs/cloudflare';
 import tailwindcss from '@tailwindcss/vite';
+import { defaultLang, locales } from './src/i18n/locales.ts';
 
 // https://astro.build/config
 export default defineConfig({
@@ -11,8 +12,8 @@ export default defineConfig({
   // Niente sessioni: l'adapter non crea l'archivio KV che non ci serve
   session: false,
   i18n: {
-    locales: ['nl', 'en', 'de'],
-    defaultLocale: 'en',
+    locales: [...locales],
+    defaultLocale: defaultLang,
     routing: {
       prefixDefaultLocale: true,
     },
