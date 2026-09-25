@@ -22,12 +22,14 @@ Browser
   ├── POST /api/checkout        Turnstile → validazione → totale dal DB
   │                             → ordine "pending" → sessione Stripe
   ├── POST /api/stripe-webhook  firma verificata → ordine "paid" → giacenze
+  │                             → email di conferma (Resend)
   └── POST /api/order           stato ordine: id e token nel body
 
-Cloudflare Workers + D1   ·   Stripe Checkout (test)   ·   Turnstile
+Cloudflare Workers + D1 · Stripe Checkout (test) · Turnstile · Resend
 ```
 
-Quattro endpoint. Nient'altro gira sul server.
+Quattro endpoint. Nient'altro gira sul server. L'email non è un quinto
+endpoint: è una chiamata in uscita fatta dal webhook.
 
 ## Pagamenti — Stripe Checkout in modalità test
 - Accessibile subito, senza verifica aziendale
@@ -61,6 +63,7 @@ CREATE TABLE orders (
   id INTEGER PRIMARY KEY,
   public_id TEXT UNIQUE NOT NULL,
   email TEXT NOT NULL,
+  lang TEXT NOT NULL CHECK (lang IN ('nl','en','de','it','fr','es')),
   status TEXT NOT NULL CHECK (status IN ('pending','paid','shipped','cancelled')),
   total_cents INTEGER NOT NULL,
   stripe_session_id TEXT UNIQUE,
@@ -88,6 +91,8 @@ CREATE TABLE shipping_addresses (
   da lì**. I prezzi mostrati nel catalogo sono scritti nell'HTML statico in build,
   sempre da `merch.ts`: un prezzo si cambia modificando `merch.ts`, rifacendo il
   seed e ripubblicando, così le due copie restano uguali
+- `orders.lang` è la lingua in cui il cliente ha comprato: serve all'email di
+  conferma per scegliere i testi e il link `/[lang]/shop/order`
 - I vincoli `CHECK` sono la seconda linea di difesa dopo la validazione
 - **Mai in tabella**: numeri di carta, CVV, password, IBAN
 - SQL sempre con parametri: `db.prepare('… WHERE id = ?').bind(id)`. Mai stringhe
@@ -105,13 +110,84 @@ CREATE TABLE shipping_addresses (
 4. Il browser salva id e token in `sessionStorage` (dentro `try/catch`), poi va
    su Stripe. Il cliente paga e torna alla pagina ordine
 5. `api/stripe-webhook`: verifica la firma, e solo allora ordine `paid` e giacenze
-   scalate, in un'unica transazione
+   scalate, in un'unica transazione. **Dopo** la transazione invia l'email di
+   conferma con Resend (sezione sotto)
 6. Pagina ordine `/[lang]/shop/order`: legge id e token da `sessionStorage` e
    chiama `getOrder` (`POST /api/order`, id e token nel body)
    - se l'ordine è ancora `pending` mostra "pagamento in verifica" e ricontrolla
      per qualche secondo: il webhook può arrivare dopo il cliente
    - se `sessionStorage` è vuoto (altra scheda, altro dispositivo) rimanda al
      link nell'email di conferma, che porta `#id=…&t=…` nel fragment
+   - **secondo paracadute**: quando ha id e token, mostra il link completo
+     `https://…/[lang]/shop/order#id=…&t=…` con un pulsante "Copia link" e una
+     riga che spiega di conservarlo, perché chi ha il link vede l'ordine. Così
+     il cliente non dipende solo dall'email. Il pulsante usa
+     `navigator.clipboard.writeText` dentro `try/catch`; se non funziona il link
+     resta visibile e selezionabile a mano
+
+## Email di conferma — Resend
+
+**Obbligatoria.** È il modo in cui il cliente ritrova l'ordine da un'altra scheda
+o da un altro dispositivo.
+
+**Come si invia.** Una `fetch` all'API REST, senza pacchetto npm (sono venti
+righe, KISS):
+
+```
+POST https://api.resend.com/emails
+Authorization: Bearer <RESEND_API_KEY>
+Content-Type: application/json
+Idempotency-Key: order-confirmation/<public_id>
+
+{ "from": "…", "to": ["<email del cliente>"], "subject": "…", "html": "…", "text": "…" }
+```
+
+- Risposta corretta: `{ "id": "…" }`. Qualsiasi altro stato è un errore
+- `Idempotency-Key`: se Stripe rimanda lo stesso webhook, Resend non manda due
+  email (la chiave vale 24 ore). Si aggiunge al controllo di stato che già rende
+  il webhook idempotente
+- Testi dell'email nei file di lingua, sotto `email.confirmation.*`, nella
+  lingua di `orders.lang`. Mai scritti nel codice
+- La costruzione dell'email è una funzione pura in `src/lib/shop/email.ts`,
+  testata con Vitest: il link porta id e token **nel fragment**, mai nella query
+- L'API di Resend va verificata sulla documentazione aggiornata prima di
+  scrivere il codice: indice in `https://resend.com/docs/llms.txt`
+
+**Quando parte.** Solo dal webhook, dopo che la transazione ha segnato l'ordine
+`paid`. Mai dal checkout: un ordine non pagato non riceve conferme.
+
+**Se fallisce.** L'ordine **resta valido**: è `paid` e le giacenze sono già
+scalate. L'errore va nei log (`console.error` con `public_id` e stato HTTP di
+Resend), e il webhook risponde comunque 200 a Stripe: il pagamento è andato a
+buon fine, non c'è niente da ripetere. Nei log **mai** il token, il link o il
+corpo dell'email. Il cliente ha comunque il link dalla pagina ordine (secondo
+paracadute).
+
+**Segreti.** `RESEND_API_KEY` nei segreti di Cloudflare
+(`npx wrangler secret put RESEND_API_KEY`) e in locale in `.dev.vars`. Mai nel
+codice, mai con prefisso `PUBLIC_`.
+
+**Concept: modalità di prova di Resend.** Senza un dominio verificato si invia
+da `onboarding@resend.dev` e Resend consegna **solo all'indirizzo dell'account**
+(quello di Pietro). Per i test d'acquisto si usa quindi quell'indirizzo; con
+qualsiasi altro l'invio fallisce e si vede in pratica il ramo "se fallisce".
+Piano gratuito: 100 email al giorno, 3.000 al mese, 10 richieste al secondo.
+
+**Cliente vero: si verifica il suo dominio.** Nel pannello di Resend si aggiunge
+il dominio del cliente (per esempio `yanks.nl`) e si inseriscono nel suo DNS i
+record SPF e DKIM indicati, più un record DMARC. Da lì il mittente diventa un
+indirizzo del cliente (per esempio `ordini@yanks.nl`) e le email arrivano a
+chiunque. Il codice non cambia: cambia solo il valore di `from`, che per questo
+sta in una variabile d'ambiente (`EMAIL_FROM`), non nel codice.
+
+**Da decidere prima della Fase 3: da dove prende il token il webhook.** Il
+link nell'email contiene il token, ma nel database c'è solo il suo hash, e il
+webhook non vede `sessionStorage`. Proposta, da confermare con Pietro: il
+token non è casuale ma è `HMAC-SHA256(ORDER_TOKEN_SECRET, public_id)`, calcolato
+con `crypto.subtle` sia dal checkout sia dal webhook. `ORDER_TOKEN_SECRET` è un
+segreto in più; `api/order` ricalcola l'HMAC e lo confronta, e la colonna
+`access_token_hash` non serve più. Un database rubato da solo continua a non
+aprire nessun ordine.
 
 **Perché il token non passa da Stripe.** Se fosse nel `success_url`, Stripe lo
 conoscerebbe e lo conserverebbe nella sessione di pagamento. Così resta tra il
@@ -132,8 +208,8 @@ funzionerebbero comunque.
    centesimo
 2. **È pagato solo quando lo dice il webhook, con firma verificata.** Il ritorno
    del cliente sulla pagina di conferma non prova niente
-3. **I segreti non stanno mai nel codice.** Chiavi Stripe, firma del webhook e
-   chiave Turnstile nelle variabili cifrate di Cloudflare. In locale in
+3. **I segreti non stanno mai nel codice.** Chiavi Stripe, firma del webhook,
+   chiave Turnstile e chiave Resend nelle variabili cifrate di Cloudflare. In locale in
    `.dev.vars`, escluso da git dal primo commit
 4. **Validazione lato server di tutto**: email, CAP, paese da una lista chiusa,
    quantità intere tra 1 e 10, lunghezze massime su ogni campo
@@ -233,9 +309,10 @@ Regole che tengono in piedi il contratto:
 2. **Fase 2S**: catalogo, scheda prodotto, carrello, checkout e pagina ordine,
    tutti sul mock
 3. **Fase 3**: D1 e migrazioni, seed da `merch.ts`, poi gli endpoint uno alla
-   volta: `products`, `checkout`, `stripe-webhook`, `order`
-4. **Fase 4**: `http.ts` e passaggio a `live`. Acquisto completo con carta di prova
-5. Email di conferma con Resend, facoltativa
+   volta: `products`, `checkout`, `stripe-webhook` (con l'email di conferma),
+   `order`
+4. **Fase 4**: `http.ts` e passaggio a `live`. Acquisto completo con carta di
+   prova, email di conferma ricevuta all'indirizzo di Pietro
 
 ## Nel portfolio
 "Shop con acquisto senza registrazione su Cloudflare Workers e D1. Pagamenti

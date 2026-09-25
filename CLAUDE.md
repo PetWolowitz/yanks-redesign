@@ -38,6 +38,8 @@ Motivazioni complete in `docs/09-stack-e-principi.md`.
 - **Cloudflare Workers** con adapter `@astrojs/cloudflare`, deploy da GitHub
 - **Cloudflare D1** per lo shop, SQL a mano con parametri, niente ORM
 - **Stripe Checkout** in modalità test, **Turnstile** sul checkout
+- **Resend** per l'email di conferma, chiamato con `fetch` alla sua API REST
+  dall'endpoint del webhook. **Nessun pacchetto npm**
 - **Vitest** per la logica critica, `astro check` e build a ogni push
 
 ## Ordine di lavoro
@@ -72,6 +74,20 @@ Lo shop **non è opzionale**. Regole del contratto:
   al link nell'email di conferma, che porta `#id=…&t=…` nel fragment. Se l'ordine
   è ancora `pending` mostra "pagamento in verifica" e ricontrolla per qualche
   secondo
+- **email di conferma obbligatoria**, con Resend (dettagli in
+  `docs/06-shop-architecture.md`):
+  - parte **dal webhook**, dopo la conferma del pagamento, mai dal checkout
+  - `fetch` a `https://api.resend.com/emails`, chiave `RESEND_API_KEY` nei
+    segreti di Cloudflare e in `.dev.vars`. Mai nel codice che arriva al browser
+  - **se l'invio fallisce l'ordine resta valido** (`paid`): l'errore va nei log
+    e il webhook risponde comunque 200. Nei log mai token né corpo dell'email
+  - contiene il link alla pagina ordine con `#id=…&t=…` nel fragment
+  - nel concept si usa la modalità di prova di Resend (mittente
+    `onboarding@resend.dev`, consegna solo all'indirizzo di Pietro); per un
+    cliente vero si verifica il suo dominio
+- **secondo paracadute**: la pagina ordine mostra il link completo, fragment
+  compreso, con un pulsante "Copia link". Senza JS o senza appunti il link resta
+  selezionabile a mano
 
 ## Principi — non negoziabili
 - **KISS**: la soluzione più semplice che funziona. Niente librerie per cose che
@@ -200,12 +216,19 @@ con il pulsante "Carica contenuto". Così il sito resta senza banner cookie.
   codice che arriva al browser.**
 
 ## MCP disponibili
-Configurati in `.mcp.json`. Usali, non sono decorativi:
+`astro-docs` e `playwright` sono in `.mcp.json`; `stripe` e `resend` accedono
+all'account di Pietro, quindi si installano a livello personale e non stanno
+nel repository (vedi `docs/10-mcp-e-collegamenti.md`). Usali, non sono
+decorativi:
 - **astro-docs** — prima di scrivere configurazione o API di Astro, verifica
   sulla documentazione della versione installata. Non fidarti della memoria
 - **playwright** — dopo ogni modifica visibile, apri la pagina e guardala a
   390 px e a 1440 px, nei due temi. Verifica i flussi dello shop cliccando
 - **stripe** (dalla Fase 3, solo modalità test)
+- **resend** (dalla Fase 3): per controllare le email inviate e i log delle
+  richieste. **Mai per scrivere il codice dell'invio**, che resta un `fetch`
+  all'API REST. Documentazione Resend dal web: indice in
+  `https://resend.com/docs/llms.txt`
 
 **Documentazione Cloudflare: dal web, non da MCP.** L'MCP `cloudflare-docs` è
 stato tolto (il server rifiuta la registrazione del client). La regola resta:

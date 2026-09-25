@@ -17,6 +17,40 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-09-25 — Prima della Fase 0, email di conferma obbligatoria
+Fatto:        aggiornati CLAUDE.md, 04, 06, 09, 10. Aggiunti .dev.vars e
+              .wrangler/ al .gitignore (erano previsti in Fase 0, ma la chiave
+              Resend va in .dev.vars). .mcp.json NON modificato (vedi Problemi)
+Decisioni:    CHIUSO — email di conferma: obbligatoria, con Resend chiamato via
+              fetch a https://api.resend.com/emails, nessun pacchetto npm.
+              - parte dal webhook, dopo la transazione che segna l'ordine paid
+              - RESEND_API_KEY nei segreti Cloudflare e in .dev.vars;
+                mittente in EMAIL_FROM
+              - Idempotency-Key "order-confirmation/<public_id>" contro i
+                webhook ripetuti
+              - se fallisce: ordine resta paid, webhook risponde 200, errore
+                nei log con public_id e stato HTTP, mai token né corpo
+              - testi in email.confirmation.* dei file di lingua; aggiunta la
+                colonna orders.lang per lingua e link
+              - concept in modalità di prova (onboarding@resend.dev, consegna
+                solo all'indirizzo di Pietro); cliente vero: dominio verificato
+                con SPF, DKIM e DMARC, cambia solo EMAIL_FROM
+              - secondo paracadute: la pagina ordine mostra il link completo
+                col fragment e un pulsante "Copia link"
+              - MCP Resend (https://mcp.resend.com/mcp) personale come Stripe,
+                solo per controllare invii e log
+Problemi:     - NUOVO, da decidere prima della Fase 3: il webhook deve mettere
+                il token nel link dell'email, ma nel DB c'è solo l'hash.
+                Proposta in docs/06: token = HMAC-SHA256(ORDER_TOKEN_SECRET,
+                public_id), ricalcolabile da checkout, webhook e api/order;
+                via la colonna access_token_hash. Da confermare
+              - .mcp.json: richiesto di aggiornarlo, ma l'MCP di Resend accede
+                all'account e docs/10 tiene fuori dal repository gli MCP con
+                account (come Stripe). Lasciato com'è: da confermare
+Prossimo:     decidere sul token HMAC, poi Fase 0 di docs/04-build-plan.md
+Ramo/commit:  docs/email-conferma — "Docs: email di conferma obbligatoria con
+              Resend", poi merge su main
+
 ## 2026-09-25 — Prima della Fase 0, tolto l'MCP cloudflare-docs
 Fatto:        rimosso cloudflare-docs da .mcp.json (e dalla lista locale in
               .claude/settings.local.json, fuori da git). Aggiornati
