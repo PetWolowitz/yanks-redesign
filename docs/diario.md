@@ -17,6 +17,39 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-09-25 — Fase 1, stile: token, font, tema
+Fatto:        tokens.css (colori dei due temi, @theme inline verso Tailwind,
+              palette e font predefiniti di Tailwind azzerati), fonts.css
+              (7 @font-face, swap), Literata 400/400i/700 e Martian Mono 400
+              in woff2 latin con licenza OFL (74 KB), Base.astro con preload
+              di Literata regolare e script del tema inline da
+              src/scripts/theme-init.js, hash nella CSP di public/_headers,
+              tests/csp-hash.test.ts sull'HTML in dist/, pagina /en/ con prova
+              di stile. docs/02 e CLAUDE.md aggiornati. @types/node 24.13.6
+              (dev). CI ora: check → build → test; tolto --passWithNoTests.
+              Verificato con Playwright a 390 e 1440 px nei due temi, nessun
+              errore CSP. Tema automatico con page.clock, browser sul fuso di
+              Londra: 19:59 chiaro, 20:00 scuro, 07:59 scuro, 08:00 chiaro,
+              sia in ora legale sia in ora solare (8 casi su 8)
+Decisioni:    - --red-text #A54C3D e --sage-text #526B64 per il testo nel tema
+                chiaro (rosso e salvia normali non arrivano a 4.5:1); nel
+                tema scuro coincidono con --red e --sage
+              - stati dell'orologio mai solo col colore: sempre testo e icona
+              - Literata e Martian Mono locali, solo latin e pesi usati
+              - il test della CSP controlla ogni script inline di dist/, non
+                solo il sorgente
+Problemi:     - Chrome a volte avvisa che il preload di Literata "non è stato
+                usato in tempo", solo su visite ripetute col font in cache.
+                Alla prima visita nessun avviso e il preload è usato (il CSS
+                non lo richiede di nuovo). Non è un errore; da riguardare con
+                Lighthouse in Fase 6
+              - Indian e Yankee Clipper ancora .ttf: woff2 in Fase 6
+              - `npm test` in locale richiede prima `npm run build`
+Prossimo:     Fase 1, punto 2: i18n (nl/en/de, t.ts, test delle chiavi,
+              hreflang in Base.astro, struttura delle pagine), prima il piano
+Ramo/commit:  sito/fase-1-stile — "Fase 1: token, font e tema con hash nella
+              CSP", poi merge su main
+
 ## 2026-09-25 — Fase 0 chiusa, sito online su Cloudflare
 Fatto:        Pietro ha collegato il repository a Cloudflare Workers: il sito
               è su https://yanks-redesign.pietro-costa25.workers.dev.

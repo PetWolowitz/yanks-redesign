@@ -1,0 +1,57 @@
+/*
+  Token del design system: unica fonte di colori, font e scala tipografica.
+  Valori e regole d'uso in docs/02-design-system.md.
+*/
+
+:root {
+  color-scheme: light;
+  --bg: #F7F0E4;        /* crema */
+  --surface: #F1E4CC;   /* sabbia */
+  --text: #2B2724;      /* inchiostro */
+  --muted: #6B645C;
+  --red: #C75B4A;       /* superfici e bordi */
+  --gold: #E3BE72;
+  --sage: #6E8F85;      /* superfici e bordi */
+  --red-text: #A54C3D;  /* testo: 5.01:1 su crema, 4.51:1 su sabbia */
+  --sage-text: #526B64; /* testo: 5.08:1 su crema, 4.58:1 su sabbia */
+}
+
+/* Ritarati uno per uno, mai invertiti in automatico */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #151310;        /* non nero puro: stanca meno */
+  --surface: #221E1A;
+  --text: #F0E8DA;
+  --muted: #A79E90;
+  --red: #E0705A;       /* schiarito: sul nero il rosso pieno non passa 4.5:1 */
+  --gold: #E3BE72;
+  --sage: #8FB0A5;
+  --red-text: var(--red);
+  --sage-text: var(--sage);
+}
+
+/* Collega le variabili alle classi di Tailwind (bg-bg, text-red-text, font-display…) */
+@theme inline {
+  --color-*: initial;
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-red: var(--red);
+  --color-gold: var(--gold);
+  --color-sage: var(--sage);
+  --color-red-text: var(--red-text);
+  --color-sage-text: var(--sage-text);
+
+  --font-*: initial;
+  --font-script: "Indian", "Brush Script MT", cursive;
+  --font-display: "Yankee Clipper", Impact, "Arial Narrow", sans-serif;
+  --font-body: "Literata", Georgia, "Times New Roman", serif;
+  --font-mono: "Martian Mono", ui-monospace, Consolas, monospace;
+
+  --text-display: clamp(3rem, 12vw, 9rem);
+  --text-h2: clamp(2rem, 5vw, 3.5rem);
+  --text-h3: clamp(1.25rem, 2.5vw, 1.75rem);
+  --text-body: clamp(1rem, 1.1vw, 1.125rem);
+  --text-small: 0.875rem;
+}

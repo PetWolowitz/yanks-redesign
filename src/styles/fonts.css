@@ -1,0 +1,61 @@
+/*
+  I quattro ruoli tipografici (CLAUDE.md). File locali, licenze accanto ai file.
+  Indian e Yankee Clipper: gratuiti solo per uso personale.
+  Literata e Martian Mono: OFL, solo sottoinsieme latin e solo i pesi usati.
+*/
+
+@font-face {
+  font-family: "Indian";
+  src: url("/fonts/indian/indian-personal-use.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Yankee Clipper";
+  src: url("/fonts/yankee-clipper/yankeeclipper.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Yankee Clipper";
+  src: url("/fonts/yankee-clipper/yankeeclipperital.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Literata";
+  src: url("/fonts/literata/literata-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Literata";
+  src: url("/fonts/literata/literata-latin-400-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Literata";
+  src: url("/fonts/literata/literata-latin-700-normal.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Martian Mono";
+  src: url("/fonts/martian-mono/martian-mono-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

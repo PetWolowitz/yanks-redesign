@@ -20,35 +20,32 @@ I loro rosso e oro, ammorbiditi verso il pastello: il rosso perde il fuoco e
 diventa terracotta, l'oro perde il metallo e diventa miele. La salvia è l'unico
 colore aggiunto e lega il tutto al mare.
 
-```css
-@theme {
-  --color-red:   #C75B4A;
-  --color-gold:  #E3BE72;
-  --color-sage:  #6E8F85;
-}
+I valori stanno **solo** in `src/styles/tokens.css`. Le variabili cambiano col
+tema, e `@theme inline` le collega alle classi di Tailwind (`bg-bg`,
+`text-red-text`, `font-display`…): il colore di una classe segue il tema da solo.
 
-:root {
-  --bg:      #F7F0E4;  /* crema */
-  --surface: #F1E4CC;  /* sabbia */
-  --text:    #2B2724;  /* inchiostro */
-  --muted:   #6B645C;
-  --red:     #C75B4A;
-  --gold:    #E3BE72;
-  --sage:    #6E8F85;
-}
+| Token | Chiaro | Scuro | Uso |
+|---|---|---|---|
+| `--bg` | `#F7F0E4` crema | `#151310` | fondo |
+| `--surface` | `#F1E4CC` sabbia | `#221E1A` | blocchi |
+| `--text` | `#2B2724` inchiostro | `#F0E8DA` | testo |
+| `--muted` | `#6B645C` | `#A79E90` | testo secondario |
+| `--red` | `#C75B4A` | `#E0705A` | superfici, bordi, testo grande |
+| `--gold` | `#E3BE72` | `#E3BE72` | dettagli |
+| `--sage` | `#6E8F85` | `#8FB0A5` | superfici, bordi, testo grande |
+| `--red-text` | `#A54C3D` | = `--red` | **testo** rosso |
+| `--sage-text` | `#526B64` | = `--sage` | **testo** salvia |
 
-:root[data-theme="dark"] {
-  --bg:      #151310;  /* non nero puro: stanca meno */
-  --surface: #221E1A;
-  --text:    #F0E8DA;
-  --muted:   #A79E90;
-  --red:     #E0705A;  /* schiarito: sul nero il rosso pieno non passa 4.5:1 */
-  --gold:    #E3BE72;
-  --sage:    #8FB0A5;  /* schiarito */
-}
-```
+**Contrasto misurato** (minimo 4.5:1 per il testo normale):
+- tema chiaro: `--red` fa 3.69 su crema e 3.33 su sabbia, `--sage` 3.13 e 2.82,
+  quindi **non passano come testo**. Per il testo si usano `--red-text` (5.01 e
+  4.51) e `--sage-text` (5.08 e 4.58)
+- tema scuro: passano tutti; `--red-text` e `--sage-text` coincidono con
+  `--red` e `--sage`
 
 **Regole d'uso**
+- Testo rosso o salvia: sempre `--red-text` e `--sage-text`, mai `--red` e
+  `--sage`
 - Rosso: stato "solo asporto", un pulsante per schermata, prezzi in evidenza
 - Oro: dettagli, sottolineature, lo script sui fondi scuri. **Mai testo piccolo
   su fondo crema**: il contrasto è troppo basso
@@ -72,8 +69,14 @@ colore aggiunto e lega il tutto al mare.
 |---|---|---|
 | Script | Indian (Billy Argel) | marchio, nome, richiami caldi. Mai paragrafi |
 | Display | Yankee Clipper (Iconian) | titoli di sezione, etichette, hero |
-| Testo | serif leggibile, da scegliere | paragrafi, menu, recensioni |
-| Dati | monospace | orari, prezzi, indirizzo |
+| Testo | Literata | paragrafi, menu, recensioni |
+| Dati | Martian Mono | orari, prezzi, indirizzo |
+
+Literata e Martian Mono sono OFL, in `public/fonts/` come `.woff2` locali con la
+licenza accanto: solo sottoinsieme latin e solo i pesi usati (Literata regolare,
+corsivo e grassetto 700; Martian Mono regolare). Si precarica solo Literata
+regolare. Indian e Yankee Clipper restano `.ttf` per ora (conversione in
+`.woff2` nella Fase 6).
 
 **Yankee Clipper non va mai nel testo lungo**: è un display, in un menu o in un
 paragrafo diventa illeggibile.
@@ -108,6 +111,9 @@ APERTO · consumo sul posto fino alle 02:00     (salvia)
 SOLO ASPORTO · chiude tra 23 minuti            (rosso)
 CHIUSO · apre alle 08:00                       (muted)
 ```
+
+**Gli stati non si distinguono mai solo col colore**: ognuno ha sempre anche il
+suo testo e la sua icona, così si leggono anche senza vedere i colori.
 
 Sempre visibile in header. Calcolato su `Europe/Amsterdam` con
 `Intl.DateTimeFormat`, mai sull'orologio del dispositivo: Italia e Paesi Bassi

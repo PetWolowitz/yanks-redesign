@@ -1,0 +1,29 @@
+---
+// Layout comune a tutte le pagine. hreflang e testi delle lingue arrivano con l'i18n.
+import '../styles/global.css';
+import themeInit from '../scripts/theme-init.js?raw';
+
+interface Props {
+  lang: string;
+  title: string;
+  description?: string;
+}
+
+const { lang, title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" href="/fonts/literata/literata-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <script is:inline set:html={themeInit} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
