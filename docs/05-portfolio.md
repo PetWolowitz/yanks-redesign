@@ -39,6 +39,16 @@ località balneare olandese, aperto fino alle tre.
 - *Sei lingue* → Zandvoort vive di turisti tedeschi, belgi, francesi
 - *Embed caricati al click* → nessun tracciamento senza consenso, nessun banner
 
+*I vincoli del settore, rispettati per scelta.* Un coffeeshop olandese è
+tollerato solo se rispetta i criteri AHOJG(I), e la "A" vieta ogni reclame oltre
+a una semplice indicazione sul locale. Il redesign ne tiene conto: nessun
+prodotto, prezzo o immagine di cannabis, menu solo food e drink, tono
+informativo invece che promozionale. È anche il motivo per cui molti siti di
+coffeeshop sono volutamente minimi: non è trascuratezza, è prudenza. Lo shop
+merch è la parte più delicata, perché ogni comune applica le regole a modo suo:
+per un uso reale servirebbe una verifica con il comune di Zandvoort. Dettagli e
+fonti in `03-content.md`, sezione "Vincoli legali dei coffeeshop".
+
 **5. La parte tecnica**
 - acquisto senza registrazione, nessun dato superfluo conservato
 - totale ricalcolato sul server: modificare il prezzo dal browser non serve

@@ -215,6 +215,7 @@ con il pulsante "Carica contenuto". Così il sito resta senza banner cookie.
 ## Contenuti
 - Dati in `src/data/*.ts` tipizzati, testi in `src/i18n/*.json`
 - Solo contenuti reali. Dove il sito originale ha lorem ipsum si scrive un testo vero
+- Nessun contenuto promozionale sulla cannabis: vedi Vincoli legali in docs/03
 - Tutto ciò che in `docs/03-content.md` è marcato DA VERIFICARE non si pubblica
   come fatto certo
 
