@@ -26,3 +26,6 @@ pnpm-debug.log*
 # Cloudflare: segreti locali e cache di wrangler
 .dev.vars
 .wrangler/
+
+# screenshot di Playwright
+.playwright-mcp/

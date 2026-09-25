@@ -1,0 +1,6 @@
+{
+  // Il resto della configurazione lo genera @astrojs/cloudflare in build.
+  // Il database D1 si aggiunge qui nella Fase 3.
+  "name": "yanks-redesign",
+  "compatibility_date": "2026-09-23"
+}
