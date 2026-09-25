@@ -19,5 +19,6 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run check
-      - run: npm test
+      # Il test della CSP legge l'HTML generato: prima la build, poi i test
       - run: npm run build
+      - run: npm test

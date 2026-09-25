@@ -118,8 +118,8 @@ Lo shop **non è opzionale**. Regole del contratto:
 1. **Script — Indian** (Billy Argel): marchio, nome, richiami caldi. Mai paragrafi
 2. **Display — Yankee Clipper** (Iconian): titoli di sezione, etichette, hero.
    **Mai per testo lungo**: in un paragrafo o in un menu è illeggibile
-3. **Testo** — serif leggibile da scegliere
-4. **Dati** — monospace per orari, prezzi, indirizzo
+3. **Testo** — Literata (OFL, woff2 locale)
+4. **Dati** — Martian Mono (OFL, woff2 locale) per orari, prezzi, indirizzo
 
 Indian e Yankee Clipper sono **gratuiti solo per uso personale**: per un cliente
 vero serve la licenza commerciale. Caricati in locale con `@font-face` e
@@ -138,6 +138,12 @@ I loro rosso e oro, ammorbiditi. Valori completi in `docs/02-design-system.md`.
 | `--red` | `#C75B4A` | `#E0705A` |
 | `--gold` | `#E3BE72` | `#E3BE72` |
 | `--sage` | `#6E8F85` | `#8FB0A5` |
+| `--red-text` | `#A54C3D` | = `--red` |
+| `--sage-text` | `#526B64` | = `--sage` |
+
+Testo rosso o salvia sempre con `--red-text` e `--sage-text`: nel tema chiaro
+`--red` e `--sage` non arrivano a 4.5:1. Gli stati dell'orologio non si
+distinguono mai solo col colore, sempre anche con testo e icona.
 
 **Dark mode obbligatoria.** Interruttore sempre in header. Colori ritarati uno
 per uno, mai invertiti in automatico. Il tema si sceglie in quest'ordine:

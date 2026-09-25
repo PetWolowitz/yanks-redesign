@@ -1,19 +1,32 @@
 ---
-// Pagina provvisoria della Fase 0: sostituita dalla home vera in Fase 2A
-import '../../styles/global.css';
+// Pagina provvisoria: sostituita dalla home vera in Fase 2A.
+// La prova di stile serve a verificare font e colori nei due temi.
+import Base from '../../layouts/Base.astro';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>Yanks — in costruzione</title>
-    <meta name="robots" content="noindex" />
-  </head>
-  <body class="grid min-h-dvh place-items-center p-6">
-    <main>
-      <h1 class="text-center text-3xl">Yanks — in costruzione</h1>
-    </main>
-  </body>
-</html>
+<Base lang="en" title="Yanks — in costruzione">
+  <main class="mx-auto max-w-3xl space-y-8 px-4 py-12">
+    <h1 class="font-display text-h2 leading-none">Yanks — in costruzione</h1>
+
+    <section class="space-y-4" aria-label="Prova di stile">
+      <p class="font-script text-h3 text-red-text">Home of the Medicine Man</p>
+      <p>
+        Literata regolare, <em>corsivo</em> e <strong>grassetto</strong>: il testo
+        dei paragrafi, delle recensioni e del menu.
+      </p>
+      <p class="text-muted">Testo secondario in <code>--muted</code>.</p>
+      <p class="font-mono text-small">08:00 – 02:00 · 02:45 · € 25,00</p>
+      <ul class="font-mono text-small space-y-1">
+        <li class="text-sage-text">Aperto · consumo sul posto</li>
+        <li class="text-red-text">Solo asporto</li>
+        <li class="text-muted">Chiuso</li>
+      </ul>
+      <div class="flex flex-wrap gap-2" aria-hidden="true">
+        <span class="h-10 w-16 border-2 border-text bg-surface"></span>
+        <span class="h-10 w-16 border-2 border-text bg-red"></span>
+        <span class="h-10 w-16 border-2 border-text bg-gold"></span>
+        <span class="h-10 w-16 border-2 border-text bg-sage"></span>
+      </div>
+    </section>
+  </main>
+</Base>
