@@ -17,6 +17,25 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-09-25 — Fase 0 chiusa, sito online su Cloudflare
+Fatto:        Pietro ha collegato il repository a Cloudflare Workers: il sito
+              è su https://yanks-redesign.pietro-costa25.workers.dev.
+              site aggiornato in astro.config.mjs; in wrangler.jsonc
+              "workers_dev": true e "preview_urls": true espliciti, per
+              togliere i due avvisi del deploy. Deploy spuntato in docs/04.
+              Verificato online con Playwright: "/" rimanda a "/en/", pagina
+              corretta a 390 e 1440 px, console senza messaggi, le sei
+              intestazioni di sicurezza arrivano
+Decisioni:    nessuna nuova: i due valori in wrangler.jsonc sono quelli
+              predefiniti, scritti per esteso
+Problemi:     nessuno aperto. Restano i promemoria delle voci precedenti
+              (--passWithNoTests in Fase 1, intestazioni degli endpoint in
+              Fase 3, eccezione su typescript in dependabot.yml)
+Prossimo:     Fase 1 di docs/04-build-plan.md, parte "Stile" e "Lingue",
+              prima il piano
+Ramo/commit:  sito/deploy-cloudflare — "Deploy: indirizzo del sito e
+              wrangler.jsonc espliciti", poi merge su main
+
 ## 2026-09-25 — Fase 0, Dependabot e TypeScript 7
 Fatto:        in .github/dependabot.yml le versioni major di typescript sono
               ignorate. Chiusa la PR #1 di Dependabot (typescript 6.0.3 →
