@@ -18,7 +18,7 @@ dipendenze, pochi punti di rottura, sito veloce e trovabile.
 | Database | **Cloudflare D1** (SQLite) | Stesso account, nessuna connessione esterna, nessun segreto in più |
 | Pagamenti | **Stripe Checkout** in modalità test | Accessibile subito senza verifica aziendale, supporta iDEAL, webhook firmati |
 | Anti-bot | **Cloudflare Turnstile** | Gratuito, senza tracciamento, niente puzzle da risolvere |
-| Email ordini | **Resend** (facoltativo) | Piano gratuito sufficiente. Per il concept basta la pagina di conferma |
+| Email ordini | **Resend**, obbligatorio, via `fetch` all'API REST | Nessun pacchetto npm. Piano gratuito: 100 email al giorno. Nel concept modalità di prova (consegna solo all'indirizzo dell'account); per un cliente si verifica il suo dominio |
 | Controlli | **Vitest** + `astro check` + GitHub Actions | Test sulla logica critica, verifica dei tipi a ogni push |
 | Aggiornamenti | **Dependabot** | Aggiornamenti raggruppati una volta a settimana |
 
@@ -128,6 +128,7 @@ online.
 **Cosa si testa con Vitest** (solo la logica che può rompersi in silenzio):
 - lo stato dell'orologio alle 01:00, 02:00, 02:15, 02:45, 03:00, 07:59, 08:00
 - il calcolo del totale del carrello lato server
+- l'email di conferma: il link porta id e token nel fragment, mai nella query
 - che i tre file di lingua abbiano le stesse chiavi
 
 Niente test sui componenti grafici: per quelli basta guardarli.
@@ -141,6 +142,8 @@ Dettagli in `06-shop-architecture.md`. In sintesi:
 - validazione lato server di ogni input
 - totale sempre ricalcolato sul server
 - webhook Stripe con verifica della firma
+- email di conferma inviata dal webhook con `RESEND_API_KEY` dai segreti; se
+  fallisce l'ordine resta valido e l'errore va nei log, senza token
 - Turnstile sul checkout
 - nessun dato di pagamento, nessuna password, nessun account
 - embed esterni caricati solo al click

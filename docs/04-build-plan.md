@@ -210,6 +210,8 @@ Tutto passa da `ShopApi`. **Nessun componente chiama `fetch` direttamente.**
       chiama `getOrder(id, token)`. Se non trova niente, rimanda al link
       nell'email. Se l'ordine è `pending`, "pagamento in verifica" e nuovo
       controllo per qualche secondo
+- [ ] Pagina ordine: link completo con il fragment e pulsante "Copia link"
+      (`navigator.clipboard` dentro `try/catch`, link comunque selezionabile)
 - [ ] Errori chiari: prodotto esaurito, campo sbagliato, servizio non raggiungibile
 
 **Fatto quando**: in modalità finta si può fare un acquisto completo, dal
@@ -235,13 +237,16 @@ Leggere `06-shop-architecture.md` prima di iniziare.
       `pending` → sessione Stripe con `success_url` senza parametri → risposta
       con id, token e indirizzo di Stripe
 - [ ] `api/stripe-webhook`: firma verificata → ordine `paid` e giacenze scalate
-      in un'unica transazione, idempotente
+      in un'unica transazione, idempotente → poi email di conferma con Resend
+      (`fetch`, `Idempotency-Key`); se fallisce, ordine valido ed errore nei log
 - [ ] `api/order`: `POST` con id e token nel body, token confrontato come hash
 
 **Stripe e Turnstile**
 - [ ] Account Stripe in modalità test, chiavi nei segreti di Cloudflare
 - [ ] Webhook di Stripe verso `/api/stripe-webhook`; in locale con Stripe CLI
 - [ ] Sito Turnstile creato, chiavi nei segreti
+- [ ] Account Resend, `RESEND_API_KEY` nei segreti e in `.dev.vars`,
+      `EMAIL_FROM=onboarding@resend.dev` (modalità di prova)
 
 **Test obbligatori**
 - [ ] Un prezzo modificato dal browser non cambia l'addebito
@@ -249,6 +254,8 @@ Leggere `06-shop-architecture.md` prima di iniziare.
 - [ ] Lo stesso webhook due volte non scala le giacenze due volte
 - [ ] Un webhook con firma sbagliata viene rifiutato
 - [ ] Una quantità superiore alla giacenza viene rifiutata
+- [ ] Con Resend che risponde errore l'ordine resta `paid` e il webhook
+      risponde 200; nei log non compare il token
 
 ## Fase 4 — Collegamento (1 ora)
 
