@@ -32,6 +32,31 @@ export const venue = {
 };
 ```
 
+## Vincoli legali dei coffeeshop
+
+I coffeeshop olandesi sono **tollerati** solo se rispettano i criteri **AHOJG(I)**.
+La **A** (*geen affichering*) vieta ogni reclame, oltre a una semplice
+indicazione sul locale. Alcuni comuni la interpretano in modo largo: loghi,
+adesivi, listini prezzi, luci verdi.
+
+Fonti: i regolamenti comunali su lokaleregelgeving.overheid.nl e
+zoek.officielebekendmakingen.nl. Esempi:
+- **CVDR762705** — *Coffeeshopbeleid gemeente Wageningen 2026*, in vigore dal
+  1° luglio 2026, art. 3: *"Geen affichering; reclame, anders dan een aanduiding
+  op de betreffende lokaliteit, is verboden."* (verificato). È un esempio di un
+  altro comune, non la regola di Zandvoort
+- **gmb-2026-274642** su zoek.officielebekendmakingen.nl — **DA VERIFICARE**:
+  la pagina non si è aperta (errore SSL), contenuto non controllato
+
+**Regole per il concept**
+1. **Nessun prodotto di cannabis, prezzo o immagine di cannabis sul sito.** Il
+   menu è solo food e drink
+2. **Tono informativo, non promozionale**: orari, come arrivare, regole
+   d'ingresso, uso responsabile
+3. **Lo shop merch è la parte più delicata**: l'applicazione delle regole varia
+   da comune a comune. Nel portfolio va scritto che per un uso reale serve una
+   verifica con il comune di Zandvoort
+
 ## Punti di forza da comunicare
 1. **Aperto 08:00–02:45 tutti i giorni**, dalle 02:00 solo asporto
 2. **A due minuti a piedi dalla spiaggia**

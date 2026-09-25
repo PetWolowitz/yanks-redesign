@@ -17,6 +17,34 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-09-25 — Documenti, vincoli legali dei coffeeshop
+Fatto:        sezione "Vincoli legali dei coffeeshop" in docs/03, paragrafo
+              nelle decisioni del caso studio in docs/05, riga in CLAUDE.md
+              (Contenuti): nessun contenuto promozionale sulla cannabis
+Decisioni:    criteri AHOJG(I), la "A" vieta la reclame. Regole del concept:
+              1. niente prodotti, prezzi o immagini di cannabis; menu solo food
+                 e drink
+              2. tono informativo, non promozionale
+              3. shop merch = parte delicata: per un uso reale serve una
+                 verifica con il comune di Zandvoort (scritto nel portfolio)
+Problemi:     - fonte CVDR762705 verificata: è il Coffeeshopbeleid di
+                Wageningen 2026 (art. 3, criterio A), esempio di un altro
+                comune. gmb-2026-274642 non si apre (errore SSL): segnata DA
+                VERIFICARE in docs/03
+              - da decidere con Pietro, NON modificati:
+                a. docs/05, punto 7 "cosa farei con un cliente vero", cita il
+                   "collegamento al sistema del menu cannabis": contrasta con
+                   la regola 1
+                b. docs/03, merch, categoria "smoking": grinder, bong/water
+                   pipe, rolling tray, glass tips. Sono accessori per la cannabis:
+                   da valutare se tenerli nel catalogo del concept
+              - in sospeso sul ramo sito/fase-1-lingue (stash): script verify e
+                nuovi ruoli dei font, in attesa di due decisioni (h2/h3 in
+                maiuscolo, preload di Martian Mono)
+Prossimo:     decisioni sui punti sopra, poi Fase 1 punto 2 (i18n)
+Ramo/commit:  docs/vincoli-legali — "Docs: vincoli legali dei coffeeshop",
+              poi merge su main
+
 ## 2026-09-25 — Fase 1, stile: token, font, tema
 Fatto:        tokens.css (colori dei due temi, @theme inline verso Tailwind,
               palette e font predefiniti di Tailwind azzerati), fonts.css
