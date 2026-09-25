@@ -28,7 +28,6 @@ export const venue = {
     facebook: "https://www.facebook.com/yankscoffeeshop",
     instagram: "https://www.instagram.com/yanksindianclub/",
   },
-  cannabisMenuUrl: "https://yanks.coffeeshopmenu.nl",
 };
 ```
 
@@ -99,18 +98,28 @@ Il sito originale dice "20 minuti": non usarlo, scrivere "circa mezz'ora".
 **DA VERIFICARE** la situazione aggiornata.
 
 ## Regole d'ingresso
-Da esporre chiaramente, ma solo dopo verifica:
-- Vietato ai minori di 18 anni, documento obbligatorio
-- Massimo 5 grammi per persona al giorno
-- Niente alcol nel coffeeshop
 
-**Turisti**: ammessi. Il criterio di residenza non viene applicato, verificato
-di persona. Il sito può dirlo chiaramente, perché è una delle prime domande che si
-fa un turista.
+**Pubblicate sul sito** — solo questa:
+- **Ingresso solo dai 18 anni, con un documento d'identità valido**
+
+**Il sito non parla di residenza**: né per dire che i turisti entrano, né per
+dire il contrario.
+
+**Contesto — NON PUBBLICARE**
+- *Criterio I della politica di Zandvoort* (CVDR625741, vedi "Vincoli legali"):
+  il coffeeshop è *"uitsluitend toegankelijk voor Ingezetenen van Nederland van
+  18 jaar en ouder"*
+- *Verifica di persona, settembre 2026*: all'ingresso il criterio di residenza
+  non veniva applicato e i turisti entravano. È una pratica osservata, non una
+  regola scritta, e contrasta con la politica pubblicata: per questo non va sul
+  sito
+- Massimo 5 grammi per persona al giorno, niente alcol nel coffeeshop (regola
+  nazionale dal 2007): sono regole di vendita, non d'ingresso, e non si
+  pubblicano tra le regole d'ingresso
 
 **Divieto di pubblicità.** La normativa vieta di promuovere il prodotto. Il sito
-parla del posto, non della merce: niente varietà, niente prezzi della cannabis.
-Il menu resta sul servizio esterno, raggiungibile con un link.
+parla del posto, non della merce: niente varietà, niente prezzi della cannabis,
+**nessun link al menu della cannabis**.
 
 ## Menu food & drink
 

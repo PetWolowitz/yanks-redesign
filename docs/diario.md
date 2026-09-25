@@ -17,6 +17,27 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-09-25 — Documenti, regole d'ingresso e provider di pagamento
+Fatto:        chiusi i tre contrasti della voce precedente. docs/03: regole
+              d'ingresso riscritte, tolti cannabisMenuUrl e il link al menu
+              esterno. docs/05: nota sul provider di pagamento
+Decisioni:    1. CHIUSO — residenza: il sito non ne parla, né in un senso né
+                 nell'altro. Pubblicata solo "ingresso dai 18 anni con
+                 documento valido". Criterio I di Zandvoort e verifica di
+                 persona (turisti ammessi in pratica) restano in docs/03 come
+                 contesto, marcati NON PUBBLICARE. Anche 5 grammi e niente
+                 alcol spostati lì: sono regole di vendita, non d'ingresso
+              2. CHIUSO — nessun link al menu della cannabis
+              3. CHIUSO — nel portfolio, accanto alla verifica con il comune:
+                 per un uso reale va verificata l'accettazione con il provider
+                 di pagamento (Stripe esclude le attività legate alla
+                 cannabis). Il portasigarette resta nel merch
+Problemi:     nessuno nuovo
+Prossimo:     Fase 1 punto 2 (i18n) sul ramo sito/fase-1-lingue, insieme a
+              verify, ruoli dei font e struttura della navigazione in docs/02
+Ramo/commit:  docs/ingresso-e-pagamenti — "Docs: regole d'ingresso, niente
+              menu cannabis, provider di pagamento", poi merge su main
+
 ## 2026-09-25 — Documenti, fonti di Zandvoort e merch senza accessori
 Fatto:        docs/03: tolta gmb-2026-274642 (pubblicazione della stessa
               politica di Wageningen); aggiunta e verificata CVDR625741,
