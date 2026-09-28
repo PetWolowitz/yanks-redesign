@@ -17,6 +17,50 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-09-28 — Fasi 2A e 2S in autonomia: sito statico e frontend dello shop
+Fatto:        PR #3 footer (indirizzo, orari, pagine, lingue, social,
+              disclaimer di docs/05) e / verso la lingua del browser.
+              PR #4 home: hero tipografico, chi sono, terrazza, orario,
+              spiaggia, anteprime di menu e shop, tre recensioni Google,
+              mappa al clic. PR #5 Visit, Menu, Know before you go, e cifre
+              di Yankee Clipper passate a Impact. PR #6 catalogo, scheda
+              prodotto, carrello (cart.ts), contatore nell'header. PR #7
+              checkout e pagina ordine: acquisto completo in modalità mock.
+              Tutte unite con check e Workers Builds verdi. 73 pagine,
+              167 test, nessun link interno rotto (test nuovo)
+Decisioni:    - materiali dal sito attuale: foto della terrazza, testi delle
+                dodici schede, recensioni; foto e taglie dei prodotti da
+                shop.yanks.nl/products.json (S-3XL, cappellino, beanie).
+                Scelte ed esclusioni in docs/03
+              - hero senza video: il sito attuale non ne ha e la foto larga
+                mostra il menu della cannabis. Logo a 232 px al massimo
+              - recensioni: 3 su 5, escluse quelle che nominano prodotti di
+                cannabis; niente nomi; nessuna traduzione senza rilettura
+              - Story ancora fuori: il testo di our-story è promozionale
+              - Yankee Clipper senza cifre (unicode-range): l'8 sembrava 0,
+                "18" si leggeva "10". Regola in docs/02
+              - h1 della scheda prodotto in Yankee Clipper (nomi lunghi)
+              - prezzi con Intl (formatPrice), sempre da centesimi
+              - catalogo per il browser preparato in build e passato in un
+                attributo data- (non script inline: CSP)
+              - mappa e futuri embed con ClickToLoad (iframe solo al clic)
+              - in Visit niente auto: parcheggi DA VERIFICARE
+Problemi:     - DA RECUPERARE (docs/03): video e poster dell'hero, indirizzi
+                dei reel Instagram, logo vettoriale, anno di apertura
+              - carrello senza pannello laterale (solo pagina e contatore)
+              - costi di spedizione non definiti: il checkout non li mostra
+              - foto dell'abbigliamento con sfondi "tribali" (tende): sono
+                del cliente, per un uso reale andrebbero rifatte
+              - testi nl e de, schede di Know before you go comprese, DA
+                RILEGGERE da un madrelingua
+              - nei test Playwright, locator.click() dopo un focus che fa
+                scorrere la pagina può cadere sui link dell'header fisso:
+                usare requestSubmit() o mouse.click() su coordinate fresche
+Prossimo:     decisioni di Pietro: Fase 3 (Stripe, D1, Resend, segreti),
+              GSAP per la Fase 5, lingue it/fr/es con rilettura, costi di
+              spedizione. Poi i controlli manuali approfonditi tutti insieme
+Ramo/commit:  PR #3-#7 unite su main; questo diario su docs/diario-fase-2
+
 ## 2026-09-28 — Fase 2A, tema scuro, orologio al neon, logo originale
 Fatto:        tema scuro ritarato (bg #1F1B17, surface #2A251F, text
               #DDD2C0). Orologio a insegna al neon con tre token --neon-* per
@@ -54,7 +98,8 @@ Problemi:     - design-guidelines.md nei Download contraddice CLAUDE.md
                 age gate, Yankee Clipper negli h1): non adottato
 Prossimo:     Pietro approva la PR; decisione sull'age gate; poi la home
 Ramo/commit:  sito/tema-scuro-neon-logo — "Anello del logo nel tema scuro,
-              colori in CLAUDE.md" (PR aperta verso main, NON unita)
+              colori in CLAUDE.md" e "Avviso d'età 18+": PR #2, unita
+              il 2026-09-28
 
 ## 2026-09-28 — Fase 2A, header e navigazione
 Fatto:        components/site: Header, OpenStatus, ThemeToggle, LangSwitch;

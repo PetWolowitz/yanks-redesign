@@ -141,38 +141,38 @@ GitHub il controllo automatico è verde.
 Obiettivo: tutto ciò che sito e shop condividono, prima di qualsiasi pagina.
 
 **Stile**
-- [ ] `tokens.css`: colori dei due temi, scala tipografica, spaziature, con `@theme`
-- [ ] `fonts.css`: `@font-face` dei quattro font, `font-display: swap`, fallback
-- [ ] Layout `Base.astro`: `<html lang>`, meta, `hreflang`, tema chiaro e scuro
-- [ ] Script inline nell'`<head>` che imposta il tema prima del rendering: prima
+- [x] `tokens.css`: colori dei due temi, scala tipografica, spaziature, con `@theme`
+- [x] `fonts.css`: `@font-face` dei quattro font, `font-display: swap`, fallback
+- [x] Layout `Base.astro`: `<html lang>`, meta, `hreflang`, tema chiaro e scuro
+- [x] Script inline nell'`<head>` che imposta il tema prima del rendering: prima
       la scelta salvata, poi l'orario `Europe/Amsterdam` (scuro dalle 20:00 alle
       08:00). Il suo hash va nella CSP di `public/_headers`
 
 **Lingue**
-- [ ] `nl.json`, `en.json`, `de.json` con le stesse chiavi
-- [ ] `t.ts`: helper di traduzione, cinque righe
-- [ ] Test: i tre file hanno esattamente le stesse chiavi
+- [x] `nl.json`, `en.json`, `de.json` con le stesse chiavi
+- [x] `t.ts`: helper di traduzione, cinque righe
+- [x] Test: i tre file hanno esattamente le stesse chiavi
 
 **Dati**
-- [ ] `venue.ts`, `menu.ts`, `merch.ts`, `reviews.ts` tipizzati
-- [ ] `getOpenStatus(date)` in `lib/open-status.ts`, funzione pura
-- [ ] Test dell'orologio alle 01:00, 02:00, 02:15, 02:45, 03:00, 07:59, 08:00, con
+- [x] `venue.ts`, `menu.ts`, `merch.ts`, `reviews.ts` tipizzati
+- [x] `getOpenStatus(date)` in `lib/open-status.ts`, funzione pura
+- [x] Test dell'orologio alle 01:00, 02:00, 02:15, 02:45, 03:00, 07:59, 08:00, con
       date sia in ora legale sia in ora solare
 
 **Il contratto dello shop** — il pezzo che rende possibile il lavoro in parallelo
-- [ ] `lib/shop/types.ts`: `Product`, `Variant`, `CartItem`, `CheckoutRequest`,
+- [x] `lib/shop/types.ts`: `Product`, `Variant`, `CartItem`, `CheckoutRequest`,
       `CheckoutResponse`, `OrderStatus`
-- [ ] `lib/shop/api.ts`: l'interfaccia `ShopApi` con tre funzioni:
+- [x] `lib/shop/api.ts`: l'interfaccia `ShopApi` con tre funzioni:
       `getProducts()`, `createCheckout(req)`, `getOrder(id, token)`,
       e la scelta tra implementazione finta e vera in base a `PUBLIC_SHOP_MODE`
-- [ ] `data/merch.ts`: solo slug, categoria, prezzo, taglie, `limited`. Nomi e
+- [x] `data/merch.ts`: solo slug, categoria, prezzo, taglie, `limited`. Nomi e
       descrizioni nei file di lingua, sotto `shop.products.<slug>.name` e
       `.description`
-- [ ] `lib/shop/mock.ts`: implementazione finta che legge `merch.ts`, simula le
+- [x] `lib/shop/mock.ts`: implementazione finta che legge `merch.ts`, simula le
       giacenze e restituisce un ordine "pagato" dopo un finto reindirizzamento
-- [ ] `lib/shop/validate.ts`: le regole di validazione di email, indirizzo e
+- [x] `lib/shop/validate.ts`: le regole di validazione di email, indirizzo e
       quantità, **usate sia dal form sia dal server**. Scritte una volta sola
-- [ ] Test della validazione
+- [x] Test della validazione
 
 **Fatto quando**: i test passano, il layout vuoto si vede nei due temi e nelle
 tre lingue, e `ShopApi` in modalità finta restituisce i prodotti.
@@ -186,52 +186,55 @@ Due rami di git, uno per binario. Si alterna tra i due, una sessione alla volta.
 ### 2A — Sito statico (12 ore)
 
 **Struttura comune** (3 ore)
-- [ ] Header: logo, navigazione, orologio, lingua, tema, icona carrello
-- [ ] Orologio: orario scritto nell'HTML statico, stato in tempo reale col JS
-- [ ] Footer: indirizzo, orari, social veri, disclaimer
-- [ ] Menu mobile
-- [ ] Redirect da `/` alla lingua del browser, con inglese come ripiego
+- [x] Header: logo, navigazione, orologio, lingua, tema, icona carrello
+- [x] Orologio: orario scritto nell'HTML statico, stato in tempo reale col JS
+- [x] Footer: indirizzo, orari, social veri, disclaimer
+- [x] Menu mobile
+- [x] Redirect da `/` alla lingua del browser, con inglese come ripiego
 
 **Home** (4 ore)
 - [ ] Hero: video su desktop, poster su mobile, script sopra display
-- [ ] Chi sono, breve
-- [ ] Le tre cose che contano: orario, mare, terrazza
-- [ ] Anteprima menu
-- [ ] Anteprima dello shop: limited edition e mystery box
+  _(2026-09-28: hero tipografico col logo; manca il video, vedi docs/03)_
+- [x] Chi sono, breve
+- [x] Le tre cose che contano: orario, mare, terrazza
+- [x] Anteprima menu
+- [x] Anteprima dello shop: limited edition e mystery box
 - [ ] Recensioni video: schede 9:16, embed al click
-- [ ] Recensioni scritte: griglia sfalsata, olandese con traduzione su richiesta
-- [ ] Mappa: anteprima statica, mappa vera al click
+  _(manca: servono gli indirizzi dei reel)_
+- [x] Recensioni scritte: griglia sfalsata, olandese con traduzione su richiesta
+- [x] Mappa: anteprima statica, mappa vera al click
 
 **Pagine interne** (5 ore)
-- [ ] Visit: come arrivare, orari nei tre stati, mappa, regole d'ingresso
-- [ ] Menu: filtri, bibite per marca, prezzo unico scritto una volta
-- [ ] Know before you go: le dodici schede
+- [x] Visit: come arrivare, orari nei tre stati, mappa, regole d'ingresso
+- [x] Menu: filtri, bibite per marca, prezzo unico scritto una volta
+- [x] Know before you go: le dodici schede
 - [ ] Story: solo quando c'è il testo originale
 
 ### 2S — Frontend dello shop, con dati finti (8 ore)
 
 Tutto passa da `ShopApi`. **Nessun componente chiama `fetch` direttamente.**
 
-- [ ] Catalogo `/[lang]/shop/`: per categoria, limited edition e mystery box
+- [x] Catalogo `/[lang]/shop/`: per categoria, limited edition e mystery box
       in evidenza. Prezzi scritti nell'HTML statico in build da `merch.ts`; il
       JS aggiorna solo la disponibilità con `getProducts()`
-- [ ] Senza JS il catalogo si legge; carrello e checkout mostrano un messaggio
+- [x] Senza JS il catalogo si legge; carrello e checkout mostrano un messaggio
       `<noscript>`: per comprare serve JavaScript
-- [ ] Scheda prodotto `/[lang]/shop/[slug]`: foto, taglie, quantità, aggiunta
+- [x] Scheda prodotto `/[lang]/shop/[slug]`: foto, taglie, quantità, aggiunta
 - [ ] Carrello: modulo `cart.ts` con `localStorage` dentro `try/catch`, pannello
       laterale, contatore nell'header aggiornato in tutte le pagine
-- [ ] Checkout: form con email e indirizzo, validazione da `validate.ts`,
+  _(2026-09-28: `cart.ts`, pagina carrello e contatore fatti; il pannello laterale no)_
+- [x] Checkout: form con email e indirizzo, validazione da `validate.ts`,
       spazio per Turnstile, riepilogo
-- [ ] Checkout: `createCheckout` restituisce id e token, salvati in
+- [x] Checkout: `createCheckout` restituisce id e token, salvati in
       `sessionStorage` (dentro `try/catch`) prima del redirect
-- [ ] Pagina di stato ordine `/[lang]/shop/order`: legge id e token da
+- [x] Pagina di stato ordine `/[lang]/shop/order`: legge id e token da
       `sessionStorage`, oppure dal fragment `#id=…&t=…` del link nell'email, e
       chiama `getOrder(id, token)`. Se non trova niente, rimanda al link
       nell'email. Se l'ordine è `pending`, "pagamento in verifica" e nuovo
       controllo per qualche secondo
-- [ ] Pagina ordine: link completo con il fragment e pulsante "Copia link"
+- [x] Pagina ordine: link completo con il fragment e pulsante "Copia link"
       (`navigator.clipboard` dentro `try/catch`, link comunque selezionabile)
-- [ ] Errori chiari: prodotto esaurito, campo sbagliato, servizio non raggiungibile
+- [x] Errori chiari: prodotto esaurito, campo sbagliato, servizio non raggiungibile
 
 **Fatto quando**: in modalità finta si può fare un acquisto completo, dal
 catalogo alla pagina "ordine pagato", senza backend.
