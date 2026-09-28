@@ -1,0 +1,101 @@
+---
+// Avviso d'età 18+ (CLAUDE.md, docs/06). Un <dialog> a tutto schermo.
+// - Nessun lampo: lo script inline nell'<head> mette data-age="ask" o "ok" prima
+//   del rendering; con "ask" il CSS mostra il pannello dal primo frame
+// - Senza JS data-age non esiste: il pannello resta nascosto e il sito si legge
+// - Si ricorda solo il "sì" (localStorage age-ok), mai il "no". Nessun cookie
+import { venue } from '../../data/venue';
+import type { Lang } from '../../i18n/locales';
+import { t } from '../../i18n/t';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<dialog
+  id="age-gate"
+  aria-labelledby="age-gate-title"
+  class="m-0 h-dvh max-h-none w-full max-w-none place-content-center border-0 bg-bg p-4 text-text"
+>
+  <div class="mx-auto flex max-w-xl flex-col items-center gap-6 text-center">
+    <img
+      src="/brand/yanks-originale.png"
+      width="232"
+      height="232"
+      alt={venue.name}
+      class="size-32 rounded-full dark:outline-2 dark:outline-text"
+    />
+    <h2 id="age-gate-title" class="text-h2 leading-none">{t(lang, 'age.title')}</h2>
+    <p>{t(lang, 'age.text')}</p>
+
+    <div data-age-ask class="flex flex-wrap justify-center gap-4">
+      <button type="button" data-age-yes autofocus class="min-h-11 border-3 border-text px-6 py-2 uppercase hover:bg-text hover:text-bg">
+        {t(lang, 'age.yes')}
+      </button>
+      <button type="button" data-age-no class="min-h-11 border-3 border-text px-6 py-2 uppercase hover:bg-text hover:text-bg">
+        {t(lang, 'age.no')}
+      </button>
+    </div>
+
+    <div data-age-denied hidden class="flex flex-col items-center gap-4">
+      <p class="font-prose text-h3" role="status">{t(lang, 'age.denied')}</p>
+      <button type="button" data-age-back class="min-h-11 text-small text-muted underline underline-offset-4 hover:text-text">
+        {t(lang, 'age.back')}
+      </button>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  /* Visibile dal primo frame quando serve, prima che lo script apra il dialog modale */
+  :global(html[data-age='ask']) dialog {
+    display: grid;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+  }
+
+  :global(html[data-age='ask']) {
+    overflow: hidden;
+  }
+</style>
+
+<script>
+  const root = document.documentElement;
+  const dialog = document.querySelector<HTMLDialogElement>('#age-gate');
+
+  if (dialog && root.dataset.age === 'ask') {
+    const ask = dialog.querySelector<HTMLElement>('[data-age-ask]')!;
+    const denied = dialog.querySelector<HTMLElement>('[data-age-denied]')!;
+
+    // Modale: il resto della pagina diventa inerte e il focus resta nel pannello
+    dialog.showModal();
+    // Esc non chiude: la domanda chiede una risposta
+    dialog.addEventListener('cancel', (event) => event.preventDefault());
+
+    dialog.querySelector('[data-age-yes]')!.addEventListener('click', () => {
+      try {
+        localStorage.setItem('age-ok', '1');
+      } catch {
+        // storage bloccato: si entra lo stesso, la domanda tornerà alla prossima pagina
+      }
+      root.dataset.age = 'ok';
+      dialog.close();
+    });
+
+    dialog.querySelector('[data-age-no]')!.addEventListener('click', () => {
+      ask.hidden = true;
+      denied.hidden = false;
+      denied.querySelector<HTMLElement>('[data-age-back]')!.focus();
+    });
+
+    dialog.querySelector('[data-age-back]')!.addEventListener('click', () => {
+      denied.hidden = true;
+      ask.hidden = false;
+      ask.querySelector<HTMLElement>('[data-age-yes]')!.focus();
+    });
+  }
+</script>

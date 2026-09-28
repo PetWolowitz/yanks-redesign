@@ -72,5 +72,11 @@
   "clock.closed": "Gesloten",
   "clock.until": "tot {time}",
   "clock.closesIn": "sluit over {minutes} min",
-  "clock.opensAt": "opent om {time}"
+  "clock.opensAt": "opent om {time}",
+  "age.title": "Ben je 18 of ouder?",
+  "age.text": "Yanks is een coffeeshop. Toegang vanaf 18 jaar, met een geldig identiteitsbewijs.",
+  "age.yes": "Ja, ik ben 18+",
+  "age.no": "Nee",
+  "age.denied": "Kom terug als je 18 bent. Het licht blijft aan.",
+  "age.back": "Ik vergiste me"
 }

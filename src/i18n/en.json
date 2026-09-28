@@ -72,5 +72,11 @@
   "clock.closed": "Closed",
   "clock.until": "until {time}",
   "clock.closesIn": "closes in {minutes} min",
-  "clock.opensAt": "opens at {time}"
+  "clock.opensAt": "opens at {time}",
+  "age.title": "Are you 18 or older?",
+  "age.text": "Yanks is a coffeeshop. Entry from 18, with a valid ID.",
+  "age.yes": "Yes, I'm 18+",
+  "age.no": "No",
+  "age.denied": "Come back when you're 18. We'll keep the lights on.",
+  "age.back": "My mistake"
 }

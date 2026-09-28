@@ -302,9 +302,13 @@ agli embed caricati al click. Verifica finale su securityheaders.com.
 - Ordini di prova cancellati periodicamente
 
 ## Accesso ai contenuti
-I siti dei coffeeshop olandesi mostrano di solito un avviso di età. Per il concept
-è consigliato un avviso semplice, che ricorda la scelta e non blocca i motori di
-ricerca.
+I siti dei coffeeshop olandesi mostrano di solito un avviso di età.
+**Deciso il 2026-09-28: c'è**, regole in CLAUDE.md ("Avviso d'età 18+").
+In breve: `<dialog>` modale, nessun lampo grazie allo script dell'`<head>`,
+invisibile senza JS e ai motori di ricerca, si ricorda solo il sì in
+`localStorage`, nessun cookie. È un avviso, non una verifica: chi mente passa.
+Per un cliente vero la verifica dell'età vale all'ingresso e alla consegna
+dello shop, non sul sito.
 
 ## Esclusi dallo shop del concept
 **I semi**: regole di vendita e spedizione diverse in ogni paese, in diversi paesi

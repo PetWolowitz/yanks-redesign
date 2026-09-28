@@ -41,9 +41,12 @@ Decisioni:    - text scuro 11.45:1 su bg (richiesta: tra 10 e 13), 10.16 su
                 docs/02 (con i --neon-*); anello crema di 2 px intorno al
                 logo solo nel tema scuro (outline in --text, 11.45:1 sul
                 fondo). Playwright rifatto: 24 casi su 24 ok
-              - age gate: CLAUDE.md non lo prevede, docs/06 lo consiglia
-                ("avviso semplice, ricorda la scelta, non blocca i motori di
-                ricerca"). Proposta fatta a Pietro, NON implementato
+              - age gate approvato da Pietro e fatto: components/site/
+                AgeGate.astro, <dialog> modale; theme-init.js mette anche
+                data-age="ask"/"ok" (hash CSP aggiornato); si salva solo il
+                sì; "Nee" mostra una frase e "Ik vergiste me". Test
+                tests/theme-init.test.ts (lo script vero in un contesto
+                finto). Regole in CLAUDE.md e docs/06
               - cookie: nessuno. Nessun Set-Cookie nelle risposte, nel codice
                 solo localStorage (tema scelto, ordini finti del mock)
 Problemi:     - design-guidelines.md nei Download contraddice CLAUDE.md

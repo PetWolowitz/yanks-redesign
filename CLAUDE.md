@@ -222,6 +222,18 @@ Embed di Instagram e Google Maps caricano cookie e tracciamento di Meta e Google
 **non si caricano finché l'utente non clicca**. Al loro posto un'anteprima statica
 con il pulsante "Carica contenuto". Così il sito resta senza banner cookie.
 
+## Avviso d'età 18+ — deciso il 2026-09-28
+`src/components/site/AgeGate.astro`, in ogni pagina tramite `Base.astro`.
+- `<dialog>` modale a tutto schermo: logo, domanda, "Sì, 18+" e "No" con lo
+  stesso peso. Esc non chiude
+- **Nessun lampo**: lo script inline dell'`<head>` mette `data-age="ask"` o
+  `"ok"` prima del rendering (hash nella CSP)
+- **Senza JS non compare** e il sito si legge tutto; il contenuto resta
+  nell'HTML per i motori di ricerca
+- Si salva **solo il sì** (`localStorage` `age-ok`, dentro `try/catch`). Il no
+  mostra una frase e un link "Ho sbagliato" che riporta alla domanda, e non si
+  salva. **Nessun cookie**
+
 ## Contenuti
 - Dati in `src/data/*.ts` tipizzati, testi in `src/i18n/*.json`
 - Solo contenuti reali. Dove il sito originale ha lorem ipsum si scrive un testo vero
