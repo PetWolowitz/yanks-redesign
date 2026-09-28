@@ -1,0 +1,113 @@
+---
+// Scelta di taglia e quantità e aggiunta al carrello. Serve JS: senza, il modulo
+// resta nascosto e c'è il messaggio <noscript>; le taglie restano scritte sopra.
+// Il JS disattiva le taglie esaurite e non aggiunge più pezzi di quelli rimasti.
+import { skuOf } from '../../data/merch';
+import type { Lang } from '../../i18n/locales';
+import type { MerchItem } from '../../lib/shop/types';
+import { t } from '../../i18n/t';
+
+interface Props {
+  lang: Lang;
+  item: MerchItem;
+}
+
+const { lang, item } = Astro.props;
+const sizes = item.sizes.length > 0 ? item.sizes : [null];
+const quantities = Array.from({ length: 10 }, (_, i) => i + 1);
+---
+
+<add-to-cart data-too-many={t(lang, 'shop.tooMany')} data-sold-out={t(lang, 'shop.soldOut')}>
+  <form hidden class="space-y-6">
+    {
+      item.sizes.length > 0 && (
+        <fieldset>
+          <legend class="mb-2 uppercase">{t(lang, 'shop.size')}</legend>
+          <div class="flex flex-wrap gap-2">
+            {sizes.map((size, index) => (
+              <label class="relative">
+                <input type="radio" name="sku" value={skuOf(item.slug, size)} checked={index === 0} required class="peer sr-only" />
+                <span class="inline-flex min-h-11 min-w-12 cursor-pointer items-center justify-center border-3 border-text px-3 peer-checked:bg-text peer-checked:text-bg peer-disabled:cursor-not-allowed peer-disabled:border-muted peer-disabled:text-muted peer-disabled:line-through peer-focus-visible:outline-3 peer-focus-visible:outline-offset-3 peer-focus-visible:outline-red">
+                  {size}
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      )
+    }
+    {item.sizes.length === 0 && <input type="hidden" name="sku" value={skuOf(item.slug, null)} />}
+
+    <div class="flex flex-wrap items-end gap-4">
+      <label class="flex flex-col gap-2">
+        <span class="uppercase">{t(lang, 'shop.quantity')}</span>
+        <select name="quantity" class="min-h-11 border-3 border-text bg-bg px-3">
+          {quantities.map((n) => <option value={n}>{n}</option>)}
+        </select>
+      </label>
+      <button type="submit" class="min-h-11 border-3 border-text bg-text px-6 py-2 text-bg uppercase hover:bg-bg hover:text-text disabled:cursor-not-allowed disabled:opacity-60">
+        {t(lang, 'shop.addToCart')}
+      </button>
+    </div>
+
+    <p data-message role="status" class="min-h-6"></p>
+    <p data-added hidden>
+      {t(lang, 'shop.added')}
+      <a href={`/${lang}/shop/cart/`} class="underline decoration-red-text decoration-[3px] underline-offset-[6px]">{t(lang, 'shop.viewCart')}</a>
+    </p>
+  </form>
+  <noscript><p class="border-3 border-text px-4 py-3">{t(lang, 'shop.noscript')}</p></noscript>
+</add-to-cart>
+
+<script>
+  import { addItem, loadCart, saveCart } from '../../lib/shop/cart';
+  import { loadProducts } from '../../lib/shop/stock';
+
+  class AddToCart extends HTMLElement {
+    #stock = new Map<string, number>();
+
+    async connectedCallback() {
+      const form = this.querySelector('form')!;
+      const message = this.querySelector<HTMLElement>('[data-message]')!;
+      const added = this.querySelector<HTMLElement>('[data-added]')!;
+      const button = form.querySelector('button')!;
+      form.hidden = false;
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const data = new FormData(form);
+        const sku = String(data.get('sku'));
+        const quantity = Number(data.get('quantity'));
+        const inCart = loadCart().find((item) => item.sku === sku)?.quantity ?? 0;
+        const stock = this.#stock.get(sku);
+        added.hidden = true;
+        // Il controllo vero lo fa il checkout; qui si evita solo di illudere
+        if (stock !== undefined && inCart + quantity > stock) {
+          message.textContent = (this.dataset.tooMany ?? '').replace('{count}', String(stock));
+          return;
+        }
+        saveCart(addItem(loadCart(), sku, quantity));
+        message.textContent = '';
+        added.hidden = false;
+      });
+
+      const products = await loadProducts();
+      if (!products) return;
+      for (const variant of products.flatMap((product) => product.variants)) this.#stock.set(variant.sku, variant.stock);
+
+      // Taglie esaurite non selezionabili; se lo sono tutte, niente pulsante
+      const radios = [...form.querySelectorAll<HTMLInputElement>('input[type=radio]')];
+      for (const radio of radios) radio.disabled = (this.#stock.get(radio.value) ?? 0) === 0;
+      const firstAvailable = radios.find((radio) => !radio.disabled);
+      if (firstAvailable) firstAvailable.checked = true;
+      const single = form.querySelector<HTMLInputElement>('input[type=hidden]');
+      const soldOut = radios.length > 0 ? !firstAvailable : (this.#stock.get(single?.value ?? '') ?? 0) === 0;
+      if (soldOut) {
+        button.disabled = true;
+        message.textContent = this.dataset.soldOut ?? '';
+      }
+    }
+  }
+
+  customElements.define('add-to-cart', AddToCart);
+</script>

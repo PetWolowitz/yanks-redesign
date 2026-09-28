@@ -1,0 +1,46 @@
+---
+// Disponibilità in tempo reale per un gruppo di SKU (un prodotto, o una sua taglia).
+// L'HTML statico non la contiene: il JS la chiede a ShopApi e scrive "Esaurito" o
+// "Ne restano N". Se il servizio non risponde resta vuota: il catalogo si legge lo stesso.
+import type { Lang } from '../../i18n/locales';
+import { t } from '../../i18n/t';
+
+interface Props {
+  lang: Lang;
+  skus: string[];
+  class?: string;
+}
+
+const { lang, skus, class: className } = Astro.props;
+---
+
+<stock-status
+  data-skus={skus.join(',')}
+  data-sold-out={t(lang, 'shop.soldOut')}
+  data-last={t(lang, 'shop.lastOnes')}
+  class:list={['text-small data-[state=low]:text-red-text data-[state=sold-out]:text-muted data-[state=sold-out]:uppercase', className]}
+></stock-status>
+
+<script>
+  import { stockOf } from '../../lib/shop/stock';
+
+  // Soglia sotto cui si avvisa che ne restano pochi
+  const LOW = 3;
+
+  class StockStatus extends HTMLElement {
+    async connectedCallback() {
+      const skus = (this.dataset.skus ?? '').split(',');
+      const stock = await stockOf(skus);
+      if (stock === null) return;
+      if (stock === 0) {
+        this.dataset.state = 'sold-out';
+        this.textContent = this.dataset.soldOut ?? '';
+      } else if (stock <= LOW) {
+        this.dataset.state = 'low';
+        this.textContent = (this.dataset.last ?? '').replace('{count}', String(stock));
+      }
+    }
+  }
+
+  customElements.define('stock-status', StockStatus);
+</script>

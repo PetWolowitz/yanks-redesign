@@ -3,7 +3,7 @@
 import type { Lang } from '../../i18n/locales';
 
 export type Category = 'smoking' | 'clothing' | 'special';
-export type Size = 'S' | 'M' | 'L' | 'XL';
+export type Size = 'S' | 'M' | 'L' | 'XL' | '2XL' | '3XL';
 
 // Paesi in cui si spedisce: lista chiusa, controllata da validate.ts
 export const shippingCountries = ['NL', 'BE', 'LU', 'DE', 'AT', 'FR', 'IT', 'ES'] as const;

@@ -39,7 +39,7 @@ describe('mock ShopApi', () => {
   it('getProducts restituisce tutti i prodotti di merch.ts, una variante per taglia', async () => {
     const products = await setup().api.getProducts();
     expect(products.map((p) => p.slug)).toEqual(merch.map((m) => m.slug));
-    expect(products.find((p) => p.slug === 'hoodie')?.variants.map((v) => v.sku)).toEqual(['hoodie-s', 'hoodie-m', 'hoodie-l', 'hoodie-xl']);
+    expect(products.find((p) => p.slug === 'hoodie')?.variants.map((v) => v.sku)).toEqual(['hoodie-s', 'hoodie-m', 'hoodie-l', 'hoodie-xl', 'hoodie-2xl', 'hoodie-3xl']);
     expect(products.find((p) => p.slug === 'mystery-box')?.variants).toEqual([{ sku: 'mystery-box', size: null, stock: 3 }]);
   });
 

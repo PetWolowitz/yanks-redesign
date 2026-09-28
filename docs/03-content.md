@@ -185,6 +185,19 @@ Yanks Mini Bong / Water Pipe, anche se in vendita su shop.yanks.nl. Due motivi:
 
 Restano: abbigliamento, accendini, portasigarette, posacenere, mystery box.
 
+**Aggiornato il 2026-09-28 da `shop.yanks.nl/products.json`** (Shopify, pubblico):
+- taglie dell'abbigliamento: S, M, L, XL, 2XL, 3XL (non più DA VERIFICARE)
+- aggiunti cappellino (€30) e beanie (€25), i prezzi che mancavano
+- i colori (per esempio Zwart / Off White) nel concept non si scelgono: una
+  variante per taglia, per tenere semplice il contratto dello shop
+- foto dei prodotti: la prima di ogni prodotto, ridotta a 1000 px, in
+  `src/assets/shop/`. Nessuna mostra cannabis; gli accessori mostrano tabacco.
+  Gli sfondi dell'abbigliamento (tende e tramonto western) sono più "tribali"
+  della direzione americana anni '50 (CLAUDE.md): sono le foto del cliente, per
+  un uso reale andrebbero rifatte
+- non inclusi, anche se in vendita: beach bag, portachiavi, profumo per interni,
+  filtri Purize e tutti gli accessori per la cannabis (sopra)
+
 **Esclusi dallo shop del concept: i semi.** La vendita e la spedizione di semi
 all'estero hanno regole diverse per ogni paese, e in diversi paesi dell'Unione è
 vietata. Per un progetto dimostrativo non vale la pena.

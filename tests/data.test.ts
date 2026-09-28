@@ -1,5 +1,6 @@
 // I dati scritti a mano sono coerenti con i file di lingua e tra loro.
 // Basta controllare en.json: i18n.test.ts garantisce che nl e de abbiano le stesse chiavi.
+import { existsSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { menu } from '../src/data/menu';
 import { merch, skuOf } from '../src/data/merch';
@@ -42,5 +43,18 @@ describe('merch.ts', () => {
   it('SKU: slug più taglia in minuscolo, solo slug per la taglia unica', () => {
     expect(skuOf('hoodie', 'XL')).toBe('hoodie-xl');
     expect(skuOf('mystery-box', null)).toBe('mystery-box');
+  });
+});
+
+describe('foto dei prodotti', () => {
+  it('ogni prodotto di merch.ts ha la sua foto in src/assets/shop', () => {
+    expect(merch.map((item) => item.slug).filter((slug) => !existsSync(`src/assets/shop/${slug}.jpg`))).toEqual([]);
+  });
+});
+
+describe('rotte dello shop', () => {
+  it('nessuno slug di merch.ts coincide con una pagina fissa dello shop', () => {
+    const reserved = ['cart', 'checkout', 'order'];
+    expect(merch.filter((item) => reserved.includes(item.slug))).toEqual([]);
   });
 });
