@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, envField } from 'astro/config';
 import cloudflare from '@astrojs/cloudflare';
 import tailwindcss from '@tailwindcss/vite';
 import { defaultLang, locales } from './src/i18n/locales.ts';
@@ -16,6 +16,18 @@ export default defineConfig({
     defaultLocale: defaultLang,
     routing: {
       prefixDefaultLocale: true,
+    },
+  },
+  env: {
+    schema: {
+      // Shop su dati finti (mock) o sugli endpoint veri (live). Il valore
+      // predefinito evita di dover creare .env in CI e su Cloudflare
+      PUBLIC_SHOP_MODE: envField.enum({
+        context: 'client',
+        access: 'public',
+        values: ['mock', 'live'],
+        default: 'mock',
+      }),
     },
   },
   vite: {

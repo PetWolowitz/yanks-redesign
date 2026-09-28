@@ -17,6 +17,47 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-09-28 — Fase 1, orologio, dati e contratto dello shop
+Fatto:        cancellata la prova di stile non tracciata (src/pages/en/).
+              src/data: venue.ts, menu.ts, merch.ts, reviews.ts.
+              lib/open-status.ts: getOpenStatus(date) su Europe/Amsterdam,
+              testato alle 7 ore richieste in ora legale e solare, più la
+              notte del cambio d'ora e la mezzanotte. lib/shop: types.ts,
+              api.ts (ShopApi, tre funzioni), mock.ts, validate.ts.
+              Testi di menu e prodotti in en/nl/de. npm run verify verde,
+              54 test su 54
+Decisioni:    - PUBLIC_SHOP_MODE con astro:env (envField.enum, default
+                mock): niente .env da creare in CI e su Cloudflare, un valore
+                sbagliato blocca la build. live lancia un errore finché non
+                c'è http.ts (Fase 4)
+              - prezzi in centesimi interi (priceCents), come nel database
+              - SKU = slug + taglia ("hoodie-m"), solo slug per la taglia
+                unica: skuOf() in merch.ts, una regola sola
+              - ShopError in types.ts, non in api.ts: evita un import
+                circolare con mock.ts
+              - validateCheckout accetta qualsiasi input e restituisce la
+                richiesta pulita o gli errori per campo; scarta i campi in
+                più (un prezzo mandato dal browser sparisce). CAP controllato
+                per paese; paesi di spedizione: NL BE LU DE AT FR IT ES
+              - mock: ordini in localStorage (con ripiego in memoria),
+                pending per 2 secondi poi paid; giacenze finte con un
+                esaurito (skull-t-shirt-xl) e due quasi finiti
+              - menu: nomi da tradurre nei file di lingua, marchi delle
+                bibite nei dati (nomi propri)
+Problemi:     DA VERIFICARE, scritti nei dati come null o con un commento:
+              - taglie dell'abbigliamento (messe S, M, L, XL)
+              - prezzi di tosti, pizza e bevande funzionali (null)
+              - "tosti vlam" lasciato non tradotto; "con panna" letto come
+                cioccolata con panna; "Zippers" tradotto come felpa con zip
+              - descrizioni dei prodotti: frasi minime ricavate dal nome,
+                da rileggere (nl e de anche da un madrelingua)
+              - reviews.ts vuoto: mancano i testi delle cinque recensioni
+                Google del sito originale
+Prossimo:     merge su main e push; poi Fase 2A (descrivere il layout
+              dell'header prima di scriverlo)
+Ramo/commit:  sito/fase-1-dati-e-shop — "Fase 1: dati del menu e contratto
+              dello shop" (non ancora unito)
+
 ## 2026-09-28 — Fase 1, lingue: verifica e merge
 Fatto:        verifica Playwright della build (astro preview) su /nl/, /en/,
               /de/ a 390 e 1440 px, tema chiaro e scuro: 12 casi su 12 ok.
@@ -27,12 +68,7 @@ Fatto:        verifica Playwright della build (astro preview) su /nl/, /en/,
               /de/ online con lang="de"
 Decisioni:    verifica fatta su un worktree pulito del commit, non sulla
               cartella di lavoro (vedi Problemi)
-Problemi:     - nella cartella di lavoro c'è src/pages/en/index.astro NON
-                TRACCIATO: una prova di stile più lunga di quella cancellata
-                dal commit. È una rotta statica, copre [lang] su /en/ e
-                blocca il checkout di main. Pietro decide se buttarla o
-                spostarla (es. /[lang]/prova-stile) prima di proseguire
-              - testi nl e de ancora DA RILEGGERE DA UN MADRELINGUA
+Problemi:     - testi nl e de ancora DA RILEGGERE DA UN MADRELINGUA
 Prossimo:     Fase 1 punto 3, partendo da un piano
 Ramo/commit:  sito/fase-1-lingue — "Fase 1: lingue, verify e ruoli dei font",
               unito su main ("Merge ramo sito/fase-1-lingue")
