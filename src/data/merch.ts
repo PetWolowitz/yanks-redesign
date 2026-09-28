@@ -6,8 +6,9 @@
 // Niente accessori legati alla cannabis e niente semi (docs/03).
 import type { MerchItem, Size } from '../lib/shop/types';
 
-// DA VERIFICARE: le taglie reali su shop.yanks.nl
-const clothingSizes: Size[] = ['S', 'M', 'L', 'XL'];
+// Taglie di shop.yanks.nl (lette il 2026-09-28). I colori non ci sono: il concept
+// vende una variante per taglia (docs/06, Merch)
+const clothingSizes: Size[] = ['S', 'M', 'L', 'XL', '2XL', '3XL'];
 
 export const merch: MerchItem[] = [
   { slug: 'djeep-lighter', category: 'smoking', priceCents: 350, sizes: [], limited: null },
@@ -23,6 +24,9 @@ export const merch: MerchItem[] = [
   { slug: 'limited-t-shirt', category: 'clothing', priceCents: 4000, sizes: clothingSizes, limited: 250 },
   { slug: 'hoodie', category: 'clothing', priceCents: 4500, sizes: clothingSizes, limited: null },
   { slug: 'zipper', category: 'clothing', priceCents: 4500, sizes: clothingSizes, limited: null },
+  // Cappellino e beanie: prezzi da shop.yanks.nl, taglia unica
+  { slug: 'cap', category: 'clothing', priceCents: 3000, sizes: [], limited: null },
+  { slug: 'beanie', category: 'clothing', priceCents: 2500, sizes: [], limited: null },
   { slug: 'mystery-box', category: 'special', priceCents: 8000, sizes: [], limited: 50 },
 ];
 

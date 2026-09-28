@@ -79,7 +79,7 @@ tra 10:1 e 13:1, abbastanza per leggere senza abbagliare):
 
 | Ruolo | Font | Token / classe | Uso |
 |---|---|---|---|
-| Titolo | Indian (Billy Argel) | `--font-title` · `font-title` | h1 e titoli hero. **Solo titoli brevi, mai frasi lunghe** |
+| Titolo | Indian (Billy Argel) | `--font-title` · `font-title` | h1 e titoli hero. **Solo titoli brevi, mai frasi lunghe**. Eccezione: nella scheda prodotto l'h1 è il nome del prodotto, spesso lungo, e usa Yankee Clipper maiuscolo |
 | Intestazione | Yankee Clipper (Iconian) | `--font-heading` · `font-heading` | h2 e h3, **sempre in maiuscolo** (`text-transform: uppercase`) |
 | Interfaccia | Martian Mono | `--font-ui` · `font-ui` | navigazione, pulsanti, etichette, prezzi, orari. È il font predefinito del `body` |
 | Prosa | Literata | `--font-prose` · `font-prose` | **solo i paragrafi lunghi**: storia, recensioni, descrizioni. Si segnano con la classe `font-prose` |

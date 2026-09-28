@@ -1,0 +1,55 @@
+---
+// Scheda prodotto (docs/04, Fase 2S): foto, nome, descrizione, prezzo scritto in
+// build, taglie, quantità, aggiunta al carrello. Una pagina per prodotto e lingua.
+// L'h1 è in Yankee Clipper e non in Indian: i nomi dei prodotti sono lunghi (docs/02).
+import type { GetStaticPaths } from 'astro';
+import { Image } from 'astro:assets';
+import AddToCart from '../../../components/shop/AddToCart.astro';
+import { merch } from '../../../data/merch';
+import { venue } from '../../../data/venue';
+import Base from '../../../layouts/Base.astro';
+import { locales, type Lang } from '../../../i18n/locales';
+import { formatPrice } from '../../../lib/format';
+import { productImage } from '../../../lib/shop/images';
+import type { MerchItem } from '../../../lib/shop/types';
+import { t, type Key } from '../../../i18n/t';
+
+export const getStaticPaths = (() =>
+  locales.flatMap((lang) => merch.map((item) => ({ params: { lang, slug: item.slug }, props: { lang, item } })))) satisfies GetStaticPaths;
+
+const { lang, item } = Astro.props as { lang: Lang; item: MerchItem };
+const name = t(lang, `shop.products.${item.slug}.name` as Key);
+const description = t(lang, `shop.products.${item.slug}.description` as Key);
+---
+
+<Base lang={lang} title={`${name} · ${venue.name}`} description={description}>
+  <main id="content" class="mx-auto max-w-360 px-4 py-10 lg:py-16">
+    <a href={`/${lang}/shop/`} class="inline-block py-2 text-small underline underline-offset-4">← {t(lang, 'shop.back')}</a>
+
+    <div class="mt-6 grid gap-10 lg:grid-cols-12 lg:gap-6">
+      <Image
+        src={productImage(item.slug)}
+        alt={name}
+        widths={[480, 800, 1000]}
+        sizes="(min-width: 1024px) 55vw, 100vw"
+        format="webp"
+        fetchpriority="high"
+        class="w-full border-3 border-text lg:col-span-7"
+      />
+
+      <div class="lg:col-span-5">
+        <h1 class="font-heading text-h2 leading-none uppercase">{name}</h1>
+        {item.limited !== null && <p class="mt-4 text-red-text">{t(lang, 'shop.limitedOf', { count: String(item.limited) })}</p>}
+        <p class="mt-6 text-h3 tabular-nums">{formatPrice(item.priceCents, lang)}</p>
+        <p class="mt-6 max-w-[50ch] font-prose">{description}</p>
+        <p class="mt-4 text-small text-muted">
+          {t(lang, 'shop.size')}: {item.sizes.length > 0 ? item.sizes.join(' · ') : t(lang, 'shop.oneSize')}
+        </p>
+        <div class="mt-8 border-t-3 border-text pt-6">
+          <AddToCart lang={lang} item={item} />
+        </div>
+        <p class="mt-8 text-small text-muted">{t(lang, 'shop.testMode')}</p>
+      </div>
+    </div>
+  </main>
+</Base>

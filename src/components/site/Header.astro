@@ -73,7 +73,7 @@ const linkClass =
         <path d="M5 8h14l-1.2 13H6.2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
         <path d="M9 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="2"></path>
       </svg>
-      <!-- Il numero degli articoli lo scrive il carrello (Fase 2S) -->
+      <!-- Il numero degli articoli lo scrive lo script qui sotto (lib/shop/cart.ts) -->
       <span data-cart-count hidden class="absolute top-0 right-0 min-w-5 bg-red-text px-1 text-center text-xs text-bg"></span>
     </a>
 
@@ -121,6 +121,19 @@ const linkClass =
 </div>
 
 <script>
+  import { countItems, loadCart, onCartChange, type Cart } from '../../lib/shop/cart';
+
+  // Numero di articoli sull'icona del carrello, in ogni pagina e tra le schede
+  const badge = document.querySelector<HTMLElement>('[data-cart-count]');
+  const showCount = (cart: Cart) => {
+    if (!badge) return;
+    const count = countItems(cart);
+    badge.hidden = count === 0;
+    badge.textContent = count > 99 ? '99+' : String(count);
+  };
+  showCount(loadCart());
+  onCartChange(showCount);
+
   // Header più compatto appena si scorre: si anima solo il transform del logo
   const header = document.querySelector<HTMLElement>('[data-header]');
   if (header) {

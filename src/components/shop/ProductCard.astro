@@ -1,0 +1,46 @@
+---
+// Scheda di un prodotto nel catalogo: foto, nome, prezzo scritto in build da
+// merch.ts, disponibilità aggiunta dal JS. Tutta la scheda è un link.
+import { Image } from 'astro:assets';
+import { skuOf } from '../../data/merch';
+import type { Lang } from '../../i18n/locales';
+import { formatPrice } from '../../lib/format';
+import { productImage } from '../../lib/shop/images';
+import type { MerchItem } from '../../lib/shop/types';
+import { t, type Key } from '../../i18n/t';
+import StockStatus from './StockStatus.astro';
+
+interface Props {
+  lang: Lang;
+  item: MerchItem;
+  // la prima scheda di ogni gruppo è più grande: niente file di schede uguali (docs/02)
+  large?: boolean;
+  class?: string;
+}
+
+const { lang, item, large = false, class: className } = Astro.props;
+const name = t(lang, `shop.products.${item.slug}.name` as Key);
+const skus = (item.sizes.length > 0 ? item.sizes : [null]).map((size) => skuOf(item.slug, size));
+---
+
+<li class={className}>
+  <a href={`/${lang}/shop/${item.slug}/`} class="group flex h-full flex-col border-3 border-text bg-bg">
+    <Image
+      src={productImage(item.slug)}
+      alt=""
+      widths={large ? [480, 800] : [320, 480]}
+      sizes={large ? '(min-width: 1024px) 50vw, 100vw' : '(min-width: 1024px) 25vw, 50vw'}
+      format="webp"
+      loading="lazy"
+      class="aspect-[4/5] w-full border-b-3 border-text object-cover"
+    />
+    <span class="flex flex-1 flex-col gap-2 p-4">
+      <span class:list={['font-heading uppercase group-hover:underline', large ? 'text-h3' : 'text-base']}>{name}</span>
+      {item.limited !== null && <span class="text-small text-red-text">{t(lang, 'shop.limitedOf', { count: String(item.limited) })}</span>}
+      <span class="mt-auto flex flex-wrap items-baseline justify-between gap-2">
+        <span class="tabular-nums">{formatPrice(item.priceCents, lang)}</span>
+        <StockStatus lang={lang} skus={skus} />
+      </span>
+    </span>
+  </a>
+</li>

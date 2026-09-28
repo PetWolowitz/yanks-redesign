@@ -10,7 +10,7 @@ const { title, intro } = Astro.props;
 ---
 
 <div class="mx-auto max-w-360 px-4 pt-10 pb-8 lg:pt-16">
-  <h1 class="pb-[0.3em] text-display leading-none">{title}</h1>
+  <h1 tabindex="-1" class="pb-[0.3em] text-display leading-none focus:outline-none">{title}</h1>
   <p class="max-w-[50ch] font-prose text-h3 leading-snug">{intro}</p>
   <slot />
 </div>
