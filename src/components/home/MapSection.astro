@@ -7,9 +7,11 @@ import { t } from '../../i18n/t';
 
 interface Props {
   lang: Lang;
+  // il link a Visit non serve nella pagina Visit stessa
+  visitLink?: boolean;
 }
 
-const { lang } = Astro.props;
+const { lang, visitLink = true } = Astro.props;
 const { street, postalCode, city } = venue.address;
 ---
 
@@ -22,9 +24,13 @@ const { street, postalCode, city } = venue.address;
         {street}<br />
         {postalCode} {city}
       </address>
-      <a href={`/${lang}/visit/`} class="mt-6 inline-block py-2 underline decoration-red-text decoration-[3px] underline-offset-[6px]">
-        {t(lang, 'home.planVisit')}
-      </a>
+      {
+        visitLink && (
+          <a href={`/${lang}/visit/`} class="mt-6 inline-block py-2 underline decoration-red-text decoration-[3px] underline-offset-[6px]">
+            {t(lang, 'home.planVisit')}
+          </a>
+        )
+      }
     </div>
     <ClickToLoad
       class="lg:col-span-8"

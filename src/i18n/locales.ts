@@ -21,3 +21,8 @@ export const languageNames: Record<Lang, string> = {
   en: 'English',
   de: 'Deutsch',
 };
+
+// getStaticPaths di ogni pagina /[lang]/…: una pagina per lingua
+export function langPaths() {
+  return locales.map((lang) => ({ params: { lang }, props: { lang } }));
+}

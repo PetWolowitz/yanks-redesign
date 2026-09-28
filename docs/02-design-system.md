@@ -98,6 +98,10 @@ h1, h2 e h3 prendono il loro font da soli (stili di base in `global.css`).
   h2 e h3 sono sempre in maiuscolo: si usano solo le maiuscole, che sono pulite,
   e il browser scrive "ß" come "SS". Se usi `font-heading` fuori da h2/h3,
   aggiungi la classe `uppercase`
+- **Yankee Clipper, cifre illeggibili**: l'8 sembra uno 0 ("18" si legge "10"),
+  il 9 è deformato. In `fonts.css` il font ha un `unicode-range` che esclude le
+  cifre: le disegna il font successivo della pila, Impact (poi Arial Narrow).
+  Scoperto il 2026-09-28 su "ingresso dai 18 anni"
 
 Literata e Martian Mono sono OFL, in `public/fonts/` come `.woff2` locali con la
 licenza accanto: solo sottoinsieme latin e solo i pesi usati (Literata regolare,
