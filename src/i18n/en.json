@@ -78,5 +78,14 @@
   "age.yes": "Yes, I'm 18+",
   "age.no": "No",
   "age.denied": "Come back when you're 18. We'll keep the lights on.",
-  "age.back": "My mistake"
+  "age.back": "My mistake",
+  "hours.title": "Opening hours",
+  "hours.everyday": "Every day",
+  "hours.open": "Open",
+  "hours.takeaway": "Takeaway only",
+  "hours.closed": "Closed",
+  "footer.address": "Address",
+  "footer.pages": "Pages",
+  "footer.follow": "Follow Yanks",
+  "footer.disclaimer": "Unsolicited concept redesign. A personal project for demonstration purposes, not affiliated with or endorsed by Yanks Indian Club. Logo, content and images belong to their respective owners. Payments run in test mode: no real transactions are processed."
 }

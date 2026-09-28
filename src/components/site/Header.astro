@@ -3,8 +3,9 @@
 // Desktop: logo, pagine, orologio, lingue, tema, carrello su una fascia.
 // Mobile: logo, carrello e ☰ sulla fascia, orologio in una striscia sotto,
 // il resto nel menu a tutto schermo (popover: funziona senza JS).
+import { pages } from '../../data/pages';
 import type { Lang } from '../../i18n/locales';
-import { t, type Key } from '../../i18n/t';
+import { t } from '../../i18n/t';
 import LangSwitch from './LangSwitch.astro';
 import OpenStatus from './OpenStatus.astro';
 import ThemeToggle from './ThemeToggle.astro';
@@ -14,14 +15,6 @@ interface Props {
 }
 
 const { lang } = Astro.props;
-
-// Story entra quando la pagina esiste (serve il testo originale)
-const pages: { slug: string; key: Key }[] = [
-  { slug: 'menu', key: 'nav.menu' },
-  { slug: 'visit', key: 'nav.visit' },
-  { slug: 'shop', key: 'nav.shop' },
-  { slug: 'know-before', key: 'nav.knowBefore' },
-];
 
 const isCurrent = (slug: string) => Astro.url.pathname.startsWith(`/${lang}/${slug}/`);
 const linkClass =
