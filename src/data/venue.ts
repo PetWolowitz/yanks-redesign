@@ -7,6 +7,8 @@ export interface Venue {
   address: { street: string; postalCode: string; city: string; country: string };
   coords: { lat: number; lng: number };
   phone: string;
+  // lo stesso numero, scritto per essere letto
+  phoneDisplay: string;
   email: string;
   timezone: string;
   hours: {
@@ -30,6 +32,7 @@ export const venue: Venue = {
   address: { street: 'Dorpsplein 2', postalCode: '2042 JK', city: 'Zandvoort', country: 'NL' },
   coords: { lat: 52.3726, lng: 4.525 },
   phone: '+31235719299',
+  phoneDisplay: '+31 23 571 92 99',
   email: 'info@yanks.nl',
   timezone: 'Europe/Amsterdam',
   // Tutti i giorni. Verificato di persona, settembre 2026

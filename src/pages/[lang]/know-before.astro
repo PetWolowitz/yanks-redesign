@@ -1,0 +1,38 @@
+---
+// Know before you go (CLAUDE.md): le dodici schede sull'uso responsabile, in
+// chiaro. Testi del sito originale riscritti più diretti (docs/03): informativi,
+// mai promozionali. Elenco numerato su due colonne, non una griglia di schede uguali.
+import type { GetStaticPaths } from 'astro';
+import PageIntro from '../../components/site/PageIntro.astro';
+import { venue } from '../../data/venue';
+import Base from '../../layouts/Base.astro';
+import { langPaths, type Lang } from '../../i18n/locales';
+import { t, type Key } from '../../i18n/t';
+
+export const getStaticPaths = langPaths satisfies GetStaticPaths;
+
+const { lang } = Astro.props as { lang: Lang };
+const points = Array.from({ length: 12 }, (_, i) => i + 1);
+---
+
+<Base lang={lang} title={`${t(lang, 'nav.knowBefore')} · ${venue.name}`} description={t(lang, 'kb.description')}>
+  <main id="content">
+    <PageIntro title={t(lang, 'nav.knowBefore')} intro={t(lang, 'kb.intro')} />
+
+    <ol class="mx-auto grid max-w-360 gap-x-10 px-4 pb-12 lg:grid-cols-2">
+      {
+        points.map((n) => (
+          <li class="flex gap-5 border-t-3 border-text py-6">
+            <span class="w-14 shrink-0 font-heading text-h2 leading-none text-red-text tabular-nums" aria-hidden="true">
+              {String(n).padStart(2, '0')}
+            </span>
+            <div>
+              <h2 class="text-h3">{t(lang, `kb.${n}.title` as Key)}</h2>
+              <p class="mt-2 max-w-[50ch] font-prose">{t(lang, `kb.${n}.text` as Key)}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </main>
+</Base>

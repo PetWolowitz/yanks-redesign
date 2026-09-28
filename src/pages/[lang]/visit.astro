@@ -1,0 +1,58 @@
+---
+// Visit (CLAUDE.md, Struttura delle pagine): come arrivare, orari nei tre stati,
+// regole d'ingresso, mappa. Regole d'ingresso: solo "dai 18 anni con documento"
+// (docs/03). In auto: la situazione dei parcheggi è DA VERIFICARE, quindi non c'è.
+import type { GetStaticPaths } from 'astro';
+import MapSection from '../../components/home/MapSection.astro';
+import Hours from '../../components/site/Hours.astro';
+import OpenStatus from '../../components/site/OpenStatus.astro';
+import PageIntro from '../../components/site/PageIntro.astro';
+import { venue } from '../../data/venue';
+import Base from '../../layouts/Base.astro';
+import { langPaths, type Lang } from '../../i18n/locales';
+import { t } from '../../i18n/t';
+
+export const getStaticPaths = langPaths satisfies GetStaticPaths;
+
+const { lang } = Astro.props as { lang: Lang };
+const { close, dineInUntil } = venue.hours;
+const blockClass = 'border-t-3 border-text pt-6';
+---
+
+<Base lang={lang} title={`${t(lang, 'nav.visit')} · ${venue.name}`} description={t(lang, 'visit.description')}>
+  <main id="content">
+    <PageIntro title={t(lang, 'nav.visit')} intro={t(lang, 'visit.intro')} />
+
+    <div class="mx-auto grid max-w-360 gap-10 px-4 pb-12 lg:grid-cols-12 lg:gap-6">
+      <section class:list={[blockClass, 'lg:col-span-7']}>
+        <h2 class="text-h2 leading-none">{t(lang, 'visit.route.title')}</h2>
+        <h3 class="mt-6 text-h3">{t(lang, 'visit.route.train')}</h3>
+        <p class="mt-2 max-w-[55ch] font-prose">{t(lang, 'visit.route.trainText')}</p>
+        <h3 class="mt-6 text-h3">{t(lang, 'visit.route.bus')}</h3>
+        <p class="mt-2 font-prose">{t(lang, 'visit.route.busText')}</p>
+      </section>
+
+      <section class:list={[blockClass, 'lg:col-span-5']}>
+        <h2 class="text-h2 leading-none">{t(lang, 'hours.title')}</h2>
+        <OpenStatus lang={lang} class="mt-6" />
+        <Hours lang={lang} class="mt-6" />
+        <p class="mt-4 max-w-[45ch] font-prose">{t(lang, 'visit.hours.text', { close, dineInUntil })}</p>
+      </section>
+
+      <section class:list={[blockClass, 'lg:col-span-7']}>
+        <h2 class="text-h2 leading-none">{t(lang, 'visit.entry.title')}</h2>
+        <p class="mt-6 border-3 border-text px-4 py-3 text-h3 font-heading uppercase">{t(lang, 'visit.entry.text')}</p>
+      </section>
+
+      <section class:list={[blockClass, 'lg:col-span-5']}>
+        <h2 class="text-h2 leading-none">{t(lang, 'visit.contact.title')}</h2>
+        <ul class="mt-6 space-y-1">
+          <li><a href={`tel:${venue.phone}`} class="inline-block py-1 underline underline-offset-4">{venue.phoneDisplay}</a></li>
+          <li><a href={`mailto:${venue.email}`} class="inline-block py-1 underline underline-offset-4">{venue.email}</a></li>
+        </ul>
+      </section>
+    </div>
+
+    <MapSection lang={lang} visitLink={false} />
+  </main>
+</Base>

@@ -15,6 +15,9 @@
 @font-face {
   font-family: "Yankee Clipper";
   src: url("/fonts/yankee-clipper/yankeeclipper.ttf") format("truetype");
+  /* Senza le cifre: in questo font l'8 sembra uno 0 ("18" si legge "10"). Le cifre
+     le disegna il font successivo della pila, Impact (docs/02) */
+  unicode-range: U+0000-002F, U+003A-10FFFF;
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -23,6 +26,9 @@
 @font-face {
   font-family: "Yankee Clipper";
   src: url("/fonts/yankee-clipper/yankeeclipperital.ttf") format("truetype");
+  /* Senza le cifre: in questo font l'8 sembra uno 0 ("18" si legge "10"). Le cifre
+     le disegna il font successivo della pila, Impact (docs/02) */
+  unicode-range: U+0000-002F, U+003A-10FFFF;
   font-weight: 400;
   font-style: italic;
   font-display: swap;

@@ -9,10 +9,10 @@ import MenuPreview from '../../components/home/MenuPreview.astro';
 import Reviews from '../../components/home/Reviews.astro';
 import ShopPreview from '../../components/home/ShopPreview.astro';
 import Base from '../../layouts/Base.astro';
-import { locales, type Lang } from '../../i18n/locales';
+import { langPaths, type Lang } from '../../i18n/locales';
 import { t } from '../../i18n/t';
 
-export const getStaticPaths = (() => locales.map((lang) => ({ params: { lang }, props: { lang } }))) satisfies GetStaticPaths;
+export const getStaticPaths = langPaths satisfies GetStaticPaths;
 
 const { lang } = Astro.props as { lang: Lang };
 ---
