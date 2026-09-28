@@ -1,0 +1,41 @@
+---
+// Mappa: anteprima statica con indirizzo, la mappa di Google solo al clic (CLAUDE.md, Privacy).
+import ClickToLoad from '../site/ClickToLoad.astro';
+import { venue } from '../../data/venue';
+import type { Lang } from '../../i18n/locales';
+import { t } from '../../i18n/t';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const { street, postalCode, city } = venue.address;
+---
+
+<section class="border-t-3 border-text">
+  <div class="mx-auto grid max-w-360 gap-10 px-4 py-12 lg:grid-cols-12 lg:gap-6 lg:py-16">
+    <div class="lg:col-span-4">
+      <h2 class="text-h2 leading-none">{t(lang, 'home.map.title')}</h2>
+      <address class="mt-6 not-italic">
+        {venue.name}<br />
+        {street}<br />
+        {postalCode} {city}
+      </address>
+      <a href={`/${lang}/visit/`} class="mt-6 inline-block py-2 underline decoration-red-text decoration-[3px] underline-offset-[6px]">
+        {t(lang, 'home.planVisit')}
+      </a>
+    </div>
+    <ClickToLoad
+      class="lg:col-span-8"
+      src={venue.maps.embedUrl}
+      title={t(lang, 'map.title')}
+      buttonLabel={t(lang, 'map.load')}
+      notice={t(lang, 'map.notice')}
+      linkHref={venue.maps.url}
+      linkLabel={t(lang, 'map.open')}
+    >
+      <p class="font-heading text-h3 uppercase">{street} · {city}</p>
+    </ClickToLoad>
+  </div>
+</section>

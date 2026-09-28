@@ -1,0 +1,52 @@
+---
+// Anteprima dello shop: le due edizioni limitate, la maglietta 1/250 e la
+// mystery box in 50 pezzi (docs/03: "meritano spazio proprio").
+// Nessuna foto dei prodotti disponibile: il numero dell'edizione fa da segno.
+// Prezzi da merch.ts, scritti nell'HTML in build.
+import { merch } from '../../data/merch';
+import type { Lang } from '../../i18n/locales';
+import { formatPrice } from '../../lib/format';
+import { t, type Key } from '../../i18n/t';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const limited = merch.filter((item) => item.limited !== null);
+---
+
+<section class="border-t-3 border-text bg-surface">
+  <div class="mx-auto max-w-360 px-4 py-12 lg:py-16">
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <div>
+        <h2 class="text-h2 leading-none">{t(lang, 'nav.shop')}</h2>
+        <p class="mt-6 max-w-[45ch] font-prose">{t(lang, 'home.shop.text')}</p>
+      </div>
+      <a href={`/${lang}/shop/`} class="inline-block py-2 underline decoration-red-text decoration-[3px] underline-offset-[6px]">
+        {t(lang, 'home.shop.link')}
+      </a>
+    </div>
+
+    <ul class="mt-10 grid gap-6 lg:grid-cols-12">
+      {
+        limited.map((item, index) => (
+          <li class:list={['border-3 border-text bg-bg', index === 0 ? 'lg:col-span-7' : 'lg:col-span-5']}>
+            <a href={`/${lang}/shop/${item.slug}/`} class="group flex h-full flex-col gap-4 p-6">
+              <span class="font-heading text-display leading-none text-red-text uppercase" aria-hidden="true">
+                {item.slug === 'limited-t-shirt' ? `1/${item.limited}` : item.limited}
+              </span>
+              <span class="text-h3 font-heading uppercase group-hover:underline">
+                {t(lang, `shop.products.${item.slug}.name` as Key)}
+              </span>
+              <span class="mt-auto flex flex-wrap items-baseline justify-between gap-2">
+                <span class="text-muted">{t(lang, 'home.shop.pieces', { count: String(item.limited) })}</span>
+                <span class="tabular-nums">{formatPrice(item.priceCents, lang)}</span>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

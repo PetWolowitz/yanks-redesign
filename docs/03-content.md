@@ -203,6 +203,14 @@ Restano in olandese, traduzione su richiesta. Altre fonti pubbliche: Tripadvisor
 porta) e Greenmeister. Nessuna stellina disegnata, nessun voto inventato: si cita
 la fonte e si linka il profilo.
 
+**Quali sono pubblicate** (deciso il 2026-09-28, testi in `src/data/reviews.ts`):
+tre delle cinque. Escluse le due che nominano prodotti di cannabis ("weed hash",
+"wiet, hasj", "edibles"), perché citarle sarebbe promozione (Vincoli legali), e
+quella che è una domanda sul caricare uno scooter elettrico. Della recensione lunga
+della coppia del Brabante c'è solo l'estratto su terrazza e personale, segnato con
+[…]. Niente nomi degli autori. Il link porta alla scheda Google del locale.
+Traduzioni: nessuna finché non c'è una rilettura.
+
 **Riconoscimenti verificati**: Travelers' Choice di Tripadvisor, primo posto nella
 vita notturna di Zandvoort. Nient'altro senza una fonte.
 
@@ -223,7 +231,18 @@ Dal sito originale, da riscrivere più diretto e mettere in una pagina visibile:
 12. Space cake: 45-90 minuti per fare effetto, non prenderne un altro pezzo
 
 ## Da recuperare
-- [ ] Testo della pagina `our-story` e anno di apertura
+- [ ] Testo della pagina `our-story` e anno di apertura. Recuperato il testo
+      il 2026-09-28: è quasi tutto promozionale ("recreational and medical
+      products", "pre-rolled joints") e superato ("open until 3 am", "20 minutes
+      by train"). Utili solo: "born 37 years ago" (senza data, quindi l'anno resta
+      DA VERIFICARE), coffee house al Dorpsplein 2, interni in stile nativo
+      americano, terrazza. Troppo poco per la pagina Story: resta fuori
+- [ ] Video per l'hero (WebM sotto 3 MB) e poster WebP. Il sito attuale non ha
+      video; la foto larga (`yanks-banner.jpg`) mostra gli schermi con il menu
+      della cannabis e non si può usare. L'hero per ora è tipografico
+- [ ] Indirizzi dei reel Instagram per le recensioni video (embed al clic)
+- [ ] Logo in alta risoluzione o vettoriale: l'originale è di 232 px
+- [ ] Foto dei prodotti del merch
 - [ ] Prezzi di tosti e pizza
 - [ ] Prezzi di cappelli e beanie
 - [ ] Foto in alta risoluzione (per un concept vanno bene quelle del sito)

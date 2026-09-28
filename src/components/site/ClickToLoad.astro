@@ -1,0 +1,63 @@
+---
+// Contenuto di terze parti (Google Maps, Instagram) caricato solo al clic
+// (CLAUDE.md, Privacy): prima c'è un'anteprima statica con un pulsante e un
+// link diretto, così nessun cookie di Google o Meta arriva senza una scelta.
+// Senza JS resta il link. L'iframe va autorizzato in frame-src (public/_headers).
+interface Props {
+  src: string;
+  // titolo dell'iframe, per gli screen reader
+  title: string;
+  buttonLabel: string;
+  notice: string;
+  linkHref: string;
+  linkLabel: string;
+  // proporzione del riquadro, per esempio "16 / 9" o "9 / 16"
+  ratio?: string;
+  class?: string;
+}
+
+const { src, title, buttonLabel, notice, linkHref, linkLabel, ratio = '16 / 9', class: className } = Astro.props;
+---
+
+<click-to-load
+  data-src={src}
+  data-title={title}
+  class:list={['relative block border-3 border-text bg-surface', className]}
+  style={`aspect-ratio: ${ratio}`}
+>
+  <div data-preview class="flex h-full flex-col items-start justify-end gap-3 p-4">
+    <slot />
+    <p class="max-w-[45ch] text-small text-muted">{notice}</p>
+    <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
+      <button type="button" hidden class="min-h-11 border-3 border-text px-4 py-2 uppercase hover:bg-text hover:text-bg">
+        {buttonLabel}
+      </button>
+      <a href={linkHref} rel="noopener" class="inline-block py-2 underline underline-offset-4">{linkLabel}</a>
+    </div>
+  </div>
+</click-to-load>
+
+<script>
+  class ClickToLoad extends HTMLElement {
+    connectedCallback() {
+      const button = this.querySelector<HTMLButtonElement>('button');
+      if (!button) return;
+      // Il pulsante serve solo con JS: senza, resta il link diretto
+      button.hidden = false;
+      button.addEventListener('click', () => {
+        const iframe = document.createElement('iframe');
+        iframe.src = this.dataset.src ?? '';
+        iframe.title = this.dataset.title ?? '';
+        iframe.loading = 'lazy';
+        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+        iframe.className = 'absolute inset-0 size-full border-0';
+        iframe.allowFullscreen = true;
+        this.querySelector('[data-preview]')?.remove();
+        this.append(iframe);
+        iframe.focus();
+      });
+    }
+  }
+
+  customElements.define('click-to-load', ClickToLoad);
+</script>

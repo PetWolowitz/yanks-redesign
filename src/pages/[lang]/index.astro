@@ -1,6 +1,13 @@
 ---
-// Pagina provvisoria nelle tre lingue: sostituita dalla home vera in Fase 2A.
+// Home (CLAUDE.md, Struttura delle pagine): hero, chi sono e le tre cose che
+// contano, anteprima del menu, anteprima dello shop, recensioni, mappa.
 import type { GetStaticPaths } from 'astro';
+import Features from '../../components/home/Features.astro';
+import Hero from '../../components/home/Hero.astro';
+import MapSection from '../../components/home/MapSection.astro';
+import MenuPreview from '../../components/home/MenuPreview.astro';
+import Reviews from '../../components/home/Reviews.astro';
+import ShopPreview from '../../components/home/ShopPreview.astro';
 import Base from '../../layouts/Base.astro';
 import { locales, type Lang } from '../../i18n/locales';
 import { t } from '../../i18n/t';
@@ -11,9 +18,12 @@ const { lang } = Astro.props as { lang: Lang };
 ---
 
 <Base lang={lang} title={t(lang, 'site.title')} description={t(lang, 'site.description')}>
-  <main id="content" class="mx-auto max-w-5xl space-y-6 px-4 py-12">
-    <h1 class="text-display pb-[0.3em] leading-none">Yanks</h1>
-    <h2 class="text-h2 leading-none">{t(lang, 'placeholder.title')}</h2>
-    <p>{t(lang, 'placeholder.text')}</p>
+  <main id="content">
+    <Hero lang={lang} />
+    <Features lang={lang} />
+    <MenuPreview lang={lang} />
+    <ShopPreview lang={lang} />
+    <Reviews lang={lang} />
+    <MapSection lang={lang} />
   </main>
 </Base>
