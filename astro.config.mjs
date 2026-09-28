@@ -32,5 +32,8 @@ export default defineConfig({
   },
   vite: {
     plugins: [tailwindcss()],
+    // Gli script dei componenti restano file esterni, mai inline nell'HTML:
+    // la CSP ammette 'self' e solo l'hash dello script del tema (docs/06)
+    build: { assetsInlineLimit: 0 },
   },
 });

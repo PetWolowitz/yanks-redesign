@@ -33,3 +33,18 @@ export function getOpenStatus(date: Date): OpenStatus {
   if (inRange(minute, minutesOf(dineInUntil), minutesOf(close))) return 'takeaway';
   return 'closed';
 }
+
+// Minuti che mancano al prossimo cambio di stato, arrotondati per eccesso
+// (alle 02:44:30 manca 1 minuto alle 02:45). Avanza un minuto alla volta sugli
+// istanti veri e chiede lo stato a getOpenStatus: così mezzanotte e cambi d'ora
+// sono già gestiti, senza calcoli a mano sugli orari.
+export function minutesUntilChange(date: Date): number {
+  const current = getOpenStatus(date);
+  const firstMinute = Math.floor(date.getTime() / 60_000) + 1;
+  // Uno stato dura sempre meno di un giorno
+  for (let minute = firstMinute; minute <= firstMinute + 24 * 60; minute++) {
+    const instant = new Date(minute * 60_000);
+    if (getOpenStatus(instant) !== current) return Math.ceil((instant.getTime() - date.getTime()) / 60_000);
+  }
+  throw new Error('Orari in venue.ts senza cambi di stato');
+}

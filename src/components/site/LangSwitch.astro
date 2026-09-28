@@ -1,0 +1,47 @@
+---
+// Link alla stessa pagina nelle altre lingue. Ogni nome è scritto nella sua lingua,
+// con lang e hreflang giusti. short: codici NL EN DE (header); altrimenti nomi interi.
+import { languageNames, locales, type Lang } from '../../i18n/locales';
+import { t } from '../../i18n/t';
+
+interface Props {
+  lang: Lang;
+  short?: boolean;
+  class?: string;
+}
+
+const { lang, short = false, class: className } = Astro.props;
+
+// /en/menu/ → /nl/menu/: cambia solo il primo segmento, come gli hreflang di Base.astro
+const hrefFor = (l: Lang) => Astro.url.pathname.replace(/^\/[^/]+\//, `/${l}/`);
+---
+
+<nav aria-label={t(lang, 'nav.languages')} class={className}>
+  <ul class:list={['flex', short ? 'gap-1' : 'flex-col gap-2']}>
+    {
+      locales.map((l) => (
+        <li>
+          <a
+            href={hrefFor(l)}
+            hreflang={l}
+            lang={l}
+            aria-current={l === lang ? 'true' : undefined}
+            class:list={[
+              'inline-flex min-h-11 items-center decoration-red-text decoration-[3px] underline-offset-[6px] hover:underline aria-[current]:underline',
+              short && 'px-1.5 uppercase',
+            ]}
+          >
+            {short ? (
+              <>
+                <span aria-hidden="true">{l}</span>
+                <span class="sr-only">{languageNames[l]}</span>
+              </>
+            ) : (
+              languageNames[l]
+            )}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

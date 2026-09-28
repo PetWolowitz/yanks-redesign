@@ -1,0 +1,133 @@
+---
+// Header (docs/02, Navigazione).
+// Desktop: logo, pagine, orologio, lingue, tema, carrello su una fascia.
+// Mobile: logo, carrello e ☰ sulla fascia, orologio in una striscia sotto,
+// il resto nel menu a tutto schermo (popover: funziona senza JS).
+import type { Lang } from '../../i18n/locales';
+import { t, type Key } from '../../i18n/t';
+import LangSwitch from './LangSwitch.astro';
+import OpenStatus from './OpenStatus.astro';
+import ThemeToggle from './ThemeToggle.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+// Story entra quando la pagina esiste (serve il testo originale)
+const pages: { slug: string; key: Key }[] = [
+  { slug: 'menu', key: 'nav.menu' },
+  { slug: 'visit', key: 'nav.visit' },
+  { slug: 'shop', key: 'nav.shop' },
+  { slug: 'know-before', key: 'nav.knowBefore' },
+];
+
+const isCurrent = (slug: string) => Astro.url.pathname.startsWith(`/${lang}/${slug}/`);
+const linkClass =
+  'decoration-red-text decoration-[3px] underline-offset-[6px] hover:underline aria-[current=page]:underline';
+---
+
+<a
+  href="#content"
+  class="sr-only z-50 bg-text px-4 py-2 text-bg focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
+  >{t(lang, 'header.skip')}</a
+>
+
+<header data-header class="group/header sticky top-0 z-40 border-b-3 border-text bg-bg">
+  <div class="mx-auto flex max-w-360 flex-wrap items-center gap-x-2 px-4 lg:h-18 lg:flex-nowrap lg:gap-x-6">
+    <!-- Segnaposto del logo finché non c'è public/brand/yanks-originale.png -->
+    <a
+      href={`/${lang}/`}
+      aria-label={t(lang, 'header.home')}
+      class="me-auto inline-flex h-16 origin-left items-center pb-1 font-title text-4xl leading-none transition-transform duration-300 group-data-scrolled/header:scale-80 motion-reduce:transition-none lg:me-0 lg:h-14 lg:pb-3 lg:text-5xl"
+      >Yanks</a
+    >
+
+    <nav aria-label={t(lang, 'nav.label')} class="hidden flex-1 lg:block">
+      <ul class="flex justify-center gap-6 text-small whitespace-nowrap uppercase">
+        {
+          pages.map(({ slug, key }) => (
+            <li>
+              <a href={`/${lang}/${slug}/`} aria-current={isCurrent(slug) ? 'page' : undefined} class={linkClass}>
+                {t(lang, key)}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <OpenStatus
+      lang={lang}
+      compact
+      class="order-last -mx-4 basis-[calc(100%+2rem)] border-t-2 border-text px-4 py-1.5 text-small lg:order-none lg:mx-0 lg:basis-auto lg:border-0 lg:p-0"
+    />
+
+    <div class="hidden items-center gap-2 text-small lg:flex">
+      <LangSwitch lang={lang} short />
+      <ThemeToggle lang={lang} />
+    </div>
+
+    <a href={`/${lang}/shop/cart/`} class="relative inline-flex size-11 items-center justify-center">
+      <span class="sr-only">{t(lang, 'header.cart')}</span>
+      <svg class="size-6" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M5 8h14l-1.2 13H6.2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+        <path d="M9 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="2"></path>
+      </svg>
+      <!-- Il numero degli articoli lo scrive il carrello (Fase 2S) -->
+      <span data-cart-count hidden class="absolute top-0 right-0 min-w-5 bg-red-text px-1 text-center text-xs text-bg"></span>
+    </a>
+
+    <button type="button" popovertarget="site-menu" class="inline-flex size-11 items-center justify-center lg:hidden">
+      <span class="sr-only">{t(lang, 'nav.open')}</span>
+      <svg class="size-6" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2"></path>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- Menu mobile a tutto schermo. popover: Esc e il pulsante ✕ lo chiudono, senza JS -->
+<div id="site-menu" popover class="m-0 h-dvh max-h-none w-full max-w-none border-0 bg-bg p-4 text-text lg:hidden">
+  <div class="flex justify-end">
+    <button
+      type="button"
+      popovertarget="site-menu"
+      popovertargetaction="hide"
+      class="inline-flex size-11 items-center justify-center"
+    >
+      <span class="sr-only">{t(lang, 'nav.close')}</span>
+      <svg class="size-6" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2"></path>
+      </svg>
+    </button>
+  </div>
+  <nav aria-label={t(lang, 'nav.label')}>
+    <ul class="flex flex-col gap-4 py-6 text-2xl uppercase">
+      {
+        pages.map(({ slug, key }) => (
+          <li>
+            <a href={`/${lang}/${slug}/`} aria-current={isCurrent(slug) ? 'page' : undefined} class={linkClass}>
+              {t(lang, key)}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+  <div class="flex items-end justify-between border-t-2 border-text pt-6">
+    <LangSwitch lang={lang} />
+    <ThemeToggle lang={lang} />
+  </div>
+</div>
+
+<script>
+  // Header più compatto appena si scorre: si anima solo il transform del logo
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  if (header) {
+    const update = () => header.toggleAttribute('data-scrolled', window.scrollY > 8);
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  }
+</script>

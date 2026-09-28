@@ -14,6 +14,17 @@ describe('file di lingua', () => {
     });
   }
 
+  // I segnaposto di t() ({time}, {minutes}…) devono essere gli stessi in ogni lingua
+  const placeholders = (text: string) => (text.match(/\{\w+\}/g) ?? []).sort();
+  for (const [name, dictionary] of Object.entries(files)) {
+    it(`${name}.json ha gli stessi segnaposto di en.json`, () => {
+      const different = Object.entries(en).filter(
+        ([key, text]) => placeholders(text).join() !== placeholders(dictionary[key] ?? '').join(),
+      );
+      expect(different.map(([key]) => key)).toEqual([]);
+    });
+  }
+
   for (const [name, dictionary] of Object.entries({ en, ...files })) {
     it(`${name}.json non ha testi vuoti`, () => {
       const empty = Object.entries(dictionary).filter(([, text]) => text.trim() === '');
