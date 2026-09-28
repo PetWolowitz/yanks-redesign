@@ -17,6 +17,45 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-09-28 — Fase 2A, tema scuro, orologio al neon, logo originale
+Fatto:        tema scuro ritarato (bg #1F1B17, surface #2A251F, text
+              #DDD2C0). Orologio a insegna al neon con tre token --neon-* per
+              tema, alone solo nello scuro, tremolio all'accensione. Logo
+              originale scaricato da yanks.nl (YANKS_rond-copy.png, 232 px)
+              in public/brand/yanks-originale.png e messo nell'header.
+              docs/02 aggiornato. npm run verify verde, 67 test su 67.
+              Playwright: 24 casi su 24 ok, contrasti letti dalla pagina
+Decisioni:    - text scuro 11.45:1 su bg (richiesta: tra 10 e 13), 10.16 su
+                surface; tutte le coppie sopra 4.5 (la più bassa: --red su
+                surface, 4.80). Tabella in docs/02
+              - neon chiaro: verde #176B37 (il primo, #1D7A40, faceva 4.27
+                su sabbia), ambra #8A5700, rosso #B3261E
+              - l'alone al neon è l'unica ombra ammessa nel sito (docs/02)
+              - tremolio: 1.2 s, una volta, solo opacity, tre cali di luce,
+                meno di tre lampi al secondo; niente con reduced motion; i
+                cambi di stato dopo l'accensione non tremano
+              - logo come <img> da public/ (40 KB PNG), non con astro:assets:
+                così resta il file di riferimento citato da docs/07. WebP e
+                astro:assets nella Fase 6
+              - poi, su richiesta: tabella colori di CLAUDE.md allineata a
+                docs/02 (con i --neon-*); anello crema di 2 px intorno al
+                logo solo nel tema scuro (outline in --text, 11.45:1 sul
+                fondo). Playwright rifatto: 24 casi su 24 ok
+              - age gate approvato da Pietro e fatto: components/site/
+                AgeGate.astro, <dialog> modale; theme-init.js mette anche
+                data-age="ask"/"ok" (hash CSP aggiornato); si salva solo il
+                sì; "Nee" mostra una frase e "Ik vergiste me". Test
+                tests/theme-init.test.ts (lo script vero in un contesto
+                finto). Regole in CLAUDE.md e docs/06
+              - cookie: nessuno. Nessun Set-Cookie nelle risposte, nel codice
+                solo localStorage (tema scelto, ordini finti del mock)
+Problemi:     - design-guidelines.md nei Download contraddice CLAUDE.md
+                (Inter, tema di default, grigi, cookie banner, calm mode,
+                age gate, Yankee Clipper negli h1): non adottato
+Prossimo:     Pietro approva la PR; decisione sull'age gate; poi la home
+Ramo/commit:  sito/tema-scuro-neon-logo — "Anello del logo nel tema scuro,
+              colori in CLAUDE.md" (PR aperta verso main, NON unita)
+
 ## 2026-09-28 — Fase 2A, header e navigazione
 Fatto:        components/site: Header, OpenStatus, ThemeToggle, LangSwitch;
               header in Base.astro per tutte le pagine. minutesUntilChange()

@@ -36,13 +36,18 @@ const linkClass =
 
 <header data-header class="group/header sticky top-0 z-40 border-b-3 border-text bg-bg">
   <div class="mx-auto flex max-w-360 flex-wrap items-center gap-x-2 px-4 lg:h-18 lg:flex-nowrap lg:gap-x-6">
-    <!-- Segnaposto del logo finché non c'è public/brand/yanks-originale.png -->
-    <a
-      href={`/${lang}/`}
-      aria-label={t(lang, 'header.home')}
-      class="me-auto inline-flex h-16 origin-left items-center pb-1 font-title text-4xl leading-none transition-transform duration-300 group-data-scrolled/header:scale-80 motion-reduce:transition-none lg:me-0 lg:h-14 lg:pb-3 lg:text-5xl"
-      >Yanks</a
-    >
+    <!-- Il logo originale, invariato (CLAUDE.md, Identità). 232 px: nitido fino a 4x.
+         Nel tema scuro un anello crema (--text, 11.45:1 sul fondo) stacca il disco nero -->
+
+    <a href={`/${lang}/`} class="me-auto inline-flex h-16 items-center lg:me-0 lg:h-18">
+      <img
+        src="/brand/yanks-originale.png"
+        width="232"
+        height="232"
+        alt={t(lang, 'header.home')}
+        class="size-12 origin-left rounded-full transition-transform dark:outline-2 dark:outline-text duration-300 group-data-scrolled/header:scale-80 motion-reduce:transition-none lg:size-14"
+      />
+    </a>
 
     <nav aria-label={t(lang, 'nav.label')} class="hidden flex-1 lg:block">
       <ul class="flex justify-center gap-6 text-small whitespace-nowrap uppercase">

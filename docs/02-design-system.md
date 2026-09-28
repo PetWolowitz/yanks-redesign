@@ -10,6 +10,9 @@ cornice a un marchio d'epoca. Il contrasto tra i due è il punto.
 ## Il marchio
 - **Il logo resta.** Nel sito attuale è annegato in un template: qui diventa
   l'elemento forte, grande, isolato, su fondi ampi
+- File: `public/brand/yanks-originale.png`. Nel tema scuro ha un anello crema
+  di 2 px (`--text`, 11.45:1 sul fondo), altrimenti il disco nero sparisce nel
+  fondo marrone. È una cornice: il logo non si tocca
 - Un solo segno importante per schermata
 - Nessuna clipart a tema come riempitivo
 - Le proposte di evoluzione del marchio (vedi `07-prompt-loghi.md`) si mostrano
@@ -26,27 +29,36 @@ tema, e `@theme inline` le collega alle classi di Tailwind (`bg-bg`,
 
 | Token | Chiaro | Scuro | Uso |
 |---|---|---|---|
-| `--bg` | `#F7F0E4` crema | `#151310` | fondo |
-| `--surface` | `#F1E4CC` sabbia | `#221E1A` | blocchi |
-| `--text` | `#2B2724` inchiostro | `#F0E8DA` | testo |
+| `--bg` | `#F7F0E4` crema | `#1F1B17` marrone caldo | fondo |
+| `--surface` | `#F1E4CC` sabbia | `#2A251F` | blocchi |
+| `--text` | `#2B2724` inchiostro | `#DDD2C0` | testo |
 | `--muted` | `#6B645C` | `#A79E90` | testo secondario |
 | `--red` | `#C75B4A` | `#E0705A` | superfici, bordi, testo grande |
 | `--gold` | `#E3BE72` | `#E3BE72` | dettagli |
 | `--sage` | `#6E8F85` | `#8FB0A5` | superfici, bordi, testo grande |
 | `--red-text` | `#A54C3D` | = `--red` | **testo** rosso |
 | `--sage-text` | `#526B64` | = `--sage` | **testo** salvia |
+| `--neon-open` | `#176B37` | `#5DF28C` | orologio: aperto |
+| `--neon-takeaway` | `#8A5700` | `#FFB547` | orologio: solo asporto |
+| `--neon-closed` | `#B3261E` | `#FF6B5E` | orologio: chiuso |
 
-**Contrasto misurato** (minimo 4.5:1 per il testo normale):
+**Contrasto misurato** (minimo 4.5:1 per il testo normale; testo principale
+tra 10:1 e 13:1, abbastanza per leggere senza abbagliare):
 - tema chiaro: `--red` fa 3.69 su crema e 3.33 su sabbia, `--sage` 3.13 e 2.82,
   quindi **non passano come testo**. Per il testo si usano `--red-text` (5.01 e
-  4.51) e `--sage-text` (5.08 e 4.58)
-- tema scuro: passano tutti; `--red-text` e `--sage-text` coincidono con
-  `--red` e `--sage`
+  4.51) e `--sage-text` (5.08 e 4.58). Neon: aperto 5.80 e 5.23, asporto 5.38 e
+  4.85, chiuso 5.77 e 5.20
+- tema scuro (ritarato il 2026-09-28: il `#151310` con testo a 15:1 affaticava
+  gli occhi): `--text` 11.45 su fondo e 10.16 su surface, `--muted` 6.47 e
+  5.74, `--red` 5.41 e 4.80, `--sage` 7.27 e 6.45, `--gold` 9.67 e 8.59. Neon:
+  aperto 11.85 e 10.52, asporto 9.74 e 8.64, chiuso 6.12 e 5.44.
+  `--red-text` e `--sage-text` coincidono con `--red` e `--sage`
 
 **Regole d'uso**
 - Testo rosso o salvia: sempre `--red-text` e `--sage-text`, mai `--red` e
   `--sage`
-- Rosso: stato "solo asporto", un pulsante per schermata, prezzi in evidenza
+- Rosso: un pulsante per schermata, prezzi in evidenza
+- I tre `--neon-*` solo per l'orologio, mai altrove
 - Oro: dettagli, sottolineature, lo script sui fondi scuri. **Mai testo piccolo
   su fondo crema**: il contrasto è troppo basso
 - `--muted` solo per testo secondario, mai per il testo principale
@@ -119,18 +131,30 @@ Syne (display), Literata (testo), Martian Mono (dati).
 - Griglia a 12 colonne usata in modo asimmetrico: mai tre schede uguali in fila
 - Immagini a filo del bordo dello schermo
 - Testo largo al massimo 65 caratteri
-- Bordi spessi (2-6 px) nel colore del testo, nessuna ombra, angoli al massimo 2 px
+- Bordi spessi (2-6 px) nel colore del testo, nessuna ombra (unica eccezione:
+  l'alone al neon dell'orologio nel tema scuro), angoli al massimo 2 px
 
 ## L'orologio a tre stati
 
 ```
-APERTO · consumo sul posto fino alle 02:00     (salvia)
-SOLO ASPORTO · chiude tra 23 minuti            (rosso)
-CHIUSO · apre alle 08:00                       (muted)
+[● APERTO] · fino alle 02:00               (verde neon, --neon-open)
+[◐ SOLO ASPORTO] · chiude tra 23 min       (ambra,      --neon-takeaway)
+[○ CHIUSO] · apre alle 08:00               (rosso,      --neon-closed)
 ```
 
+**Stile insegna al neon**, anni '50-'80: icona e stato dentro un bordo di 2 px
+nel colore dello stato; il dettaglio dopo il punto resta `--muted`.
+- **Tema scuro**: il tubo si accende. Alone con `text-shadow` sul testo,
+  `drop-shadow` sull'icona e `box-shadow` sul bordo. È **l'unica ombra
+  ammessa nel sito**: è luce, non profondità
+- **Tema chiaro**: etichetta colorata con bordo, **senza alone**
+- **Accensione**: un tremolio solo al primo caricamento, 1.2 secondi, solo
+  `opacity`, meno di tre lampi al secondo. **Niente del tutto con
+  `prefers-reduced-motion`**. I cambi di stato successivi non tremano
+
 **Gli stati non si distinguono mai solo col colore**: ognuno ha sempre anche il
-suo testo e la sua icona, così si leggono anche senza vedere i colori.
+suo testo e la sua icona (cerchio pieno, mezzo, vuoto), così si leggono anche
+senza vedere i colori.
 
 Sempre visibile in header (su mobile nella striscia sotto la fascia). Calcolato su `Europe/Amsterdam` con
 `Intl.DateTimeFormat`, mai sull'orologio del dispositivo: Italia e Paesi Bassi
