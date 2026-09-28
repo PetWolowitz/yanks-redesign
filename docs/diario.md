@@ -17,7 +17,27 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
-## 2026-09-25 — Fase 1, lingue (IN CORSO, non ancora su main)
+## 2026-09-28 — Fase 1, lingue: verifica e merge
+Fatto:        verifica Playwright della build (astro preview) su /nl/, /en/,
+              /de/ a 390 e 1440 px, tema chiaro e scuro: 12 casi su 12 ok.
+              <html lang> giusto, canonical e 4 hreflang (nl, en, de,
+              x-default=en) assoluti con barra finale, CSP presente, console
+              pulita, niente scroll orizzontale. npm run verify verde (11/11).
+              Merge su main, push; GitHub Actions e Workers Builds verdi,
+              /de/ online con lang="de"
+Decisioni:    verifica fatta su un worktree pulito del commit, non sulla
+              cartella di lavoro (vedi Problemi)
+Problemi:     - nella cartella di lavoro c'è src/pages/en/index.astro NON
+                TRACCIATO: una prova di stile più lunga di quella cancellata
+                dal commit. È una rotta statica, copre [lang] su /en/ e
+                blocca il checkout di main. Pietro decide se buttarla o
+                spostarla (es. /[lang]/prova-stile) prima di proseguire
+              - testi nl e de ancora DA RILEGGERE DA UN MADRELINGUA
+Prossimo:     Fase 1 punto 3, partendo da un piano
+Ramo/commit:  sito/fase-1-lingue — "Fase 1: lingue, verify e ruoli dei font",
+              unito su main ("Merge ramo sito/fase-1-lingue")
+
+## 2026-09-25 — Fase 1, lingue (unita su main il 2026-09-28)
 Fatto:        src/i18n/locales.ts (unica lista delle lingue, usata anche da
               astro.config.mjs), en/nl/de.json a chiavi piatte, t.ts,
               pagina src/pages/[lang]/index.astro (/nl/, /en/, /de/),
