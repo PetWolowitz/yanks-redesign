@@ -1,0 +1,238 @@
+---
+// Checkout (docs/04 e docs/06). Email e indirizzo, validati con validate.ts (le
+// stesse regole del server), poi createCheckout: id e token vanno in
+// sessionStorage prima del reindirizzamento, e il token non passa mai da Stripe.
+// Il browser manda solo SKU e quantità: il totale lo calcola il server.
+// Turnstile: nel mock un token finto; quello vero arriva con la Fase 3.
+import type { GetStaticPaths } from 'astro';
+import Field from '../../../components/shop/Field.astro';
+import PageIntro from '../../../components/site/PageIntro.astro';
+import { venue } from '../../../data/venue';
+import Base from '../../../layouts/Base.astro';
+import { langPaths, type Lang } from '../../../i18n/locales';
+import { buildCatalog } from '../../../lib/shop/catalog';
+import { shippingCountries } from '../../../lib/shop/types';
+import { limits } from '../../../lib/shop/validate';
+import { t } from '../../../i18n/t';
+
+export const getStaticPaths = langPaths satisfies GetStaticPaths;
+
+const { lang } = Astro.props as { lang: Lang };
+const catalog = await buildCatalog(lang);
+const regionName = new Intl.DisplayNames([lang], { type: 'region' });
+const countries = shippingCountries
+  .map((code) => ({ code, name: regionName.of(code) ?? code }))
+  .sort((a, b) => a.name.localeCompare(b.name, lang));
+const messages = {
+  required: t(lang, 'checkout.error.required'),
+  tooLong: t(lang, 'checkout.error.tooLong'),
+  invalid: t(lang, 'checkout.error.invalid'),
+  email: t(lang, 'checkout.error.email'),
+  postalCode: t(lang, 'checkout.error.postalCode'),
+  items: t(lang, 'checkout.error.items'),
+  outOfStock: t(lang, 'checkout.error.outOfStock'),
+  summary: t(lang, 'checkout.error.summary'),
+  unavailable: t(lang, 'shop.unavailable'),
+  wait: t(lang, 'checkout.wait'),
+};
+const legendClass = 'mb-4 font-heading text-h3 uppercase';
+---
+
+<Base lang={lang} title={`${t(lang, 'checkout.title')} · ${venue.name}`} description={t(lang, 'checkout.description')}>
+  <main id="content">
+    <PageIntro title={t(lang, 'checkout.title')} intro={t(lang, 'shop.testMode')}>
+      <noscript><p class="mt-6 border-3 border-text px-4 py-3">{t(lang, 'shop.noscript')}</p></noscript>
+    </PageIntro>
+
+    <checkout-form
+      class="mx-auto block max-w-360 px-4 pb-12"
+      data-lang={lang}
+      data-catalog={JSON.stringify(catalog)}
+      data-messages={JSON.stringify(messages)}
+    >
+      <p data-empty hidden class="border-t-3 border-text pt-6">
+        {t(lang, 'checkout.empty')}
+        <a href={`/${lang}/shop/`} class="ms-2 underline decoration-red-text decoration-[3px] underline-offset-[6px]">{t(lang, 'shop.back')}</a>
+      </p>
+
+      <div data-full hidden class="grid gap-10 lg:grid-cols-12 lg:gap-6">
+        <form novalidate class="space-y-10 border-t-3 border-text pt-6 lg:col-span-7">
+          <div data-alert role="alert" tabindex="-1" hidden class="border-3 border-red-text px-4 py-3 text-red-text"></div>
+
+          <fieldset class="space-y-6">
+            <legend class={legendClass}>{t(lang, 'checkout.contact')}</legend>
+            <Field name="email" type="email" label={t(lang, 'checkout.email')} autocomplete="email" hint={t(lang, 'checkout.emailHint')} maxlength={limits.email} />
+          </fieldset>
+
+          <fieldset class="grid gap-6 sm:grid-cols-6">
+            <legend class={legendClass}>{t(lang, 'checkout.shipping')}</legend>
+            <Field class="sm:col-span-6" name="fullName" label={t(lang, 'checkout.fullName')} autocomplete="name" maxlength={limits.fullName} />
+            <Field class="sm:col-span-6" name="street" label={t(lang, 'checkout.street')} autocomplete="street-address" maxlength={limits.street} />
+            <Field class="sm:col-span-2" name="postalCode" label={t(lang, 'checkout.postalCode')} autocomplete="postal-code" maxlength={12} />
+            <Field class="sm:col-span-4" name="city" label={t(lang, 'checkout.city')} autocomplete="address-level2" maxlength={limits.city} />
+            <Field class="sm:col-span-6" name="country" label={t(lang, 'checkout.country')} autocomplete="country">
+              <select
+                id="checkout-country"
+                name="country"
+                autocomplete="country"
+                aria-describedby="checkout-country-error"
+                class="min-h-11 border-3 border-text bg-bg px-3 aria-[invalid=true]:border-red-text"
+              >
+                {countries.map(({ code, name }) => <option value={code} selected={code === 'NL'}>{name}</option>)}
+              </select>
+            </Field>
+          </fieldset>
+
+          <p class="border-2 border-dashed border-muted px-4 py-3 text-small text-muted">{t(lang, 'checkout.turnstile')}</p>
+
+          <div class="space-y-4">
+            <p class="text-small text-muted">{t(lang, 'checkout.privacy')}</p>
+            <button type="submit" class="min-h-11 w-full border-3 border-text bg-text px-6 py-3 text-bg uppercase hover:bg-bg hover:text-text disabled:cursor-wait disabled:opacity-60 sm:w-auto">
+              {t(lang, 'checkout.pay')}
+            </button>
+          </div>
+        </form>
+
+        <aside class="h-fit border-3 border-text p-6 lg:col-span-5">
+          <h2 class="text-h3">{t(lang, 'checkout.summary')}</h2>
+          <ul data-lines class="mt-4"></ul>
+          <p class="mt-4 flex items-baseline justify-between gap-4 text-h3">
+            <span>{t(lang, 'cart.subtotal')}</span>
+            <span data-subtotal class="tabular-nums"></span>
+          </p>
+          <p class="mt-2 text-small text-muted">{t(lang, 'cart.note')}</p>
+          <a href={`/${lang}/shop/cart/`} class="mt-4 inline-block py-2 text-small underline underline-offset-4">{t(lang, 'shop.viewCart')}</a>
+        </aside>
+      </div>
+    </checkout-form>
+  </main>
+</Base>
+
+<script>
+  import type { Lang } from '../../../i18n/locales';
+  import { formatPrice } from '../../../lib/format';
+  import { shopApi } from '../../../lib/shop/api';
+  import { loadCart } from '../../../lib/shop/cart';
+  import type { CatalogEntry } from '../../../lib/shop/catalog';
+  import { ShopError, type CheckoutErrors, type CheckoutField, type FieldError } from '../../../lib/shop/types';
+  import { validateCheckout } from '../../../lib/shop/validate';
+
+  type Messages = Record<'required' | 'tooLong' | 'invalid' | 'email' | 'postalCode' | 'items' | 'outOfStock' | 'summary' | 'unavailable' | 'wait', string>;
+  const FIELDS = ['email', 'fullName', 'street', 'postalCode', 'city', 'country'] as const;
+  const ORDER_KEY = 'yanks-order';
+
+  class CheckoutForm extends HTMLElement {
+    #messages = {} as Messages;
+    #form!: HTMLFormElement;
+
+    connectedCallback() {
+      const lang = this.dataset.lang as Lang;
+      const catalog: Record<string, CatalogEntry> = JSON.parse(this.dataset.catalog ?? '{}');
+      this.#messages = JSON.parse(this.dataset.messages ?? '{}');
+      this.#form = this.querySelector('form')!;
+
+      const cart = loadCart().filter((item) => catalog[item.sku]);
+      this.querySelector<HTMLElement>('[data-empty]')!.hidden = cart.length > 0;
+      this.querySelector<HTMLElement>('[data-full]')!.hidden = cart.length === 0;
+      if (cart.length === 0) return;
+
+      // Riepilogo: solo da mostrare, il totale vero lo fa il server
+      this.querySelector('[data-lines]')!.replaceChildren(
+        ...cart.map(({ sku, quantity }) => {
+          const entry = catalog[sku]!;
+          const li = document.createElement('li');
+          li.className = 'flex items-baseline gap-4 border-b border-muted py-2 text-small';
+          li.append(`${quantity} × ${entry.name}${entry.size ? ` (${entry.size})` : ''}`);
+          const price = document.createElement('span');
+          price.className = 'ms-auto tabular-nums whitespace-nowrap';
+          price.textContent = formatPrice(entry.priceCents * quantity, lang);
+          li.append(price);
+          return li;
+        }),
+      );
+      const subtotal = cart.reduce((sum, item) => sum + catalog[item.sku]!.priceCents * item.quantity, 0);
+      this.querySelector('[data-subtotal]')!.textContent = formatPrice(subtotal, lang);
+
+      // Errore di un campo appena lo si lascia, se ci si era scritto qualcosa
+      for (const name of FIELDS) {
+        const control = this.#form.elements.namedItem(name) as HTMLInputElement | HTMLSelectElement;
+        control.addEventListener('blur', () => {
+          if (control.value.trim() === '') return;
+          const result = validateCheckout(this.request());
+          this.showFieldError(name, result.ok ? undefined : result.errors[name]);
+        });
+      }
+
+      this.#form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        void this.submit();
+      });
+    }
+
+    request() {
+      const value = (name: string) => (this.#form.elements.namedItem(name) as HTMLInputElement).value;
+      return {
+        lang: this.dataset.lang,
+        email: value('email'),
+        address: { fullName: value('fullName'), street: value('street'), postalCode: value('postalCode'), city: value('city'), country: value('country') },
+        items: loadCart(),
+        // Nel mock basta un token finto; il widget vero arriva con la Fase 3
+        turnstileToken: 'mock-turnstile',
+      };
+    }
+
+    message(field: CheckoutField, code: FieldError): string {
+      if (field === 'items') return this.#messages.items;
+      if (code === 'invalid' && (field === 'email' || field === 'postalCode')) return this.#messages[field];
+      return this.#messages[code];
+    }
+
+    showFieldError(field: (typeof FIELDS)[number], code: FieldError | undefined) {
+      const control = this.#form.elements.namedItem(field) as HTMLElement;
+      const error = this.querySelector<HTMLElement>(`[data-error-for="${field}"]`)!;
+      control.setAttribute('aria-invalid', String(Boolean(code)));
+      error.hidden = !code;
+      error.textContent = code ? this.message(field, code) : '';
+    }
+
+    showErrors(errors: CheckoutErrors) {
+      for (const field of FIELDS) this.showFieldError(field, errors[field]);
+      const general = (['items', 'lang', 'turnstileToken'] as const).find((field) => errors[field]);
+      this.alert(general ? this.message(general, errors[general]!) : this.#messages.summary);
+    }
+
+    alert(text: string) {
+      const alert = this.querySelector<HTMLElement>('[data-alert]')!;
+      alert.textContent = text;
+      alert.hidden = false;
+      alert.focus();
+    }
+
+    async submit() {
+      const result = validateCheckout(this.request());
+      if (!result.ok) return this.showErrors(result.errors);
+
+      const button = this.#form.querySelector('button')!;
+      const label = button.textContent;
+      button.disabled = true;
+      button.textContent = this.#messages.wait;
+      try {
+        const { id, token, redirectUrl } = await shopApi.createCheckout(result.value);
+        try {
+          sessionStorage.setItem(ORDER_KEY, JSON.stringify({ id, token }));
+        } catch {
+          // sessionStorage bloccato: la pagina ordine rimanderà al link nell'email
+        }
+        location.assign(redirectUrl);
+      } catch (error) {
+        button.disabled = false;
+        button.textContent = label;
+        if (error instanceof ShopError && error.code === 'invalid' && error.fields) return this.showErrors(error.fields);
+        if (error instanceof ShopError && error.code === 'out_of_stock') return this.alert(this.#messages.outOfStock);
+        this.alert(this.#messages.unavailable);
+      }
+    }
+  }
+
+  customElements.define('checkout-form', CheckoutForm);
+</script>

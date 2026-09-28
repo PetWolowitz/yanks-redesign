@@ -47,7 +47,7 @@ describe('mock ShopApi', () => {
     const { api } = setup();
     const checkout = await api.createCheckout(request);
     expect(checkout.token).toMatch(/^[A-Za-z0-9_-]{43}$/);
-    expect(checkout.redirectUrl).toBe('/de/shop/order');
+    expect(checkout.redirectUrl).toBe('/de/shop/order/');
     const order = await api.getOrder(checkout.id, checkout.token);
     expect(order.totalCents).toBe(2 * 4500 + 350);
   });

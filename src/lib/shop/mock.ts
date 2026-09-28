@@ -125,7 +125,7 @@ export function createMockShopApi(options: MockOptions = {}): ShopApi {
 
       // Al posto di Stripe si torna subito alla pagina ordine, senza parametri,
       // come farà il success_url vero
-      return { id: order.id, token: order.token, redirectUrl: `/${lang}/shop/order` };
+      return { id: order.id, token: order.token, redirectUrl: `/${lang}/shop/order/` };
     },
 
     async getOrder(id, token): Promise<OrderStatus> {

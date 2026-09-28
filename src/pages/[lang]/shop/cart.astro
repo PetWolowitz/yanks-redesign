@@ -5,32 +5,18 @@
 // in data-catalog (JSON in un attributo, non uno script inline: CSP).
 // Il subtotale è indicativo: l'addebito lo calcola sempre il server (docs/06).
 import type { GetStaticPaths } from 'astro';
-import { getImage } from 'astro:assets';
 import PageIntro from '../../../components/site/PageIntro.astro';
-import { merch, skuOf } from '../../../data/merch';
 import { venue } from '../../../data/venue';
 import Base from '../../../layouts/Base.astro';
 import { langPaths, type Lang } from '../../../i18n/locales';
-import { productImage } from '../../../lib/shop/images';
-import { t, type Key } from '../../../i18n/t';
+import { buildCatalog } from '../../../lib/shop/catalog';
+import { t } from '../../../i18n/t';
 
 export const getStaticPaths = langPaths satisfies GetStaticPaths;
 
 const { lang } = Astro.props as { lang: Lang };
 
-const catalog: Record<string, { name: string; size: string | null; priceCents: number; image: string; href: string }> = {};
-for (const item of merch) {
-  const image = await getImage({ src: productImage(item.slug), width: 160, format: 'webp' });
-  for (const size of item.sizes.length > 0 ? item.sizes : [null]) {
-    catalog[skuOf(item.slug, size)] = {
-      name: t(lang, `shop.products.${item.slug}.name` as Key),
-      size,
-      priceCents: item.priceCents,
-      image: image.src,
-      href: `/${lang}/shop/${item.slug}/`,
-    };
-  }
-}
+const catalog = await buildCatalog(lang);
 ---
 
 <Base lang={lang} title={`${t(lang, 'cart.title')} · ${venue.name}`} description={t(lang, 'cart.description')}>
@@ -92,7 +78,7 @@ for (const item of merch) {
   import { loadCart, onCartChange, saveCart, setQuantity, type Cart } from '../../../lib/shop/cart';
   import { formatPrice } from '../../../lib/format';
 
-  type Entry = { name: string; size: string | null; priceCents: number; image: string; href: string };
+  import type { CatalogEntry as Entry } from '../../../lib/shop/catalog';
 
   class CartView extends HTMLElement {
     #catalog: Record<string, Entry> = {};
