@@ -11,6 +11,7 @@
     "preview": "astro preview",
     "check": "astro check",
     "test": "vitest run",
+    "verify": "astro check && astro build && vitest run",
     "astro": "astro"
   },
   "dependencies": {

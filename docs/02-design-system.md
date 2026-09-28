@@ -65,24 +65,41 @@ tema, e `@theme inline` le collega alle classi di Tailwind (`bg-bg`,
 
 ## Tipografia
 
-| Ruolo | Font | Uso |
-|---|---|---|
-| Script | Indian (Billy Argel) | marchio, nome, richiami caldi. Mai paragrafi |
-| Display | Yankee Clipper (Iconian) | titoli di sezione, etichette, hero |
-| Testo | Literata | paragrafi, menu, recensioni |
-| Dati | Martian Mono | orari, prezzi, indirizzo |
+| Ruolo | Font | Token / classe | Uso |
+|---|---|---|---|
+| Titolo | Indian (Billy Argel) | `--font-title` · `font-title` | h1 e titoli hero. **Solo titoli brevi, mai frasi lunghe** |
+| Intestazione | Yankee Clipper (Iconian) | `--font-heading` · `font-heading` | h2 e h3, **sempre in maiuscolo** (`text-transform: uppercase`) |
+| Interfaccia | Martian Mono | `--font-ui` · `font-ui` | navigazione, pulsanti, etichette, prezzi, orari. È il font predefinito del `body` |
+| Prosa | Literata | `--font-prose` · `font-prose` | **solo i paragrafi lunghi**: storia, recensioni, descrizioni. Si segnano con la classe `font-prose` |
+
+h1, h2 e h3 prendono il loro font da soli (stili di base in `global.css`).
+
+**Caratteri disponibili** (controllati sulla tabella `cmap` dei file):
+- tutti e quattro i font hanno le lettere del tedesco (`ä ö ü ß`) e delle lingue
+  future (`à è é ì ò ù ç ñ`, maiuscole accentate, `€`)
+- **a Indian mancano `– — ‘ ’ “ ” …`**: il browser li prende dal font di riserva e
+  si vede. Negli h1 niente trattini, virgolette curve o puntini di sospensione
+- **Indian scende molto sotto la riga** (lo svolazzo della "Y"): sotto un titolo
+  in Indian serve spazio, circa `0.3em`, altrimenti copre la riga dopo
+- **Yankee Clipper minuscolo**: la "u" ha un uncino che la fa sembrare "ú", e
+  la "ß" è disegnata come una beta e si legge quasi "B" ("STRAßE"). Per questo
+  h2 e h3 sono sempre in maiuscolo: si usano solo le maiuscole, che sono pulite,
+  e il browser scrive "ß" come "SS". Se usi `font-heading` fuori da h2/h3,
+  aggiungi la classe `uppercase`
 
 Literata e Martian Mono sono OFL, in `public/fonts/` come `.woff2` locali con la
 licenza accanto: solo sottoinsieme latin e solo i pesi usati (Literata regolare,
-corsivo e grassetto 700; Martian Mono regolare). Si precarica solo Literata
-regolare. Indian e Yankee Clipper restano `.ttf` per ora (conversione in
+corsivo e grassetto 700; Martian Mono regolare). Si precarica solo **Martian Mono**
+regolare: è il font dell'interfaccia e del `body`, quindi il più usato. Literata
+serve solo ai paragrafi lunghi, spesso più in basso nella pagina. Indian e Yankee Clipper restano `.ttf` per ora (conversione in
 `.woff2` nella Fase 6).
 
-**Yankee Clipper non va mai nel testo lungo**: è un display, in un menu o in un
-paragrafo diventa illeggibile.
+**Indian e Yankee Clipper non vanno mai nel testo lungo**: in un menu o in un
+paragrafo diventano illeggibili.
 
-L'accoppiata forte è **script caldo sopra display pesante**: "Home of the" in
-corsivo, "MEDICINE MAN" in blocco. È il linguaggio delle insegne americane.
+Nell'hero l'accoppiata forte è **script caldo sopra display pesante**: il
+titolo in Indian, sopra o sotto una riga breve in Yankee Clipper. È il
+linguaggio delle insegne americane.
 
 **Licenze**: Indian e Yankee Clipper sono gratuiti solo per uso personale. Per un
 cliente vero serve la licenza commerciale. Sostituti liberi: Yellowtail (script),
@@ -127,3 +144,15 @@ hanno lo stesso fuso, ma chi guarda da Londra è un'ora indietro.
 - [ ] Nessuna scheda con ombra e angoli arrotondati
 - [ ] Yankee Clipper usato solo per titoli
 - [ ] Contrasto verificato in entrambi i temi
+
+## Navigazione (Fase 2A)
+**Desktop**: logo a sinistra, voci del menu al centro, a destra orologio,
+lingua, tema e carrello. Header fisso, che si rimpicciolisce scorrendo.
+
+**Mobile**: logo, carrello e ☰, che apre un menu a tutto schermo.
+- Il menu mobile funziona **senza JavaScript** (`<details>` o `popover`): il JS
+  aggiunge solo le animazioni
+- Il carrello mostra il numero di articoli; senza JS è un link alla pagina
+  carrello
+
+**Footer**: indirizzo, orari, link alle pagine, lingue, disclaimer del concept.

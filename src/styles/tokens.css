@@ -30,7 +30,7 @@
   --sage-text: var(--sage);
 }
 
-/* Collega le variabili alle classi di Tailwind (bg-bg, text-red-text, font-display…) */
+/* Collega le variabili alle classi di Tailwind (bg-bg, text-red-text, font-ui…) */
 @theme inline {
   --color-*: initial;
   --color-bg: var(--bg);
@@ -44,10 +44,11 @@
   --color-sage-text: var(--sage-text);
 
   --font-*: initial;
-  --font-script: "Indian", "Brush Script MT", cursive;
-  --font-display: "Yankee Clipper", Impact, "Arial Narrow", sans-serif;
-  --font-body: "Literata", Georgia, "Times New Roman", serif;
-  --font-mono: "Martian Mono", ui-monospace, Consolas, monospace;
+  /* Font per ruolo (docs/02). Indian non ha – — ‘ ’ “ ” …: niente di questi negli h1 */
+  --font-title: "Indian", "Brush Script MT", cursive;                  /* h1 e titoli hero, brevi */
+  --font-heading: "Yankee Clipper", Impact, "Arial Narrow", sans-serif; /* h2 e h3 */
+  --font-ui: "Martian Mono", ui-monospace, Consolas, monospace;         /* interfaccia, prezzi, orari */
+  --font-prose: "Literata", Georgia, "Times New Roman", serif;          /* solo paragrafi lunghi */
 
   --text-display: clamp(3rem, 12vw, 9rem);
   --text-h2: clamp(2rem, 5vw, 3.5rem);

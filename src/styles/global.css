@@ -2,12 +2,28 @@
 @import "./tokens.css";
 @import "./fonts.css";
 
+/* Ruoli dei font (docs/02): l'interfaccia è Martian Mono, i paragrafi lunghi
+   si segnano con la classe font-prose */
 @layer base {
   body {
     background-color: var(--bg);
     color: var(--text);
-    font-family: var(--font-body);
+    font-family: var(--font-ui);
     font-size: var(--text-body);
     line-height: 1.6;
+  }
+
+  h1 {
+    font-family: var(--font-title);
+    font-weight: 400;
+  }
+
+  /* Sempre maiuscolo: in Yankee Clipper la "u" minuscola sembra "ú" e la "ß"
+     sembra una "B". In maiuscolo il browser scrive "ß" come "SS" */
+  h2,
+  h3 {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    text-transform: uppercase;
   }
 }

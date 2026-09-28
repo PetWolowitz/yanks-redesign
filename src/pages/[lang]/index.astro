@@ -1,0 +1,19 @@
+---
+// Pagina provvisoria nelle tre lingue: sostituita dalla home vera in Fase 2A.
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import { locales, type Lang } from '../../i18n/locales';
+import { t } from '../../i18n/t';
+
+export const getStaticPaths = (() => locales.map((lang) => ({ params: { lang }, props: { lang } }))) satisfies GetStaticPaths;
+
+const { lang } = Astro.props as { lang: Lang };
+---
+
+<Base lang={lang} title={t(lang, 'site.title')} description={t(lang, 'site.description')}>
+  <main class="mx-auto max-w-5xl space-y-6 px-4 py-12">
+    <h1 class="text-display pb-[0.3em] leading-none">Yanks</h1>
+    <h2 class="text-h2 leading-none">{t(lang, 'placeholder.title')}</h2>
+    <p>{t(lang, 'placeholder.text')}</p>
+  </main>
+</Base>
