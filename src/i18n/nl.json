@@ -78,5 +78,14 @@
   "age.yes": "Ja, ik ben 18+",
   "age.no": "Nee",
   "age.denied": "Kom terug als je 18 bent. Het licht blijft aan.",
-  "age.back": "Ik vergiste me"
+  "age.back": "Ik vergiste me",
+  "hours.title": "Openingstijden",
+  "hours.everyday": "Elke dag",
+  "hours.open": "Open",
+  "hours.takeaway": "Alleen afhalen",
+  "hours.closed": "Gesloten",
+  "footer.address": "Adres",
+  "footer.pages": "Pagina's",
+  "footer.follow": "Volg Yanks",
+  "footer.disclaimer": "Ongevraagd conceptontwerp. Een persoonlijk project ter demonstratie, niet verbonden aan of goedgekeurd door Yanks Indian Club. Logo, inhoud en beelden zijn van hun respectieve eigenaars. Betalingen staan in testmodus: er worden geen echte transacties verwerkt."
 }

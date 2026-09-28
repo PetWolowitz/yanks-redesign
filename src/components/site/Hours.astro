@@ -1,0 +1,46 @@
+---
+// Gli orari nei tre stati, scritti nell'HTML: si leggono anche senza JS.
+// Orari da venue.ts; icone uguali a quelle dell'orologio (pieno, mezzo, vuoto).
+import { venue } from '../../data/venue';
+import type { Lang } from '../../i18n/locales';
+import { t } from '../../i18n/t';
+
+interface Props {
+  lang: Lang;
+  class?: string;
+}
+
+const { lang, class: className } = Astro.props;
+const { open, dineInUntil, close } = venue.hours;
+
+const rows = [
+  { from: open, to: dineInUntil, label: t(lang, 'hours.open'), icon: 'open' },
+  { from: dineInUntil, to: close, label: t(lang, 'hours.takeaway'), icon: 'takeaway' },
+  { from: close, to: open, label: t(lang, 'hours.closed'), icon: 'closed' },
+] as const;
+---
+
+<div class={className}>
+  <p class="text-muted">{t(lang, 'hours.everyday')}</p>
+  <dl class="mt-1 grid grid-cols-[auto_1fr] gap-x-4">
+    {
+      rows.map((row) => (
+        <>
+          <dt class="whitespace-nowrap tabular-nums">
+            {row.from}–{row.to}
+          </dt>
+          <dd class="flex items-center gap-2">
+            <svg class="size-3 shrink-0" viewBox="0 0 12 12" aria-hidden="true">
+              {row.icon === 'open' && <circle cx="6" cy="6" r="5.25" fill="currentColor" />}
+              {row.icon !== 'open' && (
+                <circle cx="6" cy="6" r="5" fill="none" stroke="currentColor" stroke-width="1.5" />
+              )}
+              {row.icon === 'takeaway' && <path d="M6 1a5 5 0 0 1 0 10z" fill="currentColor" />}
+            </svg>
+            {row.label}
+          </dd>
+        </>
+      ))
+    }
+  </dl>
+</div>

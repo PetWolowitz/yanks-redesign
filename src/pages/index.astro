@@ -1,4 +1,45 @@
 ---
-// "/" rimanda alla lingua predefinita. Richiesto da Astro con prefixDefaultLocale.
-return Astro.redirect('/en/');
+// "/" manda alla lingua del browser, con l'inglese come ripiego (docs/04, Fase 2A).
+// Pagina statica: la scelta la fa uno script esterno (CSP). Senza JS si va su
+// /en/ dopo un attimo, e nel frattempo ci sono i link alle tre lingue.
+import '../styles/global.css';
+import { defaultLang, languageNames, locales } from '../i18n/locales';
+
+const home = (l: string) => new URL(`/${l}/`, Astro.site).href;
 ---
+
+<!doctype html>
+<html lang={defaultLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Yanks Indian Club · Zandvoort</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={home(defaultLang)} />
+    {locales.map((l) => <link rel="alternate" hreflang={l} href={home(l)} />)}
+    <link rel="alternate" hreflang="x-default" href={home(defaultLang)} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <noscript><meta http-equiv="refresh" content={`1; url=/${defaultLang}/`} /></noscript>
+  </head>
+  <body>
+    <main class="mx-auto flex min-h-dvh max-w-xl flex-col items-center justify-center gap-6 p-4">
+      <img src="/brand/yanks-originale.png" width="232" height="232" alt="Yanks Indian Club" class="size-32" />
+      <ul class="flex gap-6 uppercase">
+        {
+          locales.map((l) => (
+            <li>
+              <a href={`/${l}/`} lang={l} hreflang={l} class="underline underline-offset-4">
+                {languageNames[l]}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </main>
+    <script>
+      import { pickLang } from '../i18n/locales';
+
+      location.replace(`/${pickLang(navigator.languages ?? [navigator.language])}/`);
+    </script>
+  </body>
+</html>

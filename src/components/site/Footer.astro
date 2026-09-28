@@ -1,0 +1,68 @@
+---
+// Footer (docs/02): indirizzo, orari, pagine, lingue, social veri, disclaimer del concept.
+// Griglia a 12 colonne usata in modo asimmetrico su desktop, una colonna su mobile.
+import { pages } from '../../data/pages';
+import { venue } from '../../data/venue';
+import type { Lang } from '../../i18n/locales';
+import { t } from '../../i18n/t';
+import Hours from './Hours.astro';
+import LangSwitch from './LangSwitch.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const { street, postalCode, city } = venue.address;
+const headingClass = 'mb-2 font-heading text-h3 uppercase';
+---
+
+<footer class="mt-16 border-t-3 border-text bg-surface">
+  <div class="mx-auto grid max-w-360 gap-10 px-4 py-12 lg:grid-cols-12 lg:gap-6">
+    <div class="lg:col-span-5">
+      <img src="/brand/yanks-originale.png" width="232" height="232" alt={venue.name} loading="lazy" class="mb-6 size-20 rounded-full dark:outline-2 dark:outline-text" />
+      <h2 class={headingClass}>{t(lang, 'footer.address')}</h2>
+      <address class="not-italic">
+        {venue.name}<br />
+        {street}<br />
+        {postalCode} {city}
+      </address>
+    </div>
+
+    <div class="lg:col-span-4">
+      <h2 class={headingClass}>{t(lang, 'hours.title')}</h2>
+      <Hours lang={lang} />
+    </div>
+
+    <div class="grid grid-cols-2 gap-6 lg:col-span-3 lg:grid-cols-1">
+      <nav aria-label={t(lang, 'footer.pages')}>
+        <h2 class={headingClass}>{t(lang, 'footer.pages')}</h2>
+        <ul class="space-y-1">
+          {
+            pages.map(({ slug, key }) => (
+              <li>
+                <a href={`/${lang}/${slug}/`} class="inline-block py-1 underline-offset-4 hover:underline">
+                  {t(lang, key)}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <div class="space-y-6">
+        <LangSwitch lang={lang} />
+        <div>
+          <h2 class={headingClass}>{t(lang, 'footer.follow')}</h2>
+          <ul class="space-y-1">
+            <li><a href={venue.social.instagram} rel="noopener" class="inline-block py-1 underline-offset-4 hover:underline">Instagram</a></li>
+            <li><a href={venue.social.facebook} rel="noopener" class="inline-block py-1 underline-offset-4 hover:underline">Facebook</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t-2 border-text pt-6 lg:col-span-12">
+      <p class="max-w-[65ch] font-prose text-small text-muted">{t(lang, 'footer.disclaimer')}</p>
+    </div>
+  </div>
+</footer>

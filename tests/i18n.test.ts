@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import de from '../src/i18n/de.json';
 import en from '../src/i18n/en.json';
 import nl from '../src/i18n/nl.json';
+import { pickLang } from '../src/i18n/locales';
 
 const reference = Object.keys(en).sort();
 const files: Record<string, Record<string, string>> = { nl, de };
@@ -31,4 +32,18 @@ describe('file di lingua', () => {
       expect(empty.map(([key]) => key)).toEqual([]);
     });
   }
+});
+
+describe('pickLang', () => {
+  it('prende la prima lingua del browser che il sito ha', () => {
+    expect(pickLang(['de-AT', 'en'])).toBe('de');
+    expect(pickLang(['fr-FR', 'nl-BE', 'en'])).toBe('nl');
+  });
+  it('ripiega sull\'inglese', () => {
+    expect(pickLang(['it-IT', 'fr'])).toBe('en');
+    expect(pickLang([])).toBe('en');
+  });
+  it('non distingue maiuscole e minuscole', () => {
+    expect(pickLang(['NL'])).toBe('nl');
+  });
 });
