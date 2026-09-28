@@ -1,0 +1,49 @@
+---
+// Recensioni scritte, in lingua originale con lang giusto, in griglia sfalsata
+// (docs/04). Niente stelle, niente voti: la fonte e il link (docs/03).
+// Recensioni video (reel): mancano gli indirizzi dei reel, vedi il diario.
+import { reviews } from '../../data/reviews';
+import { venue } from '../../data/venue';
+import type { Lang } from '../../i18n/locales';
+import { t } from '../../i18n/t';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+// Sfalsate: ogni recensione parte da una colonna diversa
+const placement = ['lg:col-span-7', 'lg:col-span-6 lg:col-start-6', 'lg:col-span-5 lg:col-start-2'];
+---
+
+<section class="border-t-3 border-text">
+  <div class="mx-auto max-w-360 px-4 py-12 lg:py-16">
+    <h2 class="text-h2 leading-none">{t(lang, 'home.reviews.title')}</h2>
+    <p class="mt-4 text-small text-muted">{t(lang, 'home.reviews.note')}</p>
+
+    <ul class="mt-10 grid gap-8 lg:grid-cols-12">
+      {
+        reviews.map((review, index) => (
+          <li class={placement[index % placement.length]}>
+            <figure class="border-l-3 border-red pl-5">
+              <blockquote lang={review.lang} class="font-prose">
+                <p>{review.text}</p>
+              </blockquote>
+              <figcaption class="mt-3 text-small text-muted">
+                <a href={review.url} rel="noopener" class="underline underline-offset-4 hover:text-text">
+                  {t(lang, 'home.reviews.source')}
+                </a>
+                {review.excerpt && <span> · {t(lang, 'home.reviews.excerpt')}</span>}
+              </figcaption>
+            </figure>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="mt-10 flex flex-wrap items-baseline justify-between gap-4 border-t-2 border-text pt-6">
+      <p>{t(lang, 'home.reviews.award')}</p>
+      <a href={venue.maps.url} rel="noopener" class="inline-block py-2 underline underline-offset-4">{t(lang, 'home.reviews.all')}</a>
+    </div>
+  </div>
+</section>

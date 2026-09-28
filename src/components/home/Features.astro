@@ -1,0 +1,52 @@
+---
+// Chi sono e le tre cose che contano: terrazza, orario, spiaggia (docs/04).
+// Asimmetrico: la foto della terrazza grande a sinistra, due blocchi di testo
+// a destra. Mai tre schede uguali in fila (docs/02).
+import { Image } from 'astro:assets';
+import terras from '../../assets/home/terras.png';
+import { venue } from '../../data/venue';
+import type { Lang } from '../../i18n/locales';
+import { t } from '../../i18n/t';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const { close, dineInUntil } = venue.hours;
+---
+
+<section class="border-t-3 border-text">
+  <div class="mx-auto max-w-360 px-4 py-12 lg:py-16">
+    <h2 class="text-h2 leading-none">{t(lang, 'home.about.title')}</h2>
+    <p class="mt-6 max-w-[65ch] font-prose">{t(lang, 'home.about.text')}</p>
+
+    <div class="mt-12 grid gap-10 lg:grid-cols-12 lg:gap-6">
+      <figure class="-mx-4 lg:col-span-7 lg:row-span-2 lg:mx-0">
+        <Image
+          src={terras}
+          alt={t(lang, 'home.terrace.alt')}
+          widths={[390, 640]}
+          sizes="(min-width: 1024px) 640px, 100vw"
+          format="webp"
+          loading="lazy"
+          class="h-auto w-full lg:max-w-160"
+        />
+        <figcaption class="mt-4 px-4 lg:px-0">
+          <h3 class="text-h3">{t(lang, 'home.terrace.title')}</h3>
+          <p class="mt-2 max-w-[50ch] font-prose">{t(lang, 'home.terrace.text')}</p>
+        </figcaption>
+      </figure>
+
+      <div class="border-t-3 border-text pt-6 lg:col-span-5">
+        <h3 class="text-h3">{t(lang, 'home.late.title')}</h3>
+        <p class="mt-2 font-prose">{t(lang, 'home.late.text', { close, dineInUntil })}</p>
+      </div>
+
+      <div class="border-t-3 border-text pt-6 lg:col-span-5">
+        <h3 class="text-h3">{t(lang, 'home.beach.title')}</h3>
+        <p class="mt-2 font-prose">{t(lang, 'home.beach.text')}</p>
+      </div>
+    </div>
+  </div>
+</section>

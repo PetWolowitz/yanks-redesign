@@ -20,6 +20,8 @@ export interface Venue {
   // anno della registrazione societaria, non dell'apertura
   companyFounded: number;
   social: { facebook: string; instagram: string };
+  // Scheda Google del locale e mappa da incorporare (caricata solo al clic)
+  maps: { url: string; embedUrl: string };
 }
 
 export const venue: Venue = {
@@ -41,5 +43,11 @@ export const venue: Venue = {
   social: {
     facebook: 'https://www.facebook.com/yankscoffeeshop',
     instagram: 'https://www.instagram.com/yanksindianclub/',
+  },
+  // Dal sito attuale (yanks.nl): la stessa scheda "Yanks Coffee Shop"
+  maps: {
+    url: 'https://maps.google.com/?cid=508006116904350505',
+    embedUrl:
+      'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2435.879317711208!2d4.524996176940651!3d52.372608247131225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c5ec12f0ff8e57%3A0x70cccdf2dcf3329!2sYanks%20Coffee%20Shop!5e0!3m2!1snl!2snl!4v1708428098845!5m2!1snl!2snl',
   },
 };

@@ -1,0 +1,50 @@
+---
+// Anteprima del menu: la caffetteria con i prezzi e il prezzo unico delle bibite.
+// Solo cibo e bevande (docs/03). Prezzi da menu.ts, scritti nell'HTML in build.
+import { menu } from '../../data/menu';
+import type { Lang } from '../../i18n/locales';
+import { formatPrice } from '../../lib/format';
+import { t, type Key } from '../../i18n/t';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const coffee = menu.find((group) => group.id === 'coffee');
+const softDrinks = menu.find((group) => group.id === 'softDrinks');
+const items = coffee?.kind === 'items' ? coffee.items.filter((item) => item.priceCents !== null) : [];
+const softDrinksPrice = softDrinks?.kind === 'drinks' ? softDrinks.priceCents : null;
+---
+
+<section class="border-t-3 border-text">
+  <div class="mx-auto grid max-w-360 gap-10 px-4 py-12 lg:grid-cols-12 lg:gap-6 lg:py-16">
+    <div class="lg:col-span-4">
+      <h2 class="text-h2 leading-none">{t(lang, 'nav.menu')}</h2>
+      <p class="mt-6 max-w-[40ch] font-prose">{t(lang, 'home.menu.text')}</p>
+      <a href={`/${lang}/menu/`} class="mt-6 inline-block py-2 underline decoration-red-text decoration-[3px] underline-offset-[6px]">
+        {t(lang, 'home.menu.link')}
+      </a>
+    </div>
+    <div class="lg:col-span-7 lg:col-start-6">
+      <h3 class="text-h3">{t(lang, 'menu.group.coffee')}</h3>
+      <ul class="mt-4 grid gap-x-10 sm:grid-cols-2">
+        {
+          items.map((item) => (
+            <li class="flex items-baseline gap-2 border-b border-muted py-2">
+              <span>{t(lang, `menu.item.${item.id}` as Key)}</span>
+              <span class="ms-auto whitespace-nowrap tabular-nums">{formatPrice(item.priceCents!, lang)}</span>
+            </li>
+          ))
+        }
+      </ul>
+      {
+        softDrinksPrice !== null && (
+          <p class="mt-6 border-3 border-text px-4 py-3 uppercase">
+            {t(lang, 'home.menu.softDrinks', { price: formatPrice(softDrinksPrice, lang) })}
+          </p>
+        )
+      }
+    </div>
+  </div>
+</section>

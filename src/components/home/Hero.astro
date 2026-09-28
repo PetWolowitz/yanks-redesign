@@ -1,0 +1,47 @@
+---
+// Hero della home. Il segno forte è il logo originale, grande e isolato (docs/02).
+// Asimmetrico, non centrato: a sinistra lo script "Yanks" sopra la riga in
+// display, a destra il logo. Nessun video per ora: il sito attuale non ne ha e
+// le foto larghe mostrano il menu della cannabis. Il posto per video e poster
+// è la colonna del logo (vedi docs/diario.md, "Da recuperare").
+// Il logo originale esiste solo a 232 px: più grande sarebbe sgranato. Per
+// ingrandirlo serve una versione vettoriale (docs/07, "Poi").
+import Hours from '../site/Hours.astro';
+import { venue } from '../../data/venue';
+import type { Lang } from '../../i18n/locales';
+import { t } from '../../i18n/t';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const { open, close } = venue.hours;
+---
+
+<section class="mx-auto grid max-w-360 items-center gap-10 px-4 py-10 lg:grid-cols-12 lg:gap-6 lg:py-16">
+  <div class="lg:col-span-7">
+    <h1 class="pb-[0.3em] text-display leading-none">Yanks</h1>
+    <p class="font-heading text-h2 leading-none uppercase">{venue.tagline}</p>
+    <p class="mt-8 max-w-[45ch] font-prose text-h3 leading-snug">{t(lang, 'home.intro', { open, close })}</p>
+    <div class="mt-8 flex flex-wrap items-end gap-x-10 gap-y-6">
+      <Hours lang={lang} />
+      <a
+        href={`/${lang}/visit/`}
+        class="inline-flex min-h-11 items-center border-3 border-text bg-text px-5 py-2 text-bg uppercase hover:bg-bg hover:text-text"
+      >
+        {t(lang, 'home.planVisit')}
+      </a>
+    </div>
+  </div>
+  <div class="order-first lg:order-none lg:col-span-5 lg:justify-self-end">
+    <img
+      src="/brand/yanks-originale.png"
+      width="232"
+      height="232"
+      alt={venue.name}
+      fetchpriority="high"
+      class="size-40 rounded-full sm:size-58 dark:outline-3 dark:outline-text"
+    />
+  </div>
+</section>
