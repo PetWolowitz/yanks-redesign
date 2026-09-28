@@ -3,3 +3,10 @@
 export const locales = ['nl', 'en', 'de'] as const;
 export type Lang = (typeof locales)[number];
 export const defaultLang: Lang = 'en';
+
+// Nome di ogni lingua nella lingua stessa, per il selettore: uguale in ogni pagina
+export const languageNames: Record<Lang, string> = {
+  nl: 'Nederlands',
+  en: 'English',
+  de: 'Deutsch',
+};

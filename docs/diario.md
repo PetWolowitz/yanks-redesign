@@ -17,6 +17,57 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-09-28 — Fase 2A, header e navigazione
+Fatto:        components/site: Header, OpenStatus, ThemeToggle, LangSwitch;
+              header in Base.astro per tutte le pagine. minutesUntilChange()
+              in lib/open-status.ts con i test (mezzanotte, ora legale e
+              solare, notti del cambio d'ora). t() con segnaposto {nome} e
+              test che siano uguali nelle tre lingue. docs/02: corretta la
+              contraddizione sull'orologio su mobile. docs/07 (prompt dei
+              loghi) aggiornato e unito. npm run verify verde, 67 test su 67.
+              Playwright sulla build: nl/en/de × 390/1024/1280/1440 × chiaro/
+              scuro, 24 casi su 24 ok; menu ☰, Esc, tema dal menu, Tab,
+              "salta al contenuto" e pagina senza JS provati a mano
+Decisioni:    - desktop da 1024 px; tra 1024 e 1280 l'orologio mostra solo
+                icona e stato (prop compact). Misurato: in tedesco, con
+                "Nur zum Mitnehmen · schließt in 23 Min.", a 1024 px la
+                fascia completa sforava di 138 px
+              - mobile: orologio in una striscia sotto la fascia, sempre
+                visibile; menu ☰ con popover, funziona senza JS
+              - Story fuori dalla navigazione finché la pagina non esiste
+              - conto alla rovescia: avanza un minuto alla volta chiedendo lo
+                stato a getOpenStatus, così mezzanotte e cambi d'ora sono già
+                gestiti. Nell'header solo in "solo asporto" ("chiude tra N
+                min"); aperto "fino alle 02:00", chiuso "apre alle 08:00"
+              - la notte del ritorno all'ora solare la fascia 02:00-02:45
+                capita due volte e l'orologio segue il muro: solo asporto,
+                chiuso per 15 minuti, di nuovo solo asporto. Accettato
+              - vite.build.assetsInlineLimit: 0. Astro metteva inline gli
+                script piccoli, e la CSP (senza unsafe-inline) li bloccava:
+                ora sono file in /_astro/, coperti da 'self'
+              - variante dark: di Tailwind legata a data-theme, non al tema
+                del sistema
+              - nomi delle lingue nella loro lingua in locales.ts
+                (languageNames); link con lang, hreflang, aria-current
+Problemi:     - LOGO ORIGINALE NON TROVATO. Nei Download non c'è
+                YANKS_rond-copy…; ci sono due PNG "il-logo-originale-disco-
+                nero-…" creati oggi, ma sono immagini generate (onde della
+                proposta 01, scritta "ORITTLE" sulla collana), non l'originale.
+                public/brand/ non esiste: nell'header c'è la scritta "Yanks"
+                in Indian come segnaposto. docs/07 cita già il percorso
+              - i link del menu (menu, visit, shop, know-before) e del
+                carrello portano a pagine non ancora fatte (404)
+              - il numero nel carrello arriva con cart.ts (Fase 2S)
+              - Chrome segnala il preload di Martian Mono come "non usato",
+                ma il font si scarica una volta sola dal preload e risulta
+                caricato: falso allarme, c'era già dalla Fase 1
+              - testi nl e de dell'header da rileggere da un madrelingua
+              - nel browser di Playwright era aperta una scheda di
+                adtrafficquality.google: non viene dal sito (la CSP non lo
+                permetterebbe), probabilmente dal profilo del browser MCP
+Prossimo:     logo originale in public/brand/, poi la home (Fase 2A)
+Ramo/commit:  sito/fase-2a-header — "Fase 2A: header e navigazione"
+
 ## 2026-09-28 — Fase 1, orologio, dati e contratto dello shop
 Fatto:        cancellata la prova di stile non tracciata (src/pages/en/).
               src/data: venue.ts, menu.ts, merch.ts, reviews.ts.
@@ -56,7 +107,8 @@ Problemi:     DA VERIFICARE, scritti nei dati come null o con un commento:
 Prossimo:     merge su main e push; poi Fase 2A (descrivere il layout
               dell'header prima di scriverlo)
 Ramo/commit:  sito/fase-1-dati-e-shop — "Fase 1: dati del menu e contratto
-              dello shop" (non ancora unito)
+              dello shop", unito su main il 2026-09-28 (GitHub e Workers
+              Builds verdi)
 
 ## 2026-09-28 — Fase 1, lingue: verifica e merge
 Fatto:        verifica Playwright della build (astro preview) su /nl/, /en/,

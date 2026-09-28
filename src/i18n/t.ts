@@ -9,6 +9,7 @@ export type Key = keyof typeof en;
 
 const dictionaries: Record<Lang, Record<Key, string>> = { nl, en, de };
 
-export function t(lang: Lang, key: Key): string {
-  return dictionaries[lang][key];
+// I segnaposto {nome} nel testo si riempiono con params: t(lang, 'clock.until', { time: '02:00' })
+export function t(lang: Lang, key: Key, params: Record<string, string> = {}): string {
+  return dictionaries[lang][key].replace(/\{(\w+)\}/g, (match, name: string) => params[name] ?? match);
 }

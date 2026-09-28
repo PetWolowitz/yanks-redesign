@@ -132,7 +132,7 @@ CHIUSO · apre alle 08:00                       (muted)
 **Gli stati non si distinguono mai solo col colore**: ognuno ha sempre anche il
 suo testo e la sua icona, così si leggono anche senza vedere i colori.
 
-Sempre visibile in header. Calcolato su `Europe/Amsterdam` con
+Sempre visibile in header (su mobile nella striscia sotto la fascia). Calcolato su `Europe/Amsterdam` con
 `Intl.DateTimeFormat`, mai sull'orologio del dispositivo: Italia e Paesi Bassi
 hanno lo stesso fuso, ma chi guarda da Londra è un'ora indietro.
 
@@ -146,10 +146,14 @@ hanno lo stesso fuso, ma chi guarda da Londra è un'ora indietro.
 - [ ] Contrasto verificato in entrambi i temi
 
 ## Navigazione (Fase 2A)
-**Desktop**: logo a sinistra, voci del menu al centro, a destra orologio,
-lingua, tema e carrello. Header fisso, che si rimpicciolisce scorrendo.
+**Desktop** (da 1024 px): logo a sinistra, voci del menu al centro, a destra
+orologio, lingua, tema e carrello. Header fisso, che si rimpicciolisce
+scorrendo. Tra 1024 e 1280 px l'orologio mostra solo icona e stato ("SOLO
+ASPORTO"), senza dettaglio: in tedesco la fascia completa non ci sta.
 
-**Mobile**: logo, carrello e ☰, che apre un menu a tutto schermo.
+**Mobile** (sotto 1024 px): logo, carrello e ☰ sulla fascia; sotto, una
+striscia sottile a tutta larghezza con l'orologio, sempre visibile. Il ☰ apre
+un menu a tutto schermo con pagine, lingue e tema.
 - Il menu mobile funziona **senza JavaScript** (`<details>` o `popover`): il JS
   aggiunge solo le animazioni
 - Il carrello mostra il numero di articoli; senza JS è un link alla pagina

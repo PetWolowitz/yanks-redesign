@@ -2,6 +2,9 @@
 @import "./tokens.css";
 @import "./fonts.css";
 
+/* dark: segue il tema scelto (data-theme su <html>), non quello del sistema */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 /* Ruoli dei font (docs/02): l'interfaccia è Martian Mono, i paragrafi lunghi
    si segnano con la classe font-prose */
 @layer base {
@@ -11,6 +14,12 @@
     font-family: var(--font-ui);
     font-size: var(--text-body);
     line-height: 1.6;
+  }
+
+  /* Focus sempre visibile da tastiera, nei due temi */
+  :focus-visible {
+    outline: 3px solid var(--red);
+    outline-offset: 3px;
   }
 
   h1 {

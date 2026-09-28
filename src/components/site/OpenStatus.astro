@@ -1,0 +1,86 @@
+---
+// Orologio a tre stati. Nell'HTML statico c'è l'orario; il JS aggiunge lo stato
+// in tempo reale, calcolato sul fuso di Amsterdam (lib/open-status.ts).
+// Ogni stato ha testo, icona e colore: mai solo il colore.
+import { venue } from '../../data/venue';
+import type { Lang } from '../../i18n/locales';
+import { t } from '../../i18n/t';
+
+interface Props {
+  lang: Lang;
+  class?: string;
+  // solo icona e stato tra 1024 e 1280 px, dove la fascia dell'header è stretta
+  compact?: boolean;
+}
+
+const { lang, class: className, compact = false } = Astro.props;
+const { open, dineInUntil, close } = venue.hours;
+---
+
+<open-status
+  class:list={[
+    'group inline-flex items-center gap-2 whitespace-nowrap',
+    // icona e stato nello stesso colore; il dettaglio resta muted
+    'data-[status=open]:text-sage-text data-[status=takeaway]:text-red-text data-[status=closed]:text-muted',
+    className,
+  ]}
+  data-label-open={t(lang, 'clock.open')}
+  data-label-takeaway={t(lang, 'clock.takeaway')}
+  data-label-closed={t(lang, 'clock.closed')}
+  data-detail-open={t(lang, 'clock.until', { time: dineInUntil })}
+  data-detail-takeaway={t(lang, 'clock.closesIn')}
+  data-detail-closed={t(lang, 'clock.opensAt', { time: open })}
+>
+  <svg class="size-3 shrink-0 group-data-status:hidden" viewBox="0 0 12 12" aria-hidden="true">
+    <circle cx="6" cy="6" r="5" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+    <path d="M6 3v3l2 1.5" fill="none" stroke="currentColor" stroke-width="1.5"></path>
+  </svg>
+  <!-- aperto: cerchio pieno · solo asporto: mezzo cerchio · chiuso: cerchio vuoto -->
+  <svg class="hidden size-3 shrink-0 group-data-[status=open]:block" viewBox="0 0 12 12" aria-hidden="true">
+    <circle cx="6" cy="6" r="5.25" fill="currentColor"></circle>
+  </svg>
+  <svg class="hidden size-3 shrink-0 group-data-[status=takeaway]:block" viewBox="0 0 12 12" aria-hidden="true">
+    <circle cx="6" cy="6" r="5" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+    <path d="M6 1a5 5 0 0 1 0 10z" fill="currentColor"></path>
+  </svg>
+  <svg class="hidden size-3 shrink-0 group-data-[status=closed]:block" viewBox="0 0 12 12" aria-hidden="true">
+    <circle cx="6" cy="6" r="5" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+  </svg>
+  <span data-label class="uppercase">{t(lang, 'clock.hours', { open, close })}</span>
+  <span
+    data-detail
+    class:list={['hidden text-muted group-data-status:inline', compact && 'lg:max-xl:group-data-status:hidden']}
+  >
+    <span aria-hidden="true">·</span> <span data-detail-text></span>
+  </span>
+</open-status>
+
+<script>
+  import { getOpenStatus, minutesUntilChange } from '../../lib/open-status';
+
+  class OpenStatusElement extends HTMLElement {
+    #timer = 0;
+
+    connectedCallback() {
+      this.render();
+      // Ogni 30 secondi: il conto alla rovescia è al minuto
+      this.#timer = window.setInterval(() => this.render(), 30_000);
+    }
+
+    disconnectedCallback() {
+      window.clearInterval(this.#timer);
+    }
+
+    render() {
+      const now = new Date();
+      const status = getOpenStatus(now);
+      const label = { open: this.dataset.labelOpen, takeaway: this.dataset.labelTakeaway, closed: this.dataset.labelClosed }[status];
+      const detail = { open: this.dataset.detailOpen, takeaway: this.dataset.detailTakeaway, closed: this.dataset.detailClosed }[status];
+      this.dataset.status = status;
+      this.querySelector('[data-label]')!.textContent = label ?? '';
+      this.querySelector('[data-detail-text]')!.textContent = (detail ?? '').replace('{minutes}', String(minutesUntilChange(now)));
+    }
+  }
+
+  customElements.define('open-status', OpenStatusElement);
+</script>
