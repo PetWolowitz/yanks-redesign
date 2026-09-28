@@ -17,6 +17,37 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-09-28 — Fase 2A, tema scuro, orologio al neon, logo originale
+Fatto:        tema scuro ritarato (bg #1F1B17, surface #2A251F, text
+              #DDD2C0). Orologio a insegna al neon con tre token --neon-* per
+              tema, alone solo nello scuro, tremolio all'accensione. Logo
+              originale scaricato da yanks.nl (YANKS_rond-copy.png, 232 px)
+              in public/brand/yanks-originale.png e messo nell'header.
+              docs/02 aggiornato. npm run verify verde, 67 test su 67.
+              Playwright: 24 casi su 24 ok, contrasti letti dalla pagina
+Decisioni:    - text scuro 11.45:1 su bg (richiesta: tra 10 e 13), 10.16 su
+                surface; tutte le coppie sopra 4.5 (la più bassa: --red su
+                surface, 4.80). Tabella in docs/02
+              - neon chiaro: verde #176B37 (il primo, #1D7A40, faceva 4.27
+                su sabbia), ambra #8A5700, rosso #B3261E
+              - l'alone al neon è l'unica ombra ammessa nel sito (docs/02)
+              - tremolio: 1.2 s, una volta, solo opacity, tre cali di luce,
+                meno di tre lampi al secondo; niente con reduced motion; i
+                cambi di stato dopo l'accensione non tremano
+              - logo come <img> da public/ (40 KB PNG), non con astro:assets:
+                così resta il file di riferimento citato da docs/07. WebP e
+                astro:assets nella Fase 6
+Problemi:     - CLAUDE.md ha ancora i valori scuri vecchi nella tabella dei
+                colori: da allineare (Pietro decide)
+              - nel tema scuro il disco nero del logo si confonde col fondo:
+                si vede il volto, non il cerchio. Proposta: anello sottile
+              - design-guidelines.md nei Download contraddice CLAUDE.md
+                (Inter, tema di default, grigi, cookie banner, calm mode,
+                age gate, Yankee Clipper negli h1): non adottato
+Prossimo:     Pietro guarda l'anteprima del ramo; se va, merge. Poi la home
+Ramo/commit:  sito/tema-scuro-neon-logo — "Tema scuro più caldo, orologio al
+              neon, logo originale" (NON unito: anteprima da approvare)
+
 ## 2026-09-28 — Fase 2A, header e navigazione
 Fatto:        components/site: Header, OpenStatus, ThemeToggle, LangSwitch;
               header in Base.astro per tutte le pagine. minutesUntilChange()

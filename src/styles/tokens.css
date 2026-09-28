@@ -14,20 +14,28 @@
   --sage: #6E8F85;      /* superfici e bordi */
   --red-text: #A54C3D;  /* testo: 5.01:1 su crema, 4.51:1 su sabbia */
   --sage-text: #526B64; /* testo: 5.08:1 su crema, 4.58:1 su sabbia */
+  /* Orologio a insegna: nel chiaro etichetta con bordo, senza alone */
+  --neon-open: #176B37;     /* 5.80:1 su crema, 5.23:1 su sabbia */
+  --neon-takeaway: #8A5700; /* 5.38 · 4.85 */
+  --neon-closed: #B3261E;   /* 5.77 · 5.20 */
 }
 
 /* Ritarati uno per uno, mai invertiti in automatico */
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #151310;        /* non nero puro: stanca meno */
-  --surface: #221E1A;
-  --text: #F0E8DA;
-  --muted: #A79E90;
-  --red: #E0705A;       /* schiarito: sul nero il rosso pieno non passa 4.5:1 */
+  --bg: #1F1B17;        /* marrone scuro caldo, non nero: stanca meno */
+  --surface: #2A251F;
+  --text: #DDD2C0;      /* ammorbidito: 11.45:1 su bg, 10.16:1 su surface */
+  --muted: #A79E90;     /* 6.47 · 5.74 */
+  --red: #E0705A;       /* schiarito: sul fondo scuro il rosso pieno non passa 4.5:1. 5.41 · 4.80 */
   --gold: #E3BE72;
-  --sage: #8FB0A5;
+  --sage: #8FB0A5;      /* 7.27 · 6.45 */
   --red-text: var(--red);
   --sage-text: var(--sage);
+  /* Orologio a insegna: nello scuro tubi al neon con alone */
+  --neon-open: #5DF28C;     /* 11.85 · 10.52 */
+  --neon-takeaway: #FFB547; /* 9.74 · 8.64 */
+  --neon-closed: #FF6B5E;   /* 6.12 · 5.44 */
 }
 
 /* Collega le variabili alle classi di Tailwind (bg-bg, text-red-text, font-ui…) */
@@ -42,6 +50,9 @@
   --color-sage: var(--sage);
   --color-red-text: var(--red-text);
   --color-sage-text: var(--sage-text);
+  --color-neon-open: var(--neon-open);
+  --color-neon-takeaway: var(--neon-takeaway);
+  --color-neon-closed: var(--neon-closed);
 
   --font-*: initial;
   /* Font per ruolo (docs/02). Indian non ha – — ‘ ’ “ ” …: niente di questi negli h1 */
