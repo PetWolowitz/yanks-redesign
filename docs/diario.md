@@ -37,16 +37,21 @@ Decisioni:    - text scuro 11.45:1 su bg (richiesta: tra 10 e 13), 10.16 su
               - logo come <img> da public/ (40 KB PNG), non con astro:assets:
                 così resta il file di riferimento citato da docs/07. WebP e
                 astro:assets nella Fase 6
-Problemi:     - CLAUDE.md ha ancora i valori scuri vecchi nella tabella dei
-                colori: da allineare (Pietro decide)
-              - nel tema scuro il disco nero del logo si confonde col fondo:
-                si vede il volto, non il cerchio. Proposta: anello sottile
-              - design-guidelines.md nei Download contraddice CLAUDE.md
+              - poi, su richiesta: tabella colori di CLAUDE.md allineata a
+                docs/02 (con i --neon-*); anello crema di 2 px intorno al
+                logo solo nel tema scuro (outline in --text, 11.45:1 sul
+                fondo). Playwright rifatto: 24 casi su 24 ok
+              - age gate: CLAUDE.md non lo prevede, docs/06 lo consiglia
+                ("avviso semplice, ricorda la scelta, non blocca i motori di
+                ricerca"). Proposta fatta a Pietro, NON implementato
+              - cookie: nessuno. Nessun Set-Cookie nelle risposte, nel codice
+                solo localStorage (tema scelto, ordini finti del mock)
+Problemi:     - design-guidelines.md nei Download contraddice CLAUDE.md
                 (Inter, tema di default, grigi, cookie banner, calm mode,
                 age gate, Yankee Clipper negli h1): non adottato
-Prossimo:     Pietro guarda l'anteprima del ramo; se va, merge. Poi la home
-Ramo/commit:  sito/tema-scuro-neon-logo — "Tema scuro più caldo, orologio al
-              neon, logo originale" (NON unito: anteprima da approvare)
+Prossimo:     Pietro approva la PR; decisione sull'age gate; poi la home
+Ramo/commit:  sito/tema-scuro-neon-logo — "Anello del logo nel tema scuro,
+              colori in CLAUDE.md" (PR aperta verso main, NON unita)
 
 ## 2026-09-28 — Fase 2A, header e navigazione
 Fatto:        components/site: Header, OpenStatus, ThemeToggle, LangSwitch;

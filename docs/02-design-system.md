@@ -10,6 +10,9 @@ cornice a un marchio d'epoca. Il contrasto tra i due è il punto.
 ## Il marchio
 - **Il logo resta.** Nel sito attuale è annegato in un template: qui diventa
   l'elemento forte, grande, isolato, su fondi ampi
+- File: `public/brand/yanks-originale.png`. Nel tema scuro ha un anello crema
+  di 2 px (`--text`, 11.45:1 sul fondo), altrimenti il disco nero sparisce nel
+  fondo marrone. È una cornice: il logo non si tocca
 - Un solo segno importante per schermata
 - Nessuna clipart a tema come riempitivo
 - Le proposte di evoluzione del marchio (vedi `07-prompt-loghi.md`) si mostrano

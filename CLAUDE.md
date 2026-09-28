@@ -136,18 +136,23 @@ I loro rosso e oro, ammorbiditi. Valori completi in `docs/02-design-system.md`.
 
 | Token | Chiaro | Scuro |
 |---|---|---|
-| `--bg` | `#F7F0E4` | `#151310` |
-| `--surface` | `#F1E4CC` | `#221E1A` |
-| `--text` | `#2B2724` | `#F0E8DA` |
+| `--bg` | `#F7F0E4` | `#1F1B17` |
+| `--surface` | `#F1E4CC` | `#2A251F` |
+| `--text` | `#2B2724` | `#DDD2C0` |
 | `--muted` | `#6B645C` | `#A79E90` |
 | `--red` | `#C75B4A` | `#E0705A` |
 | `--gold` | `#E3BE72` | `#E3BE72` |
 | `--sage` | `#6E8F85` | `#8FB0A5` |
 | `--red-text` | `#A54C3D` | = `--red` |
 | `--sage-text` | `#526B64` | = `--sage` |
+| `--neon-open` | `#176B37` | `#5DF28C` |
+| `--neon-takeaway` | `#8A5700` | `#FFB547` |
+| `--neon-closed` | `#B3261E` | `#FF6B5E` |
 
 Testo rosso o salvia sempre con `--red-text` e `--sage-text`: nel tema chiaro
-`--red` e `--sage` non arrivano a 4.5:1. Gli stati dell'orologio non si
+`--red` e `--sage` non arrivano a 4.5:1. Nel tema scuro il testo principale sta
+tra 10:1 e 13:1 sul fondo (ora 11.45): più alto affatica gli occhi. I
+`--neon-*` servono solo all'orologio. Gli stati dell'orologio non si
 distinguono mai solo col colore, sempre anche con testo e icona.
 
 **Dark mode obbligatoria.** Interruttore sempre in header. Colori ritarati uno
