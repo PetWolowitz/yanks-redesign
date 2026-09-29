@@ -37,7 +37,7 @@ const images = productImages(item.slug);
           sizes="(min-width: 1024px) 55vw, 100vw"
           format="webp"
           fetchpriority="high"
-          class="w-full border-3 border-text"
+          class="w-full border-3 rounded-2xl border-text"
         />
         {
           images.length > 1 && (
@@ -51,7 +51,7 @@ const images = productImages(item.slug);
                     sizes="(min-width: 1024px) 18vw, 50vw"
                     format="webp"
                     loading="lazy"
-                    class="aspect-[4/5] w-full border-3 border-text object-cover"
+                    class="aspect-[4/5] w-full border-3 rounded-2xl border-text object-cover"
                   />
                 </li>
               ))}

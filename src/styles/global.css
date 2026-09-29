@@ -36,3 +36,145 @@
     text-transform: uppercase;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Movimento (docs/08). Tutto dentro no-preference: con prefers-reduced-motion
+   non si nasconde e non si muove niente. Solo transform e opacity.
+   --------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  /* Titoli in attesa di scripts/motion.ts, solo se il JS c'è (data-js). Se lo
+     script non parte, dopo 2.5 s compaiono comunque */
+  html[data-js] :is(main, footer) :is(h1, h2, h3):not([data-split]) {
+    opacity: 0;
+    animation: show-anyway 0s 2.5s forwards;
+  }
+
+  /* Titoli spezzati: ogni pezzo sale sfalsato quando il titolo entra in vista */
+  [data-split] .split-word {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  [data-split] .split-piece {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(0.45em) rotate(4deg);
+    transition:
+      opacity 0.5s ease-out,
+      transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1.15);
+    transition-delay: calc(var(--i, 0) * 28ms);
+  }
+
+  /* Le parole dello script Indian: più lente e più ampie */
+  h1[data-split] .split-piece {
+    transform: translateY(0.3em) scale(0.92) rotate(-3deg);
+    transition-duration: 0.6s, 0.9s;
+    transition-delay: calc(var(--i, 0) * 110ms);
+  }
+
+  [data-split].is-in .split-piece {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Blocchi sotto la piega: salgono quando arrivano in vista */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.6s ease-out,
+      transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition-delay: calc(var(--i, 0) * 70ms);
+  }
+
+  [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes show-anyway {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Cursore personalizzato (scripts/cursor.ts): attivo solo con html[data-cursor] */
+html[data-cursor],
+html[data-cursor] :is(a, button, label, select, summary, [role="button"]) {
+  cursor: none;
+}
+
+/* Nei campi di testo serve il cursore di testo */
+html[data-cursor] :is(input:not([type="radio"], [type="checkbox"]), textarea) {
+  cursor: text;
+}
+
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 90;
+  pointer-events: none;
+  width: 3rem;
+  height: 3rem;
+  margin: -1.5rem 0 0 -1.5rem;
+  opacity: 0;
+  mix-blend-mode: difference;
+}
+
+.cursor::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: #fff;
+  transform: scale(0.28);
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1.2);
+}
+
+html[data-cursor] .cursor[data-visible] {
+  opacity: 1;
+}
+
+.cursor[data-mode="link"]::after {
+  transform: scale(0.9);
+}
+
+.cursor[data-mode="image"]::after {
+  transform: scale(1.8);
+}
+
+.cursor[data-pressed]::after {
+  transform: scale(0.2);
+}
+
+/* Avviso d'età e menu mobile stanno nel top layer, sopra il cursore: lì torna
+   quello di sistema */
+html[data-cursor]:has(dialog[open], [popover]:popover-open) {
+  cursor: auto;
+}
+
+html[data-cursor]:has(dialog[open], [popover]:popover-open) :is(a, button, label, select) {
+  cursor: pointer;
+}
+
+html:has(dialog[open], [popover]:popover-open) .cursor {
+  display: none;
+}
+
+/* Testo che si scompone al passaggio del mouse (ScatterText.astro, footer) */
+.scatter-letter {
+  display: inline-block;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .scatter-letter {
+    transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1.1);
+  }
+
+  .scatter-host:hover .scatter-letter {
+    transform: translate(var(--dx), var(--dy)) rotate(var(--r));
+    transition-duration: 0.3s;
+  }
+}

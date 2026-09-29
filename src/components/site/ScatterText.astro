@@ -1,0 +1,30 @@
+---
+// Testo che si scompone al passaggio del mouse e torna a posto quando esce
+// (footer). Ogni lettera ha uno spostamento e una rotazione fissi, calcolati qui
+// in build: niente JS, solo transform. Gli screen reader leggono il testo intero
+// (sr-only); le lettere sono aria-hidden. Si attiva su un antenato con .scatter-host.
+interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+
+// Pseudo-casuale ma stabile: stessa lettera, stesso posto, a ogni build
+const noise = (seed: number) => {
+  const x = Math.sin(seed * 12.9898) * 43758.5453;
+  return x - Math.floor(x);
+};
+const letters = [...text].map((char, i) => {
+  const seed = i + 1 + (char.codePointAt(0) ?? 0);
+  return {
+    char: char === ' ' ? ' ' : char,
+    dx: ((noise(seed) - 0.5) * 1.4).toFixed(2),
+    dy: ((noise(seed + 7) - 0.5) * 1.6).toFixed(2),
+    r: Math.round((noise(seed + 13) - 0.5) * 70),
+  };
+});
+---
+
+<span class="scatter"><span class="sr-only">{text}</span><span aria-hidden="true">{
+  letters.map((l) => <span class="scatter-letter" style={`--dx:${l.dx}em;--dy:${l.dy}em;--r:${l.r}deg`}>{l.char}</span>)
+}</span></span>

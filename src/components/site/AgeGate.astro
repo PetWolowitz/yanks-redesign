@@ -27,10 +27,10 @@ const { lang } = Astro.props;
     <p>{t(lang, 'age.text')}</p>
 
     <div data-age-ask class="flex flex-wrap justify-center gap-4">
-      <button type="button" data-age-yes autofocus class="min-h-11 border-3 border-text px-6 py-2 uppercase hover:bg-text hover:text-bg">
+      <button type="button" data-age-yes autofocus class="min-h-11 border-3 rounded-full border-text px-6 py-2 uppercase hover:bg-text hover:text-bg">
         {t(lang, 'age.yes')}
       </button>
-      <button type="button" data-age-no class="min-h-11 border-3 border-text px-6 py-2 uppercase hover:bg-text hover:text-bg">
+      <button type="button" data-age-no class="min-h-11 border-3 rounded-full border-text px-6 py-2 uppercase hover:bg-text hover:text-bg">
         {t(lang, 'age.no')}
       </button>
     </div>

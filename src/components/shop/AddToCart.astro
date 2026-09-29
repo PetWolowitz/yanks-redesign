@@ -17,7 +17,7 @@ const sizes = item.sizes.length > 0 ? item.sizes : [null];
 const quantities = Array.from({ length: 10 }, (_, i) => i + 1);
 ---
 
-<add-to-cart data-too-many={t(lang, 'shop.tooMany')} data-sold-out={t(lang, 'shop.soldOut')}>
+<add-to-cart data-too-many={t(lang, 'shop.tooMany')} data-sold-out={t(lang, 'shop.soldOut')} data-done={t(lang, 'shop.addedShort')}>
   <form hidden class="space-y-6">
     {
       item.sizes.length > 0 && (
@@ -27,7 +27,7 @@ const quantities = Array.from({ length: 10 }, (_, i) => i + 1);
             {sizes.map((size, index) => (
               <label class="relative">
                 <input type="radio" name="sku" value={skuOf(item.slug, size)} checked={index === 0} required class="peer sr-only" />
-                <span class="inline-flex min-h-11 min-w-12 cursor-pointer items-center justify-center border-3 border-text px-3 peer-checked:bg-text peer-checked:text-bg peer-disabled:cursor-not-allowed peer-disabled:border-muted peer-disabled:text-muted peer-disabled:line-through peer-focus-visible:outline-3 peer-focus-visible:outline-offset-3 peer-focus-visible:outline-red">
+                <span class="inline-flex min-h-11 min-w-12 cursor-pointer items-center justify-center border-3 rounded-full border-text px-3 peer-checked:bg-text peer-checked:text-bg peer-disabled:cursor-not-allowed peer-disabled:border-muted peer-disabled:text-muted peer-disabled:line-through peer-focus-visible:outline-3 peer-focus-visible:outline-offset-3 peer-focus-visible:outline-red">
                   {size}
                 </span>
               </label>
@@ -41,27 +41,28 @@ const quantities = Array.from({ length: 10 }, (_, i) => i + 1);
     <div class="flex flex-wrap items-end gap-4">
       <label class="flex flex-col gap-2">
         <span class="uppercase">{t(lang, 'shop.quantity')}</span>
-        <select name="quantity" class="min-h-11 border-3 border-text bg-bg px-3">
+        <select name="quantity" class="min-h-11 border-3 rounded-xl border-text bg-bg px-3">
           {quantities.map((n) => <option value={n}>{n}</option>)}
         </select>
       </label>
-      <button type="submit" class="min-h-11 border-3 border-text bg-text px-6 py-2 text-bg uppercase hover:bg-bg hover:text-text disabled:cursor-not-allowed disabled:opacity-60">
+      <button type="submit" class="min-h-11 border-3 rounded-full border-text bg-text px-6 py-2 text-bg uppercase hover:bg-bg hover:text-text disabled:cursor-not-allowed disabled:opacity-60">
         {t(lang, 'shop.addToCart')}
       </button>
     </div>
 
     <p data-message role="status" class="min-h-6"></p>
     <p data-added hidden>
-      {t(lang, 'shop.added')}
+      {t(lang, 'shop.added')}{' '}
       <a href={`/${lang}/shop/cart/`} class="underline decoration-red-text decoration-[3px] underline-offset-[6px]">{t(lang, 'shop.viewCart')}</a>
     </p>
   </form>
-  <noscript><p class="border-3 border-text px-4 py-3">{t(lang, 'shop.noscript')}</p></noscript>
+  <noscript><p class="border-3 rounded-2xl border-text px-4 py-3">{t(lang, 'shop.noscript')}</p></noscript>
 </add-to-cart>
 
 <script>
   import { addItem, loadCart, saveCart } from '../../lib/shop/cart';
   import { loadProducts } from '../../lib/shop/stock';
+  import { flyToCart } from '../../scripts/fly-to-cart';
 
   class AddToCart extends HTMLElement {
     #stock = new Map<string, number>();
@@ -87,6 +88,11 @@ const quantities = Array.from({ length: 10 }, (_, i) => i + 1);
           return;
         }
         saveCart(addItem(loadCart(), sku, quantity));
+        // La foto vola al carrello; il pulsante conferma per un momento
+        flyToCart(document.querySelector<HTMLImageElement>('main img'));
+        const label = button.textContent;
+        button.textContent = '✓ ' + (this.dataset.done ?? '');
+        setTimeout(() => (button.textContent = label), 1600);
         message.textContent = '';
         added.hidden = false;
       });

@@ -1,0 +1,64 @@
+---
+// Interazioni comuni a tutte le pagine: animazioni d'ingresso, cursore
+// personalizzato e freccia per tornare su (docs/08).
+// La freccia compare verso il fondo della pagina; senza JS resta nascosta.
+import type { Lang } from '../../i18n/locales';
+import { t } from '../../i18n/t';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<div data-cursor class="cursor" aria-hidden="true"></div>
+
+<a
+  href="#top"
+  data-back-to-top
+  hidden
+  class="fixed right-4 bottom-4 z-40 inline-flex size-14 translate-y-4 items-center justify-center rounded-full border-3 border-text bg-bg opacity-0 transition duration-300 hover:-translate-y-1 hover:bg-text hover:text-bg data-shown:translate-y-0 data-shown:opacity-100 motion-reduce:transition-none"
+>
+  <span class="sr-only">{t(lang, 'backToTop')}</span>
+  <svg class="size-6" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 20V5M5 11l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+  </svg>
+</a>
+
+<script>
+  import { initCursor } from '../../scripts/cursor';
+  import { initMotion } from '../../scripts/motion';
+
+  initMotion();
+  initCursor();
+
+  // Freccia per tornare su: visibile negli ultimi 600 px della pagina, se la pagina scorre
+  const button = document.querySelector<HTMLAnchorElement>('[data-back-to-top]');
+  if (button) {
+    button.hidden = false;
+    const update = () => {
+      const scrollable = document.documentElement.scrollHeight > innerHeight * 1.5;
+      const nearBottom = scrollY + innerHeight >= document.documentElement.scrollHeight - 600;
+      const shown = scrollable && nearBottom;
+      button.toggleAttribute('data-shown', shown);
+      // Nascosta davvero quando non serve: niente Tab su un pulsante invisibile
+      button.inert = !shown;
+    };
+    addEventListener('scroll', update, { passive: true });
+    addEventListener('resize', update, { passive: true });
+    update();
+
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+      // Il focus torna in cima: sul titolo della pagina, senza un secondo salto
+      const heading = document.querySelector<HTMLElement>('main h1');
+      if (heading) {
+        heading.tabIndex = -1;
+        heading.focus({ preventScroll: true });
+      }
+    });
+  }
+</script>

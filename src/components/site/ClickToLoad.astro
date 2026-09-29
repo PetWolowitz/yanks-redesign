@@ -22,14 +22,14 @@ const { src, title, buttonLabel, notice, linkHref, linkLabel, ratio = '16 / 9', 
 <click-to-load
   data-src={src}
   data-title={title}
-  class:list={['relative block border-3 border-text bg-surface', className]}
+  class:list={['relative block border-3 rounded-2xl border-text bg-surface', className]}
   style={`aspect-ratio: ${ratio}`}
 >
   <div data-preview class="flex h-full flex-col items-start justify-end gap-3 p-4">
     <slot />
     <p class="max-w-[45ch] text-small text-muted">{notice}</p>
     <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
-      <button type="button" hidden class="min-h-11 border-3 border-text px-4 py-2 uppercase hover:bg-text hover:text-bg">
+      <button type="button" hidden class="min-h-11 border-3 rounded-full border-text px-4 py-2 uppercase hover:bg-text hover:text-bg">
         {buttonLabel}
       </button>
       <a href={linkHref} rel="noopener" class="inline-block py-2 underline underline-offset-4">{linkLabel}</a>

@@ -85,6 +85,16 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
 if (reduce) return
 ```
 
+## Cosa è fatto, e come (2026-09-29)
+
+Titoli in ingresso, blocchi che salgono, cursore, volo nel carrello, lettere del
+footer e freccia per tornare su sono fatti **senza GSAP**: CSS, `IntersectionObserver`
+e Web Animations API bastano (KISS, e nessuna dipendenza nuova). Il codice:
+`src/scripts/motion.ts`, `cursor.ts`, `fly-to-cart.ts`, i componenti
+`Interactions.astro` e `ScatterText.astro`, il CSS in fondo a `global.css`.
+GSAP resta la scelta per quello che manca: nastro con l'orario e sezioni che si
+incastrano con ScrollTrigger.
+
 ## I limiti da rispettare
 
 - `prefers-reduced-motion: reduce` disattiva tutto. Non è cortesia, è

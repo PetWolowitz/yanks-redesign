@@ -137,8 +137,17 @@ Syne (display), Literata (testo), Martian Mono (dati).
 - Griglia a 12 colonne usata in modo asimmetrico: mai tre schede uguali in fila
 - Immagini a filo del bordo dello schermo
 - Testo largo al massimo 65 caratteri
-- Bordi spessi (2-6 px) nel colore del testo, nessuna ombra (unica eccezione:
-  l'alone al neon dell'orologio nel tema scuro), angoli al massimo 2 px
+- Bordi spessi (2-6 px) nel colore del testo
+- **Angoli sempre arrotondati** (richiesta di Pietro, 2026-09-29): pulsanti,
+  pillole e selettori `rounded-full`; campi dei moduli `rounded-xl`; schede,
+  riquadri e immagini `rounded-2xl`. Restano dritte solo le linee che separano
+  le sezioni
+- **Ombre**: solo due, entrambe senza sfumatura di profondità. L'alone del neon
+  (è luce) e, **al passaggio sulle schede**, un'ombra piena sfalsata di 6 px nel
+  colore del testo, con la scheda che si solleva: un adesivo anni '50
+- **Schede**: foto con zoom leggero al passaggio, etichette a pillola sopra la
+  foto (edizione "1/250" in oro sulla tavola scura, disponibilità), prezzo in una
+  pillola che si riempie al passaggio
 
 ## L'orologio a tre stati
 
@@ -148,12 +157,13 @@ Syne (display), Literata (testo), Martian Mono (dati).
 [○ CHIUSO] · apre alle 08:00               (rosso,      --neon-closed)
 ```
 
-**Stile insegna al neon**, anni '50-'80: icona e stato dentro un bordo di 2 px
-nel colore dello stato; il dettaglio dopo il punto resta `--muted`.
-- **Tema scuro**: il tubo si accende. Alone con `text-shadow` sul testo,
-  `drop-shadow` sull'icona e `box-shadow` sul bordo. È **l'unica ombra
-  ammessa nel sito**: è luce, non profondità
-- **Tema chiaro**: etichetta colorata con bordo, **senza alone**
+**Stile insegna al neon**, anni '50-'80: icona e stato dentro un tubo a
+pillola nel colore dello stato; il dettaglio dopo il punto resta `--muted`.
+- **Uguale nei due temi** (dal 2026-09-29: nel tema chiaro l'etichetta con
+  bordo non si vedeva): tubi al neon accesi su una tavola scura
+  (`--neon-board`), con alone (`text-shadow` sul testo, `drop-shadow`
+  sull'icona, `box-shadow` sul bordo). È luce, non profondità
+- Senza JS non c'è uno stato: niente tavola, solo l'orario nel colore del testo
 - **Accensione**: un tremolio solo al primo caricamento, 1.2 secondi, solo
   `opacity`, meno di tre lampi al secondo. **Niente del tutto con
   `prefers-reduced-motion`**. I cambi di stato successivi non tremano
@@ -166,12 +176,38 @@ Sempre visibile in header (su mobile nella striscia sotto la fascia). Calcolato 
 `Intl.DateTimeFormat`, mai sull'orologio del dispositivo: Italia e Paesi Bassi
 hanno lo stesso fuso, ma chi guarda da Londra è un'ora indietro.
 
+## Hero della home
+
+"Yanks" in Indian e in `--red` (3.69:1 su crema: testo grande, minimo 3:1);
+"Home of the Medicine Man" in Yankee Clipper e in `--matte`, nero opaco
+(`#1C1B1A`, 15.18:1 su crema). Nel tema scuro `--matte` è il colore del
+testo: il nero sparirebbe. Accanto, il logo grande.
+
+## Movimento (dal 2026-09-29)
+
+Tutto in CSS e poco TypeScript, senza librerie (docs/08). `prefers-reduced-motion`
+spegne tutto; si animano solo `transform` e `opacity`; senza JS si vede tutto.
+- **Titoli in ingresso** (h1, h2, h3 di pagina e footer, `scripts/motion.ts`):
+  Indian per parola, Yankee Clipper per lettera, sfalsati quando entrano in
+  vista. Gli screen reader leggono il titolo intero (`sr-only`)
+- **Blocchi in ingresso**: schede, foto, citazioni e moduli sotto la piega salgono
+  quando arrivano in vista. Quello che è a schermo al caricamento non si anima
+- **Aggiunta al carrello**: la foto vola con un arco fino all'icona del carrello,
+  il numero salta, il pulsante mostra "✓ Aggiunto" per 1.6 s
+- **Footer**: al passaggio del mouse le lettere dei link si scompongono e tornano
+  a posto quando esce (`ScatterText.astro`, solo CSS)
+- **Cursore**: un punto che inverte i colori, più grande su link e pulsanti, un
+  blocco pieno sulle foto. Solo con un mouse vero; nei campi di testo resta il
+  cursore di testo; con avviso d'età o menu aperti torna quello di sistema
+- **Freccia per tornare su**: compare negli ultimi 600 px delle pagine lunghe;
+  riporta in cima e mette il focus sul titolo della pagina
+
 ## Lista di controllo prima di ogni commit
 - [ ] Nessun gradiente, nessun glassmorphism, nessuna emoji nell'interfaccia
 - [ ] Nessuna foglia di cannabis decorativa, nessuna clipart a tema
 - [ ] Nessuna immagine stock
 - [ ] Nessun hero centrato con titolo e sottotitolo grigio
-- [ ] Nessuna scheda con ombra e angoli arrotondati
+- [ ] Schede: angoli arrotondati, ombra solo quella piena al passaggio
 - [ ] Yankee Clipper usato solo per titoli
 - [ ] Contrasto verificato in entrambi i temi
 

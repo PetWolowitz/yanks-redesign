@@ -1,6 +1,8 @@
 ---
 // Scheda di un prodotto nel catalogo: foto, nome, prezzo scritto in build da
 // merch.ts, disponibilità aggiunta dal JS. Tutta la scheda è un link.
+// Stile (docs/02): angoli arrotondati, etichette a pillola sulla foto, e al
+// passaggio la scheda si solleva con un'ombra piena sfalsata, come un adesivo.
 import { Image } from 'astro:assets';
 import { skuOf } from '../../data/merch';
 import type { Lang } from '../../i18n/locales';
@@ -23,23 +25,35 @@ const name = t(lang, `shop.products.${item.slug}.name` as Key);
 const skus = (item.sizes.length > 0 ? item.sizes : [null]).map((size) => skuOf(item.slug, size));
 ---
 
-<li class={className}>
-  <a href={`/${lang}/shop/${item.slug}/`} class="group flex h-full flex-col border-3 border-text bg-bg">
-    <Image
-      src={productImage(item.slug)}
-      alt=""
-      widths={large ? [480, 800] : [320, 480]}
-      sizes={large ? '(min-width: 1024px) 50vw, 100vw' : '(min-width: 1024px) 25vw, 50vw'}
-      format="webp"
-      loading="lazy"
-      class="aspect-[4/5] w-full border-b-3 border-text object-cover"
-    />
-    <span class="flex flex-1 flex-col gap-2 p-4">
-      <span class:list={['font-heading uppercase group-hover:underline', large ? 'text-h3' : 'text-base']}>{name}</span>
-      {item.limited !== null && <span class="text-small text-red-text">{t(lang, 'shop.limitedOf', { count: String(item.limited) })}</span>}
-      <span class="mt-auto flex flex-wrap items-baseline justify-between gap-2">
-        <span class="tabular-nums">{formatPrice(item.priceCents, lang)}</span>
-        <StockStatus lang={lang} skus={skus} />
+<li data-card class={className}>
+  <a
+    href={`/${lang}/shop/${item.slug}/`}
+    class="group flex h-full flex-col overflow-hidden rounded-2xl border-3 border-text bg-bg transition duration-300 ease-out hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0_var(--color-text)] motion-reduce:transition-none motion-reduce:hover:translate-x-0 motion-reduce:hover:translate-y-0"
+  >
+    <span class="relative block overflow-hidden border-b-3 border-text">
+      <Image
+        src={productImage(item.slug)}
+        alt=""
+        widths={large ? [480, 800] : [320, 480]}
+        sizes={large ? '(min-width: 1024px) 50vw, 100vw' : '(min-width: 1024px) 25vw, 50vw'}
+        format="webp"
+        loading="lazy"
+        class="aspect-[4/5] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+      />
+      {
+        item.limited !== null && (
+          <span class="absolute top-3 left-3 rounded-full bg-neon-board px-3 py-1 text-small text-gold tabular-nums">
+            <span aria-hidden="true">1/{item.limited}</span>
+            <span class="sr-only">{t(lang, 'shop.limitedOf', { count: String(item.limited) })}</span>
+          </span>
+        )
+      }
+      <StockStatus lang={lang} skus={skus} class="absolute top-3 right-3 rounded-full bg-bg px-3 py-1 empty:hidden" />
+    </span>
+    <span class="flex flex-1 items-end justify-between gap-3 p-4">
+      <span class:list={['font-heading leading-tight uppercase', large ? 'text-h3' : 'text-base']}>{name}</span>
+      <span class="shrink-0 rounded-full border-2 border-text px-3 py-1 text-small tabular-nums transition-colors group-hover:bg-text group-hover:text-bg">
+        {formatPrice(item.priceCents, lang)}
       </span>
     </span>
   </a>

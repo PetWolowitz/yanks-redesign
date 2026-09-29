@@ -14,10 +14,14 @@
   --sage: #6E8F85;      /* superfici e bordi */
   --red-text: #A54C3D;  /* testo: 5.01:1 su crema, 4.51:1 su sabbia */
   --sage-text: #526B64; /* testo: 5.08:1 su crema, 4.58:1 su sabbia */
-  /* Orologio a insegna: nel chiaro etichetta con bordo, senza alone */
-  --neon-open: #176B37;     /* 5.80:1 su crema, 5.23:1 su sabbia */
-  --neon-takeaway: #8A5700; /* 5.38 · 4.85 */
-  --neon-closed: #B3261E;   /* 5.77 · 5.20 */
+  /* Orologio a insegna, uguale nei due temi: tubi al neon su una tavola scura.
+     Contrasti misurati sulla tavola: 11.85 · 9.74 · 6.12 */
+  --neon-board: #1F1B17;
+  --neon-open: #5DF28C;
+  --neon-takeaway: #FFB547;
+  --neon-closed: #FF6B5E;
+  /* Nero opaco della riga "Home of the Medicine Man": 15.18:1 su crema */
+  --matte: #1C1B1A;
 }
 
 /* Ritarati uno per uno, mai invertiti in automatico */
@@ -32,10 +36,8 @@
   --sage: #8FB0A5;      /* 7.27 · 6.45 */
   --red-text: var(--red);
   --sage-text: var(--sage);
-  /* Orologio a insegna: nello scuro tubi al neon con alone */
-  --neon-open: #5DF28C;     /* 11.85 · 10.52 */
-  --neon-takeaway: #FFB547; /* 9.74 · 8.64 */
-  --neon-closed: #FF6B5E;   /* 6.12 · 5.44 */
+  /* Il nero opaco sul fondo scuro sparirebbe: qui è il colore del testo */
+  --matte: var(--text);
 }
 
 /* Collega le variabili alle classi di Tailwind (bg-bg, text-red-text, font-ui…) */
@@ -53,6 +55,8 @@
   --color-neon-open: var(--neon-open);
   --color-neon-takeaway: var(--neon-takeaway);
   --color-neon-closed: var(--neon-closed);
+  --color-neon-board: var(--neon-board);
+  --color-matte: var(--matte);
 
   --font-*: initial;
   /* Font per ruolo (docs/02). Indian non ha – — ‘ ’ “ ” …: niente di questi negli h1 */

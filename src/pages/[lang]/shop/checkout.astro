@@ -41,7 +41,7 @@ const legendClass = 'mb-4 font-heading text-h3 uppercase';
 <Base lang={lang} title={`${t(lang, 'checkout.title')} · ${venue.name}`} description={t(lang, 'checkout.description')}>
   <main id="content">
     <PageIntro title={t(lang, 'checkout.title')} intro={t(lang, 'shop.testMode')}>
-      <noscript><p class="mt-6 border-3 border-text px-4 py-3">{t(lang, 'shop.noscript')}</p></noscript>
+      <noscript><p class="mt-6 border-3 rounded-2xl border-text px-4 py-3">{t(lang, 'shop.noscript')}</p></noscript>
     </PageIntro>
 
     <checkout-form
@@ -57,7 +57,7 @@ const legendClass = 'mb-4 font-heading text-h3 uppercase';
 
       <div data-full hidden class="grid gap-10 lg:grid-cols-12 lg:gap-6">
         <form novalidate class="space-y-10 border-t-3 border-text pt-6 lg:col-span-7">
-          <div data-alert role="alert" tabindex="-1" hidden class="border-3 border-red-text px-4 py-3 text-red-text"></div>
+          <div data-alert role="alert" tabindex="-1" hidden class="border-3 rounded-2xl border-red-text px-4 py-3 text-red-text"></div>
 
           <fieldset class="space-y-6">
             <legend class={legendClass}>{t(lang, 'checkout.contact')}</legend>
@@ -76,24 +76,24 @@ const legendClass = 'mb-4 font-heading text-h3 uppercase';
                 name="country"
                 autocomplete="country"
                 aria-describedby="checkout-country-error"
-                class="min-h-11 border-3 border-text bg-bg px-3 aria-[invalid=true]:border-red-text"
+                class="min-h-11 border-3 rounded-xl border-text bg-bg px-3 aria-[invalid=true]:border-red-text"
               >
                 {countries.map(({ code, name }) => <option value={code} selected={code === 'NL'}>{name}</option>)}
               </select>
             </Field>
           </fieldset>
 
-          <p class="border-2 border-dashed border-muted px-4 py-3 text-small text-muted">{t(lang, 'checkout.turnstile')}</p>
+          <p class="border-2 rounded-2xl border-dashed border-muted px-4 py-3 text-small text-muted">{t(lang, 'checkout.turnstile')}</p>
 
           <div class="space-y-4">
             <p class="text-small text-muted">{t(lang, 'checkout.privacy')}</p>
-            <button type="submit" class="min-h-11 w-full border-3 border-text bg-text px-6 py-3 text-bg uppercase hover:bg-bg hover:text-text disabled:cursor-wait disabled:opacity-60 sm:w-auto">
+            <button type="submit" class="min-h-11 w-full border-3 rounded-full border-text bg-text px-6 py-3 text-bg uppercase hover:bg-bg hover:text-text disabled:cursor-wait disabled:opacity-60 sm:w-auto">
               {t(lang, 'checkout.pay')}
             </button>
           </div>
         </form>
 
-        <aside class="h-fit border-3 border-text p-6 lg:col-span-5">
+        <aside class="h-fit border-3 rounded-2xl border-text p-6 lg:col-span-5">
           <h2 class="text-h3">{t(lang, 'checkout.summary')}</h2>
           <ul data-lines class="mt-4"></ul>
           <p class="mt-4 flex items-baseline justify-between gap-4 text-h3">

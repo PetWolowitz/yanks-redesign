@@ -27,7 +27,7 @@ const describedBy = [hint && `${id}-hint`, `${id}-error`].filter(Boolean).join('
       autocomplete={autocomplete}
       maxlength={maxlength}
       aria-describedby={describedBy}
-      class="min-h-11 border-3 border-text bg-bg px-3 py-2 aria-[invalid=true]:border-red-text"
+      class="min-h-11 border-3 rounded-xl border-text bg-bg px-3 py-2 aria-[invalid=true]:border-red-text"
     />
   </slot>
   <p id={`${id}-error`} data-error-for={name} hidden class="text-small text-red-text"></p>
