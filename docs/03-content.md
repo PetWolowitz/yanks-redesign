@@ -195,8 +195,36 @@ Restano: abbigliamento, accendini, portasigarette, posacenere, mystery box.
   Gli sfondi dell'abbigliamento (tende e tramonto western) sono più "tribali"
   della direzione americana anni '50 (CLAUDE.md): sono le foto del cliente, per
   un uso reale andrebbero rifatte
-- non inclusi, anche se in vendita: beach bag, portachiavi, profumo per interni,
-  filtri Purize e tutti gli accessori per la cannabis (sopra)
+- ~~non inclusi: beach bag, portachiavi, profumo per interni~~ superato il
+  2026-09-29, vedi sotto
+
+**Merch completo, 2026-09-29** (richiesta di Pietro: "tutto il merch" di
+shop.yanks.nl, con le sue immagini). 21 prodotti in `merch.ts`:
+- aggiunti, nella categoria nuova **Accessori**: beach bag (€17,50), portachiavi
+  in metallo (€4,50), portachiavi a braccialetto (€9), profumo per interni
+  Yanks x LaBlaze (€15) come **due prodotti**, Original e High Tides, perché il
+  contratto dello shop conosce solo le taglie
+- **esclusi, di nuovo e per gli stessi motivi** (Vincoli legali e Stripe): Rolling
+  Tray, 3D Grinder, Grinders, Plastic Grinders, Mini Bong, Glass Tips, filtri
+  Purize
+- **tutte le foto** di ogni prodotto in `src/assets/shop/<slug>/<n>.jpg`
+  (62 foto, ridotte a 1000 px): la 1 nel catalogo, tutte nella galleria della
+  scheda. Escluse le sei foto del zip hoodie con un modello in primo piano:
+  volti di persone non necessari
+- **descrizioni** riscritte da quelle del negozio, più brevi, con i consigli di
+  taglia; tolti i passaggi su "joints" e "pre-rolls"
+- colori: ancora non selezionabili, citati nella descrizione
+
+**Immagini del negozio usate fuori dallo shop** (dalla home di shop.yanks.nl):
+- **logo in alta risoluzione** (`logo_main_ezrav.png`, 3200 px) in
+  `src/assets/brand/yanks-logo.png`, ridotto a 1200 px: sostituisce il PNG da
+  232 px in tutto il sito tramite `Logo.astro`. Il logo "vettoriale" di "Da
+  recuperare" non serve più per il sito
+- **il locale dal Dorpsplein** (`esterno.jpg`), a tutta larghezza in home e in Visit
+- **l'interno con i totem** (`interno.jpg`, 720 px) accanto a "chi sono"
+- **scartate**: gli interni con gli schermi del menu della cannabis sullo sfondo
+  (anche se illeggibili), la foto della vetrina con i bong, le foto dei prodotti
+  esclusi (grinder, bong, rolling tray, glass tips)
 
 **Esclusi dallo shop del concept: i semi.** La vendita e la spedizione di semi
 all'estero hanno regole diverse per ogni paese, e in diversi paesi dell'Unione è
@@ -254,8 +282,8 @@ Dal sito originale, da riscrivere più diretto e mettere in una pagina visibile:
       video; la foto larga (`yanks-banner.jpg`) mostra gli schermi con il menu
       della cannabis e non si può usare. L'hero per ora è tipografico
 - [ ] Indirizzi dei reel Instagram per le recensioni video (embed al clic)
-- [ ] Logo in alta risoluzione o vettoriale: l'originale è di 232 px
-- [ ] Foto dei prodotti del merch
+- [x] Logo in alta risoluzione: trovato su shop.yanks.nl (3200 px), 2026-09-29
+- [x] Foto dei prodotti del merch: da shop.yanks.nl, 2026-09-29
 - [ ] Prezzi di tosti e pizza
 - [ ] Prezzi di cappelli e beanie
 - [ ] Foto in alta risoluzione (per un concept vanno bene quelle del sito)

@@ -4,6 +4,7 @@
 // (docs/03). In auto: la situazione dei parcheggi è DA VERIFICARE, quindi non c'è.
 import type { GetStaticPaths } from 'astro';
 import MapSection from '../../components/home/MapSection.astro';
+import Exterior from '../../components/site/Exterior.astro';
 import Hours from '../../components/site/Hours.astro';
 import OpenStatus from '../../components/site/OpenStatus.astro';
 import PageIntro from '../../components/site/PageIntro.astro';
@@ -22,6 +23,8 @@ const blockClass = 'border-t-3 border-text pt-6';
 <Base lang={lang} title={`${t(lang, 'nav.visit')} · ${venue.name}`} description={t(lang, 'visit.description')}>
   <main id="content">
     <PageIntro title={t(lang, 'nav.visit')} intro={t(lang, 'visit.intro')} />
+    <Exterior lang={lang} priority />
+    <div class="h-10"></div>
 
     <div class="mx-auto grid max-w-360 gap-10 px-4 pb-12 lg:grid-cols-12 lg:gap-6">
       <section class:list={[blockClass, 'lg:col-span-7']}>

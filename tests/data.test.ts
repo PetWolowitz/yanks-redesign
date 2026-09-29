@@ -47,8 +47,8 @@ describe('merch.ts', () => {
 });
 
 describe('foto dei prodotti', () => {
-  it('ogni prodotto di merch.ts ha la sua foto in src/assets/shop', () => {
-    expect(merch.map((item) => item.slug).filter((slug) => !existsSync(`src/assets/shop/${slug}.jpg`))).toEqual([]);
+  it('ogni prodotto di merch.ts ha almeno la foto 1 in src/assets/shop/<slug>/', () => {
+    expect(merch.map((item) => item.slug).filter((slug) => !existsSync(`src/assets/shop/${slug}/1.jpg`))).toEqual([]);
   });
 });
 

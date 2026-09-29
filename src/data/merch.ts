@@ -27,6 +27,13 @@ export const merch: MerchItem[] = [
   // Cappellino e beanie: prezzi da shop.yanks.nl, taglia unica
   { slug: 'cap', category: 'clothing', priceCents: 3000, sizes: [], limited: null },
   { slug: 'beanie', category: 'clothing', priceCents: 2500, sizes: [], limited: null },
+  // Accessori da shop.yanks.nl (2026-09-29). Il profumo ha due fragranze: due prodotti,
+  // perché il contratto conosce solo le taglie
+  { slug: 'beach-bag', category: 'accessories', priceCents: 1750, sizes: [], limited: null },
+  { slug: 'metal-keychain', category: 'accessories', priceCents: 450, sizes: [], limited: null },
+  { slug: 'wristband-keychain', category: 'accessories', priceCents: 900, sizes: [], limited: null },
+  { slug: 'interior-perfume-original', category: 'accessories', priceCents: 1500, sizes: [], limited: null },
+  { slug: 'interior-perfume-high-tides', category: 'accessories', priceCents: 1500, sizes: [], limited: null },
   { slug: 'mystery-box', category: 'special', priceCents: 8000, sizes: [], limited: 50 },
 ];
 

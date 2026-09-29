@@ -5,6 +5,7 @@
 // - Senza JS data-age non esiste: il pannello resta nascosto e il sito si legge
 // - Si ricorda solo il "sì" (localStorage age-ok), mai il "no". Nessun cookie
 import { venue } from '../../data/venue';
+import Logo from './Logo.astro';
 import type { Lang } from '../../i18n/locales';
 import { t } from '../../i18n/t';
 
@@ -21,13 +22,7 @@ const { lang } = Astro.props;
   class="m-0 h-dvh max-h-none w-full max-w-none place-content-center border-0 bg-bg p-4 text-text"
 >
   <div class="mx-auto flex max-w-xl flex-col items-center gap-6 text-center">
-    <img
-      src="/brand/yanks-originale.png"
-      width="232"
-      height="232"
-      alt={venue.name}
-      class="size-32 rounded-full dark:outline-2 dark:outline-text"
-    />
+    <Logo alt={venue.name} size={160} class="size-40" />
     <h2 id="age-gate-title" class="text-h2 leading-none">{t(lang, 'age.title')}</h2>
     <p>{t(lang, 'age.text')}</p>
 
