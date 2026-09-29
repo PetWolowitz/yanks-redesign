@@ -22,7 +22,7 @@ const catalog = await buildCatalog(lang);
 <Base lang={lang} title={`${t(lang, 'cart.title')} · ${venue.name}`} description={t(lang, 'cart.description')}>
   <main id="content">
     <PageIntro title={t(lang, 'cart.title')} intro={t(lang, 'shop.testMode')}>
-      <noscript><p class="mt-6 border-3 border-text px-4 py-3">{t(lang, 'shop.noscript')}</p></noscript>
+      <noscript><p class="mt-6 border-3 rounded-2xl border-text px-4 py-3">{t(lang, 'shop.noscript')}</p></noscript>
     </PageIntro>
 
     <cart-view
@@ -40,13 +40,13 @@ const catalog = await buildCatalog(lang);
 
       <div data-full hidden class="grid gap-10 lg:grid-cols-12 lg:gap-6">
         <ul data-rows class="border-t-3 border-text lg:col-span-8"></ul>
-        <div class="h-fit border-3 border-text p-6 lg:col-span-4">
+        <div class="h-fit border-3 rounded-2xl border-text p-6 lg:col-span-4">
           <p class="flex items-baseline justify-between gap-4 text-h3">
             <span>{t(lang, 'cart.subtotal')}</span>
             <span data-subtotal class="tabular-nums"></span>
           </p>
           <p class="mt-2 text-small text-muted">{t(lang, 'cart.note')}</p>
-          <a href={`/${lang}/shop/checkout/`} class="mt-6 flex min-h-11 items-center justify-center border-3 border-text bg-text px-6 py-2 text-bg uppercase hover:bg-bg hover:text-text">
+          <a href={`/${lang}/shop/checkout/`} class="mt-6 flex min-h-11 items-center justify-center border-3 rounded-full border-text bg-text px-6 py-2 text-bg uppercase hover:bg-bg hover:text-text">
             {t(lang, 'cart.checkout')}
           </a>
         </div>
@@ -54,14 +54,14 @@ const catalog = await buildCatalog(lang);
 
       <template>
         <li class="flex gap-4 border-b border-muted py-4">
-          <img data-image alt="" width="80" height="100" class="h-25 w-20 shrink-0 border-2 border-text object-cover" />
+          <img data-image alt="" width="80" height="100" class="h-25 w-20 shrink-0 border-2 rounded-lg border-text object-cover" />
           <div class="flex flex-1 flex-col gap-2">
             <a data-name class="font-heading uppercase hover:underline"></a>
             <span data-size class="text-small text-muted"></span>
             <div class="mt-auto flex flex-wrap items-center gap-4">
               <label class="flex items-center gap-2 text-small">
                 <span data-quantity-label></span>
-                <select data-quantity class="min-h-11 border-2 border-text bg-bg px-2"></select>
+                <select data-quantity class="min-h-11 border-2 rounded-xl border-text bg-bg px-2"></select>
               </label>
               <button type="button" data-remove class="min-h-11 text-small underline underline-offset-4"></button>
             </div>

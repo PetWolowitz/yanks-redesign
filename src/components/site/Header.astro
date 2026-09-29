@@ -65,7 +65,7 @@ const linkClass =
       <ThemeToggle lang={lang} />
     </div>
 
-    <a href={`/${lang}/shop/cart/`} class="relative inline-flex size-11 items-center justify-center">
+    <a href={`/${lang}/shop/cart/`} data-cart-link class="relative inline-flex size-11 items-center justify-center">
       <span class="sr-only">{t(lang, 'header.cart')}</span>
       <svg class="size-6" viewBox="0 0 24 24" aria-hidden="true">
         <path d="M5 8h14l-1.2 13H6.2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
@@ -123,12 +123,19 @@ const linkClass =
 
   // Numero di articoli sull'icona del carrello, in ogni pagina e tra le schede
   const badge = document.querySelector<HTMLElement>('[data-cart-count]');
+  let shownCount = 0;
   const showCount = (cart: Cart) => {
     if (!badge) return;
     const count = countItems(cart);
     badge.hidden = count === 0;
     badge.textContent = count > 99 ? '99+' : String(count);
+    // Il numero salta quando cresce (dopo il volo della foto, niente con movimento ridotto)
+    if (count > shownCount && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      badge.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.7)' }, { transform: 'scale(1)' }], { duration: 450, delay: 650, easing: 'cubic-bezier(0.3, 1.6, 0.5, 1)' });
+    }
+    shownCount = count;
   };
+  shownCount = countItems(loadCart());
   showCount(loadCart());
   onCartChange(showCount);
 

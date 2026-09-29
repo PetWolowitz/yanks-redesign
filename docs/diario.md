@@ -17,6 +17,35 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-09-29 — Design: schede, animazioni, cursore, neon, angoli arrotondati
+Fatto:        richieste di Pietro. Schede nuove (catalogo, anteprima shop,
+              recensioni, blocchi della home): angoli arrotondati, foto con
+              zoom, pillole su foto e prezzo, ombra piena sfalsata al
+              passaggio. Angoli arrotondati ovunque (36 elementi). Neon
+              acceso su tavola scura anche nel tema chiaro. Hero: "Yanks"
+              rosso, "Home of the Medicine Man" nero opaco. Titoli h1-h3 in
+              ingresso sfalsati, blocchi che salgono, volo della foto nel
+              carrello con salto del numero, lettere del footer che si
+              scompongono, cursore personalizzato, freccia per tornare su.
+              verify verde, 183 test
+Decisioni:    - niente GSAP: CSS, IntersectionObserver e Web Animations API
+                bastano, nessuna dipendenza nuova (docs/08)
+              - senza JS e con reduced motion si vede tutto e non si muove
+                niente; rete di sicurezza: titoli visibili dopo 2.5 s se lo
+                script non parte; niente lampi su ciò che è già a schermo
+              - font: Indian resta per gli h1 (e "Yanks"), Yankee Clipper per
+                h2, h3 e il resto, come in CLAUDE.md
+              - regole nuove in docs/02 (angoli, ombre, neon, hero, Movimento)
+                e in CLAUDE.md (Animazioni). theme-init.js mette data-js:
+                hash della CSP aggiornato
+Problemi:     - in una prova Playwright la pagina è scorsa da sola; non si
+                riproduce e il codice non scorre: probabilmente input reale
+                sulla finestra visibile del browser di test
+              - da fare con GSAP, se servirà: nastro con l'orario, sezioni che
+                si incastrano
+Prossimo:     come prima: Fase 3, lingue it/fr/es, spedizione, colori
+Ramo/commit:  design/card-animazioni-cursore
+
 ## 2026-09-29 — Shop, merch completo e immagini di shop.yanks.nl
 Fatto:        esplorato shop.yanks.nl (27 prodotti, 81 foto, 30 immagini in
               home). merch.ts da 16 a 21 prodotti, categoria Accessori;

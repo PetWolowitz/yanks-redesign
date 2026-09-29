@@ -209,10 +209,15 @@ altre tre. Regole in `docs/04-build-plan.md`, fase i18n.
 - Un solo video in autoplay per schermata
 
 ## Animazioni
-Tre effetti, uno per sezione. Dettagli in `docs/08-animazioni-risorse.md`.
-- Testo sfalsato in ingresso e nastro con l'orario che scorre
+Dettagli in `docs/08-animazioni-risorse.md` e `docs/02-design-system.md`
+(Movimento). Fatti il 2026-09-29, in CSS e TypeScript senza librerie:
+- Titoli sfalsati in ingresso (Indian per parola, Yankee Clipper per lettera) e
+  blocchi che salgono quando entrano in vista
 - Cursore custom che inverte i colori sopra le immagini, spento su touch
-- Sezioni che si incastrano con `position: sticky` e ScrollTrigger
+- Volo della foto nel carrello all'aggiunta; lettere dei link del footer che si
+  scompongono al passaggio; freccia per tornare su in fondo alle pagine
+- Ancora da fare, con GSAP se servirà: nastro con l'orario che scorre, sezioni
+  che si incastrano con `position: sticky` e ScrollTrigger
 
 Non negoziabile: `prefers-reduced-motion` spegne tutto; si animano solo
 `transform` e `opacity`; il contenuto resta leggibile senza JavaScript.

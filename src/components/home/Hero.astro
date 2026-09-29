@@ -21,14 +21,14 @@ const { open, close } = venue.hours;
 
 <section class="mx-auto grid max-w-360 items-center gap-10 px-4 py-10 lg:grid-cols-12 lg:gap-6 lg:py-16">
   <div class="lg:col-span-7">
-    <h1 class="pb-[0.3em] text-display leading-none">Yanks</h1>
-    <p class="font-heading text-h2 leading-none uppercase">{venue.tagline}</p>
+    <h1 class="pb-[0.3em] text-display leading-none text-red">Yanks</h1>
+    <p class="font-heading text-h2 leading-none text-matte uppercase">{venue.tagline}</p>
     <p class="mt-8 max-w-[45ch] font-prose text-h3 leading-snug">{t(lang, 'home.intro', { open, close })}</p>
     <div class="mt-8 flex flex-wrap items-end gap-x-10 gap-y-6">
       <Hours lang={lang} />
       <a
         href={`/${lang}/visit/`}
-        class="inline-flex min-h-11 items-center border-3 border-text bg-text px-5 py-2 text-bg uppercase hover:bg-bg hover:text-text"
+        class="inline-flex min-h-11 items-center border-3 rounded-full border-text bg-text px-5 py-2 text-bg uppercase hover:bg-bg hover:text-text"
       >
         {t(lang, 'home.planVisit')}
       </a>

@@ -1,4 +1,4 @@
-// Prima del rendering: imposta il tema e dice se mostrare l'avviso d'età.
+// Prima del rendering: imposta il tema, dice se mostrare l'avviso d'età e segna che il JS c'è.
 // Gira inline nell'<head>, il suo hash è nella CSP.
 // Se lo modifichi, aggiorna l'hash in public/_headers: il test tests/csp-hash.test.ts lo controlla.
 (function () {
@@ -19,4 +19,7 @@
   // "ask": l'avviso d'età copre la pagina fin dal primo frame (components/site/AgeGate.astro).
   // Senza JS questo attributo non esiste e l'avviso resta nascosto
   root.dataset.age = ageOk ? 'ok' : 'ask';
+  // Il JS c'è: i titoli possono aspettare l'animazione d'ingresso (global.css).
+  // Senza JS l'attributo manca e tutto è visibile da subito
+  root.dataset.js = '';
 })();

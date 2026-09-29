@@ -27,7 +27,7 @@ const itemName = (id: string) => t(lang, `menu.item.${id}` as Key);
           {
             menu.map((group) => (
               <li>
-                <a href={`#${group.id}`} class="inline-flex min-h-11 items-center border-3 border-text px-4 text-small uppercase hover:bg-text hover:text-bg">
+                <a href={`#${group.id}`} class="inline-flex min-h-11 items-center border-3 rounded-full border-text px-4 text-small uppercase hover:bg-text hover:text-bg">
                   {groupTitle(group.id)}
                 </a>
               </li>
@@ -44,7 +44,7 @@ const itemName = (id: string) => t(lang, `menu.item.${id}` as Key);
             <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
               <h2 class="text-h2 leading-none">{groupTitle(group.id)}</h2>
               {group.kind === 'drinks' && group.priceCents !== null && (
-                <p class="border-3 border-text px-3 py-1 uppercase tabular-nums">
+                <p class="border-3 rounded-2xl border-text px-3 py-1 uppercase tabular-nums">
                   {t(lang, 'menu.allPrice', { price: formatPrice(group.priceCents, lang) })}
                 </p>
               )}

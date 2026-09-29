@@ -51,3 +51,9 @@ describe('theme-init.js', () => {
     expect(dataset.age).toBe('ask');
   });
 });
+
+describe('theme-init.js, segno del JS', () => {
+  it('mette data-js: le animazioni d\'ingresso possono nascondere i titoli', () => {
+    expect(run({}).js).toBe('');
+  });
+});

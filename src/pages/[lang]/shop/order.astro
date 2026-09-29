@@ -42,10 +42,10 @@ const messages = {
       data-messages={JSON.stringify(messages)}
     >
       <p data-message role="status" class="border-t-3 border-text pt-6 font-prose text-h3">{t(lang, 'order.loading')}</p>
-      <noscript><p class="mt-6 border-3 border-text px-4 py-3">{t(lang, 'shop.noscript')}</p></noscript>
+      <noscript><p class="mt-6 border-3 rounded-2xl border-text px-4 py-3">{t(lang, 'shop.noscript')}</p></noscript>
 
       <div class="mt-10 grid gap-10 lg:grid-cols-12 lg:gap-6">
-        <section data-details hidden class="border-3 border-text p-6 lg:col-span-7">
+        <section data-details hidden class="border-3 rounded-2xl border-text p-6 lg:col-span-7">
           <h2 class="text-h3">{t(lang, 'order.number')} <span data-id class="font-ui text-small normal-case"></span></h2>
           <ul data-lines class="mt-4"></ul>
           <p class="mt-4 flex items-baseline justify-between gap-4 text-h3">
@@ -54,11 +54,11 @@ const messages = {
           </p>
         </section>
 
-        <section data-link-box hidden class="h-fit border-3 border-text p-6 lg:col-span-5">
+        <section data-link-box hidden class="h-fit border-3 rounded-2xl border-text p-6 lg:col-span-5">
           <h2 class="text-h3">{t(lang, 'order.link.title')}</h2>
           <p class="mt-2 text-small">{t(lang, 'order.link.text')}</p>
-          <code data-link class="mt-4 block border-2 border-muted bg-surface p-3 text-small break-all select-all"></code>
-          <button type="button" data-copy class="mt-4 min-h-11 border-3 border-text px-4 py-2 uppercase hover:bg-text hover:text-bg">
+          <code data-link class="mt-4 block border-2 rounded-2xl border-muted bg-surface p-3 text-small break-all select-all"></code>
+          <button type="button" data-copy class="mt-4 min-h-11 border-3 rounded-full border-text px-4 py-2 uppercase hover:bg-text hover:text-bg">
             {t(lang, 'order.link.copy')}
           </button>
           <p data-copy-status role="status" class="mt-2 min-h-6 text-small"></p>

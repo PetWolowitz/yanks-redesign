@@ -8,6 +8,7 @@ import { t } from '../../i18n/t';
 import Hours from './Hours.astro';
 import LangSwitch from './LangSwitch.astro';
 import Logo from './Logo.astro';
+import ScatterText from './ScatterText.astro';
 
 interface Props {
   lang: Lang;
@@ -42,8 +43,8 @@ const headingClass = 'mb-2 font-heading text-h3 uppercase';
           {
             pages.map(({ slug, key }) => (
               <li>
-                <a href={`/${lang}/${slug}/`} class="inline-block py-1 underline-offset-4 hover:underline">
-                  {t(lang, key)}
+                <a href={`/${lang}/${slug}/`} class="scatter-host inline-block py-1">
+                  <ScatterText text={t(lang, key)} />
                 </a>
               </li>
             ))
@@ -51,12 +52,12 @@ const headingClass = 'mb-2 font-heading text-h3 uppercase';
         </ul>
       </nav>
       <div class="space-y-6">
-        <LangSwitch lang={lang} />
+        <LangSwitch lang={lang} scatter />
         <div>
           <h2 class={headingClass}>{t(lang, 'footer.follow')}</h2>
           <ul class="space-y-1">
-            <li><a href={venue.social.instagram} rel="noopener" class="inline-block py-1 underline-offset-4 hover:underline">Instagram</a></li>
-            <li><a href={venue.social.facebook} rel="noopener" class="inline-block py-1 underline-offset-4 hover:underline">Facebook</a></li>
+            <li><a href={venue.social.instagram} rel="noopener" class="scatter-host inline-block py-1"><ScatterText text="Instagram" /></a></li>
+            <li><a href={venue.social.facebook} rel="noopener" class="scatter-host inline-block py-1"><ScatterText text="Facebook" /></a></li>
           </ul>
         </div>
       </div>

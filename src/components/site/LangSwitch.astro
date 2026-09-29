@@ -3,14 +3,17 @@
 // con lang e hreflang giusti. short: codici NL EN DE (header); altrimenti nomi interi.
 import { languageNames, locales, type Lang } from '../../i18n/locales';
 import { t } from '../../i18n/t';
+import ScatterText from './ScatterText.astro';
 
 interface Props {
   lang: Lang;
   short?: boolean;
+  // lettere che si scompongono al passaggio del mouse (footer)
+  scatter?: boolean;
   class?: string;
 }
 
-const { lang, short = false, class: className } = Astro.props;
+const { lang, short = false, scatter = false, class: className } = Astro.props;
 
 // /en/menu/ → /nl/menu/: cambia solo il primo segmento, come gli hreflang di Base.astro
 const hrefFor = (l: Lang) => Astro.url.pathname.replace(/^\/[^/]+\//, `/${l}/`);
@@ -29,6 +32,7 @@ const hrefFor = (l: Lang) => Astro.url.pathname.replace(/^\/[^/]+\//, `/${l}/`);
             class:list={[
               'inline-flex min-h-11 items-center decoration-red-text decoration-[3px] underline-offset-[6px] hover:underline aria-[current]:underline',
               short && 'px-1.5 uppercase',
+              scatter && 'scatter-host hover:no-underline',
             ]}
           >
             {short ? (
@@ -36,6 +40,8 @@ const hrefFor = (l: Lang) => Astro.url.pathname.replace(/^\/[^/]+\//, `/${l}/`);
                 <span aria-hidden="true">{l}</span>
                 <span class="sr-only">{languageNames[l]}</span>
               </>
+            ) : scatter ? (
+              <ScatterText text={languageNames[l]} />
             ) : (
               languageNames[l]
             )}

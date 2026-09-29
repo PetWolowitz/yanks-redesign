@@ -6,6 +6,7 @@ import themeInit from '../scripts/theme-init.js?raw';
 import AgeGate from '../components/site/AgeGate.astro';
 import Footer from '../components/site/Footer.astro';
 import Header from '../components/site/Header.astro';
+import Interactions from '../components/site/Interactions.astro';
 
 interface Props {
   lang: Lang;
@@ -38,5 +39,6 @@ const urlFor = (l: Lang) => new URL(Astro.url.pathname.replace(/^\/[^/]+\//, `/$
     <slot />
     <Footer lang={lang} />
     <AgeGate lang={lang} />
+    <Interactions lang={lang} />
   </body>
 </html>
