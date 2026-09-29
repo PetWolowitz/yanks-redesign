@@ -16,7 +16,7 @@ export const getStaticPaths = langPaths satisfies GetStaticPaths;
 
 const { lang } = Astro.props as { lang: Lang };
 const limited = merch.filter((item) => item.limited !== null);
-const categories: Category[] = ['clothing', 'smoking'];
+const categories: Category[] = ['clothing', 'accessories', 'smoking'];
 const byCategory = (category: Category) => merch.filter((item) => item.category === category && item.limited === null);
 ---
 

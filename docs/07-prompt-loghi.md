@@ -2,7 +2,8 @@
 
 ## Il logo originale
 
-File: `public/brand/yanks-originale.png`. È il riferimento per ogni proposta, e
+File: `public/brand/yanks-originale.png`; in alta risoluzione (3200 px, da
+shop.yanks.nl) in `src/assets/brand/yanks-logo.png`. È il riferimento per ogni proposta, e
 le proposte si mostrano accanto a lui, mai al suo posto.
 
 Disco nero. In alto la scritta "Yanks" in corsivo rosso con contorno bianco.

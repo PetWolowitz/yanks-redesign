@@ -10,7 +10,7 @@ import { venue } from '../../../data/venue';
 import Base from '../../../layouts/Base.astro';
 import { locales, type Lang } from '../../../i18n/locales';
 import { formatPrice } from '../../../lib/format';
-import { productImage } from '../../../lib/shop/images';
+import { productImages } from '../../../lib/shop/images';
 import type { MerchItem } from '../../../lib/shop/types';
 import { t, type Key } from '../../../i18n/t';
 
@@ -20,6 +20,7 @@ export const getStaticPaths = (() =>
 const { lang, item } = Astro.props as { lang: Lang; item: MerchItem };
 const name = t(lang, `shop.products.${item.slug}.name` as Key);
 const description = t(lang, `shop.products.${item.slug}.description` as Key);
+const images = productImages(item.slug);
 ---
 
 <Base lang={lang} title={`${name} · ${venue.name}`} description={description}>
@@ -27,17 +28,39 @@ const description = t(lang, `shop.products.${item.slug}.description` as Key);
     <a href={`/${lang}/shop/`} class="inline-block py-2 text-small underline underline-offset-4">← {t(lang, 'shop.back')}</a>
 
     <div class="mt-6 grid gap-10 lg:grid-cols-12 lg:gap-6">
-      <Image
-        src={productImage(item.slug)}
-        alt={name}
-        widths={[480, 800, 1000]}
-        sizes="(min-width: 1024px) 55vw, 100vw"
-        format="webp"
-        fetchpriority="high"
-        class="w-full border-3 border-text lg:col-span-7"
-      />
+      <!-- Galleria senza JS: la prima foto grande, le altre in griglia sotto -->
+      <div class="lg:col-span-7">
+        <Image
+          src={images[0]!}
+          alt={images.length > 1 ? t(lang, 'shop.photo', { name, n: '1' }) : name}
+          widths={[480, 800, 1000]}
+          sizes="(min-width: 1024px) 55vw, 100vw"
+          format="webp"
+          fetchpriority="high"
+          class="w-full border-3 border-text"
+        />
+        {
+          images.length > 1 && (
+            <ul class="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3">
+              {images.slice(1).map((image, index) => (
+                <li>
+                  <Image
+                    src={image}
+                    alt={t(lang, 'shop.photo', { name, n: String(index + 2) })}
+                    widths={[320, 640]}
+                    sizes="(min-width: 1024px) 18vw, 50vw"
+                    format="webp"
+                    loading="lazy"
+                    class="aspect-[4/5] w-full border-3 border-text object-cover"
+                  />
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </div>
 
-      <div class="lg:col-span-5">
+      <div class="lg:col-span-5 lg:sticky lg:top-24 lg:self-start">
         <h1 class="font-heading text-h2 leading-none uppercase">{name}</h1>
         {item.limited !== null && <p class="mt-4 text-red-text">{t(lang, 'shop.limitedOf', { count: String(item.limited) })}</p>}
         <p class="mt-6 text-h3 tabular-nums">{formatPrice(item.priceCents, lang)}</p>

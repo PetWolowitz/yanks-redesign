@@ -3,6 +3,7 @@
 // Pagina statica: la scelta la fa uno script esterno (CSP). Senza JS si va su
 // /en/ dopo un attimo, e nel frattempo ci sono i link alle tre lingue.
 import '../styles/global.css';
+import Logo from '../components/site/Logo.astro';
 import { defaultLang, languageNames, locales } from '../i18n/locales';
 
 const home = (l: string) => new URL(`/${l}/`, Astro.site).href;
@@ -23,7 +24,7 @@ const home = (l: string) => new URL(`/${l}/`, Astro.site).href;
   </head>
   <body>
     <main class="mx-auto flex min-h-dvh max-w-xl flex-col items-center justify-center gap-6 p-4">
-      <img src="/brand/yanks-originale.png" width="232" height="232" alt="Yanks Indian Club" class="size-32" />
+      <Logo alt="Yanks Indian Club" size={160} priority class="size-40" />
       <ul class="flex gap-6 uppercase">
         {
           locales.map((l) => (

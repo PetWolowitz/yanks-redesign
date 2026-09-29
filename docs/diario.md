@@ -17,6 +17,23 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-09-29 — Shop, merch completo e immagini di shop.yanks.nl
+Fatto:        esplorato shop.yanks.nl (27 prodotti, 81 foto, 30 immagini in
+              home). merch.ts da 16 a 21 prodotti, categoria Accessori;
+              galleria con tutte le foto nella scheda prodotto; descrizioni
+              riscritte da quelle del negozio. Logo in alta risoluzione
+              (3200 px) al posto di quello da 232 px, grande nell'hero.
+              Esterno del locale a tutta larghezza in home e Visit, interno
+              accanto a "chi sono". 88 pagine, 182 test
+Decisioni:    esclusi di nuovo i 7 accessori per la cannabis; profumo in due
+              prodotti (Original, High Tides); escluse le foto con il modello
+              e gli interni con gli schermi del menu. Dettagli in docs/03
+Problemi:     colori dei prodotti ancora non selezionabili
+Prossimo:     come nella voce precedente (decisioni su Fase 3, GSAP, lingue,
+              spedizione)
+Ramo/commit:  shop/merch-completo — "Shop: tutto il merch e le immagini di
+              shop.yanks.nl"
+
 ## 2026-09-28 — Fasi 2A e 2S in autonomia: sito statico e frontend dello shop
 Fatto:        PR #3 footer (indirizzo, orari, pagine, lingue, social,
               disclaimer di docs/05) e / verso la lingua del browser.

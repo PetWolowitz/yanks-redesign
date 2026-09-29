@@ -1,0 +1,29 @@
+---
+// Il locale visto dal Dorpsplein, a tutta larghezza (docs/02: immagini a filo
+// dello schermo). Foto da shop.yanks.nl. Nessuno schermo o menu in vista.
+import { Image } from 'astro:assets';
+import esterno from '../../assets/home/esterno.jpg';
+import { venue } from '../../data/venue';
+import type { Lang } from '../../i18n/locales';
+import { t } from '../../i18n/t';
+
+interface Props {
+  lang: Lang;
+  priority?: boolean;
+}
+
+const { lang, priority = false } = Astro.props;
+---
+
+<figure class="border-y-3 border-text">
+  <Image
+    src={esterno}
+    alt={t(lang, 'home.exterior.alt')}
+    widths={[640, 1024, 1600, 2400]}
+    sizes="100vw"
+    format="webp"
+    loading={priority ? 'eager' : 'lazy'}
+    class="h-64 w-full object-cover sm:h-96 lg:h-[36rem]"
+  />
+  <figcaption class="sr-only">{venue.address.street}, {venue.address.city}</figcaption>
+</figure>

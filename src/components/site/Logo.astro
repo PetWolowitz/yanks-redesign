@@ -1,0 +1,30 @@
+---
+// Il logo originale (CLAUDE.md, Identità), invariato. Sorgente in alta risoluzione
+// da shop.yanks.nl (3200 px, ridotta a 1200): astro:assets ne fa WebP della misura
+// giusta. Nel tema scuro un anello crema stacca il disco nero dal fondo (docs/02).
+// public/brand/yanks-originale.png (232 px, da yanks.nl) resta come riferimento.
+import { Image } from 'astro:assets';
+import logo from '../../assets/brand/yanks-logo.png';
+
+interface Props {
+  alt: string;
+  // larghezza massima mostrata, in px CSS: decide le misure generate
+  size: number;
+  class?: string;
+  priority?: boolean;
+}
+
+const { alt, size, class: className, priority = false } = Astro.props;
+---
+
+<Image
+  src={logo}
+  alt={alt}
+  width={size}
+  height={size}
+  densities={[1, 2]}
+  format="webp"
+  loading={priority ? 'eager' : 'lazy'}
+  fetchpriority={priority ? 'high' : 'auto'}
+  class:list={['rounded-full dark:outline-2 dark:outline-text', className]}
+/>
