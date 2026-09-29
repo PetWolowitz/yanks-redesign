@@ -61,7 +61,7 @@ const images = productImages(item.slug);
       </div>
 
       <div class="lg:col-span-5 lg:sticky lg:top-24 lg:self-start">
-        <h1 class="font-heading text-h2 leading-none uppercase">{name}</h1>
+        <h1 class="font-sign text-h2 leading-none uppercase">{name}</h1>
         {item.limited !== null && <p class="mt-4 text-red-text">{t(lang, 'shop.limitedOf', { count: String(item.limited) })}</p>}
         <p class="mt-6 text-h3 tabular-nums">{formatPrice(item.priceCents, lang)}</p>
         <p class="mt-6 max-w-[50ch] font-prose">{description}</p>

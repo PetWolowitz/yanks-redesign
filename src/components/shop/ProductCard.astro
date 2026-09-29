@@ -51,7 +51,7 @@ const skus = (item.sizes.length > 0 ? item.sizes : [null]).map((size) => skuOf(i
       <StockStatus lang={lang} skus={skus} class="absolute top-3 right-3 rounded-full bg-bg px-3 py-1 empty:hidden" />
     </span>
     <span class="flex flex-1 items-end justify-between gap-3 p-4">
-      <span class:list={['font-heading leading-tight uppercase', large ? 'text-h3' : 'text-base']}>{name}</span>
+      <span class:list={['font-sign leading-tight uppercase', large ? 'text-h3' : 'text-base']}>{name}</span>
       <span class="shrink-0 rounded-full border-2 border-text px-3 py-1 text-small tabular-nums transition-colors group-hover:bg-text group-hover:text-bg">
         {formatPrice(item.priceCents, lang)}
       </span>

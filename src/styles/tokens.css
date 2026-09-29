@@ -59,9 +59,11 @@
   --color-matte: var(--matte);
 
   --font-*: initial;
-  /* Font per ruolo (docs/02). Indian non ha – — ‘ ’ “ ” …: niente di questi negli h1 */
-  --font-title: "Indian", "Brush Script MT", cursive;                  /* h1 e titoli hero, brevi */
-  --font-heading: "Yankee Clipper", Impact, "Arial Narrow", sans-serif; /* h2 e h3 */
+  /* Font dei titoli (docs/02). Dal 2026-09-29: h1 in Yankee Clipper, h2 e h3 in Indian.
+     Nessuno dei due disegna le cifre (fonts.css): Yankee le prende da Impact, Indian
+     da Literata. Indian non ha – — ‘ ’ “ ” …: niente di questi nei titoli */
+  --font-sign: "Yankee Clipper", Impact, "Arial Narrow", sans-serif;   /* h1, sempre maiuscolo */
+  --font-script: "Indian", "Literata", Georgia, cursive;                /* h2 e h3, mai maiuscolo */
   --font-ui: "Martian Mono", ui-monospace, Consolas, monospace;         /* interfaccia, prezzi, orari */
   --font-prose: "Literata", Georgia, "Times New Roman", serif;          /* solo paragrafi lunghi */
 
