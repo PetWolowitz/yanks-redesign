@@ -22,18 +22,25 @@
     outline-offset: 3px;
   }
 
+  /* h1 in Yankee Clipper, sempre maiuscolo: in minuscolo la "u" sembra "ú" e la
+     "ß" una "B". In maiuscolo il browser scrive "ß" come "SS" */
   h1 {
-    font-family: var(--font-title);
-    font-weight: 400;
-  }
-
-  /* Sempre maiuscolo: in Yankee Clipper la "u" minuscola sembra "ú" e la "ß"
-     sembra una "B". In maiuscolo il browser scrive "ß" come "SS" */
-  h2,
-  h3 {
-    font-family: var(--font-heading);
+    font-family: var(--font-sign);
     font-weight: 400;
     text-transform: uppercase;
+  }
+
+  /* h2 e h3 in Indian, mai maiuscolo: le maiuscole corsive si accavallano e non
+     si leggono. Un po' di spazio sotto per le code delle lettere */
+  h2,
+  h3 {
+    font-family: var(--font-script);
+    font-weight: 400;
+    line-height: 1.1;
+    padding-bottom: 0.12em;
+    /* Il corsivo, sottile e inclinato, sembra più piccolo degli altri font: occhio
+       portato da 0.46 a 0.56 del corpo, circa il 22% più grande */
+    font-size-adjust: 0.56;
   }
 }
 
@@ -65,8 +72,8 @@
     transition-delay: calc(var(--i, 0) * 28ms);
   }
 
-  /* Le parole dello script Indian: più lente e più ampie */
-  h1[data-split] .split-piece {
+  /* Le parole dello script Indian (h2, h3): più lente e più ampie */
+  :is(h2, h3)[data-split] .split-piece {
     transform: translateY(0.3em) scale(0.92) rotate(-3deg);
     transition-duration: 0.6s, 0.9s;
     transition-delay: calc(var(--i, 0) * 110ms);

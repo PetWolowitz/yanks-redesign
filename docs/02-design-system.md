@@ -81,24 +81,34 @@ tra 10:1 e 13:1, abbastanza per leggere senza abbagliare):
 
 | Ruolo | Font | Token / classe | Uso |
 |---|---|---|---|
-| Titolo | Indian (Billy Argel) | `--font-title` · `font-title` | h1 e titoli hero. **Solo titoli brevi, mai frasi lunghe**. Eccezione: nella scheda prodotto l'h1 è il nome del prodotto, spesso lungo, e usa Yankee Clipper maiuscolo |
-| Intestazione | Yankee Clipper (Iconian) | `--font-heading` · `font-heading` | h2 e h3, **sempre in maiuscolo** (`text-transform: uppercase`) |
+| Titolo | Yankee Clipper (Iconian) | `--font-sign` · `font-sign` | tutti gli **h1**, "Yanks" compreso, **sempre in maiuscolo**. Anche le etichette da insegna: nomi nelle schede, "1/250", la regola d'ingresso |
+| Intestazione | Indian (Billy Argel) | `--font-script` · `font-script` | **h2 e h3**, le legende del checkout e la riga "Home of the Medicine Man". **Mai in maiuscolo**. `font-size-adjust: 0.56`: il corsivo sembra più piccolo degli altri |
 | Interfaccia | Martian Mono | `--font-ui` · `font-ui` | navigazione, pulsanti, etichette, prezzi, orari. È il font predefinito del `body` |
 | Prosa | Literata | `--font-prose` · `font-prose` | **solo i paragrafi lunghi**: storia, recensioni, descrizioni. Si segnano con la classe `font-prose` |
 
 h1, h2 e h3 prendono il loro font da soli (stili di base in `global.css`).
+**Ruoli invertiti il 2026-09-29** (richiesta di Pietro): prima gli h1 erano in
+Indian e h2/h3 in Yankee Clipper. I token hanno preso il nome del font
+(`font-sign`, `font-script`) invece del ruolo, così non mentono se i ruoli
+cambiano. Controllato: nessun titolo sfora a 360, 390 e 1440 px, in nl, en, de.
 
 **Caratteri disponibili** (controllati sulla tabella `cmap` dei file):
 - tutti e quattro i font hanno le lettere del tedesco (`ä ö ü ß`) e delle lingue
   future (`à è é ì ò ù ç ñ`, maiuscole accentate, `€`)
 - **a Indian mancano `– — ‘ ’ “ ” …`**: il browser li prende dal font di riserva e
   si vede. Negli h1 niente trattini, virgolette curve o puntini di sospensione
-- **Indian scende molto sotto la riga** (lo svolazzo della "Y"): sotto un titolo
-  in Indian serve spazio, circa `0.3em`, altrimenti copre la riga dopo
+- **Indian scende molto sotto la riga** (lo svolazzo della "Y"): h2 e h3 hanno
+  `padding-bottom: 0.12em` e `line-height: 1.1`
+- **Indian in maiuscolo non si legge**: le maiuscole corsive si accavallano
+  ("ZANDVOORT"). Sempre con la sola iniziale maiuscola
+- **Indian personal use, niente cifre**: al posto di 0-9 c'è il marchio
+  "PERSONAL USE · COMPLETE SET · billyargel.com". In `fonts.css` un
+  `unicode-range` le esclude e le disegna Literata. Scoperto il 2026-09-29 sul
+  logo ("Since 1989")
 - **Yankee Clipper minuscolo**: la "u" ha un uncino che la fa sembrare "ú", e
   la "ß" è disegnata come una beta e si legge quasi "B" ("STRAßE"). Per questo
-  h2 e h3 sono sempre in maiuscolo: si usano solo le maiuscole, che sono pulite,
-  e il browser scrive "ß" come "SS". Se usi `font-heading` fuori da h2/h3,
+  gli h1 sono sempre in maiuscolo: si usano solo le maiuscole, che sono pulite,
+  e il browser scrive "ß" come "SS". Se usi `font-sign` fuori dagli h1,
   aggiungi la classe `uppercase`
 - **Yankee Clipper, cifre illeggibili**: l'8 sembra uno 0 ("18" si legge "10"),
   il 9 è deformato. In `fonts.css` il font ha un `unicode-range` che esclude le
@@ -178,8 +188,8 @@ hanno lo stesso fuso, ma chi guarda da Londra è un'ora indietro.
 
 ## Hero della home
 
-"Yanks" in Indian e in `--red` (3.69:1 su crema: testo grande, minimo 3:1);
-"Home of the Medicine Man" in Yankee Clipper e in `--matte`, nero opaco
+"YANKS" (h1) in Yankee Clipper e in `--red` (3.69:1 su crema: testo grande,
+minimo 3:1); "Home of the Medicine Man" in Indian e in `--matte`, nero opaco
 (`#1C1B1A`, 15.18:1 su crema). Nel tema scuro `--matte` è il colore del
 testo: il nero sparirebbe. Accanto, il logo grande.
 

@@ -17,6 +17,27 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-09-29 — Font dei titoli invertiti; logo nuovo in anteprima
+Fatto:        h1 in Yankee Clipper maiuscolo ("YANKS" compreso), h2 e h3 in
+              Indian, mai in maiuscolo. Token rinominati per font:
+              font-sign (Yankee Clipper), font-script (Indian). Indian senza
+              cifre (unicode-range, le fa Literata); font-size-adjust 0.56.
+              Schede della home che si allungavano: corrette. 81 pagine
+              controllate a 360/390/1440 px in nl/en/de: nessun titolo sfora.
+              Logo a badge: vettorializzato e montato, anteprima in
+              brand/anteprima/ (ramo brand/logo-badge), NON sostituito
+Decisioni:    - Indian personal use: al posto delle cifre c'è il marchio
+                "PERSONAL USE · COMPLETE SET". Vale per sito e logo
+              - Indian in maiuscolo non si legge: "Zandvoort", non "ZANDVOORT"
+              - opentype.js scrive NaN nella "o" di Indian: i glifi del logo si
+                disegnano dal contorno grezzo (scratchpad, glyph.mjs)
+Problemi:     - logo: la riga piccola non si legge sotto i 96 px (header):
+                proposta a Pietro, in attesa della sua scelta
+              - "Since 1989": docs/03 ha ancora l'anno DA VERIFICARE; la fonte
+                è il ricamo "1989" sul cappellino di shop.yanks.nl
+Prossimo:     scelta di Pietro sul logo (A o B, versione per l'header)
+Ramo/commit:  design/font-titoli-invertiti
+
 ## 2026-09-29 — Design: schede, animazioni, cursore, neon, angoli arrotondati
 Fatto:        richieste di Pietro. Schede nuove (catalogo, anteprima shop,
               recensioni, blocchi della home): angoli arrotondati, foto con

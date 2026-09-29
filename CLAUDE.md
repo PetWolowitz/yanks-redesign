@@ -116,11 +116,14 @@ Lo shop **non è opzionale**. Regole del contratto:
 
 ## Tipografia — quattro ruoli
 Token in `tokens.css`, dettagli in `docs/02-design-system.md`.
-1. **Titolo — Indian** (Billy Argel), `font-title`: h1 e titoli hero. **Solo
-   titoli brevi, mai frasi lunghe**. Non ha `– — ‘ ’ “ ” …`: negli h1 non usarli
-2. **Intestazione — Yankee Clipper** (Iconian), `font-heading`: h2 e h3,
-   **sempre in maiuscolo** (la "u" e la "ß" minuscole si leggono male).
-   **Mai per testo lungo**
+Ruoli invertiti il 2026-09-29 (richiesta di Pietro):
+1. **Titolo — Yankee Clipper** (Iconian), `font-sign`: tutti gli **h1**, "Yanks"
+   compreso. **Sempre in maiuscolo** (la "u" e la "ß" minuscole si leggono male).
+   **Mai per testo lungo**. Le cifre le disegna Impact (l'8 sembrava uno 0)
+2. **Intestazione — Indian** (Billy Argel), `font-script`: **h2 e h3**, e la
+   riga "Home of the Medicine Man". **Mai in maiuscolo** (le maiuscole corsive si
+   accavallano). Non ha `– — ‘ ’ “ ” …`: nei titoli non usarli. **Nella versione
+   personal use le cifre sono un marchio "PERSONAL USE"**: le disegna Literata
 3. **Interfaccia — Martian Mono** (OFL, woff2 locale), `font-ui`: navigazione,
    pulsanti, etichette, prezzi, orari. Font predefinito del `body`
 4. **Prosa — Literata** (OFL, woff2 locale), `font-prose`: **solo i paragrafi

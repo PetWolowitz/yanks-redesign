@@ -53,12 +53,12 @@ const { close, dineInUntil } = venue.hours;
         </figcaption>
       </figure>
 
-      <div data-card class="rounded-2xl border-3 border-text bg-surface p-6 lg:col-span-5 lg:p-8">
+      <div data-card class="rounded-2xl border-3 border-text bg-surface p-6 lg:col-span-5 lg:self-start lg:p-8">
         <h3 class="text-h3">{t(lang, 'home.late.title')}</h3>
         <p class="mt-2 font-prose">{t(lang, 'home.late.text', { close, dineInUntil })}</p>
       </div>
 
-      <div data-card class="rounded-2xl border-3 border-text bg-surface p-6 lg:col-span-5 lg:p-8">
+      <div data-card class="rounded-2xl border-3 border-text bg-surface p-6 lg:col-span-5 lg:self-start lg:p-8">
         <h3 class="text-h3">{t(lang, 'home.beach.title')}</h3>
         <p class="mt-2 font-prose">{t(lang, 'home.beach.text')}</p>
       </div>
