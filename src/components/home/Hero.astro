@@ -2,13 +2,12 @@
 // Hero della home. Il segno forte è il logo originale, grande e isolato (docs/02).
 // A sinistra il nome, centrato come un'insegna, a destra il logo.
 // Sfondo (CLAUDE.md, Video): la spiaggia di Zandvoort. Il fotogramma fisso (poster)
-// c'è sempre; il video lo carica lo script solo da 1024 px in su, senza movimento
-// ridotto e senza risparmio dati. Sopra, un velo nel colore dello sfondo tiene il
-// contrasto del testo in tutti e due i temi.
+// c'è sempre, il video solo su schermi larghi (LoopVideo.astro). Sopra, un velo
+// nel colore dello sfondo tiene il contrasto del testo in tutti e due i temi.
 // Il logo è in alta risoluzione (Logo.astro): qui è il segno forte, grande.
-import { Image } from 'astro:assets';
 import poster from '../../assets/home/hero-spiaggia.jpg';
 import Hours from '../site/Hours.astro';
+import LoopVideo from '../site/LoopVideo.astro';
 import Logo from '../site/Logo.astro';
 import { venue } from '../../data/venue';
 import type { Lang } from '../../i18n/locales';
@@ -23,27 +22,7 @@ const { open, close } = venue.hours;
 ---
 
 <section class="relative isolate overflow-hidden">
-  <Image
-    src={poster}
-    alt=""
-    widths={[960, 1920]}
-    sizes="100vw"
-    format="webp"
-    quality={70}
-    loading="eager"
-    fetchpriority="high"
-    class="absolute inset-0 -z-20 size-full object-cover"
-  />
-  <video
-    data-hero-video
-    data-src="/video/hero-spiaggia.webm"
-    muted
-    loop
-    playsinline
-    preload="none"
-    aria-hidden="true"
-    class="absolute inset-0 -z-20 size-full object-cover opacity-0 transition-opacity duration-1000"
-  ></video>
+  <LoopVideo src="/video/hero-spiaggia.webm" poster={poster} alt="" widths={[960, 1920]} sizes="100vw" priority class="-z-20" />
   <div aria-hidden="true" class="absolute inset-0 -z-10 bg-bg/85 lg:bg-transparent lg:bg-linear-to-r lg:from-bg/90 lg:via-bg/80 lg:to-bg/30"></div>
 
   <div class="mx-auto grid max-w-360 items-center gap-10 px-page py-10 lg:grid-cols-12 lg:gap-6 lg:py-16">
@@ -71,19 +50,3 @@ const { open, close } = venue.hours;
   </div>
 </section>
 
-<script>
-  // Video dell'hero: solo su schermi larghi, senza movimento ridotto e senza
-  // risparmio dati. Parte quando è in vista, si ferma quando esce.
-  const video = document.querySelector<HTMLVideoElement>('[data-hero-video]');
-  const allowed = matchMedia('(min-width: 1024px) and (prefers-reduced-motion: no-preference)').matches;
-  const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true;
-  if (video && allowed && !saveData) {
-    video.muted = true;
-    video.src = video.dataset.src ?? '';
-    video.addEventListener('playing', () => video.classList.remove('opacity-0'), { once: true });
-    new IntersectionObserver(([entry]) => {
-      if (entry?.isIntersecting) video.play().catch(() => {});
-      else video.pause();
-    }).observe(video);
-  }
-</script>

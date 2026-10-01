@@ -280,7 +280,14 @@ Dal sito originale, da riscrivere più diretto e mettere in una pagina visibile:
       fatti (apertura, registrazione 1995, il motto sul cappellino, oggi al
       Dorpsplein 2), anni presi da venue.ts
 - [x] Video per l'hero: dato da Pietro il 2026-10-01 (spiaggia di Zandvoort, 19 s).
-      WebM 2,5 MB e poster WebP, vedi docs/02
+      WebM 2,5 MB e poster WebP, vedi docs/02. Lo stesso girato, in versione
+      lunga, è in Downloads come `11961033_3840_2160_30fps.mp4`: il nome è quello
+      dei video di Pexels. **Fonte e licenza DA VERIFICARE con Pietro** (se è
+      Pexels, la licenza permette l'uso gratuito senza attribuzione)
+- [ ] Reel Instagram (2026-10-01): i due proposti da Pietro (DaoF1HCPnZn "POV: it
+      is Friday high day at Yanks", DI4J5KlNTAl aftermovie del 4/20) sono
+      promozionali sulla cannabis: esclusi. Le storie non si incorporano. Pietro ha
+      scelto video nostri ospitati in public/video/ (vedi CLAUDE.md, Video)
 - [ ] Indirizzi dei reel Instagram per le recensioni video (embed al clic)
 - [x] Logo in alta risoluzione: trovato su shop.yanks.nl (3200 px), 2026-09-29
 - [x] Foto dei prodotti del merch: da shop.yanks.nl, 2026-09-29

@@ -219,6 +219,9 @@ video (`public/video/hero-spiaggia.webm`, VP9 1600 px, 2,5 MB, senza audio) solo
 vista. Sopra, un velo nel colore `--bg`: 85% su telefono e tablet, da sinistra
 (90%) a destra (30%) su desktop, così il testo resta leggibile nei due temi.
 
+**Componente**: `LoopVideo.astro`, lo stesso per hero e Story. Nella Story la prima
+tappa ha un taglio verticale (4:5, 720 px, 1,2 MB) della stessa ripresa.
+
 ## La sezione del club (bento)
 
 Dal 2026-10-01 "De club aan het plein" è una griglia a bento: tutte le tessere

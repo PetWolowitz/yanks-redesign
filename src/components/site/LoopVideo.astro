@@ -1,0 +1,71 @@
+---
+// Video in loop, muto, ospitato da noi (public/video/): niente Instagram, niente
+// cookie. Il fotogramma fisso (poster) c'è sempre; il video lo carica lo script solo
+// da 1024 px in su, senza movimento ridotto e senza risparmio dati (CLAUDE.md, Video).
+// Riempie il contenitore: il genitore dev'essere relative e avere una misura.
+// Un solo video in autoplay per schermata: chi lo usa ne mette uno per vista.
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+
+interface Props {
+  // percorso in public/, per esempio "/video/hero-spiaggia.webm"
+  src: string;
+  poster: ImageMetadata;
+  // vuoto se è solo decorativo
+  alt: string;
+  widths: number[];
+  sizes: string;
+  // l'hero è la prima cosa che si vede: il poster si carica subito
+  priority?: boolean;
+  class?: string;
+}
+
+const { src, poster, alt, widths, sizes, priority = false, class: className } = Astro.props;
+const fill = ['absolute inset-0 size-full object-cover', className];
+---
+
+<Image
+  src={poster}
+  alt={alt}
+  widths={widths}
+  sizes={sizes}
+  format="webp"
+  quality={70}
+  loading={priority ? 'eager' : 'lazy'}
+  fetchpriority={priority ? 'high' : undefined}
+  class:list={fill}
+/>
+<video
+  data-loop-video
+  data-src={src}
+  muted
+  loop
+  playsinline
+  preload="none"
+  aria-hidden="true"
+  class:list={[fill, 'opacity-0 transition-opacity duration-1000']}
+></video>
+
+<script>
+  // Parte quando è in vista, si ferma quando esce
+  const allowed = matchMedia('(min-width: 1024px) and (prefers-reduced-motion: no-preference)').matches;
+  const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true;
+  if (allowed && !saveData) {
+    const observer = new IntersectionObserver((entries) => {
+      for (const { target, isIntersecting } of entries) {
+        const video = target as HTMLVideoElement;
+        if (!isIntersecting) {
+          video.pause();
+          continue;
+        }
+        if (!video.src) {
+          video.muted = true;
+          video.src = video.dataset.src ?? '';
+          video.addEventListener('playing', () => video.classList.remove('opacity-0'), { once: true });
+        }
+        video.play().catch(() => {});
+      }
+    });
+    document.querySelectorAll<HTMLVideoElement>('[data-loop-video]').forEach((video) => observer.observe(video));
+  }
+</script>
