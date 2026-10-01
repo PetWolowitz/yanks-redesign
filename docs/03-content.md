@@ -279,9 +279,8 @@ Dal sito originale, da riscrivere più diretto e mettere in una pagina visibile:
       promozionale e superato: non si usa. La pagina è una cronologia con soli
       fatti (apertura, registrazione 1995, il motto sul cappellino, oggi al
       Dorpsplein 2), anni presi da venue.ts
-- [ ] Video per l'hero (WebM sotto 3 MB) e poster WebP. Il sito attuale non ha
-      video; la foto larga (`yanks-banner.jpg`) mostra gli schermi con il menu
-      della cannabis e non si può usare. L'hero per ora è tipografico
+- [x] Video per l'hero: dato da Pietro il 2026-10-01 (spiaggia di Zandvoort, 19 s).
+      WebM 2,5 MB e poster WebP, vedi docs/02
 - [ ] Indirizzi dei reel Instagram per le recensioni video (embed al clic)
 - [x] Logo in alta risoluzione: trovato su shop.yanks.nl (3200 px), 2026-09-29
 - [x] Foto dei prodotti del merch: da shop.yanks.nl, 2026-09-29

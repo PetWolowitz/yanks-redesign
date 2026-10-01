@@ -13,16 +13,19 @@ interface Props {
   linkLabel: string;
   // proporzione del riquadro, per esempio "16 / 9" o "9 / 16"
   ratio?: string;
+  // angoli dritti: la mappa di Google, una volta caricata, sborderebbe dagli angoli
+  // arrotondati. È l'unica eccezione alla regola degli angoli tondi (docs/02)
+  square?: boolean;
   class?: string;
 }
 
-const { src, title, buttonLabel, notice, linkHref, linkLabel, ratio = '16 / 9', class: className } = Astro.props;
+const { src, title, buttonLabel, notice, linkHref, linkLabel, ratio = '16 / 9', square = false, class: className } = Astro.props;
 ---
 
 <click-to-load
   data-src={src}
   data-title={title}
-  class:list={['relative block border-3 rounded-2xl border-text bg-surface', className]}
+  class:list={['relative block border-3 border-text bg-surface', !square && 'rounded-2xl', className]}
   style={`aspect-ratio: ${ratio}`}
 >
   <div data-preview class="flex h-full flex-col items-start justify-end gap-3 p-4">

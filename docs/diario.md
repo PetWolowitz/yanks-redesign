@@ -17,6 +17,20 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-01 — Hero con video, bento, mappa, anno 1984
+Fatto:        hero con la spiaggia di Zandvoort (video di Pietro): poster sempre,
+              video WebM 2,5 MB solo da 1024 px, velo nel colore dello sfondo.
+              "De club aan het plein" a bento (1, 2, 3 colonne). Riquadro della
+              mappa con angoli dritti, unica eccezione. npm audit fix (PR #17,
+              0 vulnerabilità). Anno di apertura 1984 dal merch, Story unita
+Decisioni:    - ffmpeg solo nella cartella temporanea, non nel progetto
+              - il velo dell'hero è il colore --bg con trasparenza: un token
+                solo, i due temi gratis
+Problemi:     il lockfile del primo npm audit fix di Pietro l'avevo annullato io
+              per errore: rifatto in PR #17
+Prossimo:     recensioni video (servono i reel); Fase 3 backend
+Ramo/commit:  design/hero-video-bento
+
 ## 2026-10-01 — Pagina Story
 Fatto:        /[lang]/story/: cronologia (apertura, 1995 registrazione, il motto
               Home of the Medicine Man col cappellino, oggi al Dorpsplein 2),

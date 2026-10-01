@@ -193,8 +193,8 @@ Due rami di git, uno per binario. Si alterna tra i due, una sessione alla volta.
 - [x] Redirect da `/` alla lingua del browser, con inglese come ripiego
 
 **Home** (4 ore)
-- [ ] Hero: video su desktop, poster su mobile, script sopra display
-  _(2026-09-28: hero tipografico col logo; manca il video, vedi docs/03)_
+- [x] Hero: video su desktop, poster su mobile, script sopra display
+  _(2026-10-01: video della spiaggia di Pietro, vedi docs/02, Hero della home)_
 - [x] Chi sono, breve
 - [x] Le tre cose che contano: orario, mare, terrazza
 - [x] Anteprima menu
