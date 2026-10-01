@@ -17,6 +17,28 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-01 — h1 in Indian, titoli al neon, documenti e sicurezza
+Fatto:        h1 in Indian (il font più vicino alla scritta del logo, che non è
+              un font), h2 e h3 di nuovo in Yankee Clipper maiuscolo; la riga
+              dell'hero in Yankee Clipper. Titoli che entrano di lato e poi si
+              accendono come un neon (sola opacity, una volta); tutte le
+              animazioni più lente (titoli 1.1-1.4 s, blocchi 1.1 s, volo nel
+              carrello 1 s). README del progetto riscritto (stato, stack,
+              struttura, logo, font per uso personale, sicurezza);
+              src/assets/brand/LEGGIMI.md; CLAUDE.md, docs/02, 04, 06, 08.
+              Sicurezza verificata online; wrangler 4.140.0 → 4.145.0
+              (vulnerabilità di undici). 81 pagine senza sforamenti
+Decisioni:    - navbar e favicon restano con il solo indiano (Pietro)
+              - niente GSAP: neon e entrata laterale in CSS
+              - docs/06 ha ora la sezione "Stato della sicurezza"
+Problemi:     - npm audit: 4 segnalazioni restano (undici dentro
+                @astrojs/cloudflare, strumenti di build): npm audit fix fallisce
+                con EBUSY perché astro dev di Pietro tiene aperti i file. Da
+                rifare a server spento
+              - style-src 'unsafe-inline' resta per gli attributi style
+Prossimo:     npm audit fix a server spento; Fase 3 (backend dello shop)
+Ramo/commit:  design/h1-indian-neon
+
 ## 2026-10-01 — Logo nuovo: il timbro (Logo1) nel sito
 Fatto:        Pietro ha scelto Logo1.png (il timbro della proposta 01: "Yanks"
               in corsivo, indiano con fascia e piuma, anello aperto, onde).

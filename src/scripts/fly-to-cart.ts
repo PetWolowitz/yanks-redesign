@@ -40,7 +40,7 @@ export function flyToCart(source: HTMLImageElement | null) {
         { transform: `translate(${dx * 0.45}px, ${dy * 0.45 - 90}px) scale(${(1 + end) / 2.4}) rotate(-8deg)`, opacity: 0.95, offset: 0.55 },
         { transform: `translate(${dx}px, ${dy}px) scale(${end}) rotate(6deg)`, opacity: 0.3 },
       ],
-      { duration: 800, easing: 'cubic-bezier(0.5, 0, 0.3, 1)' },
+      { duration: 1000, easing: 'cubic-bezier(0.5, 0, 0.3, 1)' },
     )
     .finished.finally(() => clone.remove());
 }

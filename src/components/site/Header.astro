@@ -132,7 +132,7 @@ const linkClass =
     badge.textContent = count > 99 ? '99+' : String(count);
     // Il numero salta quando cresce (dopo il volo della foto, niente con movimento ridotto)
     if (count > shownCount && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      badge.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.7)' }, { transform: 'scale(1)' }], { duration: 450, delay: 650, easing: 'cubic-bezier(0.3, 1.6, 0.5, 1)' });
+      badge.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.7)' }, { transform: 'scale(1)' }], { duration: 550, delay: 850, easing: 'cubic-bezier(0.3, 1.6, 0.5, 1)' });
     }
     shownCount = count;
   };

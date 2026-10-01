@@ -118,21 +118,25 @@ Lo shop **non è opzionale**. Regole del contratto:
 
 ## Tipografia — quattro ruoli
 Token in `tokens.css`, dettagli in `docs/02-design-system.md`.
-Ruoli invertiti il 2026-09-29 (richiesta di Pietro):
-1. **Titolo — Yankee Clipper** (Iconian), `font-sign`: tutti gli **h1**, "Yanks"
-   compreso. **Sempre in maiuscolo** (la "u" e la "ß" minuscole si leggono male).
-   **Mai per testo lungo**. Le cifre le disegna Impact (l'8 sembrava uno 0)
-2. **Intestazione — Indian** (Billy Argel), `font-script`: **h2 e h3**, e la
-   riga "Home of the Medicine Man". **Mai in maiuscolo** (le maiuscole corsive si
-   accavallano). Non ha `– — ‘ ’ “ ” …`: nei titoli non usarli. **Nella versione
-   personal use le cifre sono un marchio "PERSONAL USE"**: le disegna Literata
+Deciso il 2026-10-01 (dopo due prove, vedi `docs/02`):
+1. **Titolo — Indian** (Billy Argel), `font-script`: tutti gli **h1**, "Yanks"
+   compreso: è il font più vicino alla scritta del logo. **Mai in maiuscolo** (le
+   maiuscole corsive si accavallano). Non ha `– — ‘ ’ “ ” …`: negli h1 non usarli.
+   **Nella versione personal use le cifre sono un marchio "PERSONAL USE"**: le
+   disegna Literata. Eccezione: l'h1 della scheda prodotto (nomi lunghi) è in
+   Yankee Clipper
+2. **Intestazione — Yankee Clipper** (Iconian), `font-sign`: **h2 e h3**, la riga
+   "Home of the Medicine Man" e le etichette da insegna. **Sempre in maiuscolo**
+   (la "u" e la "ß" minuscole si leggono male). **Mai per testo lungo**. Le cifre
+   le disegna Impact (l'8 sembrava uno 0)
 3. **Interfaccia — Martian Mono** (OFL, woff2 locale), `font-ui`: navigazione,
    pulsanti, etichette, prezzi, orari. Font predefinito del `body`
 4. **Prosa — Literata** (OFL, woff2 locale), `font-prose`: **solo i paragrafi
    lunghi**
 
 Indian e Yankee Clipper sono **gratuiti solo per uso personale**: per un cliente
-vero serve la licenza commerciale. Caricati in locale con `@font-face` e
+vero serve la licenza commerciale (nota anche nel README). TAN New York è stato
+valutato per gli h1 ma non è nel progetto: esiste solo a pagamento. Caricati in locale con `@font-face` e
 `font-display: swap`. Sostituti liberi per i test: Yellowtail, Syne, Literata,
 Martian Mono. Mai Inter, Poppins, Montserrat, Roboto.
 
@@ -215,9 +219,10 @@ altre tre. Regole in `docs/04-build-plan.md`, fase i18n.
 
 ## Animazioni
 Dettagli in `docs/08-animazioni-risorse.md` e `docs/02-design-system.md`
-(Movimento). Fatti il 2026-09-29, in CSS e TypeScript senza librerie:
-- Titoli sfalsati in ingresso (Indian per parola, Yankee Clipper per lettera) e
-  blocchi che salgono quando entrano in vista
+(Movimento). Fatti il 2026-09-29 e 2026-10-01, in CSS e TypeScript senza librerie:
+- Titoli che entrano **di lato**, sfalsati (Indian per parola, Yankee Clipper per
+  lettera), e poi **si accendono come un neon** (tremolio di sola opacity, una
+  volta). Blocchi che salgono quando entrano in vista. Tempi volutamente lenti
 - Cursore custom che inverte i colori sopra le immagini, spento su touch
 - Volo della foto nel carrello all'aggiunta; lettere dei link del footer che si
   scompongono al passaggio; freccia per tornare su in fondo alle pagine

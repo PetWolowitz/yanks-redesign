@@ -297,27 +297,33 @@ Leggere `06-shop-architecture.md` prima di iniziare.
 ## Fase 5 — Animazioni (3 ore)
 
 Leggere `08-animazioni-risorse.md` prima.
-- [ ] Titoli sfalsati con SplitText (lo script Indian per parola, non per lettera)
+- [x] Titoli sfalsati (lo script Indian per parola, non per lettera): fatti senza
+      SplitText, entrata laterale e neon che si accende (2026-10-01)
+- [x] Blocchi che salgono in vista, volo nel carrello, lettere del footer, freccia
+      per tornare su (2026-09-29)
 - [ ] Nastro con l'orario, con pulsante di pausa
-- [ ] Cursore custom, spento su touch
+- [x] Cursore custom, spento su touch
 - [ ] Sezioni che si incastrano con ScrollTrigger
-- [ ] Tutto spento con `prefers-reduced-motion`
+- [x] Tutto spento con `prefers-reduced-motion`
 
 ## Fase 6 — Rifinitura, SEO e sicurezza (4 ore)
 
-- [ ] Immagini con `astro:assets`, dimensioni esplicite
+- [x] Immagini con `astro:assets`, dimensioni esplicite
 - [ ] Meta per pagina e per lingua, Open Graph, `hreflang`
 - [ ] JSON-LD `LocalBusiness` generato da `venue.ts`
 - [ ] Sitemap
 - [ ] CSP rifinita: niente `unsafe-inline` dove si può evitare; hash dello script
-      del tema aggiornato
+      del tema aggiornato _(script: fatto, con test; stili: `unsafe-inline` resta per
+      gli attributi `style`, vedi docs/06 Stato della sicurezza)_
 - [ ] Verifica su securityheaders.com
-- [ ] `npm audit`
+- [ ] `npm audit` _(2026-10-01: wrangler aggiornato; restano 4 segnalazioni negli
+      strumenti di build, da chiudere con `npm audit fix` a server di sviluppo spento)_
 - [ ] Lighthouse su entrambi i temi: 90+ prestazioni, 95+ accessibilità
 - [ ] Navigazione completa da tastiera
 - [ ] Prova da telefono vero
 - [ ] Informativa privacy e condizioni di vendita
-- [ ] README con il caso studio
+- [ ] README con il caso studio _(README del progetto scritto il 2026-10-01; il
+      caso studio vero va in docs/05)_
 
 ## Fase 7 — Altre lingue
 
