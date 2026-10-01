@@ -17,6 +17,19 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-01 — Pagina Story
+Fatto:        /[lang]/story/: cronologia (apertura, 1995 registrazione, il motto
+              Home of the Medicine Man col cappellino, oggi al Dorpsplein 2),
+              testi nl/en/de, voce "Verhaal" nella navigazione e nel footer.
+              Navbar: spazio tra le voci 16 px sotto i 1280 px, così il tedesco
+              ci sta a 1024
+Decisioni:    anni da venue.ts (un numero solo da cambiare); nessun testo
+              promozionale, solo fatti
+Problemi:     il ricamo sul cappellino (cap/2.jpg) dice 1984, non 1989: anno da
+              riconfermare con Pietro. PR non unita finché non risponde
+Prossimo:     pannello laterale del carrello, recensioni video
+Ramo/commit:  feat/pagina-story
+
 ## 2026-10-01 — Ritocchi di layout, prezzi delle bevande
 Fatto:        prezzi aggiornati da Pietro (caffè, espresso e tè 3,00; le altre
               bevande calde 3,50; bibite 3,50) in menu.ts e docs/03. Margine

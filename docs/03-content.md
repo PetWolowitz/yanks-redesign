@@ -279,7 +279,11 @@ Dal sito originale, da riscrivere più diretto e mettere in una pagina visibile:
       products", "pre-rolled joints") e superato ("open until 3 am", "20 minutes
       by train"). Utili solo: "born 37 years ago" (senza data, quindi l'anno resta
       DA VERIFICARE), coffee house al Dorpsplein 2, interni in stile nativo
-      americano, terrazza. Troppo poco per la pagina Story: resta fuori
+      americano, terrazza. Dal 2026-10-01 la pagina Story esiste lo stesso, su
+      richiesta di Pietro: cronologia con soli fatti (apertura, registrazione 1995,
+      il motto sul cappellino, oggi al Dorpsplein 2), anni presi da venue.ts.
+      **Anno da riconfermare**: la foto del cappellino (src/assets/shop/cap/2.jpg)
+      mostra il ricamo **1984**, non 1989
 - [ ] Video per l'hero (WebM sotto 3 MB) e poster WebP. Il sito attuale non ha
       video; la foto larga (`yanks-banner.jpg`) mostra gli schermi con il menu
       della cannabis e non si può usare. L'hero per ora è tipografico

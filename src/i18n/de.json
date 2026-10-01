@@ -247,5 +247,21 @@
   "home.interior.alt": "Drinnen bei Yanks: zwei geschnitzte Totempfähle, Barhocker und Wände, bemalt wie ein Nachthimmel.",
   "backToTop": "Nach oben",
   "shop.addedShort": "Hinzugefügt",
-  "home.since": "Seit {year}"
+  "home.since": "Seit {year}",
+  "nav.story": "Geschichte",
+  "story.title": "Unsere Geschichte",
+  "story.description": "Die Geschichte von Yanks Indian Club am Dorpsplein in Zandvoort, seit {year}.",
+  "story.intro": "Seit {year} am Dorpsplein in Zandvoort. Eine kurze Zeitleiste, nur mit dem, was wir prüfen konnten.",
+  "story.opened.title": "Offen am Platz",
+  "story.opened.text": "Yanks öffnet am Dorpsplein, dem Platz mitten im Dorf, ein paar Minuten zu Fuß vom Strand.",
+  "story.company.title": "Ein eigenes Unternehmen",
+  "story.company.text": "Yanks wird als Unternehmen eingetragen. Der Club am Platz hat jetzt auch Papiere.",
+  "story.sign.label": "Das Zeichen",
+  "story.sign.title": "Home of the Medicine Man",
+  "story.sign.text": "Das Logo ist der Kopf eines Häuptlings mit Federschmuck, gezeichnet wie ein altes amerikanisches Ladenschild. Das Motto ist auch auf die Rückseite der Kappe im Shop gestickt.",
+  "story.sign.alt": "Rückseite der schwarzen Yanks-Kappe mit der roten Stickerei Home of the Medicine Man.",
+  "story.today.label": "Heute",
+  "story.today.title": "Dorpsplein 2",
+  "story.today.text": "Eine Bar mit Billardtischen, Spieltischen und großen Bildschirmen, zwei geschnitzte Totempfähle und Wände wie ein Nachthimmel. Draußen die Terrasse. Jeden Tag geöffnet von {open} bis {close}.",
+  "story.cta": "Besuch planen"
 }

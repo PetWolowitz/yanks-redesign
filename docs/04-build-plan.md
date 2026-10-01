@@ -208,7 +208,9 @@ Due rami di git, uno per binario. Si alterna tra i due, una sessione alla volta.
 - [x] Visit: come arrivare, orari nei tre stati, mappa, regole d'ingresso
 - [x] Menu: filtri, bibite per marca, prezzo unico scritto una volta
 - [x] Know before you go: le dodici schede
-- [ ] Story: solo quando c'è il testo originale
+- [x] Story: cronologia breve con soli fatti verificati (2026-10-01, richiesta di
+      Pietro), senza il testo originale, che è promozionale. Anno di apertura da
+      riconfermare (vedi docs/03)
 
 ### 2S — Frontend dello shop, con dati finti (8 ore)
 

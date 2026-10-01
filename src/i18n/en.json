@@ -247,5 +247,21 @@
   "home.interior.alt": "Inside Yanks: two carved totem poles, bar stools and walls painted like a night sky.",
   "backToTop": "Back to top",
   "shop.addedShort": "Added",
-  "home.since": "Since {year}"
+  "home.since": "Since {year}",
+  "nav.story": "Story",
+  "story.title": "Our story",
+  "story.description": "The history of Yanks Indian Club on the Dorpsplein in Zandvoort, since {year}.",
+  "story.intro": "On the Dorpsplein in Zandvoort since {year}. A short timeline, with only what we could check.",
+  "story.opened.title": "Open on the square",
+  "story.opened.text": "Yanks opens on the Dorpsplein, the square in the middle of the village, a few minutes walk from the beach.",
+  "story.company.title": "A company of its own",
+  "story.company.text": "Yanks is registered as a company. The club on the square now has paperwork too.",
+  "story.sign.label": "The sign",
+  "story.sign.title": "Home of the Medicine Man",
+  "story.sign.text": "The logo is the head of a Native American chief in a feather headdress, drawn like an old American shop sign. The motto is also embroidered on the back of the cap in the shop.",
+  "story.sign.alt": "Back of the black Yanks cap with the red embroidery Home of the Medicine Man.",
+  "story.today.label": "Today",
+  "story.today.title": "Dorpsplein 2",
+  "story.today.text": "A bar with pool tables, game tables and big screens, two carved totem poles and walls like a night sky. Outside, the terrace. Open every day from {open} to {close}.",
+  "story.cta": "Plan your visit"
 }
