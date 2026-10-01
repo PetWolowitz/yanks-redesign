@@ -95,6 +95,11 @@ e Web Animations API bastano (KISS, e nessuna dipendenza nuova). Il codice:
 GSAP resta la scelta per quello che manca: nastro con l'orario e sezioni che si
 incastrano con ScrollTrigger.
 
+**Aggiornato il 2026-10-01**: i titoli entrano di lato (traslazione più
+inclinazione che si raddrizza) e poi si accendono come un neon, con un tremolio di
+sola opacity dopo l'ultimo pezzo (`--n` = numero dei pezzi, messo da `motion.ts`).
+Tutte le animazioni più lente. Regole in `02-design-system.md`, Movimento.
+
 ## I limiti da rispettare
 
 - `prefers-reduced-motion: reduce` disattiva tutto. Non è cortesia, è

@@ -1,5 +1,5 @@
 ---
-// Testata delle pagine interne: h1 in Yankee Clipper maiuscolo e
+// Testata delle pagine interne: h1 in Indian (senza – — ‘ ’ “ ” …) e
 // una riga d'introduzione. Allineata a sinistra, mai centrata (docs/02).
 interface Props {
   title: string;
@@ -10,7 +10,7 @@ const { title, intro } = Astro.props;
 ---
 
 <div class="mx-auto max-w-360 px-4 pt-10 pb-8 lg:pt-16">
-  <h1 tabindex="-1" class="pb-[0.1em] text-display leading-[0.9] focus:outline-none">{title}</h1>
+  <h1 tabindex="-1" class="text-display focus:outline-none">{title}</h1>
   <p class="max-w-[50ch] font-prose text-h3 leading-snug">{intro}</p>
   <slot />
 </div>

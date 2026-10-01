@@ -90,16 +90,19 @@ tra 10:1 e 13:1, abbastanza per leggere senza abbagliare):
 
 | Ruolo | Font | Token / classe | Uso |
 |---|---|---|---|
-| Titolo | Yankee Clipper (Iconian) | `--font-sign` · `font-sign` | tutti gli **h1**, "Yanks" compreso, **sempre in maiuscolo**. Anche le etichette da insegna: nomi nelle schede, "1/250", la regola d'ingresso |
-| Intestazione | Indian (Billy Argel) | `--font-script` · `font-script` | **h2 e h3**, le legende del checkout e la riga "Home of the Medicine Man". **Mai in maiuscolo**. `font-size-adjust: 0.56`: il corsivo sembra più piccolo degli altri |
+| Titolo | Indian (Billy Argel) | `--font-script` · `font-script` | tutti gli **h1**, "Yanks" compreso: il font più vicino alla scritta del logo. **Mai in maiuscolo**. Eccezione: l'h1 della scheda prodotto, nome lungo, è in Yankee Clipper |
+| Intestazione | Yankee Clipper (Iconian) | `--font-sign` · `font-sign` | **h2 e h3**, **sempre in maiuscolo**. Anche la riga "Home of the Medicine Man", le legende del checkout e le etichette da insegna: nomi nelle schede, "1/250", la regola d'ingresso |
 | Interfaccia | Martian Mono | `--font-ui` · `font-ui` | navigazione, pulsanti, etichette, prezzi, orari. È il font predefinito del `body` |
 | Prosa | Literata | `--font-prose` · `font-prose` | **solo i paragrafi lunghi**: storia, recensioni, descrizioni. Si segnano con la classe `font-prose` |
 
 h1, h2 e h3 prendono il loro font da soli (stili di base in `global.css`).
-**Ruoli invertiti il 2026-09-29** (richiesta di Pietro): prima gli h1 erano in
-Indian e h2/h3 in Yankee Clipper. I token hanno preso il nome del font
-(`font-sign`, `font-script`) invece del ruolo, così non mentono se i ruoli
-cambiano. Controllato: nessun titolo sfora a 360, 390 e 1440 px, in nl, en, de.
+**Storia delle scelte**: in partenza h1 in Indian e h2/h3 in Yankee Clipper; il
+2026-09-29 invertiti su richiesta di Pietro; il 2026-10-01 di nuovo h1 in Indian,
+perché è il font più vicino alla scritta "Yanks" del logo nuovo (la scritta del logo
+non è un font: è un disegno con le sole lettere Y-a-n-k-s). TAN New York è stato
+valutato e scartato: esiste solo a pagamento. I token hanno il nome del font
+(`font-sign`, `font-script`), non del ruolo, così non mentono se i ruoli cambiano.
+Controllato: nessun titolo sfora a 360, 390 e 1440 px, in nl, en, de.
 
 **Caratteri disponibili** (controllati sulla tabella `cmap` dei file):
 - tutti e quattro i font hanno le lettere del tedesco (`ä ö ü ß`) e delle lingue
@@ -197,8 +200,9 @@ hanno lo stesso fuso, ma chi guarda da Londra è un'ora indietro.
 
 ## Hero della home
 
-"YANKS" (h1) in Yankee Clipper e in `--red` (3.69:1 su crema: testo grande,
-minimo 3:1); "Home of the Medicine Man" in Indian e in `--matte`, nero opaco
+"Yanks" (h1) in Indian e in `--red` (3.69:1 su crema: testo grande, minimo 3:1),
+come la scritta del logo; "HOME OF THE MEDICINE MAN" in Yankee Clipper e in
+`--matte`, nero opaco
 (`#1C1B1A`, 15.18:1 su crema). Nel tema scuro `--matte` è il colore del
 testo: il nero sparirebbe. Accanto, il logo grande.
 
@@ -206,9 +210,14 @@ testo: il nero sparirebbe. Accanto, il logo grande.
 
 Tutto in CSS e poco TypeScript, senza librerie (docs/08). `prefers-reduced-motion`
 spegne tutto; si animano solo `transform` e `opacity`; senza JS si vede tutto.
-- **Titoli in ingresso** (h1, h2, h3 di pagina e footer, `scripts/motion.ts`):
-  Indian per parola, Yankee Clipper per lettera, sfalsati quando entrano in
-  vista. Gli screen reader leggono il titolo intero (`sr-only`)
+- **Titoli in ingresso** (h1, h2, h3 di pagina e footer, `scripts/motion.ts`),
+  dal 2026-10-01: ogni pezzo entra **da sinistra**, inclinato, e si raddrizza;
+  Indian per parola (170 ms l'una), Yankee Clipper per lettera (45 ms l'una).
+  Dopo l'ultimo pezzo il titolo **si accende come un neon**: un tremolio di sola
+  opacity, una volta, 1.4 s, meno di tre lampi al secondo. Gli screen reader
+  leggono il titolo intero (`sr-only`)
+- **Tempi**: volutamente lenti (titoli 1.1-1.4 s, blocchi 1.1 s, volo nel
+  carrello 1 s)
 - **Blocchi in ingresso**: schede, foto, citazioni e moduli sotto la piega salgono
   quando arrivano in vista. Quello che è a schermo al caricamento non si anima
 - **Aggiunta al carrello**: la foto vola con un arco fino all'icona del carrello,

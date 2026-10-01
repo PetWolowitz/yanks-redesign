@@ -242,6 +242,41 @@ nostro server e il browser del cliente.
 inviata al server: il token non finisce nei log di Cloudflare, né
 nell'intestazione `Referer`. E passa nel body di una `POST`, non nell'indirizzo.
 
+## Stato della sicurezza (2026-10-01)
+
+**Già applicato, sul sito online**
+- Intestazioni su ogni pagina (`public/_headers`, verificate in produzione):
+  CSP, HSTS (un anno, sottodomini), `X-Content-Type-Options: nosniff`,
+  `Referrer-Policy`, `Permissions-Policy` (camera, microfono, posizione,
+  pagamenti spenti), `Cross-Origin-Opener-Policy`
+- **CSP**: script solo da `'self'` più l'hash dell'unico script inline (tema e
+  avviso d'età); niente `'unsafe-inline'` sugli script. Un test controlla che ogni
+  script inline di ogni pagina abbia il suo hash. Script dei componenti sempre
+  esterni (`assetsInlineLimit: 0`). `frame-ancestors 'none'`: niente clickjacking
+- **Nessun cookie**, nessun tracciamento; embed di Google e Instagram solo al clic
+- **Nessun dato di pagamento e nessun segreto** nel codice; `.env` e `.dev.vars`
+  fuori da git
+- **Validazione** dei dati del checkout in `validate.ts`, scritta per il server
+  (accetta input non fidato, scarta campi in più, CAP per paese, quantità 1-10);
+  carrello e link dell'ordine letti senza fidarsi dello storage
+- **Dipendenze**: versioni esatte, Dependabot settimanale, `npm audit` controllato.
+  Il 2026-10-01 wrangler aggiornato a 4.145.0 per una vulnerabilità di `undici`
+  (strumenti di build, non codice che va al browser)
+
+**Da fare**
+- **Tutto il lato server dello shop arriva con la Fase 3**: verifica Turnstile,
+  firma del webhook di Stripe, token HMAC dell'ordine con `crypto.subtle.verify`,
+  prezzi ricalcolati dal database, idempotenza, segreti in Cloudflare. Oggi lo
+  shop gira sul mock nel browser: non c'è niente da attaccare sul server
+- `npm audit`: restano 4 segnalazioni (3 moderate, 1 alta) nella stessa catena
+  `undici` dentro `@astrojs/cloudflare`, strumenti di build. Si chiudono con
+  `npm audit fix` (senza `--force`) a server di sviluppo spento: con `astro dev`
+  acceso Windows blocca i file
+- `style-src 'unsafe-inline'` resta: lo richiedono gli attributi `style` (variabili
+  CSS delle lettere del footer, proporzioni dei riquadri). Rischio basso; si può
+  togliere spostando quelle variabili in classi
+- Verifica finale su securityheaders.com e Lighthouse (Fase 6)
+
 ## Sicurezza — le regole
 
 **Le quattro che contano di più**

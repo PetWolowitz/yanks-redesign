@@ -1,4 +1,5 @@
-// Animazioni d'ingresso (docs/08): titoli che entrano sfalsati e blocchi che salgono
+// Animazioni d'ingresso (docs/08): titoli che entrano di lato, sfalsati, e poi si
+// accendono come un neon; blocchi che salgono
 // quando arrivano in vista. Solo transform e opacity, niente librerie.
 // - prefers-reduced-motion: niente di tutto questo, il CSS mostra tutto subito
 // - senza JS: i titoli restano visibili (il CSS li nasconde solo con html[data-js])
@@ -27,6 +28,7 @@ function split(heading: HTMLElement, index: { value: number }) {
     }
     visual.append(wordSpan);
   }
+  heading.style.setProperty('--n', String(index.value));
   // Il testo vero resta per gli screen reader, intero
   const readable = document.createElement('span');
   readable.className = 'sr-only';
