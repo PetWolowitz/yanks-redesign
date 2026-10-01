@@ -17,6 +17,21 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-01 — Ritocchi di layout, prezzi delle bevande
+Fatto:        prezzi aggiornati da Pietro (caffè, espresso e tè 3,00; le altre
+              bevande calde 3,50; bibite 3,50) in menu.ts e docs/03. Margine
+              laterale unico --page-x (20-56 px) con utility px-page su tutti i
+              contenitori. Navbar allineata a sinistra. Footer riordinato su 12
+              colonne (logo e indirizzo, orari, pagine, lingue, social, poi
+              disclaimer). Ombra morbida sopra ogni sezione e sopra il footer.
+              Hero: Yanks centrato, più staccato dal motto, "Sinds 1989" sotto.
+              Tolto il tremolio al neon dei titoli, l'entrata laterale resta
+Decisioni:    - quali bevande a 3,00 e quali a 3,50: interpretazione di "da 3 a
+                3,5" (le semplici 3,00, quelle con latte o panna 3,50)
+Problemi:     npm audit fix ancora da fare a server spento
+Prossimo:     pagina Story, pannello laterale del carrello, recensioni video
+Ramo/commit:  design/ritocchi-layout
+
 ## 2026-10-01 — h1 in Indian, titoli al neon, documenti e sicurezza
 Fatto:        h1 in Indian (il font più vicino alla scritta del logo, che non è
               un font), h2 e h3 di nuovo in Yankee Clipper maiuscolo; la riga

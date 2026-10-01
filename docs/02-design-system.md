@@ -164,9 +164,14 @@ Syne (display), Literata (testo), Martian Mono (dati).
   pillole e selettori `rounded-full`; campi dei moduli `rounded-xl`; schede,
   riquadri e immagini `rounded-2xl`. Restano dritte solo le linee che separano
   le sezioni
-- **Ombre**: solo due, entrambe senza sfumatura di profondità. L'alone del neon
-  (è luce) e, **al passaggio sulle schede**, un'ombra piena sfalsata di 6 px nel
-  colore del testo, con la scheda che si solleva: un adesivo anni '50
+- **Ombre**: tre. L'alone del neon (è luce); **al passaggio sulle schede**,
+  un'ombra piena sfalsata di 6 px nel colore del testo, con la scheda che si
+  solleva: un adesivo anni '50; e dal 2026-10-01 un'**ombra morbida sopra ogni
+  sezione** (e sopra il footer), `--section-shadow`, così le sezioni si staccano
+  come fogli sovrapposti
+- **Margine laterale** (dal 2026-10-01): un solo token, `--page-x`
+  (`clamp(1.25rem, 4.5vw, 3.5rem)`, 20 px su telefono, 56 px a 1440), usato con
+  l'utility `px-page` da tutti i contenitori. Niente più `px-4` sui contenitori
 - **Schede**: foto con zoom leggero al passaggio, etichette a pillola sopra la
   foto (edizione "1/250" in oro sulla tavola scura, disponibilità), prezzo in una
   pillola che si riempie al passaggio
@@ -213,9 +218,8 @@ spegne tutto; si animano solo `transform` e `opacity`; senza JS si vede tutto.
 - **Titoli in ingresso** (h1, h2, h3 di pagina e footer, `scripts/motion.ts`),
   dal 2026-10-01: ogni pezzo entra **da sinistra**, inclinato, e si raddrizza;
   Indian per parola (170 ms l'una), Yankee Clipper per lettera (45 ms l'una).
-  Dopo l'ultimo pezzo il titolo **si accende come un neon**: un tremolio di sola
-  opacity, una volta, 1.4 s, meno di tre lampi al secondo. Gli screen reader
-  leggono il titolo intero (`sr-only`)
+  Nessun tremolio dopo l'ingresso (provato e tolto il 2026-10-01). Gli screen
+  reader leggono il titolo intero (`sr-only`)
 - **Tempi**: volutamente lenti (titoli 1.1-1.4 s, blocchi 1.1 s, volo nel
   carrello 1 s)
 - **Blocchi in ingresso**: schede, foto, citazioni e moduli sotto la piega salgono

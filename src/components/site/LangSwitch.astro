@@ -10,17 +10,19 @@ interface Props {
   short?: boolean;
   // lettere che si scompongono al passaggio del mouse (footer)
   scatter?: boolean;
+  // elenco compatto, con la stessa spaziatura degli altri elenchi (footer)
+  dense?: boolean;
   class?: string;
 }
 
-const { lang, short = false, scatter = false, class: className } = Astro.props;
+const { lang, short = false, scatter = false, dense = false, class: className } = Astro.props;
 
 // /en/menu/ → /nl/menu/: cambia solo il primo segmento, come gli hreflang di Base.astro
 const hrefFor = (l: Lang) => Astro.url.pathname.replace(/^\/[^/]+\//, `/${l}/`);
 ---
 
 <nav aria-label={t(lang, 'nav.languages')} class={className}>
-  <ul class:list={['flex', short ? 'gap-1' : 'flex-col gap-2']}>
+  <ul class:list={['flex', short ? 'gap-1' : dense ? 'flex-col gap-1' : 'flex-col gap-2']}>
     {
       locales.map((l) => (
         <li>
@@ -30,7 +32,9 @@ const hrefFor = (l: Lang) => Astro.url.pathname.replace(/^\/[^/]+\//, `/${l}/`);
             lang={l}
             aria-current={l === lang ? 'true' : undefined}
             class:list={[
-              'inline-flex min-h-11 items-center decoration-red-text decoration-[3px] underline-offset-[6px] hover:underline aria-[current]:underline',
+              'inline-flex items-center decoration-red-text',
+              dense ? 'py-1' : 'min-h-11',
+              'decoration-[3px] underline-offset-[6px] hover:underline aria-[current]:underline',
               short && 'px-1.5 uppercase',
               scatter && 'scatter-host hover:no-underline',
             ]}

@@ -96,9 +96,9 @@ GSAP resta la scelta per quello che manca: nastro con l'orario e sezioni che si
 incastrano con ScrollTrigger.
 
 **Aggiornato il 2026-10-01**: i titoli entrano di lato (traslazione più
-inclinazione che si raddrizza) e poi si accendono come un neon, con un tremolio di
-sola opacity dopo l'ultimo pezzo (`--n` = numero dei pezzi, messo da `motion.ts`).
-Tutte le animazioni più lente. Regole in `02-design-system.md`, Movimento.
+inclinazione che si raddrizza). Il tremolio al neon dopo l'ingresso è stato provato e
+tolto lo stesso giorno: a Pietro piace l'entrata, non il lampeggio. Tutte le
+animazioni più lente. Regole in `02-design-system.md`, Movimento.
 
 ## I limiti da rispettare
 

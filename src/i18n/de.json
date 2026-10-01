@@ -246,5 +246,6 @@
   "home.exterior.alt": "Yanks vom Dorpsplein aus: das Backsteinhaus mit dem Yanks-Schild, die Terrasse mit Holztischen und ein geschnitzter Totempfahl am Eingang.",
   "home.interior.alt": "Drinnen bei Yanks: zwei geschnitzte Totempfähle, Barhocker und Wände, bemalt wie ein Nachthimmel.",
   "backToTop": "Nach oben",
-  "shop.addedShort": "Hinzugefügt"
+  "shop.addedShort": "Hinzugefügt",
+  "home.since": "Seit {year}"
 }

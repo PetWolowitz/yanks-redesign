@@ -221,8 +221,8 @@ altre tre. Regole in `docs/04-build-plan.md`, fase i18n.
 Dettagli in `docs/08-animazioni-risorse.md` e `docs/02-design-system.md`
 (Movimento). Fatti il 2026-09-29 e 2026-10-01, in CSS e TypeScript senza librerie:
 - Titoli che entrano **di lato**, sfalsati (Indian per parola, Yankee Clipper per
-  lettera), e poi **si accendono come un neon** (tremolio di sola opacity, una
-  volta). Blocchi che salgono quando entrano in vista. Tempi volutamente lenti
+  lettera). Niente tremolio al neon sui titoli: tolto il 2026-10-01 su richiesta
+  di Pietro. Blocchi che salgono quando entrano in vista. Tempi volutamente lenti
 - Cursore custom che inverte i colori sopra le immagini, spento su touch
 - Volo della foto nel carrello all'aggiunta; lettere dei link del footer che si
   scompongono al passaggio; freccia per tornare su in fondo alle pagine

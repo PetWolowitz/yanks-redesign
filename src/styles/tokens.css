@@ -20,6 +20,10 @@
   --neon-open: #5DF28C;
   --neon-takeaway: #FFB547;
   --neon-closed: #FF6B5E;
+  /* Margine laterale delle pagine: cresce con lo schermo (2026-10-01) */
+  --page-x: clamp(1.25rem, 4.5vw, 3.5rem);
+  /* Ombra morbida tra una sezione e l'altra */
+  --section-shadow: rgb(43 39 36 / 0.2);
   /* Nero opaco della riga "Home of the Medicine Man": 15.18:1 su crema */
   --matte: #1C1B1A;
 }
@@ -36,6 +40,7 @@
   --sage: #8FB0A5;      /* 7.27 · 6.45 */
   --red-text: var(--red);
   --sage-text: var(--sage);
+  --section-shadow: rgb(0 0 0 / 0.6);
   /* Il nero opaco sul fondo scuro sparirebbe: qui è il colore del testo */
   --matte: var(--text);
 }
