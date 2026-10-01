@@ -8,17 +8,26 @@ Struttura contemporanea (bordi netti, blocchi pieni, zero decorazione) che fa da
 cornice a un marchio d'epoca. Il contrasto tra i due è il punto.
 
 ## Il marchio
-- **Il logo resta.** Nel sito attuale è annegato in un template: qui diventa
-  l'elemento forte, grande, isolato, su fondi ampi
-- File: `src/assets/brand/yanks-logo.png` (alta risoluzione, da shop.yanks.nl), sempre
-  tramite `Logo.astro`; `public/brand/yanks-originale.png` (232 px) resta come
-  riferimento. Nel tema scuro ha un anello crema
-  di 2 px (`--text`, 11.45:1 sul fondo), altrimenti il disco nero sparisce nel
-  fondo marrone. È una cornice: il logo non si tocca
+- **Logo nuovo dal 2026-10-01**, scelto da Pietro: il "timbro" della proposta 01
+  di `07-prompt-loghi.md` (`brand/sorgente/logo1-timbro.png`): disco nero, "Yanks"
+  in corsivo rosso, l'indiano con fascia e piuma, anello crema aperto, onde del
+  Mare del Nord. Vettorializzato con la palette dei token (`#1F1B17`, `#DDD2C0`,
+  `#E0705A`), fondo piatto, SVGO: 16-25 KB. Confronto con il vecchio in
+  `brand/anteprima/confronto-logo.png`
+- Sempre tramite `Logo.astro`, con due varianti:
+  - **badge** (logo completo) **dai 160 px in su**: hero, footer, avviso d'età,
+    scelta della lingua
+  - **indiano** (solo il volto) **sotto i 160 px**: header; e la favicon
+  - ognuna in versione chiara (disco nero) e scura (anello crema che stacca il
+    disco dal fondo marrone); si mostra quella del tema attivo
+- Il logo originale del locale resta come riferimento in
+  `public/brand/yanks-originale.png`, per il confronto nel portfolio
+- È il segno forte: grande, isolato, su fondi ampi
 - Un solo segno importante per schermata
 - Nessuna clipart a tema come riempitivo
 - Le proposte di evoluzione del marchio (vedi `07-prompt-loghi.md`) si mostrano
-  accanto all'originale, non al suo posto
+  accanto all'originale. La proposta 01 è diventata il logo del sito per scelta di
+  Pietro; nel portfolio va mostrata accanto all'originale
 
 ## Colori
 I loro rosso e oro, ammorbiditi verso il pastello: il rosso perde il fuoco e

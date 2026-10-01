@@ -22,7 +22,7 @@ export const venue = {
     dineInUntil: "02:00", // dopo quest'ora solo asporto
     close: "02:45",
   },
-  founded: null,          // DA VERIFICARE: le fonti dicono "37 anni" o "oltre 30"
+  founded: 1989,          // confermato il 2026-10-01: ricamo "1989" sul cappellino dello shop ufficiale
   companyFounded: 1995,   // registrazione societaria
   social: {
     facebook: "https://www.facebook.com/yankscoffeeshop",
@@ -217,7 +217,7 @@ shop.yanks.nl, con le sue immagini). 21 prodotti in `merch.ts`:
 
 **Immagini del negozio usate fuori dallo shop** (dalla home di shop.yanks.nl):
 - **logo in alta risoluzione** (`logo_main_ezrav.png`, 3200 px) in
-  `src/assets/brand/yanks-logo.png`, ridotto a 1200 px: sostituisce il PNG da
+  `src/assets/brand/yanks-logo.png` (tolto il 2026-10-01: il sito usa il logo nuovo, docs/02), ridotto a 1200 px: sostituiva il PNG da
   232 px in tutto il sito tramite `Logo.astro`. Il logo "vettoriale" di "Da
   recuperare" non serve più per il sito
 - **il locale dal Dorpsplein** (`esterno.jpg`), a tutta larghezza in home e in Visit
@@ -272,7 +272,9 @@ Dal sito originale, da riscrivere più diretto e mettere in una pagina visibile:
 12. Space cake: 45-90 minuti per fare effetto, non prenderne un altro pezzo
 
 ## Da recuperare
-- [ ] Testo della pagina `our-story` e anno di apertura. Recuperato il testo
+- [ ] Testo della pagina `our-story`. **Anno di apertura: 1989**, confermato da
+      Pietro il 2026-10-01; fonte il ricamo "1989" sul cappellino in vendita su
+      shop.yanks.nl ("born 37 years ago" della vecchia pagina è coerente). Recuperato il testo
       il 2026-09-28: è quasi tutto promozionale ("recreational and medical
       products", "pre-rolled joints") e superato ("open until 3 am", "20 minutes
       by train"). Utili solo: "born 37 years ago" (senza data, quindi l'anno resta

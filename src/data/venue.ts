@@ -17,7 +17,8 @@ export interface Venue {
     dineInUntil: string;
     close: string;
   };
-  // DA VERIFICARE: le fonti dicono "37 anni" o "oltre 30"
+  // anno di apertura: 1989, confermato da Pietro il 2026-10-01 (fonte: il ricamo
+  // "1989" sul cappellino dello shop ufficiale, shop.yanks.nl)
   founded: number | null;
   // anno della registrazione societaria, non dell'apertura
   companyFounded: number;
@@ -41,7 +42,7 @@ export const venue: Venue = {
     dineInUntil: '02:00',
     close: '02:45',
   },
-  founded: null,
+  founded: 1989,
   companyFounded: 1995,
   social: {
     facebook: 'https://www.facebook.com/yankscoffeeshop',

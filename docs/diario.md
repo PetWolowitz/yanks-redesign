@@ -17,6 +17,28 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-01 — Logo nuovo: il timbro (Logo1) nel sito
+Fatto:        Pietro ha scelto Logo1.png (il timbro della proposta 01: "Yanks"
+              in corsivo, indiano con fascia e piuma, anello aperto, onde).
+              Vettorializzato con la palette dei token, fondo piatto, SVGO
+              (16-25 KB). Varianti badge e solo indiano, chiara e scura, in
+              src/assets/brand/. Logo.astro: badge dai 160 px (hero 448,
+              footer 160, avviso d'età 160, scelta lingua 160), solo indiano
+              nell'header (56) e come favicon (svg + ico 16/32/48). Tolto il
+              vecchio PNG; l'originale del locale resta in public/brand/.
+              Confronto in brand/anteprima/confronto-logo.png. "Since 1989"
+              confermato: venue.founded = 1989, docs/03. verify verde
+Decisioni:    - il badge Canva (ramo brand/logo-nuovo) e la prima proposta
+                (brand/logo-badge) restano non uniti, superati da Logo1
+              - nel tema scuro le versioni hanno un anello crema esterno nel
+                file stesso: tolto l'anello aggiunto via CSS
+Problemi:     - font TAN New York: nessuna demo gratuita ufficiale; i
+                download portano alla licenza a pagamento su Creative Market,
+                le copie dirette sono ridistribuzioni non autorizzate. In
+                attesa di Pietro (licenza o alternativa OFL)
+Prossimo:     decisione sul font degli h1; poi Fase 3
+Ramo/commit:  brand/logo-timbro — "Logo nuovo: il timbro nel sito"
+
 ## 2026-09-29 — Font dei titoli invertiti; logo nuovo in anteprima
 Fatto:        h1 in Yankee Clipper maiuscolo ("YANKS" compreso), h2 e h3 in
               Indian, mai in maiuscolo. Token rinominati per font:
