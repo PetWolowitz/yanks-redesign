@@ -22,7 +22,7 @@ const { lang } = Astro.props;
   class="m-0 h-dvh max-h-none w-full max-w-none place-content-center border-0 bg-bg p-4 text-text"
 >
   <div class="mx-auto flex max-w-xl flex-col items-center gap-6 text-center">
-    <Logo alt={venue.name} size={160} class="size-40" />
+    <Logo alt={venue.name} variant="badge" size={160} class="size-40" />
     <h2 id="age-gate-title" class="text-h2 leading-none">{t(lang, 'age.title')}</h2>
     <p>{t(lang, 'age.text')}</p>
 

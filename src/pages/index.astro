@@ -19,12 +19,13 @@ const home = (l: string) => new URL(`/${l}/`, Astro.site).href;
     <link rel="canonical" href={home(defaultLang)} />
     {locales.map((l) => <link rel="alternate" hreflang={l} href={home(l)} />)}
     <link rel="alternate" hreflang="x-default" href={home(defaultLang)} />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <noscript><meta http-equiv="refresh" content={`1; url=/${defaultLang}/`} /></noscript>
   </head>
   <body>
     <main class="mx-auto flex min-h-dvh max-w-xl flex-col items-center justify-center gap-6 p-4">
-      <Logo alt="Yanks Indian Club" size={160} priority class="size-40" />
+      <Logo alt="Yanks Indian Club" variant="badge" size={160} priority class="size-40" />
       <ul class="flex gap-6 uppercase">
         {
           locales.map((l) => (

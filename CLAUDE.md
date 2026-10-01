@@ -109,8 +109,10 @@ Lo shop **non è opzionale**. Regole del contratto:
   Versioni esatte. Mai `npm audit fix --force`, mai `--legacy-peer-deps`
 
 ## Identità — punti fermi
-- **Il logo e il tema indiano restano.** Il lavoro è dargli spazio, non sostituirlo.
-  Proposte di evoluzione del marchio si presentano affiancate all'originale
+- **Il tema indiano resta.** Il logo del sito, dal 2026-10-01 per scelta di Pietro,
+  è il "timbro" (proposta 01 di `docs/07`), dettagli in `docs/02` (Il marchio).
+  Il logo originale del locale resta in `public/brand/` e nel portfolio si mostra
+  accanto al nuovo
 - L'immaginario è **americana anni '50**: moto, diner, insegne. Non tribale
 - Da evitare: clipart a tema usata come riempitivo. Il segno forte è il logo
 

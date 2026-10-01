@@ -1,30 +1,30 @@
 ---
-// Il logo originale (CLAUDE.md, Identità), invariato. Sorgente in alta risoluzione
-// da shop.yanks.nl (3200 px, ridotta a 1200): astro:assets ne fa WebP della misura
-// giusta. Nel tema scuro un anello crema stacca il disco nero dal fondo (docs/02).
-// public/brand/yanks-originale.png (232 px, da yanks.nl) resta come riferimento.
-import { Image } from 'astro:assets';
-import logo from '../../assets/brand/yanks-logo.png';
+// Il logo (docs/02, Il marchio): il timbro con "Yanks", l'indiano, l'anello aperto e
+// le onde, deciso da Pietro il 2026-10-01. SVG da brand/sorgente/logo1-timbro.png.
+// - badge: logo completo, dai 160 px in su (hero, footer, avviso d'età, scelta lingua)
+// - indiano: solo il volto, sotto i 160 px (header) e come favicon
+// Ogni versione ha la variante per il tema chiaro (disco nero) e per lo scuro (con un
+// anello crema che stacca il disco dal fondo): si mostra quella del tema attivo.
+import badgeChiaro from '../../assets/brand/yanks-badge-chiaro.svg?url';
+import badgeScuro from '../../assets/brand/yanks-badge-scuro.svg?url';
+import indianoChiaro from '../../assets/brand/yanks-indiano-chiaro.svg?url';
+import indianoScuro from '../../assets/brand/yanks-indiano-scuro.svg?url';
 
 interface Props {
   alt: string;
-  // larghezza massima mostrata, in px CSS: decide le misure generate
+  variant: 'badge' | 'indiano';
+  // larghezza mostrata, in px CSS
   size: number;
   class?: string;
   priority?: boolean;
 }
 
-const { alt, size, class: className, priority = false } = Astro.props;
+const { alt, variant, size, class: className, priority = false } = Astro.props;
+const [light, dark] = variant === 'badge' ? [badgeChiaro, badgeScuro] : [indianoChiaro, indianoScuro];
+const common = { width: size, height: size, decoding: 'async' as const, fetchpriority: priority ? ('high' as const) : ('auto' as const), loading: priority ? ('eager' as const) : ('lazy' as const) };
 ---
 
-<Image
-  src={logo}
-  alt={alt}
-  width={size}
-  height={size}
-  densities={[1, 2]}
-  format="webp"
-  loading={priority ? 'eager' : 'lazy'}
-  fetchpriority={priority ? 'high' : 'auto'}
-  class:list={['rounded-full dark:outline-2 dark:outline-text', className]}
-/>
+<span class:list={['inline-block shrink-0', className]}>
+  <img src={light} alt={alt} {...common} class="size-full dark:hidden" />
+  <img src={dark} alt={alt} {...common} class="hidden size-full dark:block" />
+</span>

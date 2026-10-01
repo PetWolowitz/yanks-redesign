@@ -3,7 +3,7 @@
 ## Il logo originale
 
 File: `public/brand/yanks-originale.png`; in alta risoluzione (3200 px, da
-shop.yanks.nl) in `src/assets/brand/yanks-logo.png`. È il riferimento per ogni proposta, e
+shop.yanks.nl) usato fino al 2026-10-01. È il riferimento per ogni proposta, e
 le proposte si mostrano accanto a lui, mai al suo posto.
 
 Disco nero. In alto la scritta "Yanks" in corsivo rosso con contorno bianco.
@@ -37,7 +37,12 @@ mascot, caricature
 Il generatore sbaglia quasi sempre il testo: **genera il simbolo senza lettere**
 e aggiungi il nome dopo, col font vero, in un editor vettoriale.
 
-## 01 · Timbro
+## 01 · Timbro — adottato
+
+**Dal 2026-10-01 è il logo del sito**, per scelta di Pietro: la versione generata
+è in `brand/sorgente/logo1-timbro.png`, vettorializzata in `src/assets/brand/`
+(vedi `02-design-system.md`, Il marchio).
+
 
 **Soggetto**: il volto dell'originale, semplificato a forme piene in crema, dentro
 un disco nero. Striscia rossa sulla fronte, una piuma. Nella parte bassa del
