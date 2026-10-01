@@ -17,6 +17,21 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-01 — Pannello laterale del carrello
+Fatto:        components/shop/CartView.astro: le righe del carrello, condivise da
+              pagina carrello e pannello. Pannello = <dialog> nell'header che
+              entra da destra (solo transform e opacity), sfondo --overlay,
+              pagina sotto bloccata. Esc, ✕ e clic sullo sfondo chiudono; il
+              focus torna sull'icona. Senza JS l'icona porta alla pagina
+              carrello. Non c'è su carrello e checkout
+Decisioni:    - il catalogo (14 kB, compresso molto meno) è in ogni pagina in
+                data-catalog: niente fetch, regola dello ShopApi
+              - all'aggiunta il pannello non si apre da solo: resta il volo
+                della foto verso l'icona
+Problemi:     nessuno
+Prossimo:     recensioni video (servono gli indirizzi dei reel)
+Ramo/commit:  feat/carrello-laterale
+
 ## 2026-10-01 — Ritocchi di layout, prezzi delle bevande
 Fatto:        prezzi aggiornati da Pietro (caffè, espresso e tè 3,00; le altre
               bevande calde 3,50; bibite 3,50) in menu.ts e docs/03. Margine

@@ -247,5 +247,7 @@
   "home.interior.alt": "Drinnen bei Yanks: zwei geschnitzte Totempfähle, Barhocker und Wände, bemalt wie ein Nachthimmel.",
   "backToTop": "Nach oben",
   "shop.addedShort": "Hinzugefügt",
-  "home.since": "Seit {year}"
+  "home.since": "Seit {year}",
+  "cart.view": "Warenkorb ansehen",
+  "cart.close": "Warenkorb schließen"
 }

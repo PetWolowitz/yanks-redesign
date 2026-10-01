@@ -247,5 +247,7 @@
   "home.interior.alt": "Inside Yanks: two carved totem poles, bar stools and walls painted like a night sky.",
   "backToTop": "Back to top",
   "shop.addedShort": "Added",
-  "home.since": "Since {year}"
+  "home.since": "Since {year}",
+  "cart.view": "View cart",
+  "cart.close": "Close cart"
 }
