@@ -13,7 +13,7 @@ da Yanks Indian Club.
 |---|---|
 | 0 · Progetto e deploy | fatta |
 | 1 · Fondamenta: stile, lingue, dati, contratto dello shop | fatta |
-| 2A · Sito: header, footer, home, Visit, Menu, Know before you go | fatta; mancano video dell'hero, recensioni video, pagina Story (materiali da recuperare) |
+| 2A · Sito: header, footer, home, Visit, Menu, Know before you go | fatta, con Story e video dell'hero; mancano le recensioni video (servono i reel) |
 | 2S · Shop sui dati finti: catalogo, scheda, carrello, checkout, ordine | fatta, compreso il pannello laterale del carrello |
 | 3 · Backend dello shop: D1, Stripe, Turnstile, Resend | da fare |
 | 4 · Collegamento mock → live | da fare |

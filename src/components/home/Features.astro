@@ -1,7 +1,9 @@
 ---
 // Chi sono e le tre cose che contano: terrazza, orario, spiaggia (docs/04).
-// Asimmetrico: la foto della terrazza grande a sinistra, due blocchi di testo
-// a destra. Mai tre schede uguali in fila (docs/02).
+// Griglia a bento (Pietro, 2026-10-01), mobile first:
+// - telefono: una colonna (testo, interno, orario, spiaggia, terrazza)
+// - tablet: due colonne, l'interno alto quanto orario e spiaggia insieme
+// - desktop: tre colonne, la terrazza alta quanto tutta la griglia a destra
 import { Image } from 'astro:assets';
 import interno from '../../assets/home/interno.jpg';
 import terras from '../../assets/home/terras.png';
@@ -15,53 +17,61 @@ interface Props {
 
 const { lang } = Astro.props;
 const { close, dineInUntil } = venue.hours;
+const tile = 'rounded-2xl border-3 border-text';
+const card = `${tile} bg-surface p-6 lg:p-8`;
 ---
 
 <section class="border-t-3 border-text">
-  <div class="mx-auto max-w-360 px-page py-12 lg:py-16">
-    <div class="grid items-center gap-8 lg:grid-cols-12 lg:gap-6">
-      <div class="lg:col-span-7">
-        <h2 class="text-h2 leading-none">{t(lang, 'home.about.title')}</h2>
-        <p class="mt-6 max-w-[65ch] font-prose">{t(lang, 'home.about.text')}</p>
-      </div>
-      <!-- Foto dell'interno da shop.yanks.nl: 720 px, quindi mai più larga -->
+  <div class="mx-auto grid max-w-360 gap-4 px-page py-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6 lg:py-16">
+    <div data-card class:list={[card, 'sm:col-span-2']}>
+      <h2 class="text-h2 leading-none">{t(lang, 'home.about.title')}</h2>
+      <p class="mt-6 max-w-[65ch] font-prose">{t(lang, 'home.about.text')}</p>
+    </div>
+
+    <!-- Foto dell'interno da shop.yanks.nl: 720 px, quindi mai più larga -->
+    <div class:list={[tile, 'relative aspect-square overflow-hidden sm:row-span-2 sm:aspect-auto sm:min-h-80']}>
       <Image
         src={interno}
         alt={t(lang, 'home.interior.alt')}
         widths={[360, 720]}
-        sizes="(min-width: 1024px) 400px, 100vw"
+        sizes="(min-width: 1024px) 440px, (min-width: 640px) 50vw, 100vw"
         format="webp"
         loading="lazy"
-        class="w-full max-w-100 border-3 rounded-2xl border-text lg:col-span-5 lg:justify-self-end"
+        class="absolute inset-0 size-full object-cover"
       />
     </div>
 
-    <div class="mt-12 grid gap-10 lg:grid-cols-12 lg:gap-6">
-      <figure class="lg:col-span-7 lg:row-span-2">
+    <div data-card class={card}>
+      <h3 class="text-h3">{t(lang, 'home.late.title')}</h3>
+      <p class="mt-2 font-prose">{t(lang, 'home.late.text', { close, dineInUntil })}</p>
+    </div>
+
+    <div data-card class={card}>
+      <h3 class="text-h3">{t(lang, 'home.beach.title')}</h3>
+      <p class="mt-2 font-prose">{t(lang, 'home.beach.text')}</p>
+    </div>
+
+    <figure
+      class:list={[
+        tile,
+        'flex flex-col overflow-hidden bg-surface sm:col-span-2 lg:col-span-1 lg:col-start-3 lg:row-span-3 lg:row-start-1',
+      ]}
+    >
+      <div class="relative aspect-4/3 lg:aspect-auto lg:min-h-80 lg:flex-1">
         <Image
           src={terras}
           alt={t(lang, 'home.terrace.alt')}
           widths={[390, 640]}
-          sizes="(min-width: 1024px) 640px, 100vw"
+          sizes="(min-width: 1024px) 440px, 100vw"
           format="webp"
           loading="lazy"
-          class="h-auto w-full rounded-2xl border-3 border-text lg:max-w-160"
+          class="absolute inset-0 size-full object-cover"
         />
-        <figcaption class="mt-4">
-          <h3 class="text-h3">{t(lang, 'home.terrace.title')}</h3>
-          <p class="mt-2 max-w-[50ch] font-prose">{t(lang, 'home.terrace.text')}</p>
-        </figcaption>
-      </figure>
-
-      <div data-card class="rounded-2xl border-3 border-text bg-surface p-6 lg:col-span-5 lg:self-start lg:p-8">
-        <h3 class="text-h3">{t(lang, 'home.late.title')}</h3>
-        <p class="mt-2 font-prose">{t(lang, 'home.late.text', { close, dineInUntil })}</p>
       </div>
-
-      <div data-card class="rounded-2xl border-3 border-text bg-surface p-6 lg:col-span-5 lg:self-start lg:p-8">
-        <h3 class="text-h3">{t(lang, 'home.beach.title')}</h3>
-        <p class="mt-2 font-prose">{t(lang, 'home.beach.text')}</p>
-      </div>
-    </div>
+      <figcaption class="border-t-3 border-text p-6 lg:p-8">
+        <h3 class="text-h3">{t(lang, 'home.terrace.title')}</h3>
+        <p class="mt-2 max-w-[50ch] font-prose">{t(lang, 'home.terrace.text')}</p>
+      </figcaption>
+    </figure>
   </div>
 </section>

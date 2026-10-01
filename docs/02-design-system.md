@@ -163,7 +163,8 @@ Syne (display), Literata (testo), Martian Mono (dati).
 - **Angoli sempre arrotondati** (richiesta di Pietro, 2026-09-29): pulsanti,
   pillole e selettori `rounded-full`; campi dei moduli `rounded-xl`; schede,
   riquadri e immagini `rounded-2xl`. Restano dritte solo le linee che separano
-  le sezioni
+  le sezioni e, unica eccezione (Pietro, 2026-10-01), il riquadro della mappa:
+  l'iframe di Google sborderebbe dagli angoli tondi
 - **Ombre**: tre. L'alone del neon (è luce); **al passaggio sulle schede**,
   un'ombra piena sfalsata di 6 px nel colore del testo, con la scheda che si
   solleva: un adesivo anni '50; e dal 2026-10-01 un'**ombra morbida sopra ogni
@@ -210,6 +211,20 @@ come la scritta del logo; "HOME OF THE MEDICINE MAN" in Yankee Clipper e in
 `--matte`, nero opaco
 (`#1C1B1A`, 15.18:1 su crema). Nel tema scuro `--matte` è il colore del
 testo: il nero sparirebbe. Accanto, il logo grande.
+
+**Sfondo** (dal 2026-10-01): la spiaggia di Zandvoort, video di Pietro.
+Fotogramma fisso (`src/assets/home/hero-spiaggia.jpg`, WebP in build) sempre;
+video (`public/video/hero-spiaggia.webm`, VP9 1600 px, 2,5 MB, senza audio) solo da
+1024 px, senza movimento ridotto e senza risparmio dati, fermo quando esce di
+vista. Sopra, un velo nel colore `--bg`: 85% su telefono e tablet, da sinistra
+(90%) a destra (30%) su desktop, così il testo resta leggibile nei due temi.
+
+## La sezione del club (bento)
+
+Dal 2026-10-01 "De club aan het plein" è una griglia a bento: tutte le tessere
+con lo stesso bordo e lo stesso spazio (16 px, 24 da desktop). Telefono: una
+colonna. Tablet: due, l'interno alto quanto le schede orario e spiaggia. Desktop:
+tre, il testo largo due colonne in alto, la terrazza alta quanto tutta la griglia.
 
 ## Movimento (dal 2026-09-29)
 
