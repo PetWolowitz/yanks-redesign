@@ -42,22 +42,24 @@ export const menu: MenuGroup[] = [
   {
     id: 'coffee',
     kind: 'items',
+    // Prezzi aggiornati da Pietro il 2026-10-01: bevande calde da 3,00 a 3,50
     items: [
-      { id: 'coffee', priceCents: 275 },
-      { id: 'espresso', priceCents: 275 },
-      { id: 'cappuccino', priceCents: 325 },
-      { id: 'latte-macchiato', priceCents: 325 },
-      { id: 'caffe-latte', priceCents: 325 },
-      { id: 'hot-chocolate', priceCents: 325 },
-      { id: 'hot-chocolate-cream', priceCents: 375 },
-      { id: 'tea', priceCents: 275 },
-      { id: 'fresh-mint-tea', priceCents: 325 },
+      { id: 'coffee', priceCents: 300 },
+      { id: 'espresso', priceCents: 300 },
+      { id: 'cappuccino', priceCents: 350 },
+      { id: 'latte-macchiato', priceCents: 350 },
+      { id: 'caffe-latte', priceCents: 350 },
+      { id: 'hot-chocolate', priceCents: 350 },
+      { id: 'hot-chocolate-cream', priceCents: 350 },
+      { id: 'tea', priceCents: 300 },
+      { id: 'fresh-mint-tea', priceCents: 350 },
     ],
   },
   {
     id: 'softDrinks',
     kind: 'drinks',
-    priceCents: 325,
+    // 3,50 dal 2026-10-01 (Pietro)
+    priceCents: 350,
     drinks: [
       { brand: 'Coca-Cola', variants: 5 },
       { brand: 'Fanta', variants: 4 },

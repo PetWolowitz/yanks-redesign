@@ -125,10 +125,10 @@ parla del posto, non della merce: niente varietà, niente prezzi della cannabis,
 
 - **Tosti** — kaas, ham-kaas, vlam
 - **Pizza** — salami, chorizo, margherita, hawaii, prosciutto
-- **Caffetteria** — caffè 2,75 · espresso 2,75 · cappuccino 3,25 · latte
-  macchiato 3,25 · caffellatte 3,25 · cioccolata 3,25 · con panna 3,75 · tè 2,75 ·
-  tè alla menta fresca 3,25
-- **Bibite — tutte 3,25 €**, per marca e collassate: Coca-Cola (5) · Fanta (4) ·
+- **Caffetteria** (prezzi aggiornati da Pietro il 2026-10-01, da 3,00 a 3,50) —
+  caffè 3,00 · espresso 3,00 · tè 3,00 · cappuccino 3,50 · latte macchiato 3,50 ·
+  caffellatte 3,50 · cioccolata 3,50 · con panna 3,50 · tè alla menta fresca 3,50
+- **Bibite — tutte 3,50 €** (dal 2026-10-01), per marca e collassate: Coca-Cola (5) · Fanta (4) ·
   Capri-Sun (3) · Fernandes (4) · Lipton (3) · Oasis (2) · Orangina (2) ·
   Schweppes (2) · singoli (Dr Pepper, AA energy, succo di mela, Chocomel, Fristi,
   Hawai, Poms, Taksi, Spa naturale e frizzante)

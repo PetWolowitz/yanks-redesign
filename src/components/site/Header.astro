@@ -29,7 +29,7 @@ const linkClass =
 >
 
 <header data-header class="group/header sticky top-0 z-40 border-b-3 border-text bg-bg">
-  <div class="mx-auto flex max-w-360 flex-wrap items-center gap-x-2 px-4 lg:h-18 lg:flex-nowrap lg:gap-x-6">
+  <div class="mx-auto flex max-w-360 flex-wrap items-center gap-x-2 px-page lg:h-18 lg:flex-nowrap lg:gap-x-6">
     <!-- Il logo originale (Logo.astro), che si rimpicciolisce scorrendo -->
     <a href={`/${lang}/`} class="me-auto inline-flex h-16 items-center lg:me-0 lg:h-18">
       <Logo
@@ -42,7 +42,7 @@ const linkClass =
     </a>
 
     <nav aria-label={t(lang, 'nav.label')} class="hidden flex-1 lg:block">
-      <ul class="flex justify-center gap-6 text-small whitespace-nowrap uppercase">
+      <ul class="flex justify-start gap-6 text-small whitespace-nowrap uppercase">
         {
           pages.map(({ slug, key }) => (
             <li>
@@ -58,7 +58,7 @@ const linkClass =
     <OpenStatus
       lang={lang}
       compact
-      class="order-last -mx-4 basis-[calc(100%+2rem)] border-t-2 border-text px-4 py-1.5 text-small lg:order-none lg:mx-0 lg:basis-auto lg:border-0 lg:p-0"
+      class="order-last -mx-[var(--page-x)] basis-[calc(100%+2*var(--page-x))] border-t-2 border-text px-page py-1.5 text-small lg:order-none lg:mx-0 lg:basis-auto lg:border-0 lg:p-0"
     />
 
     <div class="hidden items-center gap-2 text-small lg:flex">

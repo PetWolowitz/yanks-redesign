@@ -19,10 +19,14 @@ const { lang } = Astro.props;
 const { open, close } = venue.hours;
 ---
 
-<section class="mx-auto grid max-w-360 items-center gap-10 px-4 py-10 lg:grid-cols-12 lg:gap-6 lg:py-16">
+<section class="mx-auto grid max-w-360 items-center gap-10 px-page py-10 lg:grid-cols-12 lg:gap-6 lg:py-16">
   <div class="lg:col-span-7">
-    <h1 class="text-display text-red">Yanks</h1>
-    <p class="font-sign text-h2 leading-none text-matte uppercase">{venue.tagline}</p>
+    <!-- Il blocco del nome, centrato come un'insegna: Yanks, la riga e l'anno -->
+    <div class="text-center">
+      <h1 class="text-display text-red">Yanks</h1>
+      <p class="mt-4 font-sign text-h2 leading-none text-matte uppercase">{venue.tagline}</p>
+      {venue.founded && <p class="mt-4 text-small tracking-[0.35em] text-muted uppercase">{t(lang, 'home.since', { year: String(venue.founded) })}</p>}
+    </div>
     <p class="mt-8 max-w-[45ch] font-prose text-h3 leading-snug">{t(lang, 'home.intro', { open, close })}</p>
     <div class="mt-8 flex flex-wrap items-end gap-x-10 gap-y-6">
       <Hours lang={lang} />

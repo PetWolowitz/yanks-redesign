@@ -246,5 +246,6 @@
   "home.exterior.alt": "Yanks gezien vanaf het Dorpsplein: het bakstenen pand met het Yanks-bord, het terras met houten tafels en een gesneden totem bij de ingang.",
   "home.interior.alt": "Binnen bij Yanks: twee gesneden totempalen, barkrukken en muren beschilderd als een nachtelijke hemel.",
   "backToTop": "Terug naar boven",
-  "shop.addedShort": "Toegevoegd"
+  "shop.addedShort": "Toegevoegd",
+  "home.since": "Sinds {year}"
 }
