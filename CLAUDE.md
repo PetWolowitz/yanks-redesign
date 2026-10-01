@@ -203,7 +203,8 @@ altre tre. Regole in `docs/04-build-plan.md`, fase i18n.
 ## Struttura delle pagine
 1. **Home** — hero con video, stato di apertura, chi sono, anteprima menu,
    anteprima shop, recensioni (video e scritte), mappa
-2. **Story** — cronologia (serve il testo di `our-story`, ancora da recuperare)
+2. **Story** — cronologia con soli fatti verificati (il testo di `our-story` è
+   promozionale e non si usa); apertura nel 1984, dal merch
 3. **Menu** — food e drink, bibite raggruppate per marca, prezzo unico una volta
 4. **Shop** — catalogo, scheda prodotto, carrello, checkout, stato ordine.
    Pagamento Stripe in modalità test
@@ -216,6 +217,11 @@ altre tre. Regole in `docs/04-build-plan.md`, fase i18n.
 - **Recensioni video**: schede 9:16 in fila scorrevole, partono solo in vista,
   click per l'audio. Materiale Instagram solo con embed ufficiale
 - Un solo video in autoplay per schermata
+- **Video nostri** (dal 2026-10-01, scelta di Pietro): i video in loop stanno in
+  `public/video/` e passano da `src/components/site/LoopVideo.astro` (poster
+  sempre, video solo da 1024 px). Niente reel di Instagram scaricati né usati come
+  sfondo. I reel del locale controllati finora ("Friday high day", aftermovie del
+  4/20) sono promozionali sulla cannabis: non si usano
 
 ## Animazioni
 Dettagli in `docs/08-animazioni-risorse.md` e `docs/02-design-system.md`

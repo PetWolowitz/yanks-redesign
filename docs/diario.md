@@ -17,6 +17,18 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-01 — Video nostri: LoopVideo, spiaggia nella Story
+Fatto:        components/site/LoopVideo.astro (poster sempre, video da 1024 px,
+              fermo fuori vista), usato dall'hero e dalla prima tappa della
+              Story (taglio 4:5 della spiaggia, 1,2 MB). CLAUDE.md: Story e
+              regola dei video nostri
+Decisioni:    - reel di Instagram proposti esclusi: promozionali sulla cannabis
+                ("Friday high day", 4/20). Pietro ha scelto video nostri
+              - lo script del video è uno solo per tutta la pagina
+Problemi:     fonte del video della spiaggia da confermare (nome da Pexels)
+Prossimo:     altri video del locale da Pietro, se ne ha; Fase 3 backend
+Ramo/commit:  feat/video-story
+
 ## 2026-10-01 — Hero con video, bento, mappa, anno 1984
 Fatto:        hero con la spiaggia di Zandvoort (video di Pietro): poster sempre,
               video WebM 2,5 MB solo da 1024 px, velo nel colore dello sfondo.
