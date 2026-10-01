@@ -1,0 +1,93 @@
+---
+// Story (CLAUDE.md, Struttura delle pagine): una cronologia breve, solo fatti
+// verificati (docs/03). Il testo originale di our-story è promozionale e non si usa.
+// Gli anni vengono da venue.ts: se cambiano lì, cambia anche questa pagina.
+import type { GetStaticPaths } from 'astro';
+import { Image } from 'astro:assets';
+import interno from '../../assets/home/interno.jpg';
+import capBack from '../../assets/shop/cap/3.jpg';
+import PageIntro from '../../components/site/PageIntro.astro';
+import { venue } from '../../data/venue';
+import Base from '../../layouts/Base.astro';
+import { langPaths, type Lang } from '../../i18n/locales';
+import { t, type Key } from '../../i18n/t';
+
+export const getStaticPaths = langPaths satisfies GetStaticPaths;
+
+const { lang } = Astro.props as { lang: Lang };
+const { open, close } = venue.hours;
+const year = String(venue.founded ?? '');
+
+// Ogni tappa: l'anno (o un'etichetta se l'anno non si sa), titolo, testo, foto facoltativa
+const steps: {
+  when: string;
+  // gli anni in grande, le etichette ("Vandaag") alla misura dei titoli: in grande non ci stanno
+  isYear?: boolean;
+  title: Key;
+  text: Key;
+  params?: Record<string, string>;
+  image?: { src: ImageMetadata; alt: Key };
+}[] = [
+  ...(venue.founded ? [{ when: year, isYear: true, title: 'story.opened.title', text: 'story.opened.text' } as const] : []),
+  { when: String(venue.companyFounded), isYear: true, title: 'story.company.title', text: 'story.company.text' },
+  {
+    when: t(lang, 'story.sign.label'),
+    title: 'story.sign.title',
+    text: 'story.sign.text',
+    image: { src: capBack, alt: 'story.sign.alt' },
+  },
+  {
+    when: t(lang, 'story.today.label'),
+    title: 'story.today.title',
+    text: 'story.today.text',
+    params: { open, close },
+    image: { src: interno, alt: 'home.interior.alt' },
+  },
+];
+---
+
+<Base
+  lang={lang}
+  title={`${t(lang, 'story.title')} · ${venue.name}`}
+  description={t(lang, 'story.description', { year })}
+>
+  <main id="content">
+    <PageIntro title={t(lang, 'story.title')} intro={t(lang, 'story.intro', { year })} />
+
+    <ol class="mx-auto max-w-360 px-page pb-12">
+      {
+        steps.map((step) => (
+          <li class="grid gap-6 border-t-3 border-text py-10 lg:grid-cols-12 lg:py-14">
+            <p class:list={['font-sign leading-none text-red-text uppercase lg:col-span-3', step.isYear ? 'text-display' : 'text-h2']}>
+              {step.when}
+            </p>
+            <div class="lg:col-span-5">
+              <h2 class="text-h2 leading-none">{t(lang, step.title)}</h2>
+              <p class="mt-6 max-w-[55ch] font-prose">{t(lang, step.text, step.params)}</p>
+            </div>
+            {step.image && (
+              <Image
+                src={step.image.src}
+                alt={t(lang, step.image.alt)}
+                widths={[360, 667]}
+                sizes="(min-width: 1024px) 360px, 100vw"
+                format="webp"
+                loading="lazy"
+                class="aspect-4/5 w-full max-w-90 rounded-2xl border-3 border-text object-cover lg:col-span-4 lg:justify-self-end"
+              />
+            )}
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="mx-auto max-w-360 px-page pb-16">
+      <a
+        href={`/${lang}/visit/`}
+        class="inline-flex min-h-11 items-center rounded-full border-3 border-text px-5 py-2 uppercase transition-colors hover:bg-text hover:text-bg"
+      >
+        {t(lang, 'story.cta')} →
+      </a>
+    </div>
+  </main>
+</Base>

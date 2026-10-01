@@ -17,6 +17,19 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-01 — Pagina Story
+Fatto:        /[lang]/story/: cronologia (apertura, 1995 registrazione, il motto
+              Home of the Medicine Man col cappellino, oggi al Dorpsplein 2),
+              testi nl/en/de, voce "Verhaal" nella navigazione e nel footer.
+              Navbar: spazio tra le voci 16 px sotto i 1280 px, così il tedesco
+              ci sta a 1024
+Decisioni:    - anno di apertura 1984, non 1989: lo dice il ricamo sul cappellino
+                del merch (cap/2.jpg); Pietro: "usa le fonti del merch"
+              - anni da venue.ts; nessun testo promozionale, solo fatti
+Problemi:     nessuno
+Prossimo:     hero con video, bento della sezione club
+Ramo/commit:  feat/pagina-story
+
 ## 2026-10-01 — Pannello laterale del carrello
 Fatto:        components/shop/CartView.astro: le righe del carrello, condivise da
               pagina carrello e pannello. Pannello = <dialog> nell'header che

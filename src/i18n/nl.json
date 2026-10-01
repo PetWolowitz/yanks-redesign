@@ -249,5 +249,21 @@
   "shop.addedShort": "Toegevoegd",
   "home.since": "Sinds {year}",
   "cart.view": "Bekijk winkelwagen",
-  "cart.close": "Winkelwagen sluiten"
+  "cart.close": "Winkelwagen sluiten",
+  "nav.story": "Verhaal",
+  "story.title": "Ons verhaal",
+  "story.description": "De geschiedenis van Yanks Indian Club aan het Dorpsplein in Zandvoort, sinds {year}.",
+  "story.intro": "Sinds {year} aan het Dorpsplein van Zandvoort. Een korte tijdlijn, met alleen wat we konden nagaan.",
+  "story.opened.title": "Open aan het plein",
+  "story.opened.text": "Yanks opent aan het Dorpsplein, het plein midden in het dorp, op een paar minuten lopen van het strand.",
+  "story.company.title": "Een eigen onderneming",
+  "story.company.text": "Yanks wordt ingeschreven als onderneming. De club op het plein heeft vanaf nu ook papieren.",
+  "story.sign.label": "Het teken",
+  "story.sign.title": "Home of the Medicine Man",
+  "story.sign.text": "Het logo is het hoofd van een indiaan met verentooi, getekend als een oud Amerikaans uithangbord. Het motto staat ook geborduurd op de achterkant van de pet in de shop.",
+  "story.sign.alt": "Achterkant van de zwarte Yanks-pet met het rode borduursel Home of the Medicine Man.",
+  "story.today.label": "Vandaag",
+  "story.today.title": "Dorpsplein 2",
+  "story.today.text": "Een bar met pooltafels, speltafels en grote schermen, twee gesneden totempalen en muren als een nachtelijke hemel. Daarbuiten het terras. Elke dag open van {open} tot {close}.",
+  "story.cta": "Plan je bezoek"
 }

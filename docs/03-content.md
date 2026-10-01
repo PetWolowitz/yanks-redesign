@@ -22,7 +22,7 @@ export const venue = {
     dineInUntil: "02:00", // dopo quest'ora solo asporto
     close: "02:45",
   },
-  founded: 1989,          // confermato il 2026-10-01: ricamo "1989" sul cappellino dello shop ufficiale
+  founded: 1984,          // 2026-10-01: ricamo "1984" sul cappellino del merch (cap/2.jpg), scelto da Pietro
   companyFounded: 1995,   // registrazione societaria
   social: {
     facebook: "https://www.facebook.com/yankscoffeeshop",
@@ -272,14 +272,13 @@ Dal sito originale, da riscrivere più diretto e mettere in una pagina visibile:
 12. Space cake: 45-90 minuti per fare effetto, non prenderne un altro pezzo
 
 ## Da recuperare
-- [ ] Testo della pagina `our-story`. **Anno di apertura: 1989**, confermato da
-      Pietro il 2026-10-01; fonte il ricamo "1989" sul cappellino in vendita su
-      shop.yanks.nl ("born 37 years ago" della vecchia pagina è coerente). Recuperato il testo
-      il 2026-09-28: è quasi tutto promozionale ("recreational and medical
-      products", "pre-rolled joints") e superato ("open until 3 am", "20 minutes
-      by train"). Utili solo: "born 37 years ago" (senza data, quindi l'anno resta
-      DA VERIFICARE), coffee house al Dorpsplein 2, interni in stile nativo
-      americano, terrazza. Troppo poco per la pagina Story: resta fuori
+- [x] Pagina Story (2026-10-01). **Anno di apertura: 1984**, dal ricamo sul
+      cappellino del merch (src/assets/shop/cap/2.jpg); scelto da Pietro il
+      2026-10-01 ("usa le fonti del merch"). Prima era 1989, letto male dalla
+      stessa foto. Il testo di our-story (recuperato il 2026-09-28) è quasi tutto
+      promozionale e superato: non si usa. La pagina è una cronologia con soli
+      fatti (apertura, registrazione 1995, il motto sul cappellino, oggi al
+      Dorpsplein 2), anni presi da venue.ts
 - [ ] Video per l'hero (WebM sotto 3 MB) e poster WebP. Il sito attuale non ha
       video; la foto larga (`yanks-banner.jpg`) mostra gli schermi con il menu
       della cannabis e non si può usare. L'hero per ora è tipografico
