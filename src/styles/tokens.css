@@ -24,6 +24,8 @@
   --page-x: clamp(1.25rem, 4.5vw, 3.5rem);
   /* Ombra morbida tra una sezione e l'altra */
   --section-shadow: rgb(43 39 36 / 0.2);
+  /* sfondo dietro il pannello del carrello */
+  --overlay: rgb(43 39 36 / 0.55);
   /* Nero opaco della riga "Home of the Medicine Man": 15.18:1 su crema */
   --matte: #1C1B1A;
 }
@@ -41,6 +43,7 @@
   --red-text: var(--red);
   --sage-text: var(--sage);
   --section-shadow: rgb(0 0 0 / 0.6);
+  --overlay: rgb(0 0 0 / 0.7);
   /* Il nero opaco sul fondo scuro sparirebbe: qui è il colore del testo */
   --matte: var(--text);
 }
