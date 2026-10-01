@@ -3,7 +3,10 @@
 // Desktop: logo, pagine, orologio, lingue, tema, carrello su una fascia.
 // Mobile: logo, carrello e ☰ sulla fascia, orologio in una striscia sotto,
 // il resto nel menu a tutto schermo (popover: funziona senza JS).
+// Carrello: l'icona è un link alla pagina carrello; con JS apre il pannello laterale
+// (<dialog>). Su carrello e checkout il pannello non c'è: la pagina mostra già tutto.
 import { pages } from '../../data/pages';
+import CartView from '../shop/CartView.astro';
 import type { Lang } from '../../i18n/locales';
 import { t } from '../../i18n/t';
 import LangSwitch from './LangSwitch.astro';
@@ -17,6 +20,7 @@ interface Props {
 
 const { lang } = Astro.props;
 
+const withDrawer = !/\/shop\/(cart|checkout)\//.test(Astro.url.pathname);
 const isCurrent = (slug: string) => Astro.url.pathname.startsWith(`/${lang}/${slug}/`);
 const linkClass =
   'decoration-red-text decoration-[3px] underline-offset-[6px] hover:underline aria-[current=page]:underline';
@@ -119,6 +123,31 @@ const linkClass =
   </div>
 </div>
 
+{
+  withDrawer && (
+    <dialog
+      data-cart-drawer
+      aria-labelledby="cart-drawer-title"
+      class="cart-drawer m-0 ms-auto h-dvh max-h-none w-full max-w-md border-0 border-s-3 border-text bg-bg p-0 text-text"
+    >
+      <div class="flex h-full flex-col gap-4 p-6">
+        <div class="flex items-center justify-between">
+          <h2 id="cart-drawer-title" tabindex="-1" class="text-h2 leading-none focus:outline-none">{t(lang, 'cart.title')}</h2>
+          <form method="dialog">
+            <button class="inline-flex size-11 items-center justify-center">
+              <span class="sr-only">{t(lang, 'cart.close')}</span>
+              <svg class="size-6" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2" />
+              </svg>
+            </button>
+          </form>
+        </div>
+        <CartView lang={lang} variant="drawer" focusFallback="#cart-drawer-title" class="min-h-0 flex-1" />
+      </div>
+    </dialog>
+  )
+}
+
 <script>
   import { countItems, loadCart, onCartChange, type Cart } from '../../lib/shop/cart';
 
@@ -139,6 +168,23 @@ const linkClass =
   shownCount = countItems(loadCart());
   showCount(loadCart());
   onCartChange(showCount);
+
+  // Pannello del carrello: il clic normale sull'icona lo apre al posto della pagina.
+  // Ctrl/Cmd/Maiusc+clic restano al browser (nuova scheda). Esc e ✕ chiudono da soli
+  // (<dialog> e form method="dialog"); il clic sullo sfondo lo chiude qui.
+  const drawer = document.querySelector<HTMLDialogElement>('[data-cart-drawer]');
+  const cartLink = document.querySelector<HTMLAnchorElement>('[data-cart-link]');
+  if (drawer && cartLink) {
+    cartLink.setAttribute('aria-haspopup', 'dialog');
+    cartLink.addEventListener('click', (event) => {
+      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      drawer.showModal();
+    });
+    drawer.addEventListener('click', (event) => {
+      if (event.target === drawer) drawer.close();
+    });
+  }
 
   // Header più compatto appena si scorre: si anima solo il transform del logo
   const header = document.querySelector<HTMLElement>('[data-header]');

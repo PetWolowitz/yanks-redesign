@@ -23,12 +23,27 @@ Fatto:        /[lang]/story/: cronologia (apertura, 1995 registrazione, il motto
               testi nl/en/de, voce "Verhaal" nella navigazione e nel footer.
               Navbar: spazio tra le voci 16 px sotto i 1280 px, così il tedesco
               ci sta a 1024
-Decisioni:    anni da venue.ts (un numero solo da cambiare); nessun testo
-              promozionale, solo fatti
-Problemi:     il ricamo sul cappellino (cap/2.jpg) dice 1984, non 1989: anno da
-              riconfermare con Pietro. PR non unita finché non risponde
-Prossimo:     pannello laterale del carrello, recensioni video
+Decisioni:    - anno di apertura 1984, non 1989: lo dice il ricamo sul cappellino
+                del merch (cap/2.jpg); Pietro: "usa le fonti del merch"
+              - anni da venue.ts; nessun testo promozionale, solo fatti
+Problemi:     nessuno
+Prossimo:     hero con video, bento della sezione club
 Ramo/commit:  feat/pagina-story
+
+## 2026-10-01 — Pannello laterale del carrello
+Fatto:        components/shop/CartView.astro: le righe del carrello, condivise da
+              pagina carrello e pannello. Pannello = <dialog> nell'header che
+              entra da destra (solo transform e opacity), sfondo --overlay,
+              pagina sotto bloccata. Esc, ✕ e clic sullo sfondo chiudono; il
+              focus torna sull'icona. Senza JS l'icona porta alla pagina
+              carrello. Non c'è su carrello e checkout
+Decisioni:    - il catalogo (14 kB, compresso molto meno) è in ogni pagina in
+                data-catalog: niente fetch, regola dello ShopApi
+              - all'aggiunta il pannello non si apre da solo: resta il volo
+                della foto verso l'icona
+Problemi:     nessuno
+Prossimo:     recensioni video (servono gli indirizzi dei reel)
+Ramo/commit:  feat/carrello-laterale
 
 ## 2026-10-01 — Ritocchi di layout, prezzi delle bevande
 Fatto:        prezzi aggiornati da Pietro (caffè, espresso e tè 3,00; le altre

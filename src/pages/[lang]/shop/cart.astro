@@ -1,139 +1,25 @@
 ---
-// Carrello (docs/04, Fase 2S). Il carrello sta in localStorage (lib/shop/cart.ts):
-// l'HTML statico non lo conosce, quindi le righe le costruisce il JS.
-// Nomi, taglie, prezzi e miniature di tutti gli SKU arrivano preparati in build
-// in data-catalog (JSON in un attributo, non uno script inline: CSP).
-// Il subtotale è indicativo: l'addebito lo calcola sempre il server (docs/06).
+// Carrello (docs/04, Fase 2S). Le righe le disegna CartView, lo stesso del pannello
+// laterale. Il subtotale è indicativo: l'addebito lo calcola sempre il server (docs/06).
 import type { GetStaticPaths } from 'astro';
+import CartView from '../../../components/shop/CartView.astro';
 import PageIntro from '../../../components/site/PageIntro.astro';
 import { venue } from '../../../data/venue';
 import Base from '../../../layouts/Base.astro';
 import { langPaths, type Lang } from '../../../i18n/locales';
-import { buildCatalog } from '../../../lib/shop/catalog';
 import { t } from '../../../i18n/t';
 
 export const getStaticPaths = langPaths satisfies GetStaticPaths;
 
 const { lang } = Astro.props as { lang: Lang };
-
-const catalog = await buildCatalog(lang);
 ---
 
 <Base lang={lang} title={`${t(lang, 'cart.title')} · ${venue.name}`} description={t(lang, 'cart.description')}>
   <main id="content">
     <PageIntro title={t(lang, 'cart.title')} intro={t(lang, 'shop.testMode')}>
-      <noscript><p class="mt-6 border-3 rounded-2xl border-text px-4 py-3">{t(lang, 'shop.noscript')}</p></noscript>
+      <noscript><p class="mt-6 rounded-2xl border-3 border-text px-4 py-3">{t(lang, 'shop.noscript')}</p></noscript>
     </PageIntro>
 
-    <cart-view
-      class="mx-auto block max-w-360 px-page pb-12"
-      data-catalog={JSON.stringify(catalog)}
-      data-lang={lang}
-      data-size-label={t(lang, 'shop.size')}
-      data-remove-label={t(lang, 'cart.remove')}
-      data-quantity-label={t(lang, 'shop.quantity')}
-    >
-      <p data-empty hidden class="border-t-3 border-text pt-6">
-        {t(lang, 'cart.empty')}
-        <a href={`/${lang}/shop/`} class="ms-2 underline decoration-red-text decoration-[3px] underline-offset-[6px]">{t(lang, 'shop.back')}</a>
-      </p>
-
-      <div data-full hidden class="grid gap-10 lg:grid-cols-12 lg:gap-6">
-        <ul data-rows class="border-t-3 border-text lg:col-span-8"></ul>
-        <div class="h-fit border-3 rounded-2xl border-text p-6 lg:col-span-4">
-          <p class="flex items-baseline justify-between gap-4 text-h3">
-            <span>{t(lang, 'cart.subtotal')}</span>
-            <span data-subtotal class="tabular-nums"></span>
-          </p>
-          <p class="mt-2 text-small text-muted">{t(lang, 'cart.note')}</p>
-          <a href={`/${lang}/shop/checkout/`} class="mt-6 flex min-h-11 items-center justify-center border-3 rounded-full border-text bg-text px-6 py-2 text-bg uppercase hover:bg-bg hover:text-text">
-            {t(lang, 'cart.checkout')}
-          </a>
-        </div>
-      </div>
-
-      <template>
-        <li class="flex gap-4 border-b border-muted py-4">
-          <img data-image alt="" width="80" height="100" class="h-25 w-20 shrink-0 border-2 rounded-lg border-text object-cover" />
-          <div class="flex flex-1 flex-col gap-2">
-            <a data-name class="font-sign uppercase hover:underline"></a>
-            <span data-size class="text-small text-muted"></span>
-            <div class="mt-auto flex flex-wrap items-center gap-4">
-              <label class="flex items-center gap-2 text-small">
-                <span data-quantity-label></span>
-                <select data-quantity class="min-h-11 border-2 rounded-xl border-text bg-bg px-2"></select>
-              </label>
-              <button type="button" data-remove class="min-h-11 text-small underline underline-offset-4"></button>
-            </div>
-          </div>
-          <span data-price class="tabular-nums"></span>
-        </li>
-      </template>
-    </cart-view>
+    <CartView lang={lang} variant="page" focusFallback="main h1" class="mx-auto max-w-360 px-page pb-12" />
   </main>
 </Base>
-
-<script>
-  import type { Lang } from '../../../i18n/locales';
-  import { loadCart, onCartChange, saveCart, setQuantity, type Cart } from '../../../lib/shop/cart';
-  import { formatPrice } from '../../../lib/format';
-
-  import type { CatalogEntry as Entry } from '../../../lib/shop/catalog';
-
-  class CartView extends HTMLElement {
-    #catalog: Record<string, Entry> = {};
-
-    connectedCallback() {
-      this.#catalog = JSON.parse(this.dataset.catalog ?? '{}');
-      this.render(loadCart());
-      onCartChange((cart) => this.render(cart));
-    }
-
-    render(cart: Cart) {
-      const lang = this.dataset.lang as Lang;
-      // SKU che il catalogo non conosce più (prodotto tolto): si scartano
-      const lines = cart.filter((item) => this.#catalog[item.sku]);
-      this.querySelector<HTMLElement>('[data-empty]')!.hidden = lines.length > 0;
-      this.querySelector<HTMLElement>('[data-full]')!.hidden = lines.length === 0;
-
-      const rows = this.querySelector('[data-rows]')!;
-      const template = this.querySelector('template')!;
-      // Il ridisegno sostituisce le righe: si ricorda quale select aveva il focus
-      const focusedSku = (document.activeElement as HTMLElement | null)?.closest<HTMLElement>('[data-sku]')?.dataset.sku;
-      const focusedQuantity = document.activeElement?.matches('[data-quantity]') ?? false;
-      rows.replaceChildren(
-        ...lines.map(({ sku, quantity }) => {
-          const entry = this.#catalog[sku]!;
-          const row = template.content.firstElementChild!.cloneNode(true) as HTMLElement;
-          row.dataset.sku = sku;
-          row.querySelector<HTMLImageElement>('[data-image]')!.src = entry.image;
-          const name = row.querySelector<HTMLAnchorElement>('[data-name]')!;
-          name.href = entry.href;
-          name.textContent = entry.name;
-          row.querySelector('[data-size]')!.textContent = entry.size ? `${this.dataset.sizeLabel}: ${entry.size}` : '';
-          row.querySelector('[data-quantity-label]')!.textContent = this.dataset.quantityLabel ?? '';
-          row.querySelector('[data-price]')!.textContent = formatPrice(entry.priceCents * quantity, lang);
-
-          const select = row.querySelector<HTMLSelectElement>('[data-quantity]')!;
-          for (let n = 1; n <= 10; n++) select.add(new Option(String(n), String(n), false, n === quantity));
-          select.addEventListener('change', () => saveCart(setQuantity(loadCart(), sku, Number(select.value))));
-
-          const remove = row.querySelector<HTMLButtonElement>('[data-remove]')!;
-          remove.textContent = this.dataset.removeLabel ?? '';
-          remove.setAttribute('aria-label', `${this.dataset.removeLabel}: ${entry.name}${entry.size ? ` ${entry.size}` : ''}`);
-          remove.addEventListener('click', () => saveCart(setQuantity(loadCart(), sku, 0)));
-          return row;
-        }),
-      );
-
-      if (focusedSku && focusedQuantity) rows.querySelector<HTMLElement>(`[data-sku="${focusedSku}"] [data-quantity]`)?.focus();
-      // Riga tolta: il focus va sul titolo della pagina, non si perde nel vuoto
-      else if (focusedSku) document.querySelector<HTMLElement>('main h1')?.focus();
-
-      const subtotal = lines.reduce((sum, item) => sum + this.#catalog[item.sku]!.priceCents * item.quantity, 0);
-      this.querySelector('[data-subtotal]')!.textContent = formatPrice(subtotal, lang);
-    }
-  }
-
-  customElements.define('cart-view', CartView);
-</script>

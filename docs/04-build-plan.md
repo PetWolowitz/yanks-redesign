@@ -209,8 +209,8 @@ Due rami di git, uno per binario. Si alterna tra i due, una sessione alla volta.
 - [x] Menu: filtri, bibite per marca, prezzo unico scritto una volta
 - [x] Know before you go: le dodici schede
 - [x] Story: cronologia breve con soli fatti verificati (2026-10-01, richiesta di
-      Pietro), senza il testo originale, che è promozionale. Anno di apertura da
-      riconfermare (vedi docs/03)
+      Pietro), senza il testo originale, che è promozionale. Anno di apertura
+      1984 (vedi docs/03)
 
 ### 2S — Frontend dello shop, con dati finti (8 ore)
 
@@ -222,9 +222,11 @@ Tutto passa da `ShopApi`. **Nessun componente chiama `fetch` direttamente.**
 - [x] Senza JS il catalogo si legge; carrello e checkout mostrano un messaggio
       `<noscript>`: per comprare serve JavaScript
 - [x] Scheda prodotto `/[lang]/shop/[slug]`: foto, taglie, quantità, aggiunta
-- [ ] Carrello: modulo `cart.ts` con `localStorage` dentro `try/catch`, pannello
+- [x] Carrello: modulo `cart.ts` con `localStorage` dentro `try/catch`, pannello
       laterale, contatore nell'header aggiornato in tutte le pagine
-  _(2026-09-28: `cart.ts`, pagina carrello e contatore fatti; il pannello laterale no)_
+  _(2026-09-28: `cart.ts`, pagina carrello e contatore fatti; il pannello laterale no.
+  2026-10-01: pannello laterale fatto, un <dialog> nell'header che usa lo stesso
+  CartView della pagina carrello; senza JS l'icona porta alla pagina)_
 - [x] Checkout: form con email e indirizzo, validazione da `validate.ts`,
       spazio per Turnstile, riepilogo
 - [x] Checkout: `createCheckout` restituisce id e token, salvati in

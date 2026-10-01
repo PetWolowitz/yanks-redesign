@@ -116,7 +116,7 @@ Controllato: nessun titolo sfora a 360, 390 e 1440 px, in nl, en, de.
 - **Indian personal use, niente cifre**: al posto di 0-9 c'è il marchio
   "PERSONAL USE · COMPLETE SET · billyargel.com". In `fonts.css` un
   `unicode-range` le esclude e le disegna Literata. Scoperto il 2026-09-29 sul
-  logo ("Since 1989")
+  logo ("Since 1984")
 - **Yankee Clipper minuscolo**: la "u" ha un uncino che la fa sembrare "ú", e
   la "ß" è disegnata come una beta e si legge quasi "B" ("STRAßE"). Per questo
   gli h1 sono sempre in maiuscolo: si usano solo le maiuscole, che sono pulite,
