@@ -19,7 +19,8 @@ const { open, dineInUntil, close } = venue.hours;
 
 <open-status
   class:list={[
-    'group inline-flex items-center gap-2 whitespace-nowrap',
+    // a capo solo tra insegna e dettaglio, mai dentro (telefoni stretti, tedesco)
+    'group inline-flex flex-wrap items-center gap-x-2 gap-y-1',
     // insegna: icona e stato nel colore neon dello stato; il dettaglio resta muted
     'data-[status=open]:text-neon-open data-[status=takeaway]:text-neon-takeaway data-[status=closed]:text-neon-closed',
     className,
@@ -33,7 +34,7 @@ const { open, dineInUntil, close } = venue.hours;
 >
   <!-- L'insegna: tubo al neon (bordo e testo) su una tavola scura, nei due temi.
        Senza JS non c'è stato: niente tavola, solo l'orario nel colore del testo -->
-  <span data-sign class="inline-flex items-center gap-2 rounded-full border-2 border-current px-3 py-0.5 group-data-status:bg-neon-board">
+  <span data-sign class="inline-flex items-center gap-2 whitespace-nowrap rounded-full border-2 border-current px-3 py-0.5 group-data-status:bg-neon-board">
   <svg class="size-3 shrink-0 group-data-status:hidden" viewBox="0 0 12 12" aria-hidden="true">
     <circle cx="6" cy="6" r="5" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
     <path d="M6 3v3l2 1.5" fill="none" stroke="currentColor" stroke-width="1.5"></path>

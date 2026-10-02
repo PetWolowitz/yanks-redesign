@@ -1,7 +1,8 @@
 ---
 // Footer (docs/02): indirizzo, orari, pagine, lingue, social veri, disclaimer del concept.
 // Riordinato il 2026-10-01: ogni colonna ha la stessa forma (titolo, poi elenco) e la
-// stessa spaziatura. Desktop: cinque colonne su 12; tablet: due; mobile: una.
+// stessa spaziatura. Mobile: una colonna; tablet: due; laptop piccolo (lg): logo e
+// indirizzo affiancati sopra, poi quattro colonne; da 1280 px (xl) tutto su una riga.
 import { pages } from '../../data/pages';
 import { venue } from '../../data/venue';
 import type { Lang } from '../../i18n/locales';
@@ -18,13 +19,14 @@ interface Props {
 const { lang } = Astro.props;
 const { street, postalCode, city } = venue.address;
 const headingClass = 'mb-3 text-h3';
-const linkClass = 'scatter-host inline-block py-1';
+// py-2.5 su telefono e tablet: bersagli di tocco di circa 44 px
+const linkClass = 'scatter-host inline-block py-2.5 lg:py-1';
 ---
 
 <footer class="edge-shadow mt-16 border-t-3 border-text bg-surface">
   <!-- text-small: testi più piccoli (Pietro, 2026-10-02); i titoli restano text-h3 -->
-  <div class="mx-auto grid max-w-360 gap-x-8 gap-y-10 px-page pt-14 pb-10 text-small sm:grid-cols-2 lg:grid-cols-12">
-    <div class="flex items-start gap-5 sm:col-span-2 lg:col-span-2 lg:flex-col">
+  <div class="mx-auto grid max-w-360 gap-x-8 gap-y-10 px-page pt-14 pb-10 text-small sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-12">
+    <div class="flex items-start gap-5 sm:col-span-2 lg:col-span-5 xl:col-span-3 xl:flex-col">
       <Logo alt={venue.name} variant="badge" size={160} class="size-28 lg:size-40" />
       <div>
         <h2 class={headingClass}>{t(lang, 'footer.address')}</h2>
@@ -36,12 +38,12 @@ const linkClass = 'scatter-host inline-block py-1';
       </div>
     </div>
 
-    <div class="lg:col-span-4">
+    <div class="lg:col-span-2 xl:col-span-3">
       <h2 class={headingClass}>{t(lang, 'hours.title')}</h2>
       <Hours lang={lang} />
     </div>
 
-    <nav aria-label={t(lang, 'footer.pages')} class="lg:col-span-2">
+    <nav aria-label={t(lang, 'footer.pages')} class="xl:col-span-2">
       <h2 class={headingClass}>{t(lang, 'footer.pages')}</h2>
       <ul class="space-y-1">
         {
@@ -56,12 +58,12 @@ const linkClass = 'scatter-host inline-block py-1';
       </ul>
     </nav>
 
-    <div class="lg:col-span-2">
+    <div class="xl:col-span-2">
       <h2 class={headingClass}>{t(lang, 'nav.languages')}</h2>
       <LangSwitch lang={lang} scatter dense />
     </div>
 
-    <div class="lg:col-span-2">
+    <div class="xl:col-span-2">
       <h2 class={headingClass}>{t(lang, 'footer.follow')}</h2>
       <ul class="space-y-1">
         <li><a href={venue.social.instagram} rel="noopener" class={linkClass}><ScatterText text="Instagram" /></a></li>
@@ -69,7 +71,7 @@ const linkClass = 'scatter-host inline-block py-1';
       </ul>
     </div>
 
-    <div class="border-t-2 border-text pt-6 sm:col-span-2 lg:col-span-12">
+    <div class="border-t-2 border-text pt-6 sm:col-span-2 lg:col-span-5 xl:col-span-12">
       <p class="max-w-[70ch] font-prose text-small text-muted">{t(lang, 'footer.disclaimer')}</p>
     </div>
   </div>

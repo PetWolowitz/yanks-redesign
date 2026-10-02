@@ -17,6 +17,22 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-02 — Controllo e correzioni per tutte le misure
+Fatto:        controllo automatico su 14 larghezze × 22 pagine, tre lingue, più
+              telefono in orizzontale; poi controllo a occhio delle misure dove
+              il layout cambia. Corretti: scorrimento laterale causato dalle
+              animazioni "da destra", griglie e fieldset che si allargavano su
+              telefono, carrello a 320 px (prezzo accanto al nome), pillola del
+              prezzo nelle schede, footer a 1024 e 1280, bibite del menu a 1024,
+              mappa che si sovrapponeva all'indirizzo a 320 px, orari e stato in
+              tedesco a 320 px, avviso d'età in orizzontale, logo dell'hero
+              centrato su telefono e tablet, schede dello shop affiancate dal
+              tablet, bersagli di tocco del footer e dei link piccoli
+Decisioni:    regole in docs/02, sezione "Misure dello schermo"
+Problemi:     nessuno
+Prossimo:     chiavi di Stripe, Turnstile e Resend da Pietro; poi Fase 4
+Ramo/commit:  design/responsive-audit
+
 ## 2026-10-02 — Checkout e webhook Stripe
 Fatto:        POST /api/checkout e POST /api/stripe-webhook, con Stripe,
               Turnstile e Resend chiamati con fetch (nessun pacchetto);

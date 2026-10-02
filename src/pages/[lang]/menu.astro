@@ -17,6 +17,8 @@ export const getStaticPaths = langPaths satisfies GetStaticPaths;
 const { lang } = Astro.props as { lang: Lang };
 const groupTitle = (id: string) => t(lang, `menu.group.${id}` as Key);
 const itemName = (id: string) => t(lang, `menu.item.${id}` as Key);
+// Bibite su due colonne, ma non a 1024-1279 px: lì la sezione è stretta e marca e
+// gusti non ci stanno (controllo responsive del 2026-10-02).
 ---
 
 <Base lang={lang} title={`${t(lang, 'nav.menu')} · ${venue.name}`} description={t(lang, 'menu.description')}>
@@ -60,7 +62,7 @@ const itemName = (id: string) => t(lang, `menu.item.${id}` as Key);
                 ))}
               </ul>
             ) : (
-              <ul class="mt-6 grid gap-x-6 sm:grid-cols-2">
+              <ul class="mt-6 grid gap-x-6 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
                 {group.drinks.map((drink) => (
                   <li class="flex items-baseline gap-4 border-b border-muted py-2">
                     <span>{'brand' in drink ? drink.brand : itemName(drink.id)}</span>

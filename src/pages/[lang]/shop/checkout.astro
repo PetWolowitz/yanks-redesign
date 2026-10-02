@@ -96,12 +96,12 @@ const legendClass = 'mb-4 font-sign text-h3 uppercase';
         <aside class="h-fit border-3 rounded-2xl border-text p-6 lg:col-span-5">
           <h2 class="text-h3">{t(lang, 'checkout.summary')}</h2>
           <ul data-lines class="mt-4"></ul>
-          <p class="mt-4 flex items-baseline justify-between gap-4 text-h3">
+          <p class="mt-4 flex flex-wrap items-baseline justify-between gap-x-4 text-h3">
             <span>{t(lang, 'cart.subtotal')}</span>
             <span data-subtotal class="tabular-nums"></span>
           </p>
           <p class="mt-2 text-small text-muted">{t(lang, 'cart.note')}</p>
-          <a href={`/${lang}/shop/cart/`} class="mt-4 inline-block py-2 text-small underline underline-offset-4">{t(lang, 'shop.viewCart')}</a>
+          <a href={`/${lang}/shop/cart/`} class="mt-4 inline-block py-3 text-small underline underline-offset-4">{t(lang, 'shop.viewCart')}</a>
         </aside>
       </div>
     </checkout-form>
@@ -142,7 +142,10 @@ const legendClass = 'mb-4 font-sign text-h3 uppercase';
           const entry = catalog[sku]!;
           const li = document.createElement('li');
           li.className = 'flex items-baseline gap-4 border-b border-muted py-2 text-small';
-          li.append(`${quantity} × ${entry.name}${entry.size ? ` (${entry.size})` : ''}`);
+          const label = document.createElement('span');
+          label.className = 'min-w-0 break-words hyphens-auto';
+          label.textContent = `${quantity} × ${entry.name}${entry.size ? ` (${entry.size})` : ''}`;
+          li.append(label);
           const price = document.createElement('span');
           price.className = 'ms-auto tabular-nums whitespace-nowrap';
           price.textContent = formatPrice(entry.priceCents * quantity, lang);

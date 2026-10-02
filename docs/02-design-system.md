@@ -234,6 +234,29 @@ la tessera alta a sinistra, titolo e recensione breve in alto a destra, sotto
 l'estratto largo e il premio Tripadvisor su una tavola scura (oro su
 `--neon-board`, come l'orologio).
 
+## Misure dello schermo (controllo del 2026-10-02)
+
+Provato su 14 larghezze (320, 360, 390, 414, 600, 768, 834, 1024, 1180, 1280,
+1366, 1536, 1920, 2560 px), 22 pagine nelle tre lingue, più il telefono in
+orizzontale (740×360, 667×375, 568×320). Controlli automatici con Playwright:
+niente scorrimento laterale, niente elementi che escono dal proprio contenitore,
+nessun testo sotto i 12 px, bersagli di tocco di almeno 40 px sotto i 1024 px.
+Regole che ne sono uscite:
+- `html, body { overflow-x: clip }`: le tessere che entrano "da destra" non
+  fanno scorrere la pagina di lato (clip, non hidden, per non rompere lo sticky)
+- `.grid` senza colonne dichiarate ha `minmax(0, 1fr)`; `fieldset` ha
+  `min-width: 0`: su telefono niente si allarga più dello schermo
+- nomi lunghi (carrello, schede, riepilogo): `break-words hyphens-auto`, la
+  sillabazione segue il `lang` della pagina
+- link del footer: a capo solo tra le parole (lettere raggruppate per parola)
+- footer: una colonna, due da tablet, cinque a 1024 (logo e indirizzo sopra),
+  dodici da 1280
+- bibite del menu su una colonna tra 1024 e 1279 px
+- anteprima della mappa: si allunga se il testo non sta nella proporzione 16:9
+- avviso d'età su schermi bassi (max-height 480 px): il solo volto a 80 px e meno
+  spazio, così tutto resta in vista
+- oltre i 1440 px il contenuto resta centrato su 1440 (max-w-360)
+
 ## Story in orizzontale (dal 2026-10-02)
 
 La cronologia è una fila di schede che scorre da sinistra a destra (Pietro:
