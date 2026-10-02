@@ -17,6 +17,18 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-02 — Bento delle recensioni, movimenti, ombre
+Fatto:        "Wat gasten zeggen" a bento rovesciata rispetto al club; ogni
+              tessera delle bento entra con un movimento diverso (data-anim);
+              titoli un po' più lenti; ombra leggera sopra le sezioni su tutte
+              le pagine (utility edge-shadow). Story di nuovo senza video
+Decisioni:    - la foto sotto l'hero resta attaccata: staccata stonava nel tema
+                scuro (Pietro)
+              - video del locale solo se un giorno ne fanno senza promozione
+Problemi:     nessuno
+Prossimo:     footer più piccolo, pulsanti del carrello, Story in orizzontale
+Ramo/commit:  design/bento-recensioni
+
 ## 2026-10-01 — Video nostri: LoopVideo, spiaggia nella Story
 Fatto:        components/site/LoopVideo.astro (poster sempre, video da 1024 px,
               fermo fuori vista), usato dall'hero e dalla prima tappa della

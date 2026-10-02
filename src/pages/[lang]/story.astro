@@ -6,8 +6,6 @@ import type { GetStaticPaths } from 'astro';
 import { Image } from 'astro:assets';
 import interno from '../../assets/home/interno.jpg';
 import capBack from '../../assets/shop/cap/3.jpg';
-import beach from '../../assets/home/story-spiaggia.jpg';
-import LoopVideo from '../../components/site/LoopVideo.astro';
 import PageIntro from '../../components/site/PageIntro.astro';
 import { venue } from '../../data/venue';
 import Base from '../../layouts/Base.astro';
@@ -20,8 +18,7 @@ const { lang } = Astro.props as { lang: Lang };
 const { open, close } = venue.hours;
 const year = String(venue.founded ?? '');
 
-// Ogni tappa: l'anno (o un'etichetta se l'anno non si sa), titolo, testo, foto o
-// video facoltativi (il video è nostro, in public/video/, mai da Instagram)
+// Ogni tappa: l'anno (o un'etichetta se l'anno non si sa), titolo, testo, foto facoltativa
 const steps: {
   when: string;
   // gli anni in grande, le etichette ("Vandaag") alla misura dei titoli: in grande non ci stanno
@@ -30,17 +27,8 @@ const steps: {
   text: Key;
   params?: Record<string, string>;
   image?: { src: ImageMetadata; alt: Key };
-  video?: { src: string; poster: ImageMetadata; alt: Key };
 }[] = [
-  ...(venue.founded ? [
-        {
-          when: year,
-          isYear: true,
-          title: 'story.opened.title',
-          text: 'story.opened.text',
-          video: { src: '/video/story-spiaggia.webm', poster: beach, alt: 'story.opened.alt' },
-        } as const,
-      ] : []),
+  ...(venue.founded ? [{ when: year, isYear: true, title: 'story.opened.title', text: 'story.opened.text' } as const] : []),
   { when: String(venue.companyFounded), isYear: true, title: 'story.company.title', text: 'story.company.text' },
   {
     when: t(lang, 'story.sign.label'),
@@ -69,7 +57,7 @@ const steps: {
     <ol class="mx-auto max-w-360 px-page pb-12">
       {
         steps.map((step) => (
-          <li class="grid gap-6 border-t-3 border-text py-10 lg:grid-cols-12 lg:py-14">
+          <li class="edge-shadow grid gap-6 border-t-3 border-text py-10 lg:grid-cols-12 lg:py-14">
             <p class:list={['font-sign leading-none text-red-text uppercase lg:col-span-3', step.isYear ? 'text-display' : 'text-h2']}>
               {step.when}
             </p>
@@ -77,17 +65,6 @@ const steps: {
               <h2 class="text-h2 leading-none">{t(lang, step.title)}</h2>
               <p class="mt-6 max-w-[55ch] font-prose">{t(lang, step.text, step.params)}</p>
             </div>
-            {step.video && (
-              <div class="relative aspect-4/5 w-full max-w-90 overflow-hidden rounded-2xl border-3 border-text lg:col-span-4 lg:justify-self-end">
-                <LoopVideo
-                  src={step.video.src}
-                  poster={step.video.poster}
-                  alt={t(lang, step.video.alt)}
-                  widths={[360, 720]}
-                  sizes="(min-width: 1024px) 360px, 100vw"
-                />
-              </div>
-            )}
             {step.image && (
               <Image
                 src={step.image.src}

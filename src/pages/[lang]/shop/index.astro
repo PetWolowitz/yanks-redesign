@@ -28,7 +28,7 @@ const byCategory = (category: Category) => merch.filter((item) => item.category 
     </PageIntro>
 
     <section class="mx-auto max-w-360 px-page pb-12">
-      <h2 class="border-t-3 border-text pt-6 text-h2 leading-none">{t(lang, 'shop.limited.title')}</h2>
+      <h2 class="edge-shadow border-t-3 border-text pt-6 text-h2 leading-none">{t(lang, 'shop.limited.title')}</h2>
       <ul class="mt-8 grid gap-6 sm:grid-cols-2">
         {limited.map((item) => <ProductCard lang={lang} item={item} large />)}
       </ul>
@@ -37,7 +37,7 @@ const byCategory = (category: Category) => merch.filter((item) => item.category 
     {
       categories.map((category) => (
         <section class="mx-auto max-w-360 px-page pb-12">
-          <h2 class="border-t-3 border-text pt-6 text-h2 leading-none">{t(lang, `shop.category.${category}` as Key)}</h2>
+          <h2 class="edge-shadow border-t-3 border-text pt-6 text-h2 leading-none">{t(lang, `shop.category.${category}` as Key)}</h2>
           <ul class="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
             {byCategory(category).map((item, index) => (
               <ProductCard lang={lang} item={item} large={index === 0} class={index === 0 ? 'col-span-2 row-span-2' : undefined} />

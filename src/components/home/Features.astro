@@ -4,6 +4,7 @@
 // - telefono: una colonna (testo, interno, orario, spiaggia, terrazza)
 // - tablet: due colonne, l'interno alto quanto orario e spiaggia insieme
 // - desktop: tre colonne, la terrazza alta quanto tutta la griglia a destra
+// Ogni tessera entra con un movimento diverso (data-anim, global.css).
 import { Image } from 'astro:assets';
 import interno from '../../assets/home/interno.jpg';
 import terras from '../../assets/home/terras.png';
@@ -21,15 +22,15 @@ const tile = 'rounded-2xl border-3 border-text';
 const card = `${tile} bg-surface p-6 lg:p-8`;
 ---
 
-<section class="border-t-3 border-text">
+<section class="edge-shadow border-t-3 border-text">
   <div class="mx-auto grid max-w-360 gap-4 px-page py-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6 lg:py-16">
-    <div data-card class:list={[card, 'sm:col-span-2']}>
+    <div data-card data-anim="left" class:list={[card, 'sm:col-span-2']}>
       <h2 class="text-h2 leading-none">{t(lang, 'home.about.title')}</h2>
       <p class="mt-6 max-w-[65ch] font-prose">{t(lang, 'home.about.text')}</p>
     </div>
 
     <!-- Foto dell'interno da shop.yanks.nl: 720 px, quindi mai più larga -->
-    <div class:list={[tile, 'relative aspect-square overflow-hidden sm:row-span-2 sm:aspect-auto sm:min-h-80']}>
+    <div data-anim="zoom" class:list={[tile, 'relative aspect-square overflow-hidden sm:row-span-2 sm:aspect-auto sm:min-h-80']}>
       <Image
         src={interno}
         alt={t(lang, 'home.interior.alt')}
@@ -41,17 +42,18 @@ const card = `${tile} bg-surface p-6 lg:p-8`;
       />
     </div>
 
-    <div data-card class={card}>
+    <div data-card data-anim="tilt" class={card}>
       <h3 class="text-h3">{t(lang, 'home.late.title')}</h3>
       <p class="mt-2 font-prose">{t(lang, 'home.late.text', { close, dineInUntil })}</p>
     </div>
 
-    <div data-card class={card}>
+    <div data-card data-anim="up" class={card}>
       <h3 class="text-h3">{t(lang, 'home.beach.title')}</h3>
       <p class="mt-2 font-prose">{t(lang, 'home.beach.text')}</p>
     </div>
 
     <figure
+      data-anim="right"
       class:list={[
         tile,
         'flex flex-col overflow-hidden bg-surface sm:col-span-2 lg:col-span-1 lg:col-start-3 lg:row-span-3 lg:row-start-1',
