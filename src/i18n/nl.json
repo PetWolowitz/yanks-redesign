@@ -269,5 +269,9 @@
   "cart.decrease": "Eén minder",
   "cart.increase": "Eén meer",
   "story.prev": "Vorige",
-  "story.next": "Volgende"
+  "story.next": "Volgende",
+  "email.subject": "Je bestelling bij Yanks Indian Club ({number})",
+  "email.intro": "Bedankt! We hebben je betaling ontvangen. Hieronder staat je bestelling.",
+  "email.link": "Je bestelling bekijken:",
+  "email.test": "Dit is een conceptwinkel in testmodus: er is niets afgerekend en er wordt niets verzonden."
 }

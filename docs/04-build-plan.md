@@ -258,11 +258,11 @@ Leggere `06-shop-architecture.md` prima di iniziare.
 
 **Endpoint**
 - [x] `api/products`: prodotti attivi e giacenze _(2026-10-02)_
-- [ ] `api/checkout`: Turnstile verificato lato server → `validate.ts` → prezzi
+- [x] `api/checkout`: Turnstile verificato lato server → `validate.ts` → prezzi
       letti dal database → totale ricalcolato → giacenze controllate → ordine
       `pending` → sessione Stripe con `success_url` senza parametri → risposta
       con id, token e indirizzo di Stripe
-- [ ] `api/stripe-webhook`: firma verificata → ordine `paid` e giacenze scalate
+- [x] `api/stripe-webhook`: firma verificata → ordine `paid` e giacenze scalate
       in un'unica transazione, idempotente → poi email di conferma con Resend
       (`fetch`, `Idempotency-Key`); se fallisce, ordine valido ed errore nei log
 - [x] `lib/shop/token.ts`: token HMAC-SHA256 con Web Crypto, con i test _(2026-10-02)_
@@ -279,12 +279,12 @@ Leggere `06-shop-architecture.md` prima di iniziare.
       valori diversi nei segreti e in `.dev.vars`
 
 **Test obbligatori**
-- [ ] Un prezzo modificato dal browser non cambia l'addebito
-- [ ] L'ordine resta `pending` finché il webhook non conferma
-- [ ] Lo stesso webhook due volte non scala le giacenze due volte
-- [ ] Un webhook con firma sbagliata viene rifiutato
-- [ ] Una quantità superiore alla giacenza viene rifiutata
-- [ ] Con Resend che risponde errore l'ordine resta `paid` e il webhook
+- [x] Un prezzo modificato dal browser non cambia l'addebito
+- [x] L'ordine resta `pending` finché il webhook non conferma
+- [x] Lo stesso webhook due volte non scala le giacenze due volte
+- [x] Un webhook con firma sbagliata viene rifiutato
+- [x] Una quantità superiore alla giacenza viene rifiutata
+- [x] Con Resend che risponde errore l'ordine resta `paid` e il webhook
       risponde 200; nei log non compare il token
 - [x] Un token troncato, di un altro ordine o firmato con un altro segreto
       viene rifiutato con la stessa risposta di un ordine inesistente

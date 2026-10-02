@@ -6,6 +6,12 @@
 	// indirizzi di anteprima per ogni versione
 	"workers_dev": true,
 	"preview_urls": true,
+	// Variabili non segrete. I segreti (chiavi di Stripe, Turnstile, Resend e
+	// ORDER_TOKEN_SECRET) stanno solo in wrangler secret put e in .dev.vars
+	"vars": {
+		// Modalità di prova di Resend: consegna solo all'indirizzo del proprietario
+		"EMAIL_FROM": "Yanks concept <onboarding@resend.dev>"
+	},
 	// Database dello shop (docs/06). Schema in migrations/, seed da merch.ts:
 	// npm run db:migrate:local e db:seed:local (e :remote). L'id non è un segreto
 	"d1_databases": [

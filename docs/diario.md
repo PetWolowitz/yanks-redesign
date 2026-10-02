@@ -17,6 +17,23 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-02 — Checkout e webhook Stripe
+Fatto:        POST /api/checkout e POST /api/stripe-webhook, con Stripe,
+              Turnstile e Resend chiamati con fetch (nessun pacchetto);
+              email di conferma nelle tre lingue; 20 test (tutti quelli
+              obbligatori di docs/04 più attacchi: firma vecchia o di un altro
+              segreto, corpo modificato, importo diverso, sessione non nostra,
+              indirizzo di pagamento estraneo, chiavi mancanti). EMAIL_FROM in
+              vars; Turnstile di prova in .dev.vars. vitest 5.0.2 (PR #28),
+              Dependabot non propone più @types/node 26
+Decisioni:    - giacenze non prenotate al checkout, mai sotto zero al pagamento
+              - email solo dalla chiamata che segna davvero il pagamento
+              - senza chiavi tutto rifiuta (fail closed)
+Problemi:     servono le chiavi di Pietro: Stripe test, segreto del webhook,
+              Turnstile, Resend
+Prossimo:     account e chiavi; poi Fase 4 (http.ts, widget Turnstile, live)
+Ramo/commit:  feat/api-checkout-webhook
+
 ## 2026-10-02 — Endpoint products e order, segreto del token
 Fatto:        GET /api/products e POST /api/order (src/pages/api/, logica in
               src/lib/shop/handlers.ts, query in db.ts, intestazioni in http.ts);

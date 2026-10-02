@@ -12,3 +12,6 @@ updates:
       # Togliere quando supporterà TypeScript 7 (promemoria nel diario).
       - dependency-name: typescript
         update-types: ["version-update:semver-major"]
+      # Il progetto gira su Node 24: i tipi restano alla 24 (Pietro, 2026-10-02)
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]

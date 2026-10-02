@@ -269,5 +269,9 @@
   "cart.decrease": "Eins weniger",
   "cart.increase": "Eins mehr",
   "story.prev": "Zurück",
-  "story.next": "Weiter"
+  "story.next": "Weiter",
+  "email.subject": "Deine Bestellung bei Yanks Indian Club ({number})",
+  "email.intro": "Danke! Wir haben deine Zahlung erhalten. Hier ist deine Bestellung.",
+  "email.link": "Deine Bestellung ansehen:",
+  "email.test": "Dies ist ein Konzept-Shop im Testmodus: Es wurde nichts abgebucht und es wird nichts verschickt."
 }
