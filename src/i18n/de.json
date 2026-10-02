@@ -265,5 +265,7 @@
   "story.today.label": "Heute",
   "story.today.title": "Dorpsplein 2",
   "story.today.text": "Eine Bar mit Billardtischen, Spieltischen und großen Bildschirmen, zwei geschnitzte Totempfähle und Wände wie ein Nachthimmel. Draußen die Terrasse. Jeden Tag geöffnet von {open} bis {close}.",
-  "story.cta": "Besuch planen"
+  "story.cta": "Besuch planen",
+  "cart.decrease": "Eins weniger",
+  "cart.increase": "Eins mehr"
 }

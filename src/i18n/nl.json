@@ -265,5 +265,7 @@
   "story.today.label": "Vandaag",
   "story.today.title": "Dorpsplein 2",
   "story.today.text": "Een bar met pooltafels, speltafels en grote schermen, twee gesneden totempalen en muren als een nachtelijke hemel. Daarbuiten het terras. Elke dag open van {open} tot {close}.",
-  "story.cta": "Plan je bezoek"
+  "story.cta": "Plan je bezoek",
+  "cart.decrease": "Eén minder",
+  "cart.increase": "Eén meer"
 }
