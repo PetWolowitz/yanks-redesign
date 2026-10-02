@@ -251,8 +251,8 @@ Leggere `06-shop-architecture.md` prima di iniziare.
 
 **Database**
 - [ ] `npx wrangler d1 create yanks-db` e binding in `wrangler.jsonc`
-- [ ] `migrations/0001_init.sql` con lo schema
-- [ ] `scripts/seed.ts` che genera il seed da `merch.ts`: i prodotti si scrivono
+- [x] `migrations/0001_init.sql` con lo schema _(2026-10-02, con i test su SQLite)_
+- [x] `scripts/seed.ts` che genera il seed da `merch.ts`: i prodotti si scrivono
       una volta sola
 - [ ] Migrazioni applicate in locale e poi in remoto
 
@@ -265,7 +265,7 @@ Leggere `06-shop-architecture.md` prima di iniziare.
 - [ ] `api/stripe-webhook`: firma verificata → ordine `paid` e giacenze scalate
       in un'unica transazione, idempotente → poi email di conferma con Resend
       (`fetch`, `Idempotency-Key`); se fallisce, ordine valido ed errore nei log
-- [ ] `lib/shop/token.ts`: token HMAC-SHA256 con Web Crypto, con i test
+- [x] `lib/shop/token.ts`: token HMAC-SHA256 con Web Crypto, con i test _(2026-10-02)_
 - [ ] `api/order`: `POST` con id e token nel body, token verificato con
       `crypto.subtle.verify` (tempo costante), mai con `===`
 
@@ -320,8 +320,7 @@ Leggere `08-animazioni-risorse.md` prima.
       del tema aggiornato _(script: fatto, con test; stili: `unsafe-inline` resta per
       gli attributi `style`, vedi docs/06 Stato della sicurezza)_
 - [ ] Verifica su securityheaders.com
-- [ ] `npm audit` _(2026-10-01: wrangler aggiornato; restano 4 segnalazioni negli
-      strumenti di build, da chiudere con `npm audit fix` a server di sviluppo spento)_
+- [x] `npm audit` _(2026-10-01, PR #17: `npm audit fix` senza `--force`, 0 vulnerabilità)_
 - [ ] Lighthouse su entrambi i temi: 90+ prestazioni, 95+ accessibilità
 - [ ] Navigazione completa da tastiera
 - [ ] Prova da telefono vero

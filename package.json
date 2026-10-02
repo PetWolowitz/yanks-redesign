@@ -12,7 +12,11 @@
     "check": "astro check",
     "test": "vitest run",
     "verify": "astro check && astro build && vitest run",
-    "astro": "astro"
+    "astro": "astro",
+    "db:migrate:local": "wrangler d1 migrations apply yanks-db --local",
+    "db:migrate:remote": "wrangler d1 migrations apply yanks-db --remote",
+    "db:seed:local": "node scripts/seed.ts && wrangler d1 execute yanks-db --local --file=.wrangler/seed.sql",
+    "db:seed:remote": "node scripts/seed.ts && wrangler d1 execute yanks-db --remote --file=.wrangler/seed.sql"
   },
   "dependencies": {
     "@astrojs/cloudflare": "14.3.3",
