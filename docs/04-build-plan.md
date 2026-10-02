@@ -250,11 +250,11 @@ catalogo alla pagina "ordine pagato", senza backend.
 Leggere `06-shop-architecture.md` prima di iniziare.
 
 **Database**
-- [ ] `npx wrangler d1 create yanks-db` e binding in `wrangler.jsonc`
+- [x] `npx wrangler d1 create yanks-db` e binding in `wrangler.jsonc` _(2026-10-02, regione EEUR, binding `DB`)_
 - [x] `migrations/0001_init.sql` con lo schema _(2026-10-02, con i test su SQLite)_
 - [x] `scripts/seed.ts` che genera il seed da `merch.ts`: i prodotti si scrivono
       una volta sola
-- [ ] Migrazioni applicate in locale e poi in remoto
+- [x] Migrazioni applicate in locale e poi in remoto _(2026-10-02, con il seed: 21 prodotti, 56 varianti)_
 
 **Endpoint**
 - [ ] `api/products`: prodotti attivi e giacenze

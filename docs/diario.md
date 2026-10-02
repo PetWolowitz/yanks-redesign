@@ -17,6 +17,17 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-02 — Database D1 creato
+Fatto:        wrangler login di Pietro; database yanks-db creato (regione EEUR,
+              piano gratuito), binding DB in wrangler.jsonc; schema e seed
+              applicati in locale e online: 21 prodotti, 56 varianti, prezzi
+              uguali a merch.ts
+Decisioni:    l'id del database sta in wrangler.jsonc: non è un segreto
+Problemi:     nessuno
+Prossimo:     endpoint (products, checkout, webhook, order); servono Stripe
+              test, Turnstile e Resend di Pietro
+Ramo/commit:  feat/d1-binding
+
 ## 2026-10-02 — Fase 3, primo pezzo: token, schema, seed
 Fatto:        src/lib/shop/token.ts (HMAC-SHA256 con Web Crypto, verifica con
               crypto.subtle.verify) e 9 test; migrations/0001_init.sql; seed
