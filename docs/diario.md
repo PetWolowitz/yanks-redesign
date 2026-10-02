@@ -17,6 +17,20 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-02 — Endpoint products e order, segreto del token
+Fatto:        GET /api/products e POST /api/order (src/pages/api/, logica in
+              src/lib/shop/handlers.ts, query in db.ts, intestazioni in http.ts);
+              12 test su SQLite in memoria; provati anche nel runtime locale di
+              Cloudflare. ORDER_TOKEN_SECRET online (wrangler secret put, valore
+              mai mostrato) e in .dev.vars (valore diverso). Binding SHOP_LIMITER
+Decisioni:    - tipi di Cloudflare scritti a mano (server-env.ts): quelli generati
+                da wrangler types vanno in conflitto con il DOM
+              - token verificato prima di toccare il database
+              - risposta dell'ordine senza email né indirizzo
+Problemi:     da vedere se il piano gratuito accetta il binding del limitatore
+Prossimo:     account Stripe test, Turnstile, Resend; poi checkout e webhook
+Ramo/commit:  feat/api-products-order
+
 ## 2026-10-02 — Database D1 creato
 Fatto:        wrangler login di Pietro; database yanks-db creato (regione EEUR,
               piano gratuito), binding DB in wrangler.jsonc; schema e seed

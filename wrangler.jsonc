@@ -14,5 +14,15 @@
 			"database_name": "yanks-db",
 			"database_id": "d8a5c25d-5841-454f-b616-243665b0c657"
 		}
+	],
+	// Limite di richieste agli endpoint dello shop, per indirizzo IP e per sede
+	// Cloudflare (approssimato per scelta di Cloudflare). Se manca, gli endpoint
+	// funzionano lo stesso: la vera barriera è il token a 256 bit
+	"ratelimits": [
+		{
+			"name": "SHOP_LIMITER",
+			"namespace_id": "1001",
+			"simple": { "limit": 30, "period": 60 }
+		}
 	]
 }

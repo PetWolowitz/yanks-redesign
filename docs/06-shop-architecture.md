@@ -242,14 +242,28 @@ nell'intestazione `Referer`. E passa nel body di una `POST`, non nell'indirizzo.
   (strumenti di build, non codice che va al browser)
 
 **Da fare**
-- **Tutto il lato server dello shop arriva con la Fase 3**: verifica Turnstile,
-  firma del webhook di Stripe, token HMAC dell'ordine con `crypto.subtle.verify`,
-  prezzi ricalcolati dal database, idempotenza, segreti in Cloudflare. Oggi lo
-  shop gira sul mock nel browser: non c'è niente da attaccare sul server
-- `npm audit`: restano 4 segnalazioni (3 moderate, 1 alta) nella stessa catena
-  `undici` dentro `@astrojs/cloudflare`, strumenti di build. Si chiudono con
-  `npm audit fix` (senza `--force`) a server di sviluppo spento: con `astro dev`
-  acceso Windows blocca i file
+- **Lato server, fatto il 2026-10-02**: `GET /api/products` e `POST /api/order`
+  (logica in `src/lib/shop/handlers.ts`, 12 test in `tests/api.test.ts`):
+  - token HMAC verificato con `crypto.subtle.verify`, **prima** di leggere il
+    database; token sbagliato, troncato, di un altro ordine o di un altro segreto
+    danno **la stessa risposta** di un ordine inesistente (404 `not_found`)
+  - `ORDER_TOKEN_SECRET`: 32 byte casuali, generato e passato a
+    `wrangler secret put` senza mai mostrarlo; in locale un valore diverso in
+    `.dev.vars` (escluso da git)
+  - POST accettate solo dalla nostra origine (`Origin` e `Sec-Fetch-Site`), solo
+    JSON, corpo massimo 512 byte, id solo in forma di UUID: tutto il resto 400
+  - SQL solo con parametri; la risposta dell'ordine non contiene né email né
+    indirizzo
+  - intestazioni di sicurezza scritte nel codice (`src/lib/shop/http.ts`), perché
+    `_headers` non vale per le risposte del Worker: `nosniff`, CSP
+    `default-src 'none'`, `no-store`, HSTS, `no-referrer`
+  - errori generici verso fuori, nei log solo frasi fisse: mai token, corpi,
+    messaggi del database
+  - limite di richieste per IP (binding `SHOP_LIMITER`, 30 al minuto): se
+    Cloudflare non lo fornisce gli endpoint funzionano lo stesso, perché la
+    barriera vera è il token a 256 bit
+  - restano da fare: checkout (Turnstile, prezzi dal database), webhook Stripe
+- `npm audit`: 0 vulnerabilità (PR #17, 2026-10-01)
 - `style-src 'unsafe-inline'` resta: lo richiedono gli attributi `style` (variabili
   CSS delle lettere del footer, proporzioni dei riquadri). Rischio basso; si può
   togliere spostando quelle variabili in classi
@@ -278,7 +292,7 @@ nell'intestazione `Referer`. E passa nel body di una `POST`, non nell'indirizzo.
 
 **Anti-abuso**
 - Turnstile sul checkout: ferma i bot senza puzzle e senza tracciamento
-- Se serve, una regola di limitazione delle richieste dal pannello Cloudflare
+- Limite di richieste per IP negli endpoint (binding `SHOP_LIMITER`, sopra)
 - Protezione DDoS e firewall di Cloudflare inclusi anche nel piano gratuito
 
 **Intestazioni HTTP** in `public/_headers`

@@ -257,7 +257,7 @@ Leggere `06-shop-architecture.md` prima di iniziare.
 - [x] Migrazioni applicate in locale e poi in remoto _(2026-10-02, con il seed: 21 prodotti, 56 varianti)_
 
 **Endpoint**
-- [ ] `api/products`: prodotti attivi e giacenze
+- [x] `api/products`: prodotti attivi e giacenze _(2026-10-02)_
 - [ ] `api/checkout`: Turnstile verificato lato server → `validate.ts` → prezzi
       letti dal database → totale ricalcolato → giacenze controllate → ordine
       `pending` → sessione Stripe con `success_url` senza parametri → risposta
@@ -266,7 +266,7 @@ Leggere `06-shop-architecture.md` prima di iniziare.
       in un'unica transazione, idempotente → poi email di conferma con Resend
       (`fetch`, `Idempotency-Key`); se fallisce, ordine valido ed errore nei log
 - [x] `lib/shop/token.ts`: token HMAC-SHA256 con Web Crypto, con i test _(2026-10-02)_
-- [ ] `api/order`: `POST` con id e token nel body, token verificato con
+- [x] `api/order`: `POST` con id e token nel body, token verificato con
       `crypto.subtle.verify` (tempo costante), mai con `===`
 
 **Stripe e Turnstile**
@@ -275,7 +275,7 @@ Leggere `06-shop-architecture.md` prima di iniziare.
 - [ ] Sito Turnstile creato, chiavi nei segreti
 - [ ] Account Resend, `RESEND_API_KEY` nei segreti e in `.dev.vars`,
       `EMAIL_FROM=onboarding@resend.dev` (modalità di prova)
-- [ ] `ORDER_TOKEN_SECRET` generato (comando in `06-shop-architecture.md`),
+- [x] `ORDER_TOKEN_SECRET` generato (comando in `06-shop-architecture.md`),
       valori diversi nei segreti e in `.dev.vars`
 
 **Test obbligatori**
@@ -286,7 +286,7 @@ Leggere `06-shop-architecture.md` prima di iniziare.
 - [ ] Una quantità superiore alla giacenza viene rifiutata
 - [ ] Con Resend che risponde errore l'ordine resta `paid` e il webhook
       risponde 200; nei log non compare il token
-- [ ] Un token troncato, di un altro ordine o firmato con un altro segreto
+- [x] Un token troncato, di un altro ordine o firmato con un altro segreto
       viene rifiutato con la stessa risposta di un ordine inesistente
 
 ## Fase 4 — Collegamento (1 ora)
