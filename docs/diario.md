@@ -27,7 +27,9 @@ Decisioni:    - tipi di Cloudflare scritti a mano (server-env.ts): quelli genera
                 da wrangler types vanno in conflitto con il DOM
               - token verificato prima di toccare il database
               - risposta dell'ordine senza email né indirizzo
-Problemi:     da vedere se il piano gratuito accetta il binding del limitatore
+Problemi:     il binding del limitatore è accettato ma online non scatta (provato
+              con 110 richieste): annotato in docs/06. Gli endpoint funzionano,
+              la barriera vera resta il token
 Prossimo:     account Stripe test, Turnstile, Resend; poi checkout e webhook
 Ramo/commit:  feat/api-products-order
 

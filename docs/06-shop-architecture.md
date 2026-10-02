@@ -261,7 +261,12 @@ nell'intestazione `Referer`. E passa nel body di una `POST`, non nell'indirizzo.
     messaggi del database
   - limite di richieste per IP (binding `SHOP_LIMITER`, 30 al minuto): se
     Cloudflare non lo fornisce gli endpoint funzionano lo stesso, perché la
-    barriera vera è il token a 256 bit
+    barriera vera è il token a 256 bit. **Provato online il 2026-10-02: non
+    scatta** (110 richieste in pochi secondi, tutte 200). Probabilmente il piano
+    gratuito non lo applica, o lo applica in modo troppo approssimato. Le regole
+    di limitazione del firewall Cloudflare valgono solo per un dominio proprio,
+    non per workers.dev. Per un cliente vero con il suo dominio: una regola di
+    rate limiting nel pannello (una è inclusa nel piano gratuito)
   - restano da fare: checkout (Turnstile, prezzi dal database), webhook Stripe
 - `npm audit`: 0 vulnerabilità (PR #17, 2026-10-01)
 - `style-src 'unsafe-inline'` resta: lo richiedono gli attributi `style` (variabili
