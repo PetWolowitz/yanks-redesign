@@ -204,7 +204,8 @@ altre tre. Regole in `docs/04-build-plan.md`, fase i18n.
 1. **Home** — hero con video, stato di apertura, chi sono, anteprima menu,
    anteprima shop, recensioni (video e scritte), mappa
 2. **Story** — cronologia con soli fatti verificati (il testo di `our-story` è
-   promozionale e non si usa); apertura nel 1984, dal merch
+   promozionale e non si usa); apertura nel 1984, dal merch. Scorre in
+   orizzontale (schede con scroll-snap), per non far scorrere tanto in giù
 3. **Menu** — food e drink, bibite raggruppate per marca, prezzo unico una volta
 4. **Shop** — catalogo, scheda prodotto, carrello, checkout, stato ordine.
    Pagamento Stripe in modalità test

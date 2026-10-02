@@ -234,6 +234,17 @@ la tessera alta a sinistra, titolo e recensione breve in alto a destra, sotto
 l'estratto largo e il premio Tripadvisor su una tavola scura (oro su
 `--neon-board`, come l'orologio).
 
+## Story in orizzontale (dal 2026-10-02)
+
+La cronologia è una fila di schede che scorre da sinistra a destra (Pietro:
+scorrere molto in giù fa perdere le cose). Scroll-snap nativo, una linea del tempo
+con un pallino per tappa sopra le schede, pulsanti ← → per il mouse (con JS),
+barra di scorrimento sottile nei colori del tema. Le schede aderiscono al
+contenuto. La rotella non viene mai dirottata in orizzontale. Telefono: una
+scheda all'85% della larghezza, così si vede che ce n'è un'altra.
+Attenzione: la fila è `relative`, altrimenti il testo `sr-only` dei titoli
+animati (posizione assoluta) esce dalla fila e allarga la pagina.
+
 ## Movimento (dal 2026-09-29)
 
 Tutto in CSS e poco TypeScript, senza librerie (docs/08). `prefers-reduced-motion`
