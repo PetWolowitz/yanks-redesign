@@ -267,7 +267,30 @@ nell'intestazione `Referer`. E passa nel body di una `POST`, non nell'indirizzo.
     di limitazione del firewall Cloudflare valgono solo per un dominio proprio,
     non per workers.dev. Per un cliente vero con il suo dominio: una regola di
     rate limiting nel pannello (una è inclusa nel piano gratuito)
-  - restano da fare: checkout (Turnstile, prezzi dal database), webhook Stripe
+- **Checkout e webhook, scritti il 2026-10-02** (`handleCheckout`,
+  `handleStripeWebhook`; 20 test in `tests/checkout.test.ts`). Stripe, Turnstile e
+  Resend chiamati con `fetch`, **nessun pacchetto** (`stripe.ts`, `turnstile.ts`,
+  `email.ts`):
+  - checkout: stessa origine, corpo max 4 KB, `validate.ts`, Turnstile lato
+    server (se non risponde si rifiuta), **prezzi e giacenze letti dal database**,
+    totale ricalcolato, ordine `pending` con righe e indirizzo in una transazione,
+    sessione Stripe con i prezzi del database e `Idempotency-Key`, `success_url`
+    senza parametri; si accetta solo un indirizzo `https://checkout.stripe.com/`.
+    Se Stripe fallisce l'ordine passa a `cancelled`
+  - webhook: firma `v1` verificata con `crypto.subtle.verify` (tempo costante),
+    tolleranza 5 minuti contro le ripetizioni, corpo letto intatto (max 128 KB);
+    l'ordine deve combaciare su sessione **e** `client_reference_id`, l'importo
+    pagato deve essere uguale al totale in euro. Pagato e giacenze scalate nella
+    stessa transazione, una volta sola; giacenze mai sotto zero. Email solo se
+    questa chiamata ha segnato il pagamento; se fallisce, l'ordine resta pagato
+  - sessione scaduta o pagamento asincrono fallito: l'ordine `pending` passa a
+    `cancelled`, uno già pagato non si tocca
+  - **senza chiavi configurate tutto viene rifiutato** (nessun ordine pagato)
+  - in locale Turnstile usa la chiave di prova ufficiale che passa sempre
+    (`1x0000…AA`), solo in `.dev.vars`
+  - limite noto: la giacenza si controlla al checkout ma non si prenota. Se due
+    clienti pagano l'ultimo pezzo, la giacenza resta a 0 e l'ordine si gestisce a
+    mano (per un concept va bene)
 - `npm audit`: 0 vulnerabilità (PR #17, 2026-10-01)
 - `style-src 'unsafe-inline'` resta: lo richiedono gli attributi `style` (variabili
   CSS delle lettere del footer, proporzioni dei riquadri). Rischio basso; si può

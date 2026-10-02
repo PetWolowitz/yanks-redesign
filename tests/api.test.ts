@@ -1,38 +1,23 @@
 // Gli endpoint /api/products e /api/order su un SQLite in memoria con schema e seed
 // veri. Un piccolo adattatore imita la parte di D1 che usiamo.
-import { readFileSync } from 'node:fs';
-import { DatabaseSync, type SQLInputValue } from 'node:sqlite';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { merch, skuOf } from '../src/data/merch';
+import { merch } from '../src/data/merch';
 import { handleOrder, handleProducts } from '../src/lib/shop/handlers';
-import { seedSql } from '../src/lib/shop/seed';
-import type { D1Database, D1PreparedStatement, RateLimit, ShopEnv } from '../src/lib/shop/server-env';
+import type { D1Database, RateLimit, ShopEnv } from '../src/lib/shop/server-env';
 import { orderToken } from '../src/lib/shop/token';
+import { makeDb, makeEnv as baseEnv, ORIGIN, SECRETS } from './helpers/shop';
 
-const SECRET = 'segreto-di-prova-0123456789abcdefghijklmnop';
-const ORIGIN = 'https://yanks.test';
+const SECRET = SECRETS.ORDER_TOKEN_SECRET;
 const ORDER_ID = '6f1c2a9e-3b7d-4c55-9a01-2d8e7f4b6c10';
 const OTHER_ID = '0b9d8c7e-1a2b-4c3d-8e4f-5a6b7c8d9e0f';
 
-function d1(db: DatabaseSync): D1Database {
-  const statement = (sql: string, values: SQLInputValue[] = []): D1PreparedStatement => ({
-    bind: (...next) => statement(sql, next),
-    first: async <T,>() => (db.prepare(sql).get(...values) ?? null) as T | null,
-    all: async <T,>() => ({ results: db.prepare(sql).all(...values) as T[] }),
-    run: async () => db.prepare(sql).run(...values),
-  });
-  return { prepare: (sql) => statement(sql), batch: async (list) => Promise.all(list.map((s) => s.run())) };
-}
-
 function makeEnv(overrides: Partial<ShopEnv> = {}): ShopEnv {
-  const db = new DatabaseSync(':memory:');
-  db.exec(readFileSync(new URL('../migrations/0001_init.sql', import.meta.url), 'utf8'));
-  db.exec(seedSql(merch, skuOf));
+  const db = makeDb();
   // un ordine pagato: 2 cappellini a 30 euro
   db.exec(`INSERT INTO orders (public_id, email, lang, status, total_cents) VALUES ('${ORDER_ID}', 'cliente@example.com', 'nl', 'paid', 6000)`);
   db.exec(`INSERT INTO order_items (order_id, variant_id, quantity, price_cents) VALUES (1, (SELECT id FROM variants WHERE sku = 'cap'), 2, 3000)`);
   db.exec(`INSERT INTO shipping_addresses VALUES (1, 'Mario Rossi', 'Via Roma 1', '00100', 'Roma', 'IT')`);
-  return { DB: d1(db), ORDER_TOKEN_SECRET: SECRET, ...overrides };
+  return baseEnv(db, overrides);
 }
 
 function orderRequest(body: unknown, init: { headers?: Record<string, string>; method?: string; raw?: string } = {}): Request {
@@ -71,7 +56,12 @@ describe('GET /api/products', () => {
 
   it('con il database giù risponde 503 generico, senza dettagli', async () => {
     vi.spyOn(console, 'error').mockImplementation(() => {});
-    const broken: D1Database = { prepare: () => { throw new Error('D1_ERROR: segreto interno'); }, batch: async () => [] };
+    const broken: D1Database = {
+      prepare: () => {
+        throw new Error('D1_ERROR: segreto interno');
+      },
+      batch: async () => [],
+    };
     const response = await handleProducts(new Request(`${ORIGIN}/api/products`), makeEnv({ DB: broken }));
     expect(response.status).toBe(503);
     expect(await response.text()).toBe('{"error":"unavailable"}');

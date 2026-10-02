@@ -269,5 +269,9 @@
   "cart.decrease": "One fewer",
   "cart.increase": "One more",
   "story.prev": "Previous",
-  "story.next": "Next"
+  "story.next": "Next",
+  "email.subject": "Your order at Yanks Indian Club ({number})",
+  "email.intro": "Thank you! We have received your payment. Your order is below.",
+  "email.link": "View your order:",
+  "email.test": "This is a concept shop in test mode: nothing has been charged and nothing will be shipped."
 }
