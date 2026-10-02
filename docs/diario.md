@@ -17,6 +17,18 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-02 — Story in orizzontale
+Fatto:        la cronologia della Story scorre in orizzontale: schede con
+              scroll-snap, linea del tempo con pallini, pulsanti ← → (custom
+              element story-track), utility px-bleed per allineare la prima
+              scheda al margine della pagina
+Decisioni:    - niente dirottamento della rotella: confonde chi scorre la pagina
+              - schede alte quanto il loro contenuto, non tutte uguali
+Problemi:     risolto: lo sr-only dei titoli animati usciva dalla fila e faceva
+              scorrere la pagina di lato; la fila ora è relative
+Prossimo:     quello che manca: Fase 3 (backend dello shop), poi Fase 6
+Ramo/commit:  design/story-orizzontale
+
 ## 2026-10-02 — Footer più piccolo, pulsanti del carrello
 Fatto:        footer: testi a text-small, titoli invariati. Carrello (pagina e
               pannello): la tendina della quantità diventa − numero + in una

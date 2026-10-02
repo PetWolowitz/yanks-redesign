@@ -267,5 +267,7 @@
   "story.today.text": "A bar with pool tables, game tables and big screens, two carved totem poles and walls like a night sky. Outside, the terrace. Open every day from {open} to {close}.",
   "story.cta": "Plan your visit",
   "cart.decrease": "One fewer",
-  "cart.increase": "One more"
+  "cart.increase": "One more",
+  "story.prev": "Previous",
+  "story.next": "Next"
 }

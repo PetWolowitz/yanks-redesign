@@ -2,6 +2,10 @@
 // Story (CLAUDE.md, Struttura delle pagine): una cronologia breve, solo fatti
 // verificati (docs/03). Il testo originale di our-story è promozionale e non si usa.
 // Gli anni vengono da venue.ts: se cambiano lì, cambia anche questa pagina.
+// Dal 2026-10-02 la cronologia scorre in orizzontale (Pietro: "scrollare in giù
+// fa perdere le cose"): schede affiancate con scroll-snap, una linea del tempo
+// sopra, pulsanti ← → per il mouse. Senza JS lo scorrimento funziona lo stesso;
+// la rotella non viene mai dirottata.
 import type { GetStaticPaths } from 'astro';
 import { Image } from 'astro:assets';
 import interno from '../../assets/home/interno.jpg';
@@ -17,6 +21,8 @@ export const getStaticPaths = langPaths satisfies GetStaticPaths;
 const { lang } = Astro.props as { lang: Lang };
 const { open, close } = venue.hours;
 const year = String(venue.founded ?? '');
+// Ogni scheda entra con un movimento diverso (data-anim, global.css)
+const anims = ['left', 'zoom', 'tilt', 'right'];
 
 // Ogni tappa: l'anno (o un'etichetta se l'anno non si sa), titolo, testo, foto facoltativa
 const steps: {
@@ -54,32 +60,56 @@ const steps: {
   <main id="content">
     <PageIntro title={t(lang, 'story.title')} intro={t(lang, 'story.intro', { year })} />
 
-    <ol class="mx-auto max-w-360 px-page pb-12">
-      {
-        steps.map((step) => (
-          <li class="edge-shadow grid gap-6 border-t-3 border-text py-10 lg:grid-cols-12 lg:py-14">
-            <p class:list={['font-sign leading-none text-red-text uppercase lg:col-span-3', step.isYear ? 'text-display' : 'text-h2']}>
-              {step.when}
-            </p>
-            <div class="lg:col-span-5">
-              <h2 class="text-h2 leading-none">{t(lang, step.title)}</h2>
-              <p class="mt-6 max-w-[55ch] font-prose">{t(lang, step.text, step.params)}</p>
-            </div>
-            {step.image && (
-              <Image
-                src={step.image.src}
-                alt={t(lang, step.image.alt)}
-                widths={[360, 667]}
-                sizes="(min-width: 1024px) 360px, 100vw"
-                format="webp"
-                loading="lazy"
-                class="aspect-4/5 w-full max-w-90 rounded-2xl border-3 border-text object-cover lg:col-span-4 lg:justify-self-end"
-              />
-            )}
-          </li>
-        ))
-      }
-    </ol>
+    <story-track class="block pb-12">
+      <ol
+        data-track
+        tabindex="0"
+        aria-label={t(lang, 'story.title')}
+        class="story-track relative flex items-start snap-x snap-mandatory gap-4 overflow-x-auto px-bleed pb-6 focus:outline-none focus-visible:ring-3 focus-visible:ring-red lg:gap-6"
+      >
+        {
+          steps.map((step, index) => (
+            <li data-anim={anims[index % anims.length]} class="flex shrink-0 basis-[85%] snap-start flex-col sm:basis-[60%] lg:basis-[34rem]">
+              <!-- La linea del tempo: un pallino per tappa su una riga continua -->
+              <div aria-hidden="true" class="mb-4 flex items-center gap-3">
+                <span class="size-4 shrink-0 rounded-full border-3 border-text bg-red" />
+                <span class="h-0.75 flex-1 bg-text" />
+              </div>
+              <article class="flex flex-1 flex-col overflow-hidden rounded-2xl border-3 border-text bg-surface">
+                {step.image && (
+                  <Image
+                    src={step.image.src}
+                    alt={t(lang, step.image.alt)}
+                    widths={[360, 667]}
+                    sizes="(min-width: 1024px) 544px, 85vw"
+                    format="webp"
+                    loading="lazy"
+                    class="aspect-3/2 w-full border-b-3 border-text object-cover"
+                  />
+                )}
+                <div class="flex flex-1 flex-col p-6 lg:p-8">
+                  <p class:list={['font-sign leading-none text-red-text uppercase', step.isYear ? 'text-display' : 'text-h2']}>
+                    {step.when}
+                  </p>
+                  <h2 class="mt-4 text-h2 leading-none">{t(lang, step.title)}</h2>
+                  <p class="mt-4 max-w-[55ch] font-prose">{t(lang, step.text, step.params)}</p>
+                </div>
+              </article>
+            </li>
+          ))
+        }
+      </ol>
+
+      <!-- Pulsanti per chi usa il mouse: compaiono solo con JS -->
+      <div data-controls hidden class="mx-auto flex max-w-360 justify-end gap-3 px-page">
+        <button type="button" data-dir="-1" aria-label={t(lang, 'story.prev')} class="inline-flex size-11 items-center justify-center rounded-full border-3 border-text hover:bg-text hover:text-bg aria-disabled:opacity-40 aria-disabled:hover:bg-transparent aria-disabled:hover:text-text">
+          <span aria-hidden="true">←</span>
+        </button>
+        <button type="button" data-dir="1" aria-label={t(lang, 'story.next')} class="inline-flex size-11 items-center justify-center rounded-full border-3 border-text hover:bg-text hover:text-bg aria-disabled:opacity-40 aria-disabled:hover:bg-transparent aria-disabled:hover:text-text">
+          <span aria-hidden="true">→</span>
+        </button>
+      </div>
+    </story-track>
 
     <div class="mx-auto max-w-360 px-page pb-16">
       <a
@@ -91,3 +121,37 @@ const steps: {
     </div>
   </main>
 </Base>
+
+<script>
+  // Pulsanti ← →: spostano di una scheda; spenti (aria-disabled) agli estremi.
+  // Con movimento ridotto lo spostamento è immediato
+  class StoryTrack extends HTMLElement {
+    connectedCallback() {
+      const track = this.querySelector<HTMLElement>('[data-track]');
+      const controls = this.querySelector<HTMLElement>('[data-controls]');
+      if (!track || !controls) return;
+      controls.hidden = false;
+      const buttons = [...controls.querySelectorAll<HTMLButtonElement>('[data-dir]')];
+      const update = () => {
+        const max = track.scrollWidth - track.clientWidth - 2;
+        for (const button of buttons) {
+          const atEdge = button.dataset.dir === '-1' ? track.scrollLeft <= 2 : track.scrollLeft >= max;
+          button.toggleAttribute('aria-disabled', atEdge);
+        }
+      };
+      for (const button of buttons) {
+        button.addEventListener('click', () => {
+          const card = track.querySelector('li');
+          const step = (card?.getBoundingClientRect().width ?? track.clientWidth) + 16;
+          const smooth = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+          track.scrollBy({ left: Number(button.dataset.dir) * step, behavior: smooth ? 'smooth' : 'auto' });
+        });
+      }
+      track.addEventListener('scroll', update, { passive: true });
+      addEventListener('resize', update);
+      update();
+    }
+  }
+
+  customElements.define('story-track', StoryTrack);
+</script>
