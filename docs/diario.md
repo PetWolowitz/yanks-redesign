@@ -29,9 +29,14 @@ Fatto:        controllo automatico su 14 larghezze × 22 pagine, tre lingue, pi�
               centrato su telefono e tablet, schede dello shop affiancate dal
               tablet, bersagli di tocco del footer e dei link piccoli
 Decisioni:    regole in docs/02, sezione "Misure dello schermo"
-Problemi:     nessuno
+Problemi:     errore di Claude: unita per sbaglio la PR #30 di Dependabot
+              (@types/node 24.13.6 → 24.19.0, solo tipi, resta sulla 24) al posto
+              della #31, perché il numero della PR era scritto a mano. Controlli
+              verdi, npm audit 0, verify verde; il messaggio di merge della #30
+              dice "controllo responsive" ma è l'aggiornamento dei tipi. Da ora il
+              numero si prende dal ramo, mai a mano
 Prossimo:     chiavi di Stripe, Turnstile e Resend da Pietro; poi Fase 4
-Ramo/commit:  design/responsive-audit
+Ramo/commit:  design/responsive-audit (PR #31)
 
 ## 2026-10-02 — Checkout e webhook Stripe
 Fatto:        POST /api/checkout e POST /api/stripe-webhook, con Stripe,
