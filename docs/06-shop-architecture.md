@@ -43,45 +43,23 @@ registrata. L'architettura non cambia.
 
 ## Database — Cloudflare D1
 
-```sql
--- migrations/0001_init.sql
-CREATE TABLE products (
-  id INTEGER PRIMARY KEY,
-  slug TEXT UNIQUE NOT NULL,
-  category TEXT NOT NULL,
-  price_cents INTEGER NOT NULL CHECK (price_cents > 0),
-  active INTEGER NOT NULL DEFAULT 1
-);
-CREATE TABLE variants (
-  id INTEGER PRIMARY KEY,
-  product_id INTEGER NOT NULL REFERENCES products(id),
-  size TEXT,
-  sku TEXT UNIQUE NOT NULL,
-  stock INTEGER NOT NULL CHECK (stock >= 0)
-);
-CREATE TABLE orders (
-  id INTEGER PRIMARY KEY,
-  public_id TEXT UNIQUE NOT NULL,
-  email TEXT NOT NULL,
-  lang TEXT NOT NULL CHECK (lang IN ('nl','en','de','it','fr','es')),
-  status TEXT NOT NULL CHECK (status IN ('pending','paid','shipped','cancelled')),
-  total_cents INTEGER NOT NULL,
-  stripe_session_id TEXT UNIQUE,
-  created_at TEXT NOT NULL DEFAULT (datetime('now'))
-);
-CREATE TABLE order_items (
-  id INTEGER PRIMARY KEY,
-  order_id INTEGER NOT NULL REFERENCES orders(id),
-  variant_id INTEGER NOT NULL REFERENCES variants(id),
-  quantity INTEGER NOT NULL CHECK (quantity BETWEEN 1 AND 10),
-  price_cents INTEGER NOT NULL
-);
-CREATE TABLE shipping_addresses (
-  order_id INTEGER PRIMARY KEY REFERENCES orders(id),
-  full_name TEXT NOT NULL, street TEXT NOT NULL, postal_code TEXT NOT NULL,
-  city TEXT NOT NULL, country TEXT NOT NULL
-);
-```
+Lo schema è in `migrations/0001_init.sql` (scritto il 2026-10-02): è quello il
+riferimento, non una copia qui. Tabelle: `products` (slug, categoria, prezzo,
+`limited`, `active`), `variants` (una per taglia, con `stock`), `orders`
+(`public_id` UUID, email, lingua, stato, totale, sessione Stripe),
+`order_items` (con il prezzo letto dal database al momento dell'ordine),
+`shipping_addresses`. Rispetto alla prima bozza: `products.limited` (le
+edizioni limitate servono a `getProducts()`) e un indice su
+`order_items(order_id)`.
+
+**Seed** (`src/lib/shop/seed.ts`, lanciato da `scripts/seed.ts`): si può rifare
+quante volte si vuole. Aggiorna prezzi e categorie da `merch.ts`, **non tocca le
+giacenze** delle varianti già presenti (sono vendite vere), spegne (`active = 0`)
+i prodotti tolti da `merch.ts` senza cancellarli, perché gli ordini vecchi li
+citano. Giacenza iniziale: 20 per variante; le edizioni limitate dividono i loro
+pezzi tra le taglie. Comandi: `npm run db:migrate:local`, `npm run db:seed:local`
+(e `:remote`). Test: `tests/seed.test.ts`, su SQLite in memoria (`node:sqlite`).
+
 
 - Nomi e descrizioni dei prodotti stanno nei file di lingua, sotto
   `shop.products.<slug>.name` e `.description`, non nel database: il database

@@ -17,6 +17,20 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-02 — Fase 3, primo pezzo: token, schema, seed
+Fatto:        src/lib/shop/token.ts (HMAC-SHA256 con Web Crypto, verifica con
+              crypto.subtle.verify) e 9 test; migrations/0001_init.sql; seed
+              generato da merch.ts (src/lib/shop/seed.ts + scripts/seed.ts) e
+              6 test su SQLite in memoria (node:sqlite, nessuna dipendenza);
+              comandi npm db:migrate:* e db:seed:*
+Decisioni:    - il seed non tocca le giacenze esistenti e spegne i prodotti tolti
+              - products.limited aggiunta allo schema (serve a getProducts)
+              - giacenza iniziale 20 per variante; limitate divise per taglia
+Problemi:     per andare avanti servono gli account di Pietro: database D1
+              (wrangler d1 create yanks-db), Stripe test, Turnstile, Resend
+Prossimo:     binding D1 in wrangler.jsonc, poi gli endpoint
+Ramo/commit:  feat/shop-token-db
+
 ## 2026-10-02 — Story in orizzontale
 Fatto:        la cronologia della Story scorre in orizzontale: schede con
               scroll-snap, linea del tempo con pallini, pulsanti ← → (custom
