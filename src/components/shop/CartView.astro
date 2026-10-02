@@ -29,6 +29,8 @@ const page = variant === 'page';
   data-size-label={t(lang, 'shop.size')}
   data-remove-label={t(lang, 'cart.remove')}
   data-quantity-label={t(lang, 'shop.quantity')}
+  data-decrease-label={t(lang, 'cart.decrease')}
+  data-increase-label={t(lang, 'cart.increase')}
 >
   <p data-empty hidden class:list={[page && 'border-t-3 border-text pt-6']}>
     {t(lang, 'cart.empty')}
@@ -65,12 +67,23 @@ const page = variant === 'page';
       <div class="flex min-w-0 flex-1 flex-col gap-2">
         <a data-name class="font-sign uppercase hover:underline"></a>
         <span data-size class="text-small text-muted"></span>
-        <div class="mt-auto flex flex-wrap items-center gap-4">
-          <label class="flex items-center gap-2 text-small">
-            <span data-quantity-label></span>
-            <select data-quantity class="min-h-11 rounded-xl border-2 border-text bg-bg px-2"></select>
-          </label>
-          <button type="button" data-remove class="min-h-11 text-small underline underline-offset-4"></button>
+        <!-- Modifica (− e +) e cancella: pulsanti veri, grandi abbastanza per il dito -->
+        <div class="mt-auto flex flex-wrap items-center gap-3">
+          <div data-stepper role="group" class="inline-flex items-center rounded-full border-2 border-text">
+            <button type="button" data-step="-1" class="inline-flex size-11 items-center justify-center rounded-full text-xl hover:bg-text hover:text-bg aria-disabled:opacity-40 aria-disabled:hover:bg-transparent aria-disabled:hover:text-text">
+              <span aria-hidden="true">−</span>
+            </button>
+            <output data-quantity aria-live="polite" class="min-w-8 text-center tabular-nums"></output>
+            <button type="button" data-step="1" class="inline-flex size-11 items-center justify-center rounded-full text-xl hover:bg-text hover:text-bg aria-disabled:opacity-40 aria-disabled:hover:bg-transparent aria-disabled:hover:text-text">
+              <span aria-hidden="true">+</span>
+            </button>
+          </div>
+          <button type="button" data-remove class="inline-flex min-h-11 items-center gap-2 rounded-full border-2 border-text px-4 text-small hover:bg-text hover:text-bg">
+            <svg class="size-4" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+            </svg>
+            <span data-remove-text></span>
+          </button>
         </div>
       </div>
       <span data-price class="tabular-nums"></span>
@@ -81,6 +94,7 @@ const page = variant === 'page';
 <script>
   import type { Lang } from '../../i18n/locales';
   import { loadCart, onCartChange, saveCart, setQuantity, type Cart } from '../../lib/shop/cart';
+  import { limits } from '../../lib/shop/validate';
   import { formatPrice } from '../../lib/format';
   import type { CatalogEntry as Entry } from '../../lib/shop/catalog';
 
@@ -102,10 +116,10 @@ const page = variant === 'page';
 
       const rows = this.querySelector('[data-rows]')!;
       const template = this.querySelector('template')!;
-      // Il ridisegno sostituisce le righe: si ricorda quale select aveva il focus
+      // Il ridisegno sostituisce le righe: si ricorda quale pulsante − o + aveva il focus
       const active = document.activeElement as HTMLElement | null;
       const focusedSku = this.contains(active) ? active?.closest<HTMLElement>('[data-sku]')?.dataset.sku : undefined;
-      const focusedQuantity = active?.matches('[data-quantity]') ?? false;
+      const focusedStep = active?.dataset.step;
       rows.replaceChildren(
         ...lines.map(({ sku, quantity }) => {
           const entry = this.#catalog[sku]!;
@@ -116,22 +130,33 @@ const page = variant === 'page';
           name.href = entry.href;
           name.textContent = entry.name;
           row.querySelector('[data-size]')!.textContent = entry.size ? `${this.dataset.sizeLabel}: ${entry.size}` : '';
-          row.querySelector('[data-quantity-label]')!.textContent = this.dataset.quantityLabel ?? '';
           row.querySelector('[data-price]')!.textContent = formatPrice(entry.priceCents * quantity, lang);
+          const label = `${entry.name}${entry.size ? ` ${entry.size}` : ''}`;
 
-          const select = row.querySelector<HTMLSelectElement>('[data-quantity]')!;
-          for (let n = 1; n <= 10; n++) select.add(new Option(String(n), String(n), false, n === quantity));
-          select.addEventListener('change', () => saveCart(setQuantity(loadCart(), sku, Number(select.value))));
+          // − e +: da 1 al massimo per riga. Ai limiti il pulsante resta focalizzabile
+          // (aria-disabled, non disabled) così il focus non si perde
+          row.querySelector('[data-stepper]')!.setAttribute('aria-label', `${this.dataset.quantityLabel}: ${label}`);
+          row.querySelector('[data-quantity]')!.textContent = String(quantity);
+          for (const button of row.querySelectorAll<HTMLButtonElement>('[data-step]')) {
+            const step = Number(button.dataset.step);
+            const next = quantity + step;
+            const blocked = next < 1 || next > limits.maxQuantity;
+            button.setAttribute('aria-label', step < 0 ? `${this.dataset.decreaseLabel}: ${label}` : `${this.dataset.increaseLabel}: ${label}`);
+            if (blocked) button.setAttribute('aria-disabled', 'true');
+            button.addEventListener('click', () => {
+              if (!blocked) saveCart(setQuantity(loadCart(), sku, next));
+            });
+          }
 
           const remove = row.querySelector<HTMLButtonElement>('[data-remove]')!;
-          remove.textContent = this.dataset.removeLabel ?? '';
-          remove.setAttribute('aria-label', `${this.dataset.removeLabel}: ${entry.name}${entry.size ? ` ${entry.size}` : ''}`);
+          remove.querySelector('[data-remove-text]')!.textContent = this.dataset.removeLabel ?? '';
+          remove.setAttribute('aria-label', `${this.dataset.removeLabel}: ${label}`);
           remove.addEventListener('click', () => saveCart(setQuantity(loadCart(), sku, 0)));
           return row;
         }),
       );
 
-      if (focusedSku && focusedQuantity) rows.querySelector<HTMLElement>(`[data-sku="${focusedSku}"] [data-quantity]`)?.focus();
+      if (focusedSku && focusedStep) rows.querySelector<HTMLElement>(`[data-sku="${focusedSku}"] [data-step="${focusedStep}"]`)?.focus();
       // Riga tolta: il focus va su un titolo, non si perde nel vuoto
       else if (focusedSku) document.querySelector<HTMLElement>(this.dataset.focusFallback ?? 'main h1')?.focus();
 

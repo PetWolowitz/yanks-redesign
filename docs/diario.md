@@ -17,6 +17,17 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-02 — Footer più piccolo, pulsanti del carrello
+Fatto:        footer: testi a text-small, titoli invariati. Carrello (pagina e
+              pannello): la tendina della quantità diventa − numero + in una
+              pillola, "Verwijderen" un pulsante vero con il cestino. Ai limiti
+              (1 e 10) il pulsante è aria-disabled, così il focus non si perde
+Decisioni:    − non cancella la riga arrivato a 1: per togliere c'è il cestino
+Problemi:     PR #20 di Dependabot aperta: vitest 5.0.1 → 5.0.2 va bene,
+              @types/node 24 → 26 no (Node in uso è il 24): da decidere con Pietro
+Prossimo:     Story che scorre in orizzontale
+Ramo/commit:  design/footer-carrello
+
 ## 2026-10-02 — Bento delle recensioni, movimenti, ombre
 Fatto:        "Wat gasten zeggen" a bento rovesciata rispetto al club; ogni
               tessera delle bento entra con un movimento diverso (data-anim);
