@@ -34,7 +34,8 @@ const limited = merch.filter((item) => item.limited !== null);
       </a>
     </div>
 
-    <ul class="mt-10 grid gap-6 lg:grid-cols-12">
+    <!-- Affiancate già dal tablet: una sotto l'altra sarebbero due foto enormi -->
+    <ul class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-12">
       {
         limited.map((item, index) => {
           const name = t(lang, `shop.products.${item.slug}.name` as Key);

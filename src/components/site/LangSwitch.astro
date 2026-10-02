@@ -33,7 +33,7 @@ const hrefFor = (l: Lang) => Astro.url.pathname.replace(/^\/[^/]+\//, `/${l}/`);
             aria-current={l === lang ? 'true' : undefined}
             class:list={[
               'inline-flex items-center decoration-red-text',
-              dense ? 'py-1' : 'min-h-11',
+              dense ? 'py-2.5 lg:py-1' : 'min-h-11',
               'decoration-[3px] underline-offset-[6px] hover:underline aria-[current]:underline',
               short && 'px-1.5 uppercase',
               scatter && 'scatter-host hover:no-underline',

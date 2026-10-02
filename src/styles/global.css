@@ -25,6 +25,26 @@
 /* Ruoli dei font (docs/02): l'interfaccia è Martian Mono, i paragrafi lunghi
    si segnano con la classe font-prose */
 @layer base {
+  /* Quello che esce di lato (le tessere che entrano "da destra", 56 px fuori) non
+     deve far scorrere la pagina in orizzontale. clip, non hidden: non crea un
+     contenitore di scorrimento, quindi l'header sticky continua a funzionare */
+  html,
+  body {
+    overflow-x: clip;
+  }
+
+  /* Griglie senza colonne dichiarate (succede su telefono, quando le colonne
+     arrivano solo con sm: o lg:): una colonna che si restringe allo schermo,
+     invece di allargarsi quanto il contenuto. Le utility grid-cols-* vincono */
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* I fieldset di base non scendono sotto la larghezza del contenuto */
+  fieldset {
+    min-width: 0;
+  }
+
   body {
     background-color: var(--bg);
     color: var(--text);

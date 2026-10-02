@@ -40,7 +40,7 @@ const page = variant === 'page';
   <div data-full hidden class:list={[page ? 'grid gap-10 lg:grid-cols-12 lg:gap-6' : 'flex h-full flex-col']}>
     <ul data-rows class:list={['border-t-3 border-text', page ? 'lg:col-span-8' : 'flex-1 overflow-x-hidden overflow-y-auto']}></ul>
     <div class:list={[page ? 'h-fit rounded-2xl border-3 border-text p-6 lg:col-span-4' : 'border-t-3 border-text pt-4']}>
-      <p class="flex items-baseline justify-between gap-4 text-h3">
+      <p class="flex flex-wrap items-baseline justify-between gap-x-4 text-h3">
         <span>{t(lang, 'cart.subtotal')}</span>
         <span data-subtotal class="tabular-nums"></span>
       </p>
@@ -65,7 +65,10 @@ const page = variant === 'page';
     <li class="flex gap-3 border-b border-muted py-4">
       <img data-image alt="" width="80" height="100" class="h-25 w-20 shrink-0 rounded-lg border-2 border-text object-cover" />
       <div class="flex min-w-0 flex-1 flex-col gap-2">
-        <a data-name class="font-sign uppercase hover:underline"></a>
+        <div class="flex items-start justify-between gap-3">
+          <a data-name class="inline-block min-w-0 py-2 font-sign uppercase break-words hyphens-auto hover:underline"></a>
+          <span data-price class="shrink-0 py-2 tabular-nums"></span>
+        </div>
         <span data-size class="text-small text-muted"></span>
         <!-- Modifica (− e +) e cancella: pulsanti veri, grandi abbastanza per il dito -->
         <div class="mt-auto flex flex-wrap items-center gap-3">
@@ -86,7 +89,6 @@ const page = variant === 'page';
           </button>
         </div>
       </div>
-      <span data-price class="tabular-nums"></span>
     </li>
   </template>
 </cart-view>

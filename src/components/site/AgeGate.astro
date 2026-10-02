@@ -21,8 +21,11 @@ const { lang } = Astro.props;
   aria-labelledby="age-gate-title"
   class="m-0 h-dvh max-h-none w-full max-w-none place-content-center border-0 bg-bg p-4 text-text"
 >
-  <div class="mx-auto flex max-w-xl flex-col items-center gap-6 text-center">
-    <Logo alt={venue.name} variant="badge" size={160} class="size-40" />
+  <!-- Schermi bassi: meno spazio tra gli elementi -->
+  <div class="mx-auto flex max-w-xl flex-col items-center gap-6 text-center [@media(max-height:480px)]:gap-3">
+    <!-- Schermi bassi (telefono in orizzontale): il solo volto, come vuole la regola del marchio sotto i 160 px -->
+    <span class="[@media(max-height:480px)]:hidden"><Logo alt={venue.name} variant="badge" size={160} class="size-40" /></span>
+    <span class="hidden [@media(max-height:480px)]:block"><Logo alt={venue.name} variant="indiano" size={80} class="size-20" /></span>
     <h2 id="age-gate-title" class="text-h2 leading-none">{t(lang, 'age.title')}</h2>
     <p>{t(lang, 'age.text')}</p>
 

@@ -23,8 +23,24 @@ const letters = [...text].map((char, i) => {
     r: Math.round((noise(seed + 13) - 0.5) * 70),
   };
 });
+// Lettere raggruppate per parola: si va a capo tra le parole, mai a metà
+const words = letters.reduce<(typeof letters)[]>(
+  (list, l) => {
+    if (l.char.trim() === '') list.push([]);
+    else list.at(-1)!.push(l);
+    return list;
+  },
+  [[]],
+);
 ---
 
 <span class="scatter"><span class="sr-only">{text}</span><span aria-hidden="true">{
-  letters.map((l) => <span class="scatter-letter" style={`--dx:${l.dx}em;--dy:${l.dy}em;--r:${l.r}deg`}>{l.char}</span>)
+  words.map((word, w) => (
+    <>
+      {w > 0 && ' '}
+      <span class="whitespace-nowrap">
+        {word.map((l) => <span class="scatter-letter" style={`--dx:${l.dx}em;--dy:${l.dy}em;--r:${l.r}deg`}>{l.char}</span>)}
+      </span>
+    </>
+  ))
 }</span></span>

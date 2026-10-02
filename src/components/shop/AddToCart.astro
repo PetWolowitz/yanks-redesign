@@ -53,7 +53,7 @@ const quantities = Array.from({ length: 10 }, (_, i) => i + 1);
     <p data-message role="status" class="min-h-6"></p>
     <p data-added hidden>
       {t(lang, 'shop.added')}{' '}
-      <a href={`/${lang}/shop/cart/`} class="underline decoration-red-text decoration-[3px] underline-offset-[6px]">{t(lang, 'shop.viewCart')}</a>
+      <a href={`/${lang}/shop/cart/`} class="inline-block py-2.5 underline decoration-red-text decoration-[3px] underline-offset-[6px]">{t(lang, 'shop.viewCart')}</a>
     </p>
   </form>
   <noscript><p class="border-3 rounded-2xl border-text px-4 py-3">{t(lang, 'shop.noscript')}</p></noscript>

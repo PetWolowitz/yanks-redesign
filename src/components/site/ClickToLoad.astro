@@ -28,7 +28,8 @@ const { src, title, buttonLabel, notice, linkHref, linkLabel, ratio = '16 / 9', 
   class:list={['relative block border-3 border-text bg-surface', !square && 'rounded-2xl', className]}
   style={`aspect-ratio: ${ratio}`}
 >
-  <div data-preview class="flex h-full flex-col items-start justify-end gap-3 p-4">
+  <!-- min-h-full: se il testo è più alto della proporzione (telefoni stretti) il riquadro si allunga invece di farlo uscire -->
+  <div data-preview class="flex min-h-full flex-col items-start justify-end gap-3 p-4">
     <slot />
     <p class="max-w-[45ch] text-small text-muted">{notice}</p>
     <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
