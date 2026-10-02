@@ -221,14 +221,16 @@ altre tre. Regole in `docs/04-build-plan.md`, fase i18n.
   `public/video/` e passano da `src/components/site/LoopVideo.astro` (poster
   sempre, video solo da 1024 px). Niente reel di Instagram scaricati né usati come
   sfondo. I reel del locale controllati finora ("Friday high day", aftermovie del
-  4/20) sono promozionali sulla cannabis: non si usano
+  4/20) sono promozionali sulla cannabis: non si usano. Video del locale senza
+  promozione si possono proporre in seguito, se il locale li produce
 
 ## Animazioni
 Dettagli in `docs/08-animazioni-risorse.md` e `docs/02-design-system.md`
 (Movimento). Fatti il 2026-09-29 e 2026-10-01, in CSS e TypeScript senza librerie:
 - Titoli che entrano **di lato**, sfalsati (Indian per parola, Yankee Clipper per
   lettera). Niente tremolio al neon sui titoli: tolto il 2026-10-01 su richiesta
-  di Pietro. Blocchi che salgono quando entrano in vista. Tempi volutamente lenti
+  di Pietro. Blocchi che entrano quando arrivano in vista, nelle bento con un
+  movimento diverso per tessera. Tempi volutamente lenti
 - Cursore custom che inverte i colori sopra le immagini, spento su touch
 - Volo della foto nel carrello all'aggiunta; lettere dei link del footer che si
   scompongono al passaggio; freccia per tornare su in fondo alle pagine

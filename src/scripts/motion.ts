@@ -62,14 +62,17 @@ export function initMotion() {
   }
   reveal(headings);
 
-  // Blocchi che salgono: solo quelli ancora sotto la piega, per non far lampeggiare il resto.
-  // Nelle griglie un piccolo ritardo per elemento
-  const blocks = [...document.querySelectorAll<HTMLElement>('main :is([data-card], figure, blockquote, img:not([data-card] img), form, aside)')];
+  // Blocchi in ingresso: solo quelli ancora sotto la piega, per non far lampeggiare il resto.
+  // Nelle griglie un piccolo ritardo per elemento. data-anim sceglie il movimento
+  // (le tessere delle bento ne hanno uno diverso ciascuna, global.css); senza, salgono.
+  // Un blocco dentro un altro blocco animato non si anima due volte
+  const candidates = [...document.querySelectorAll<HTMLElement>('main :is([data-anim], [data-card], figure, blockquote, img, form, aside)')];
+  const blocks = candidates.filter((block) => !candidates.some((other) => other !== block && other.contains(block)));
   const below = blocks.filter((block) => block.getBoundingClientRect().top > innerHeight);
   below.forEach((block) => {
     const siblings = block.parentElement ? [...block.parentElement.children] : [];
     block.style.setProperty('--i', String(Math.min(siblings.indexOf(block), 6)));
-    block.dataset.reveal = '';
+    block.dataset.reveal = block.dataset.anim ?? 'up';
   });
   reveal(below);
 }

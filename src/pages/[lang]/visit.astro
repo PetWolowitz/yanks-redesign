@@ -17,7 +17,7 @@ export const getStaticPaths = langPaths satisfies GetStaticPaths;
 
 const { lang } = Astro.props as { lang: Lang };
 const { close, dineInUntil } = venue.hours;
-const blockClass = 'border-t-3 border-text pt-6';
+const blockClass = 'edge-shadow border-t-3 border-text pt-6';
 ---
 
 <Base lang={lang} title={`${t(lang, 'nav.visit')} · ${venue.name}`} description={t(lang, 'visit.description')}>
