@@ -19,9 +19,9 @@
     "db:seed:remote": "node scripts/seed.ts && wrangler d1 execute yanks-db --remote --file=.wrangler/seed.sql"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "14.3.3",
+    "@astrojs/cloudflare": "14.3.4",
     "@tailwindcss/vite": "4.3.3",
-    "astro": "7.3.5",
+    "astro": "7.3.8",
     "tailwindcss": "4.3.3"
   },
   "allowScripts": {
@@ -30,9 +30,9 @@
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
-    "@types/node": "24.19.0",
+    "@types/node": "24.19.2",
     "typescript": "6.0.3",
-    "vitest": "5.0.2",
-    "wrangler": "4.145.0"
+    "vitest": "5.0.4",
+    "wrangler": "4.149.0"
   }
 }
