@@ -274,11 +274,13 @@ Tutto in CSS e poco TypeScript, senza librerie (docs/08). `prefers-reduced-motio
 spegne tutto; si animano solo `transform` e `opacity`; senza JS si vede tutto.
 - **Titoli in ingresso** (h1, h2, h3 di pagina e footer, `scripts/motion.ts`),
   dal 2026-10-01: ogni pezzo entra **da sinistra**, inclinato, e si raddrizza;
-  Indian per parola (200 ms l'una), Yankee Clipper per lettera (55 ms l'una).
+  Indian per parola (320 ms l'una), Yankee Clipper per lettera (85 ms l'una).
   Nessun tremolio dopo l'ingresso (provato e tolto il 2026-10-01). Gli screen
   reader leggono il titolo intero (`sr-only`)
-- **Tempi**: volutamente lenti (titoli 1.3-1.7 s dal 2026-10-02, blocchi 1.1 s,
-  volo nel carrello 1 s)
+- **Tempi**: volutamente lenti e ben visibili (dal 2026-10-19, richiesta di Pietro:
+  titoli 2-2.6 s, blocchi 1.8 s con 160 ms tra uno e l'altro, spostamenti di
+  48-80 px; partono quando il blocco è un quinto dentro lo schermo), volo nel
+  carrello 1 s
 - **Blocchi in ingresso**: schede, foto, citazioni e moduli sotto la piega salgono
   quando arrivano in vista. Quello che è a schermo al caricamento non si anima.
   Nelle bento ogni tessera ha un movimento suo (`data-anim`: left, right, up,

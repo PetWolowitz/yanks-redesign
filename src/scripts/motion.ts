@@ -43,7 +43,8 @@ function reveal(elements: Iterable<HTMLElement>) {
         observer.unobserve(entry.target);
       }
     },
-    { rootMargin: '0px 0px -10% 0px' },
+    // parte quando il blocco è già un quinto dentro lo schermo, così si vede tutto
+    { rootMargin: '0px 0px -20% 0px' },
   );
   for (const element of elements) observer.observe(element);
 }
