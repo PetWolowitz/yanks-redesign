@@ -270,10 +270,13 @@ Leggere `06-shop-architecture.md` prima di iniziare.
       `crypto.subtle.verify` (tempo costante), mai con `===`
 
 **Stripe e Turnstile**
-- [ ] Account Stripe in modalità test, chiavi nei segreti di Cloudflare
-- [ ] Webhook di Stripe verso `/api/stripe-webhook`; in locale con Stripe CLI
-- [ ] Sito Turnstile creato, chiavi nei segreti
-- [ ] Account Resend, `RESEND_API_KEY` nei segreti e in `.dev.vars`,
+- [x] Account Stripe in modalità test, chiavi nei segreti di Cloudflare _(2026-10-19)_
+- [x] Webhook di Stripe verso `/api/stripe-webhook`; in locale con Stripe CLI
+      _(2026-10-19: endpoint online `we_1USECB…` con 4 eventi, segreto diverso da
+      quello locale; in locale `stripe listen --forward-to`)_
+- [ ] Sito Turnstile creato, chiavi nei segreti _(2026-10-19: widget e controllo
+      di hostname e azione fatti; mancano le chiavi vere di Pietro)_
+- [x] Account Resend, `RESEND_API_KEY` nei segreti e in `.dev.vars`,
       `EMAIL_FROM=onboarding@resend.dev` (modalità di prova)
 - [x] `ORDER_TOKEN_SECRET` generato (comando in `06-shop-architecture.md`),
       valori diversi nei segreti e in `.dev.vars`
@@ -291,10 +294,15 @@ Leggere `06-shop-architecture.md` prima di iniziare.
 
 ## Fase 4 — Collegamento (1 ora)
 
-- [ ] `PUBLIC_SHOP_MODE=live` in locale: acquisto completo con carta di prova
+- [x] `PUBLIC_SHOP_MODE=live` in locale: acquisto completo con carta di prova
+      _(2026-10-19: due acquisti con 4242, ordine `paid`, giacenze scalate una
+      volta sola anche rimandando il webhook, email arrivata. Resend in prova
+      consegna solo a pietro.costa25@hotmail.it)_
 - [ ] Stesso test online
-- [ ] Il frontend non è cambiato: se è servito toccare un componente, il
-      contratto della Fase 1 era incompleto. Annotarlo
+- [x] Il frontend non è cambiato: se è servito toccare un componente, il
+      contratto della Fase 1 era incompleto. Annotarlo _(2026-10-19: nessun
+      componente toccato per lo shop live; solo il checkout, per il widget
+      Turnstile, che era previsto come segnaposto)_
 
 ---
 
@@ -319,7 +327,7 @@ Leggere `08-animazioni-risorse.md` prima.
 - [ ] CSP rifinita: niente `unsafe-inline` dove si può evitare; hash dello script
       del tema aggiornato _(script: fatto, con test; stili: `unsafe-inline` resta per
       gli attributi `style`, vedi docs/06 Stato della sicurezza)_
-- [ ] Verifica su securityheaders.com
+- [x] Verifica su securityheaders.com _(2026-10-19: A+)_
 - [x] `npm audit` _(2026-10-01, PR #17: `npm audit fix` senza `--force`, 0 vulnerabilità)_
 - [ ] Lighthouse su entrambi i temi: 90+ prestazioni, 95+ accessibilità
 - [ ] Navigazione completa da tastiera
