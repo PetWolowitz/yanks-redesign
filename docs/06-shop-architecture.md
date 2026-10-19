@@ -226,7 +226,9 @@ nell'intestazione `Referer`. E passa nel body di una `POST`, non nell'indirizzo.
 - Intestazioni su ogni pagina (`public/_headers`, verificate in produzione):
   CSP, HSTS (un anno, sottodomini), `X-Content-Type-Options: nosniff`,
   `Referrer-Policy`, `Permissions-Policy` (camera, microfono, posizione,
-  pagamenti spenti), `Cross-Origin-Opener-Policy`
+  pagamenti spenti), `Cross-Origin-Opener-Policy`, `Cross-Origin-Resource-Policy`
+  e `X-Frame-Options: DENY` (dal 2026-10-19). **securityheaders.com: A+**
+  (2026-10-19)
 - **CSP**: script solo da `'self'` più l'hash dell'unico script inline (tema e
   avviso d'età); niente `'unsafe-inline'` sugli script. Un test controlla che ogni
   script inline di ogni pagina abbia il suo hash. Script dei componenti sempre

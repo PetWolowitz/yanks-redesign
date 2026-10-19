@@ -1,5 +1,6 @@
 # Intestazioni di sicurezza per gli asset statici (testo in docs/06).
 # Non valgono per le risposte degli endpoint /api/: quelle le impostano nel codice.
+# X-Frame-Options ripete frame-ancestors per i browser vecchi (securityheaders.com, 2026-10-19).
 # L'hash in script-src è quello di src/scripts/theme-init.js (test: tests/csp-hash.test.ts).
 /*
   Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-MlAu42i3I+CLYzSeiIN83dc2VG8iLpSlYxWurhKEdnk=' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com https://www.instagram.com https://www.google.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self'; form-action 'self' https://checkout.stripe.com; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests
@@ -8,3 +9,5 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
   Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+  X-Frame-Options: DENY
