@@ -288,6 +288,11 @@ nell'intestazione `Referer`. E passa nel body di una `POST`, non nell'indirizzo.
   - **senza chiavi configurate tutto viene rifiutato** (nessun ordine pagato)
   - in locale Turnstile usa la chiave di prova ufficiale che passa sempre
     (`1x0000…AA`), solo in `.dev.vars`
+  - **hostname di Turnstile** (2026-10-19): la risposta di `siteverify` deve avere
+    lo stesso hostname della richiesta al checkout, così un token preso su un
+    altro sito con la nostra chiave non vale. Le chiavi di prova rispondono
+    `example.com` con `metadata.result_with_testing_key`: si accettano solo su
+    localhost, online vengono rifiutate (`tests/turnstile.test.ts`)
   - limite noto: la giacenza si controlla al checkout ma non si prenota. Se due
     clienti pagano l'ultimo pezzo, la giacenza resta a 0 e l'ordine si gestisce a
     mano (per un concept va bene)

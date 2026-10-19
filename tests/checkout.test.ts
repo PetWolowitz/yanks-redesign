@@ -110,6 +110,24 @@ describe('POST /api/checkout', () => {
     }
   });
 
+  it('Turnstile superato su un altro sito o con una chiave di prova online: niente ordine', async () => {
+    const answers = [
+      { success: true, hostname: 'evil.example' },
+      { success: true },
+      // le chiavi di prova di Cloudflare rispondono così: valgono solo in locale
+      { success: true, hostname: 'example.com', metadata: { result_with_testing_key: true } },
+    ];
+    for (const answer of answers) {
+      const db = makeDb();
+      const fake = fakeFetch({ turnstile: answer });
+      const response = await handleCheckout(checkoutRequest(validBody), makeEnv(db), deps(fake.fetcher, ID));
+      expect(response.status).toBe(400);
+      expect(await response.json()).toEqual({ error: 'invalid', fields: { turnstileToken: 'invalid' } });
+      expect(row<{ n: number }>(db, 'SELECT COUNT(*) n FROM orders').n).toBe(0);
+      expect(fake.calls.some((call) => call.url.includes('stripe'))).toBe(false);
+    }
+  });
+
   it('campi non validi: 400 con gli errori dei campi, senza chiamare servizi esterni', async () => {
     const fake = fakeFetch();
     const response = await handleCheckout(checkoutRequest({ ...validBody, email: 'non-una-email' }), makeEnv(), deps(fake.fetcher, ID));
