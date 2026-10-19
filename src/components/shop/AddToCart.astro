@@ -45,7 +45,7 @@ const quantities = Array.from({ length: 10 }, (_, i) => i + 1);
           {quantities.map((n) => <option value={n}>{n}</option>)}
         </select>
       </label>
-      <button type="submit" class="min-h-11 border-3 rounded-full border-text bg-text px-6 py-2 text-bg uppercase hover:bg-bg hover:text-text disabled:cursor-not-allowed disabled:opacity-60">
+      <button type="submit" class="btn-solid disabled:cursor-not-allowed disabled:opacity-60">
         {t(lang, 'shop.addToCart')}
       </button>
     </div>

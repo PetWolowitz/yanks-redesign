@@ -47,13 +47,13 @@ const page = variant === 'page';
       <p class="mt-2 text-small text-muted">{t(lang, 'cart.note')}</p>
       <a
         href={`/${lang}/shop/checkout/`}
-        class="mt-6 flex min-h-11 items-center justify-center rounded-full border-3 border-text bg-text px-6 py-2 text-bg uppercase hover:bg-bg hover:text-text"
+        class="btn-solid mt-6 flex"
       >
         {t(lang, 'cart.checkout')}
       </a>
       {
         !page && (
-          <a href={`/${lang}/shop/cart/`} class="mt-3 flex min-h-11 items-center justify-center rounded-full border-3 border-text px-6 py-2 uppercase hover:bg-text hover:text-bg">
+          <a href={`/${lang}/shop/cart/`} class="btn mt-3 flex">
             {t(lang, 'cart.view')}
           </a>
         )
