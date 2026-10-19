@@ -9,7 +9,9 @@ import { t } from '../../i18n/t';
 interface Props {
   lang: Lang;
   class?: string;
-  // solo icona e stato tra 1024 e 1280 px, dove la fascia dell'header è stretta
+  // header: "solo asporto" in breve; solo icona e stato dove la fascia è stretta
+  // (sotto 640 px e tra 1024 e 1280 px); senza JS lì non c'è
+  // (gli orari sono nel menu)
   compact?: boolean;
 }
 
@@ -23,10 +25,11 @@ const { open, dineInUntil, close } = venue.hours;
     'group inline-flex flex-wrap items-center gap-x-2 gap-y-1',
     // insegna: icona e stato nel colore neon dello stato; il dettaglio resta muted
     'data-[status=open]:text-neon-open data-[status=takeaway]:text-neon-takeaway data-[status=closed]:text-neon-closed',
+    compact && 'max-sm:not-data-status:hidden lg:max-xl:not-data-status:hidden',
     className,
   ]}
   data-label-open={t(lang, 'clock.open')}
-  data-label-takeaway={t(lang, 'clock.takeaway')}
+  data-label-takeaway={t(lang, compact ? 'clock.takeawayShort' : 'clock.takeaway')}
   data-label-closed={t(lang, 'clock.closed')}
   data-detail-open={t(lang, 'clock.until', { time: dineInUntil })}
   data-detail-takeaway={t(lang, 'clock.closesIn')}
@@ -54,7 +57,7 @@ const { open, dineInUntil, close } = venue.hours;
   </span>
   <span
     data-detail
-    class:list={['hidden text-muted group-data-status:inline', compact && 'lg:max-xl:group-data-status:hidden']}
+    class:list={['hidden text-muted group-data-status:inline', compact && 'max-sm:group-data-status:hidden lg:max-xl:group-data-status:hidden']}
   >
     <span aria-hidden="true">·</span> <span data-detail-text></span>
   </span>

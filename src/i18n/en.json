@@ -67,6 +67,7 @@
   "clock.hours": "Daily {open}–{close}",
   "clock.open": "Open",
   "clock.takeaway": "Takeaway only",
+  "clock.takeawayShort": "Takeaway",
   "clock.closed": "Closed",
   "clock.until": "until {time}",
   "clock.closesIn": "closes in {minutes} min",

@@ -1,14 +1,17 @@
 ---
 // Header (docs/02, Navigazione).
-// Desktop: logo, pagine, orologio, lingue, tema, carrello su una fascia.
-// Mobile: logo, carrello e ☰ sulla fascia, orologio in una striscia sotto,
-// il resto nel menu a tutto schermo (popover: funziona senza JS).
+// In cima alla pagina è una fascia piatta col bordo sotto; appena si scorre il fondo
+// sparisce e compare una capsula staccata dai bordi (solo opacity e transform).
+// Desktop: logo, pagine, orologio, lingue e tema, carrello sulla stessa riga.
+// Sotto 1024 px: logo, orologio, carrello e ☰; il resto nel menu a tutto schermo
+// (popover: funziona senza JS).
 // Carrello: l'icona è un link alla pagina carrello; con JS apre il pannello laterale
 // (<dialog>). Su carrello e checkout il pannello non c'è: la pagina mostra già tutto.
 import { pages } from '../../data/pages';
 import CartView from '../shop/CartView.astro';
 import type { Lang } from '../../i18n/locales';
 import { t } from '../../i18n/t';
+import Hours from './Hours.astro';
 import LangSwitch from './LangSwitch.astro';
 import Logo from './Logo.astro';
 import OpenStatus from './OpenStatus.astro';
@@ -22,8 +25,9 @@ const { lang } = Astro.props;
 
 const withDrawer = !/\/shop\/(cart|checkout)\//.test(Astro.url.pathname);
 const isCurrent = (slug: string) => Astro.url.pathname.startsWith(`/${lang}/${slug}/`);
-const linkClass =
-  'decoration-red-text decoration-[3px] underline-offset-[6px] hover:underline aria-[current=page]:underline';
+// Lingue e tema in un'unica pillola, uguale nella fascia e nel menu
+const toolsClass = 'items-center gap-0.5 rounded-full border-2 border-text p-0.5';
+const iconButton = 'inline-flex size-11 items-center justify-center rounded-full hover:text-red-text';
 ---
 
 <a
@@ -32,25 +36,42 @@ const linkClass =
   >{t(lang, 'header.skip')}</a
 >
 
-<header data-header class="group/header sticky top-0 z-40 border-b-3 border-text bg-bg">
-  <div class="mx-auto flex max-w-360 flex-wrap items-center gap-x-2 px-page lg:h-18 lg:flex-nowrap lg:gap-x-6">
-    <!-- Il logo originale (Logo.astro), che si rimpicciolisce scorrendo -->
-    <a href={`/${lang}/`} class="me-auto inline-flex h-16 items-center lg:me-0 lg:h-18">
+<header data-header class="group/header sticky top-0 z-40">
+  <!-- Fondo della fascia: c'è in cima alla pagina, sparisce scorrendo -->
+  <div
+    aria-hidden="true"
+    class="absolute inset-0 border-b-3 border-text bg-bg transition-opacity duration-500 group-data-scrolled/header:opacity-0 motion-reduce:transition-none"
+  >
+  </div>
+
+  <div class="relative mx-auto flex h-16 max-w-360 items-center px-page sm:gap-x-2 lg:h-18 lg:gap-x-1.5 xl:gap-x-5">
+    <!-- La capsula: compare scorrendo, un poco più larga del contenuto -->
+    <div
+      aria-hidden="true"
+      class="capsule pointer-events-none absolute inset-y-1.5 rounded-full border-2 border-text bg-surface transition-[opacity,transform] duration-500 motion-reduce:transition-none"
+    >
+    </div>
+
+    <a href={`/${lang}/`} class="relative me-auto inline-flex h-16 shrink-0 items-center lg:me-0 lg:h-18">
       <Logo
         alt={t(lang, 'header.home')}
         variant="indiano"
         size={56}
         priority
-        class="size-12 origin-left transition-transform duration-300 group-data-scrolled/header:scale-80 motion-reduce:transition-none lg:size-14"
+        class="size-12 origin-left transition-transform duration-300 group-data-scrolled/header:scale-80 motion-reduce:transition-none lg:size-12 xl:size-14"
       />
     </a>
 
-    <nav aria-label={t(lang, 'nav.label')} class="hidden flex-1 lg:block">
-      <ul class="flex justify-start gap-4 text-small xl:gap-6 whitespace-nowrap uppercase">
+    <nav aria-label={t(lang, 'nav.label')} class="relative hidden flex-1 lg:block">
+      <ul class="nav-list flex items-center text-small whitespace-nowrap uppercase xl:gap-1">
         {
           pages.map(({ slug, key }) => (
             <li>
-              <a href={`/${lang}/${slug}/`} aria-current={isCurrent(slug) ? 'page' : undefined} class={linkClass}>
+              <a
+                href={`/${lang}/${slug}/`}
+                aria-current={isCurrent(slug) ? 'page' : undefined}
+                class="nav-link inline-flex min-h-10 items-center rounded-full px-2 xl:px-3.5"
+              >
                 {t(lang, key)}
               </a>
             </li>
@@ -59,67 +80,85 @@ const linkClass =
       </ul>
     </nav>
 
-    <OpenStatus
-      lang={lang}
-      compact
-      class="order-last -mx-[var(--page-x)] basis-[calc(100%+2*var(--page-x))] border-t-2 border-text px-page py-1.5 text-small lg:order-none lg:mx-0 lg:basis-auto lg:border-0 lg:p-0"
-    />
+    <OpenStatus lang={lang} compact class="relative text-xs sm:text-small lg:max-xl:text-xs" />
 
-    <div class="hidden items-center gap-2 text-small lg:flex">
+    <div class:list={['relative hidden text-small lg:inline-flex', toolsClass]}>
       <LangSwitch lang={lang} short />
-      <ThemeToggle lang={lang} />
+      <ThemeToggle lang={lang} class="rounded-full hover:text-red-text lg:size-9" />
     </div>
 
-    <a href={`/${lang}/shop/cart/`} data-cart-link class="relative inline-flex size-11 items-center justify-center">
+    <a href={`/${lang}/shop/cart/`} data-cart-link class:list={['relative shrink-0', iconButton]}>
       <span class="sr-only">{t(lang, 'header.cart')}</span>
       <svg class="size-6" viewBox="0 0 24 24" aria-hidden="true">
         <path d="M5 8h14l-1.2 13H6.2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
         <path d="M9 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="2"></path>
       </svg>
       <!-- Il numero degli articoli lo scrive lo script qui sotto (lib/shop/cart.ts) -->
-      <span data-cart-count hidden class="absolute top-0 right-0 min-w-5 bg-red-text px-1 text-center text-xs text-bg"></span>
+      <span
+        data-cart-count
+        hidden
+        class="absolute top-0.5 right-0 grid h-5 min-w-5 place-items-center rounded-full bg-red-text px-1 text-xs text-bg"
+      ></span>
     </a>
 
-    <button type="button" popovertarget="site-menu" class="inline-flex size-11 items-center justify-center lg:hidden">
+    <button type="button" popovertarget="site-menu" class:list={['relative shrink-0 lg:hidden', iconButton]}>
       <span class="sr-only">{t(lang, 'nav.open')}</span>
       <svg class="size-6" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2"></path>
+        <path d="M3 7h18M3 12h18M3 17h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
       </svg>
     </button>
   </div>
 </header>
 
-<!-- Menu mobile a tutto schermo. popover: Esc e il pulsante ✕ lo chiudono, senza JS -->
-<div id="site-menu" popover class="m-0 h-dvh max-h-none w-full max-w-none border-0 bg-bg p-4 text-text lg:hidden">
-  <div class="flex justify-end">
-    <button
-      type="button"
-      popovertarget="site-menu"
-      popovertargetaction="hide"
-      class="inline-flex size-11 items-center justify-center"
-    >
-      <span class="sr-only">{t(lang, 'nav.close')}</span>
-      <svg class="size-6" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2"></path>
-      </svg>
-    </button>
-  </div>
-  <nav aria-label={t(lang, 'nav.label')}>
-    <ul class="flex flex-col gap-4 py-6 text-2xl uppercase">
-      {
-        pages.map(({ slug, key }) => (
-          <li>
-            <a href={`/${lang}/${slug}/`} aria-current={isCurrent(slug) ? 'page' : undefined} class={linkClass}>
-              {t(lang, key)}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-  </nav>
-  <div class="flex items-end justify-between border-t-2 border-text pt-6">
-    <LangSwitch lang={lang} />
-    <ThemeToggle lang={lang} />
+<!-- Menu a tutto schermo sotto 1024 px. popover: Esc e il pulsante ✕ lo chiudono, senza JS -->
+<div
+  id="site-menu"
+  popover
+  class="site-menu m-0 h-dvh max-h-none w-full max-w-none overflow-y-auto border-0 bg-bg p-0 text-text lg:hidden"
+>
+  <div class="flex min-h-full flex-col px-page pb-8">
+    <div class="flex h-16 shrink-0 items-center justify-between">
+      <a href={`/${lang}/`} class="inline-flex items-center">
+        <Logo alt={t(lang, 'header.home')} variant="indiano" size={56} class="size-12" />
+      </a>
+      <button type="button" popovertarget="site-menu" popovertargetaction="hide" class={iconButton}>
+        <span class="sr-only">{t(lang, 'nav.close')}</span>
+        <svg class="size-6" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Voci grandi in Yankee Clipper, come un'insegna (scelta di Pietro, 2026-10-19) -->
+    <nav aria-label={t(lang, 'nav.label')} class="pt-6">
+      <ol>
+        {
+          pages.map(({ slug, key }, i) => (
+            <li class="menu-item border-b-2 border-text" style={`--i: ${i}`}>
+              <a
+                href={`/${lang}/${slug}/`}
+                aria-current={isCurrent(slug) ? 'page' : undefined}
+                class="flex items-baseline gap-4 py-3 hover:text-red-text aria-[current=page]:text-red-text"
+              >
+                <span class="w-6 shrink-0 text-small text-red-text tabular-nums" aria-hidden="true">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span class="font-sign text-[clamp(2rem,9vw,3rem)] leading-none uppercase">{t(lang, key)}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+
+    <div class="mt-auto flex flex-col items-start gap-5 pt-10 text-small">
+      <OpenStatus lang={lang} />
+      <Hours lang={lang} />
+      <div class:list={['inline-flex', toolsClass]}>
+        <LangSwitch lang={lang} short />
+        <ThemeToggle lang={lang} class="rounded-full hover:text-red-text" />
+      </div>
+    </div>
   </div>
 </div>
 
@@ -147,6 +186,96 @@ const linkClass =
     </dialog>
   )
 }
+
+<style>
+  /* La capsula sporge di 0.75rem oltre il contenuto, così logo e icone non cambiano
+     posto quando compare. Ombra netta spostata, da adesivo */
+  .capsule {
+    inset-inline: calc(var(--page-x) - 0.75rem);
+    box-shadow: 5px 5px 0 var(--text);
+    opacity: 0;
+    transform: scale(0.97);
+  }
+
+  [data-scrolled] .capsule {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Pillola rossa dietro il link: sulla pagina attiva e al passaggio. Se il mouse è
+     su un altro link, la pillola della pagina attiva si spegne e si accende lì.
+     Testo crema su rosso: 5.01:1 nel tema chiaro, 5.41:1 nello scuro */
+  .nav-link {
+    position: relative;
+    isolation: isolate;
+    transition: color 0.3s;
+  }
+
+  .nav-link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: 9999px;
+    background: var(--red-text);
+    opacity: 0;
+    transform: scale(0.6, 0.4);
+    transition:
+      opacity 0.25s,
+      transform 0.45s cubic-bezier(0.3, 1.4, 0.5, 1);
+  }
+
+  .nav-link:is(:hover, :focus-visible, [aria-current='page']) {
+    color: var(--bg);
+  }
+
+  .nav-link:is(:hover, :focus-visible, [aria-current='page'])::before {
+    opacity: 1;
+    transform: none;
+  }
+
+  .nav-list:has(.nav-link:hover) .nav-link[aria-current='page']:not(:hover) {
+    color: inherit;
+  }
+
+  .nav-list:has(.nav-link:hover) .nav-link[aria-current='page']:not(:hover)::before {
+    opacity: 0;
+    transform: scale(0.6, 0.4);
+  }
+
+  /* Il menu entra dall'alto, le voci arrivano di lato una dopo l'altra */
+  @media (prefers-reduced-motion: no-preference) {
+    .site-menu:popover-open {
+      animation: menu-drop 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .site-menu:popover-open .menu-item {
+      animation: menu-item-in 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+      animation-delay: calc(0.12s + var(--i) * 0.07s);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-link,
+    .nav-link::before {
+      transition: none;
+    }
+  }
+
+  @keyframes menu-drop {
+    from {
+      opacity: 0;
+      transform: translateY(-1.5rem);
+    }
+  }
+
+  @keyframes menu-item-in {
+    from {
+      opacity: 0;
+      transform: translateX(-1.5rem);
+    }
+  }
+</style>
 
 <script>
   import { countItems, loadCart, onCartChange, type Cart } from '../../lib/shop/cart';
@@ -186,7 +315,7 @@ const linkClass =
     });
   }
 
-  // Header più compatto appena si scorre: si anima solo il transform del logo
+  // Scorrendo, la fascia diventa capsula: si animano solo opacity e transform
   const header = document.querySelector<HTMLElement>('[data-header]');
   if (header) {
     const update = () => header.toggleAttribute('data-scrolled', window.scrollY > 8);

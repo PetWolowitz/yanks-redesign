@@ -67,6 +67,7 @@
   "clock.hours": "Täglich {open}–{close}",
   "clock.open": "Geöffnet",
   "clock.takeaway": "Nur zum Mitnehmen",
+  "clock.takeawayShort": "Mitnahme",
   "clock.closed": "Geschlossen",
   "clock.until": "bis {time}",
   "clock.closesIn": "schließt in {minutes} Min.",
