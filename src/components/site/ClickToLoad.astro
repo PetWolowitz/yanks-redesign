@@ -33,7 +33,7 @@ const { src, title, buttonLabel, notice, linkHref, linkLabel, ratio = '16 / 9', 
     <slot />
     <p class="max-w-[45ch] text-small text-muted">{notice}</p>
     <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
-      <button type="button" hidden class="min-h-11 border-3 rounded-full border-text px-4 py-2 uppercase hover:bg-text hover:text-bg">
+      <button type="button" hidden class="btn">
         {buttonLabel}
       </button>
       <a href={linkHref} rel="noopener" class="inline-block py-2 underline underline-offset-4">{linkLabel}</a>
