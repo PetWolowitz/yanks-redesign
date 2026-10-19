@@ -204,7 +204,7 @@
   "checkout.summary": "Je bestelling",
   "checkout.pay": "Verder naar betalen",
   "checkout.wait": "Even geduld",
-  "checkout.turnstile": "In de echte shop draait hier een botcontrole van Cloudflare Turnstile, zonder puzzels en zonder tracking.",
+  "checkout.turnstile": "Cloudflare Turnstile controleert dat je geen bot bent: zonder puzzels en zonder tracking.",
   "checkout.privacy": "We gebruiken je gegevens alleen om deze bestelling te verzenden.",
   "checkout.empty": "Je winkelwagen is leeg, er is niets af te rekenen.",
   "checkout.error.summary": "Controleer de velden hieronder.",

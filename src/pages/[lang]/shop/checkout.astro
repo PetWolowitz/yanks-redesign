@@ -3,7 +3,8 @@
 // stesse regole del server), poi createCheckout: id e token vanno in
 // sessionStorage prima del reindirizzamento, e il token non passa mai da Stripe.
 // Il browser manda solo SKU e quantità: il totale lo calcola il server.
-// Turnstile: nel mock un token finto; quello vero arriva con la Fase 3.
+// Turnstile: nel mock un token finto; nello shop vero il widget di Cloudflare,
+// caricato solo qui (azione "checkout", controllata anche dal server).
 import type { GetStaticPaths } from 'astro';
 import Field from '../../../components/shop/Field.astro';
 import PageIntro from '../../../components/site/PageIntro.astro';
@@ -83,7 +84,11 @@ const legendClass = 'mb-4 font-sign text-h3 uppercase';
             </Field>
           </fieldset>
 
-          <p class="border-2 rounded-2xl border-dashed border-muted px-4 py-3 text-small text-muted">{t(lang, 'checkout.turnstile')}</p>
+          <div class="space-y-3">
+            <p class="text-small text-muted">{t(lang, 'checkout.turnstile')}</p>
+            <!-- Il widget di Turnstile (solo nello shop vero): lo disegna lo script qui sotto -->
+            <div data-turnstile class="min-h-[65px] empty:hidden"></div>
+          </div>
 
           <div class="space-y-4">
             <p class="text-small text-muted">{t(lang, 'checkout.privacy')}</p>
@@ -109,6 +114,7 @@ const legendClass = 'mb-4 font-sign text-h3 uppercase';
 </Base>
 
 <script>
+  import { PUBLIC_SHOP_MODE, PUBLIC_TURNSTILE_SITE_KEY } from 'astro:env/client';
   import type { Lang } from '../../../i18n/locales';
   import { formatPrice } from '../../../lib/format';
   import { shopApi } from '../../../lib/shop/api';
@@ -120,10 +126,21 @@ const legendClass = 'mb-4 font-sign text-h3 uppercase';
   type Messages = Record<'required' | 'tooLong' | 'invalid' | 'email' | 'postalCode' | 'items' | 'outOfStock' | 'summary' | 'unavailable' | 'wait', string>;
   const FIELDS = ['email', 'fullName', 'street', 'postalCode', 'city', 'country'] as const;
   const ORDER_KEY = 'yanks-order';
+  const TURNSTILE_SCRIPT = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+
+  // Il pezzo dell'API di Turnstile che usiamo (developers.cloudflare.com/turnstile)
+  interface Turnstile {
+    render(element: HTMLElement, options: Record<string, unknown>): string;
+    getResponse(widgetId: string): string | undefined;
+    reset(widgetId: string): void;
+  }
+  const turnstile = () => (window as unknown as { turnstile?: Turnstile }).turnstile;
 
   class CheckoutForm extends HTMLElement {
     #messages = {} as Messages;
     #form!: HTMLFormElement;
+    // id del widget Turnstile; null nel mock o finché lo script non è arrivato
+    #widget: string | null = null;
 
     connectedCallback() {
       const lang = this.dataset.lang as Lang;
@@ -170,6 +187,31 @@ const legendClass = 'mb-4 font-sign text-h3 uppercase';
         event.preventDefault();
         void this.submit();
       });
+
+      if (PUBLIC_SHOP_MODE === 'live') this.loadTurnstile(lang);
+    }
+
+    // Script di Cloudflare caricato solo qui, solo nello shop vero (la CSP lo ammette)
+    loadTurnstile(lang: Lang) {
+      const slot = this.querySelector<HTMLElement>('[data-turnstile]')!;
+      const script = document.createElement('script');
+      script.src = TURNSTILE_SCRIPT;
+      script.async = true;
+      script.addEventListener('load', () => {
+        this.#widget =
+          turnstile()?.render(slot, {
+            sitekey: PUBLIC_TURNSTILE_SITE_KEY,
+            action: 'checkout',
+            language: lang,
+            theme: document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light',
+          }) ?? null;
+      });
+      document.head.append(script);
+    }
+
+    turnstileToken(): string {
+      if (PUBLIC_SHOP_MODE !== 'live') return 'mock-turnstile';
+      return (this.#widget !== null && turnstile()?.getResponse(this.#widget)) || '';
     }
 
     request() {
@@ -179,8 +221,8 @@ const legendClass = 'mb-4 font-sign text-h3 uppercase';
         email: value('email'),
         address: { fullName: value('fullName'), street: value('street'), postalCode: value('postalCode'), city: value('city'), country: value('country') },
         items: loadCart(),
-        // Nel mock basta un token finto; il widget vero arriva con la Fase 3
-        turnstileToken: 'mock-turnstile',
+        // Nel mock un token finto; nello shop vero quello del widget
+        turnstileToken: this.turnstileToken(),
       };
     }
 
@@ -230,6 +272,8 @@ const legendClass = 'mb-4 font-sign text-h3 uppercase';
       } catch (error) {
         button.disabled = false;
         button.textContent = label;
+        // Il token di Turnstile vale una volta sola: per riprovare ne serve uno nuovo
+        if (this.#widget !== null) turnstile()?.reset(this.#widget);
         if (error instanceof ShopError && error.code === 'invalid' && error.fields) return this.showErrors(error.fields);
         if (error instanceof ShopError && error.code === 'out_of_stock') return this.alert(this.#messages.outOfStock);
         this.alert(this.#messages.unavailable);

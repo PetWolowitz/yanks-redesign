@@ -28,6 +28,14 @@ export default defineConfig({
         values: ['mock', 'live'],
         default: 'mock',
       }),
+      // Chiave pubblica del widget Turnstile (sta nell'HTML, non è un segreto).
+      // Il valore predefinito è la chiave di prova di Cloudflare, che il server
+      // accetta solo su localhost (turnstile.ts)
+      PUBLIC_TURNSTILE_SITE_KEY: envField.string({
+        context: 'client',
+        access: 'public',
+        default: '1x00000000000000000000AA',
+      }),
     },
   },
   vite: {
