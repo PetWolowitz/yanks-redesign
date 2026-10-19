@@ -119,7 +119,8 @@ export async function handleCheckout(request: Request, env: ShopEnv, deps: Deps 
   if (!validation.ok) return json({ error: 'invalid', fields: validation.errors }, 400);
   const req = validation.value;
 
-  if (!(await verifyTurnstile(deps.fetch, env.TURNSTILE_SECRET_KEY, req.turnstileToken, clientKey(request)))) {
+  const hostname = new URL(request.url).hostname;
+  if (!(await verifyTurnstile(deps.fetch, env.TURNSTILE_SECRET_KEY, req.turnstileToken, clientKey(request), hostname))) {
     return json({ error: 'invalid', fields: { turnstileToken: 'invalid' } }, 400);
   }
 
