@@ -130,7 +130,8 @@ Deciso il 2026-10-01 (dopo due prove, vedi `docs/02`):
    (la "u" e la "ß" minuscole si leggono male). **Mai per testo lungo**. Le cifre
    le disegna Impact (l'8 sembrava uno 0)
 3. **Interfaccia — Martian Mono** (OFL, woff2 locale), `font-ui`: navigazione,
-   pulsanti, etichette, prezzi, orari. Font predefinito del `body`
+   pulsanti, etichette, prezzi, orari. Font predefinito del `body`. Eccezione
+   (2026-10-19): le voci grandi del menu su telefono sono in Yankee Clipper
 4. **Prosa — Literata** (OFL, woff2 locale), `font-prose`: **solo i paragrafi
    lunghi**
 

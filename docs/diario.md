@@ -17,6 +17,29 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-19 — Navbar a capsula
+Fatto:        header nuovo (variante A scelta da Pietro su una pagina di prova):
+              fascia piatta in cima, capsula staccata dai bordi scorrendo;
+              pillola rossa dietro il link attivo e al passaggio; lingue e tema
+              in un'unica pillola; orologio sulla fascia anche su telefono (niente
+              più striscia sotto); menu a tutto schermo con voci in Yankee
+              Clipper numerate 01–05. "Solo asporto" in breve nell'header
+              (clock.takeawayShort: Takeaway, Afhalen, Mitnahme). Controllato
+              con Playwright: 3 lingue × 4 stati (aperto, asporto, chiuso, senza
+              JS) × 9 larghezze, niente esce dalla barra. verify verde, 233 test.
+              Chiavi Stripe (test) e Resend in .dev.vars
+Decisioni:    - voci del menu su telefono in Yankee Clipper: eccezione alla regola
+                "navigazione in Martian Mono" (CLAUDE.md e docs/02)
+              - la pillola non scivola da un link all'altro (servirebbe animare la
+                larghezza): si spegne e si accende, solo opacity e transform
+              - senza JS l'orologio dell'header sparisce sotto 640 px e tra 1024
+                e 1280 px (gli orari restano nel menu e nel footer)
+Problemi:     manca STRIPE_WEBHOOK_SECRET: serve la Stripe CLI (stripe listen),
+              da installare con l'ok di Pietro. "Mitnahme" da far rileggere.
+              La chiave Resend è passata dalla chat: da rigenerare a fine concept
+Prossimo:     PR 2, testi e pulsanti fluidi (variante C approvata)
+Ramo/commit:  design/navbar-capsula
+
 ## 2026-10-02 — Controllo e correzioni per tutte le misure
 Fatto:        controllo automatico su 14 larghezze × 22 pagine, tre lingue, più
               telefono in orizzontale; poi controllo a occhio delle misure dove

@@ -304,14 +304,25 @@ spegne tutto; si animano solo `transform` e `opacity`; senza JS si vede tutto.
 - [ ] Contrasto verificato in entrambi i temi
 
 ## Navigazione (Fase 2A)
-**Desktop** (da 1024 px): logo a sinistra, voci del menu al centro, a destra
-orologio, lingua, tema e carrello. Header fisso, che si rimpicciolisce
-scorrendo. Tra 1024 e 1280 px l'orologio mostra solo icona e stato ("SOLO
-ASPORTO"), senza dettaglio: in tedesco la fascia completa non ci sta.
+**Capsula** (2026-10-19, variante A scelta da Pietro): in cima alla pagina
+l'header è una fascia piatta col bordo sotto; appena si scorre il fondo sparisce
+e compare una capsula staccata dai bordi (sabbia, bordo, ombra netta spostata da
+adesivo). Logo e icone non si spostano: la capsula sporge di 0.75rem oltre il
+contenuto. Si animano solo opacity e transform.
 
-**Mobile** (sotto 1024 px): logo, carrello e ☰ sulla fascia; sotto, una
-striscia sottile a tutta larghezza con l'orologio, sempre visibile. Il ☰ apre
-un menu a tutto schermo con pagine, lingue e tema.
+**Desktop** (da 1024 px): logo a sinistra, voci del menu al centro, a destra
+orologio, lingue e tema in un'unica pillola, carrello. La pagina attiva ha una
+**pillola rossa** dietro il link; al passaggio del mouse la pillola si accende sul
+link puntato e si spegne su quello attivo (solo CSS). Tra 1024 e 1280 px
+l'orologio mostra solo icona e stato, senza dettaglio: in tedesco non ci sta.
+
+**Mobile** (sotto 1024 px): logo, orologio, carrello e ☰ sulla stessa fascia.
+Sotto 640 px l'orologio mostra solo icona e stato ("GEÖFFNET"), dal tablet anche
+il dettaglio. Il ☰ apre un menu a tutto schermo: le voci grandi in **Yankee
+Clipper**, numerate 01–05, che entrano di lato una dopo l'altra; in fondo
+orologio, orari, lingue e tema. Le voci in Yankee Clipper sono un'eccezione alla
+regola "navigazione in Martian Mono", scelta da Pietro il 2026-10-19: sono
+etichette da insegna, corte e in maiuscolo.
 - Il menu mobile funziona **senza JavaScript** (`<details>` o `popover`): il JS
   aggiunge solo le animazioni
 - Il carrello mostra il numero di articoli; senza JS è un link alla pagina
