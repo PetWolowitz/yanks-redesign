@@ -1,7 +1,8 @@
 // Il contratto dello shop: tutto il frontend passa da qui, nessun componente chiama fetch.
 // Due implementazioni della stessa interfaccia, scelte da PUBLIC_SHOP_MODE:
-// mock.ts (dati finti, Fasi 1-3) e http.ts (endpoint veri, dalla Fase 4).
+// mock.ts (dati finti, Fasi 1-3) e live.ts (endpoint veri, dalla Fase 4).
 import { PUBLIC_SHOP_MODE } from 'astro:env/client';
+import { createLiveShopApi } from './live';
 import { createMockShopApi } from './mock';
 import type { CheckoutRequest, CheckoutResponse, OrderStatus, Product } from './types';
 
@@ -15,8 +16,7 @@ export interface ShopApi {
 }
 
 function selectShopApi(): ShopApi {
-  if (PUBLIC_SHOP_MODE === 'mock') return createMockShopApi();
-  throw new Error('PUBLIC_SHOP_MODE=live: http.ts arriva nella Fase 4');
+  return PUBLIC_SHOP_MODE === 'live' ? createLiveShopApi() : createMockShopApi();
 }
 
 export const shopApi: ShopApi = selectShopApi();

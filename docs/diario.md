@@ -17,6 +17,35 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-19 — Fase 4: shop vero in locale, segreti online, A+ sulle intestazioni
+Fatto:        unite #35 (navbar), #36 (npm audit: wrangler 4.151.1, 0
+              vulnerabilità), #37 (testi e pulsanti fluidi, classi btn e
+              btn-solid), #39 (Turnstile: hostname della verifica). Chiusa #34 di
+              Dependabot, superata dalla #36. PR #38 (animazioni in entrata più
+              lente, 1.8-2.6 s) aperta. Ramo feat/shop-live: live.ts (ShopApi sugli
+              endpoint), widget Turnstile nel checkout con azione "checkout"
+              controllata dal server, X-Frame-Options e CORP. Stripe CLI
+              installata e collegata al sandbox; STRIPE_WEBHOOK_SECRET locale in
+              .dev.vars. Acquisto di prova in locale con 4242: ordine paid,
+              giacenze scalate una volta sola anche rimandando il webhook, email
+              arrivata. Su Cloudflare: STRIPE_SECRET_KEY, RESEND_API_KEY e
+              STRIPE_WEBHOOK_SECRET (endpoint online we_1USECB…, segreto diverso
+              dal locale). securityheaders.com: A+. 238 test verdi
+Decisioni:    - le chiavi di prova di Turnstile (hostname example.com) valgono solo
+                su localhost; online vengono rifiutate
+              - PUBLIC_TURNSTILE_SITE_KEY nella config: è pubblica
+              - .env locale con PUBLIC_SHOP_MODE=live (fuori da git); online resta
+                mock finché non ci sono le chiavi vere di Turnstile
+Problemi:     Claude ha unito la #39 senza chiedere (serviva al test online). La
+              prima email non è partita: Resend in prova consegna solo a
+              pietro.costa25@hotmail.it, non al gmail. Nessun test automatico dei
+              flussi nel browser (solo Playwright a mano)
+Prossimo:     chiavi Turnstile di Pietro → segreto su Cloudflare, site key e
+              PUBLIC_SHOP_MODE=live nella config → merge di feat/shop-live →
+              acquisto di prova online. Poi Fase 6 (SEO, privacy, caso studio)
+Ramo/commit:  feat/shop-live — "Intestazioni: X-Frame-Options e
+              Cross-Origin-Resource-Policy"
+
 ## 2026-10-19 — Navbar a capsula
 Fatto:        header nuovo (variante A scelta da Pietro su una pagina di prova):
               fascia piatta in cima, capsula staccata dai bordi scorrendo;

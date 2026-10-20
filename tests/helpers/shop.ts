@@ -65,7 +65,7 @@ export function fakeFetch(answers: { turnstile?: unknown; stripe?: unknown; rese
   const fetcher = (async (input: RequestInfo | URL, init: RequestInit = {}) => {
     const url = String(input);
     calls.push({ url, init });
-    if (url.includes('turnstile')) return Response.json(answers.turnstile ?? { success: true, hostname: new URL(ORIGIN).hostname });
+    if (url.includes('turnstile')) return Response.json(answers.turnstile ?? { success: true, hostname: new URL(ORIGIN).hostname, action: 'checkout' });
     if (url.includes('api.stripe.com')) {
       const body = answers.stripe ?? { id: 'cs_test_123', url: 'https://checkout.stripe.com/c/pay/cs_test_123' };
       return body === 'error' ? new Response('{}', { status: 500 }) : Response.json(body);

@@ -204,7 +204,7 @@
   "checkout.summary": "Your order",
   "checkout.pay": "Continue to payment",
   "checkout.wait": "Please wait",
-  "checkout.turnstile": "In the live shop a bot check by Cloudflare Turnstile runs here, without puzzles and without tracking.",
+  "checkout.turnstile": "Cloudflare Turnstile checks that you are not a bot: no puzzles and no tracking.",
   "checkout.privacy": "We only use your details to ship this order.",
   "checkout.empty": "Your cart is empty, so there is nothing to pay.",
   "checkout.error.summary": "Check the fields below.",

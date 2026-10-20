@@ -112,7 +112,8 @@ describe('POST /api/checkout', () => {
 
   it('Turnstile superato su un altro sito o con una chiave di prova online: niente ordine', async () => {
     const answers = [
-      { success: true, hostname: 'evil.example' },
+      { success: true, hostname: 'evil.example', action: 'checkout' },
+      { success: true, hostname: 'yanks.test', action: 'altro' },
       { success: true },
       // le chiavi di prova di Cloudflare rispondono così: valgono solo in locale
       { success: true, hostname: 'example.com', metadata: { result_with_testing_key: true } },

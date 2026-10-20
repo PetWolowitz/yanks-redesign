@@ -204,7 +204,7 @@
   "checkout.summary": "Deine Bestellung",
   "checkout.pay": "Weiter zur Zahlung",
   "checkout.wait": "Bitte warten",
-  "checkout.turnstile": "Im echten Shop läuft hier eine Bot-Prüfung von Cloudflare Turnstile, ohne Rätsel und ohne Tracking.",
+  "checkout.turnstile": "Cloudflare Turnstile prüft, dass du kein Bot bist: ohne Rätsel und ohne Tracking.",
   "checkout.privacy": "Wir verwenden deine Daten nur, um diese Bestellung zu versenden.",
   "checkout.empty": "Dein Warenkorb ist leer, es gibt nichts zu bezahlen.",
   "checkout.error.summary": "Bitte prüfe die Felder unten.",

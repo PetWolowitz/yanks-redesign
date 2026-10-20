@@ -21,12 +21,21 @@ export default defineConfig({
   env: {
     schema: {
       // Shop su dati finti (mock) o sugli endpoint veri (live). Il valore
-      // predefinito evita di dover creare .env in CI e su Cloudflare
+      // predefinito è quello del sito online, così su Cloudflare non serve .env
       PUBLIC_SHOP_MODE: envField.enum({
         context: 'client',
         access: 'public',
         values: ['mock', 'live'],
-        default: 'mock',
+        default: 'live',
+      }),
+      // Chiave pubblica del widget Turnstile (sta nell'HTML, non è un segreto).
+      // Il valore predefinito è la chiave vera, valida solo sull'hostname online.
+      // In locale .env usa la chiave di prova 1x00000000000000000000AA, che il
+      // server accetta solo su localhost (turnstile.ts)
+      PUBLIC_TURNSTILE_SITE_KEY: envField.string({
+        context: 'client',
+        access: 'public',
+        default: '0x4AAAAAAFdePRXnN1v5V-Am',
       }),
     },
   },

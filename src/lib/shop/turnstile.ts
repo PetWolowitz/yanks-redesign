@@ -11,6 +11,7 @@ const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]']);
 interface SiteverifyResult {
   success?: unknown;
   hostname?: unknown;
+  action?: unknown;
   metadata?: { result_with_testing_key?: unknown };
 }
 
@@ -28,7 +29,8 @@ export async function verifyTurnstile(fetcher: typeof fetch, secret: string, tok
     const result = (await response.json()) as SiteverifyResult;
     if (result.success !== true) return false;
     if (result.metadata?.result_with_testing_key === true) return LOCAL_HOSTS.has(expectedHostname);
-    return result.hostname === expectedHostname;
+    // Il widget del checkout dichiara l'azione "checkout" (checkout.astro)
+    return result.hostname === expectedHostname && result.action === 'checkout';
   } catch {
     return false;
   }
