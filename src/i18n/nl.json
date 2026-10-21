@@ -274,5 +274,9 @@
   "email.subject": "Je bestelling bij Yanks Indian Club ({number})",
   "email.intro": "Bedankt! We hebben je betaling ontvangen. Hieronder staat je bestelling.",
   "email.link": "Je bestelling bekijken:",
-  "email.test": "Dit is een conceptwinkel in testmodus: er is niets afgerekend en er wordt niets verzonden."
+  "email.test": "Dit is een conceptwinkel in testmodus: er is niets afgerekend en er wordt niets verzonden.",
+  "notFound.title": "Pagina niet gevonden",
+  "notFound.text": "Deze pagina bestaat niet, of niet meer. Kies je taal om terug te gaan.",
+  "notFound.home": "Naar de homepage",
+  "notFound.meta": "Deze pagina bestaat niet."
 }

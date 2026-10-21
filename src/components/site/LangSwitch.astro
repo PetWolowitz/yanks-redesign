@@ -3,6 +3,7 @@
 // con lang e hreflang giusti. short: codici NL EN DE (header); altrimenti nomi interi.
 import { languageNames, locales, type Lang } from '../../i18n/locales';
 import { t } from '../../i18n/t';
+import Flag from './Flag.astro';
 import ScatterText from './ScatterText.astro';
 
 interface Props {
@@ -10,19 +11,24 @@ interface Props {
   short?: boolean;
   // lettere che si scompongono al passaggio del mouse (footer)
   scatter?: boolean;
-  // elenco compatto, con la stessa spaziatura degli altri elenchi (footer)
+  // elenco compatto, con la stessa spaziatura degli altri elenchi
   dense?: boolean;
+  // bandiere in fila al posto dei nomi (footer, variante C): il nome resta per i
+  // lettori di schermo e nel title, perché una bandiera indica un Paese, non una lingua
+  flags?: boolean;
   class?: string;
 }
 
-const { lang, short = false, scatter = false, dense = false, class: className } = Astro.props;
+const { lang, short = false, scatter = false, dense = false, flags = false, class: className } = Astro.props;
 
 // /en/menu/ → /nl/menu/: cambia solo il primo segmento, come gli hreflang di Base.astro
-const hrefFor = (l: Lang) => Astro.url.pathname.replace(/^\/[^/]+\//, `/${l}/`);
+// Una pagina senza lingua nell'indirizzo (la 404) porta alla home della lingua
+const hasLang = locales.some((l) => Astro.url.pathname.startsWith(`/${l}/`));
+const hrefFor = (l: Lang) => (hasLang ? Astro.url.pathname.replace(/^\/[^/]+\//, `/${l}/`) : `/${l}/`);
 ---
 
 <nav aria-label={t(lang, 'nav.languages')} class={className}>
-  <ul class:list={['flex', short ? 'gap-0.5' : dense ? 'flex-col gap-1' : 'flex-col gap-2']}>
+  <ul class:list={['flex', short ? 'gap-0.5' : flags ? 'flex-wrap gap-2' : dense ? 'flex-col gap-1' : 'flex-col gap-2']}>
     {
       locales.map((l) => (
         <li>
@@ -31,17 +37,26 @@ const hrefFor = (l: Lang) => Astro.url.pathname.replace(/^\/[^/]+\//, `/${l}/`);
             hreflang={l}
             lang={l}
             aria-current={l === lang ? 'true' : undefined}
+            title={flags ? languageNames[l] : undefined}
             class:list={[
               'inline-flex items-center',
-              short
+              flags
+                ? // bandiera dentro un bersaglio da 44 px; la lingua attiva è cerchiata in rosso
+                  'min-h-11 min-w-11 justify-center rounded-lg aria-[current]:ring-2 aria-[current]:ring-red-text'
+                : short
                 ? // pillole della capsula: la lingua attiva è piena
                   'min-h-11 min-w-11 justify-center rounded-full px-2 uppercase not-aria-[current]:hover:text-red-text aria-[current]:bg-text aria-[current]:text-bg lg:min-h-9 lg:min-w-9 xl:min-w-10'
                 : 'decoration-red-text decoration-[3px] underline-offset-[6px] hover:underline aria-[current]:underline',
-              !short && (dense ? 'py-2.5 lg:py-1' : 'min-h-11'),
+              !short && !flags && (dense ? 'py-2.5 lg:py-1' : 'min-h-11'),
               scatter && 'scatter-host hover:no-underline',
             ]}
           >
-            {short ? (
+            {flags ? (
+              <>
+                <Flag lang={l} />
+                <span class="sr-only">{languageNames[l]}</span>
+              </>
+            ) : short ? (
               <>
                 <span aria-hidden="true">{l}</span>
                 <span class="sr-only">{languageNames[l]}</span>

@@ -274,5 +274,9 @@
   "email.subject": "Your order at Yanks Indian Club ({number})",
   "email.intro": "Thank you! We have received your payment. Your order is below.",
   "email.link": "View your order:",
-  "email.test": "This is a concept shop in test mode: nothing has been charged and nothing will be shipped."
+  "email.test": "This is a concept shop in test mode: nothing has been charged and nothing will be shipped.",
+  "notFound.title": "Page not found",
+  "notFound.text": "This page does not exist, or not anymore. Choose your language to go back.",
+  "notFound.home": "To the homepage",
+  "notFound.meta": "This page does not exist."
 }
