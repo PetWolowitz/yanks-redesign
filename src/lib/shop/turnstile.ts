@@ -29,6 +29,11 @@ function errorCodes(value: unknown): string[] {
   return value.filter((code): code is string => typeof code === 'string' && /^[a-z0-9-]{1,40}$/.test(code)).slice(0, 5);
 }
 
+// Valori arrivati da Cloudflare: nei log solo se hanno la forma attesa
+function safe(value: unknown, pattern: RegExp): string | null {
+  return typeof value === 'string' && pattern.test(value) ? value : null;
+}
+
 // expectedHostname: quello della richiesta al checkout. Il token deve venire da un
 // widget mostrato sul nostro sito, non da un altro sito con la stessa chiave
 export async function verifyTurnstile(fetcher: typeof fetch, secret: string, token: string, ip: string, expectedHostname: string): Promise<boolean> {
@@ -48,7 +53,13 @@ export async function verifyTurnstile(fetcher: typeof fetch, secret: string, tok
     // Il widget del checkout dichiara l'azione "checkout" (checkout.astro)
     const hostnameOk = result.hostname === expectedHostname;
     const actionOk = result.action === 'checkout';
-    return (hostnameOk && actionOk) || reject({ hostnameOk, actionOk });
+    return (
+      (hostnameOk && actionOk) ||
+      reject({
+        hostname: { received: safe(result.hostname, /^[a-z0-9.-]{1,253}$/), expected: expectedHostname },
+        action: { received: safe(result.action, /^[a-z0-9_-]{1,32}$/), expected: 'checkout' },
+      })
+    );
   } catch {
     return reject({ unreachable: true });
   }

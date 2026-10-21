@@ -59,10 +59,15 @@ describe('verifyTurnstile, log del rifiuto', () => {
     expect(line).toContain('"errorCodes":["invalid-input-secret"]');
   });
 
-  it('scrive quale controllo non passa tra hostname e azione', async () => {
-    expect(await logged(answer({ success: true, hostname: 'altro.example', action: 'checkout' }))).toContain('"hostnameOk":false,"actionOk":true');
+  it('scrive hostname e azione ricevuti e attesi', async () => {
+    expect(await logged(answer({ success: true, hostname: 'altro.example', action: 'checkout' }))).toContain(
+      '"hostname":{"received":"altro.example","expected":"yanks.test"},"action":{"received":"checkout","expected":"checkout"}',
+    );
     lines = [];
-    expect(await logged(answer({ success: true, hostname: 'yanks.test', action: 'login' }))).toContain('"hostnameOk":true,"actionOk":false');
+    expect(await logged(answer({ success: true, hostname: 'yanks.test', action: 'login' }))).toContain('"action":{"received":"login","expected":"checkout"}');
+    lines = [];
+    // Un valore strano da Cloudflare non finisce nei log così com'è
+    expect(await logged(answer({ success: true, hostname: '<b>x</b>' }))).toContain('"hostname":{"received":null');
   });
 
   it('chiave di prova online, risposta non ok, Cloudflare irraggiungibile', async () => {

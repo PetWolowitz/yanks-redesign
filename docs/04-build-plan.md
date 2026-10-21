@@ -298,10 +298,9 @@ Leggere `06-shop-architecture.md` prima di iniziare.
       _(2026-10-19: due acquisti con 4242, ordine `paid`, giacenze scalate una
       volta sola anche rimandando il webhook, email arrivata. Resend in prova
       consegna solo a pietro.costa25@hotmail.it)_
-- [x] Stesso test online _(2026-10-21: fatto da Pietro dal suo browser su
-      workers.dev, flusso completo. Da Playwright Turnstile rifiuta il token,
-      come deve con un browser automatico: i test dei flussi con Playwright si
-      fanno in locale, con le chiavi di prova)_
+- [ ] Stesso test online _(2026-10-21: non funziona. /api/checkout risponde
+      400, Turnstile rifiuta il token anche dal browser di Pietro. Aggiunto
+      il log del motivo per capire se è la secret, l'hostname o l'azione)_
 - [x] Il frontend non è cambiato: se è servito toccare un componente, il
       contratto della Fase 1 era incompleto. Annotarlo _(2026-10-19: nessun
       componente toccato per lo shop live; solo il checkout, per il widget
