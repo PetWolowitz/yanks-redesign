@@ -329,20 +329,22 @@ Leggere `08-animazioni-risorse.md` prima.
 
 Scelta e regole in CLAUDE.md (Design definitivo) e docs/02 (Direzione
 definitiva). Una PR per passo, screenshot prima e dopo a 390 e 1440 px nei due
-temi, **ok di Pietro prima del passo successivo**.
-- [ ] Design system in docs/02 e nei token: colori, font, scala, spaziature,
+temi, **ok di Pietro prima del passo successivo**. _(2026-10-21: su richiesta di
+Pietro applicato tutto insieme, un ramo con un commit per tappa e screenshot
+prima/dopo di tutte le pagine in `.playwright-mcp/pagine/`)_
+- [x] Design system in docs/02 e nei token: colori, font, scala, spaziature,
       bordi, pulsanti, card, onde divisorie, foto, animazioni
-- [ ] Pagina "styleguide" interna con tutti i componenti (non nel menu, `noindex`)
-- [ ] Home
-- [ ] Menu
-- [ ] Visit
-- [ ] Shop: catalogo, scheda prodotto, carrello, checkout, ordine
-- [ ] Story
-- [ ] Know before you go
-- [ ] Avviso d'età
-- [ ] 404 con il marchio
-- [ ] Footer: bandiere, icone social, sottolineatura al posto delle lettere che
-      si scompongono
+- [x] Pagina "styleguide" interna con tutti i componenti (non nel menu, `noindex`)
+- [x] Home
+- [x] Menu
+- [x] Visit
+- [x] Shop: catalogo, scheda prodotto, carrello, checkout, ordine
+- [x] Story
+- [x] Know before you go
+- [x] Avviso d'età
+- [x] 404 con il marchio
+- [x] Footer: bandiere, icone social da 32 px; le lettere che si scompongono
+      restano (sottolineatura provata e scartata)
 
 ## Fase 5S — Shop pronto per un locale vero
 

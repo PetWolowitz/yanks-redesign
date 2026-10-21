@@ -7,13 +7,13 @@ alle tre di notte.** Tre parole: caldo, notturno, schietto.
 Struttura contemporanea (bordi netti, blocchi pieni, zero decorazione) che fa da
 cornice a un marchio d'epoca. Il contrasto tra i due è il punto.
 
-## Direzione definitiva: variante C (decisa il 2026-10-21, in applicazione)
+## Direzione definitiva: variante C (decisa e applicata il 2026-10-21)
 Pietro ha confrontato cinque prove della home (attuale; A "Notte al neon", rosso e
 foto in duotono; B "Mare del Nord", verde mare, grana analogica, con Bricolage
 Grotesque o Familjen Grotesk; C) e ha scelto **C: il sito di oggi con palette
 nuova, onde e shop blu**. Le prove erano CSS iniettato con Playwright, senza
-toccare il codice. Le regole qui sotto restano valide **finché una pagina non è
-convertita**; a ogni pagina convertita si riscrive la sezione che la riguarda.
+toccare il codice. **Applicata a tutte le pagine lo stesso giorno**: dove le
+sezioni più sotto (Colori, Spaziatura, Navigazione) dicono altro, vale questa.
 
 | Cosa | Oggi | Variante C |
 |---|---|---|
@@ -24,36 +24,42 @@ convertita**; a ogni pagina convertita si riscrive la sezione che la riguarda.
 | Testi non titoli | scala del 2026-10-21 | un po' più piccoli: prosa 15-17 px, introduzioni 16-18, etichette e pulsanti 12.5-13.5 |
 | Font | quattro ruoli | invariati (Bricolage e Familjen provati e scartati) |
 | Foto | naturali | naturali (duotono e grana provati e scartati) |
-| Footer | nomi delle lingue, scritte social, lettere che si scompongono | bandiere nostre, icone social cliccabili, sottolineatura rossa al passaggio |
+| Footer | nomi delle lingue, scritte social | bandiere nostre, icone social da 32 px; le lettere che si scompongono restano sui link delle pagine (sottolineatura rossa provata e scartata) |
 
-Contrasti misurati nella prova (tutti sopra 4.5:1): testo bianco sul blu 7.43,
-secondario sul blu 6.13; sul fondo chiaro testo 16.48, secondario 6.32, rosso
-5.44. **Da ritarare**: il testo chiaro sull'inchiostro era 14.89:1, sopra il
-tetto di 13:1 che vale per il tema scuro.
+Contrasti misurati (tutti sopra 4.5:1; i valori accanto ai token in
+`tokens.css`): testo bianco sul blu 7.43, secondario sul blu 6.13; sul fondo
+chiaro testo 16.48, secondario 6.32, rosso 5.44. Testo chiaro sull'inchiostro
+`#D9D0C2`: 11.26:1 (nella prova era 14.89, sopra il tetto di 13).
 
 Bandiere: SVG disegnati da noi (Paesi Bassi, Regno Unito per l'inglese,
 Germania), angoli arrotondati, bordo sottile, lingua attiva cerchiata in rosso; il
 nome della lingua resta in `sr-only` e nel `title`.
 
-**Come è costruita** (Fase 5C, passo 1):
-- `tokens.css`: i colori delle sezioni piene (`--ink*`, `--sea*`) e l'onda
-  (`--wave`, `--wave-h`) valgono ovunque, perché sono nomi nuovi. La palette che
-  sostituisce quella di oggi (`--bg`, `--surface`, `--text`…) e la grana valgono
-  **solo con `html[data-design="c"]`**: `Base.astro` lo mette con `design="c"`.
-  Quando si converte la home si spostano su `:root` e `data-design` sparisce
+**Come è costruita**:
+- `tokens.css`: palette C nei due temi, colori delle sezioni piene (`--ink*`,
+  `--sea*`), onda (`--wave`, `--wave-h`) e grana (`--grain`, niente nel tema scuro)
 - `global.css`, nel layer components:
   - `tone-ink`, `tone-sea`, `tone-cream`: sezioni piene che **ridefiniscono i
     token al loro interno**, così card, pulsanti e link seguono il fondo da soli
   - `wave-top`: l'onda del badge come bordo superiore della sezione, nel colore
     della sezione stessa (maschera CSS con un SVG `data:`, ammesso dalla CSP)
   - `card-title`: titoli delle card, Yankee Clipper più piccolo e spaziato
-  - `link-line`: sottolineatura rossa che cresce da sinistra al passaggio (solo
-    `transform`, ferma con il movimento ridotto)
-- misure più piccole dei testi non titoli: per ora regole sotto
-  `html[data-design="c"]`, poi nei token della scala
+- misure più piccole dei testi non titoli direttamente nella scala dei token
+  (`--text-body` 15-17, `--text-lead` 16-18, `--text-small` e `--text-btn`
+  12.5-13.5)
 - componenti: `Flag.astro` (bandiere) e `SocialIcon.astro` (Instagram, Facebook a
   tratto), entrambi decorativi: il nome lo dà il link (`sr-only`)
-- bordo delle card: `border-[1.5px]`
+- bordo di card, campi, riquadri e righe interne: `border-[1.5px]` (pulsanti,
+  header e tubo al neon restano com'erano). L'ombra sopra le sezioni
+  (`edge-shadow`) non c'è più
+- home: hero bianca, foto dell'esterno, "chi siamo" `tone-ink`, menu bianco,
+  shop `tone-sea`, recensioni bianche, mappa `tone-ink`; footer `tone-cream`
+  con l'onda, su tutte le pagine
+- `LangSwitch` con `flags`: bandiere nel footer. Su una pagina senza lingua
+  nell'indirizzo (la 404) il selettore porta alla home della lingua
+- 404 (`src/pages/404.astro`): logo grande e un riquadro per lingua, ognuno col
+  suo `lang`; testi in `notFound.*`, **da far rileggere a Pietro** (nl e de
+  scritti da Claude)
 
 **Styleguide**: `/en/styleguide/` (`src/pages/[lang]/styleguide.astro`), generata
 anche in nl e de solo perché il selettore della lingua porta alla stessa pagina.
@@ -360,8 +366,9 @@ spegne tutto; si animano solo `transform` e `opacity`; senza JS si vede tutto.
   blocco animato non si anima due volte
 - **Aggiunta al carrello**: la foto vola con un arco fino all'icona del carrello,
   il numero salta, il pulsante mostra "✓ Aggiunto" per 1.6 s
-- **Footer**: al passaggio del mouse le lettere dei link si scompongono e tornano
-  a posto quando esce (`ScatterText.astro`, solo CSS)
+- **Footer**: al passaggio del mouse le lettere dei link delle pagine si
+  scompongono e tornano a posto quando esce (`ScatterText.astro`, solo CSS).
+  Bandiere e icone social non hanno lettere, quindi non si scompongono
 - **Cursore**: un punto che inverte i colori, più grande su link e pulsanti, un
   blocco pieno sulle foto. Solo con un mouse vero; nei campi di testo resta il
   cursore di testo; con avviso d'età o menu aperti torna quello di sistema
@@ -402,4 +409,5 @@ etichette da insegna, corte e in maiuscolo.
 - Il carrello mostra il numero di articoli; senza JS è un link alla pagina
   carrello
 
-**Footer**: indirizzo, orari, link alle pagine, lingue, disclaimer del concept.
+**Footer** (variante C): crema con l'onda sopra; indirizzo, orari, link alle
+pagine, bandiere per le lingue, icone social, disclaimer del concept.
