@@ -356,8 +356,12 @@ prima/dopo di tutte le pagine in `.playwright-mcp/pagine/`)_
 - [ ] Pagine legali: condizioni di vendita, diritto di recesso di 14 giorni,
       privacy, spedizioni e resi, dati dell'azienda. Testi da verificare, non
       inventati
-- [ ] Test automatici dei flussi dello shop con Playwright in locale, con le
-      chiavi di prova di Turnstile (mai quelle vere)
+- [x] Test automatici dei flussi dello shop con Playwright _(2026-10-21:
+      `e2e/shop.e2e.ts`, 6 flussi su desktop e telefono, sulla build mock:
+      catalogo senza JS, carrello, errori del checkout, ordine pagato con toast
+      una volta sola, pagina ordine senza ordine, avviso d'età. Anche in CI.
+      Il primo avvio dell'anteprima fallisce la prima richiesta: c'è un
+      riscaldamento in `e2e/warmup.ts`)_
 
 ## Fase 6 — Rifinitura, SEO e sicurezza (4 ore)
 

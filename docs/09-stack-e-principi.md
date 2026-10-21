@@ -101,7 +101,8 @@ Conseguenza: anche se il backend avesse un problema, il sito resta in piedi.
 
 1. **Poche dipendenze.** Lista di partenza: `astro`, `@astrojs/cloudflare`,
    `tailwindcss`, `@tailwindcss/vite`. In sviluppo: `wrangler`, `vitest`,
-   `@astrojs/check`, `typescript`. **`gsap` e `stripe` erano previsti e non sono
+   `@astrojs/check`, `typescript`, `@playwright/test` (dal 2026-10-21, per i test
+   dei flussi dello shop nel browser). **`gsap` e `stripe` erano previsti e non sono
    stati installati**: le animazioni sono in CSS e TypeScript, e Stripe, Turnstile
    e Resend si chiamano con `fetch` (2026-10-02). Ogni pacchetto in più va motivato
 2. **Versioni esatte.** File `.npmrc` con `save-exact=true`: niente aggiornamenti

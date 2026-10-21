@@ -29,3 +29,7 @@ pnpm-debug.log*
 
 # screenshot di Playwright
 .playwright-mcp/
+
+# Playwright: rapporti e tracce dei test
+playwright-report/
+test-results/

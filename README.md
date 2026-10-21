@@ -40,6 +40,7 @@ e Web Animations API, senza librerie. Motivazioni in `docs/09-stack-e-principi.m
 |---|---|
 | `npm run dev` | sito in locale su `localhost:4321` |
 | `npm run verify` | `astro check`, build e test: va verde prima di ogni merge |
+| `npm run test:e2e` | flussi dello shop nel browser (Playwright, build mock): rifà `dist/` in modalità mock |
 | `npm run build` | build in `dist/` |
 | `npm run preview` | anteprima della build |
 

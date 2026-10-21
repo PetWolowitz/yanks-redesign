@@ -44,6 +44,10 @@ Motivazioni complete in `docs/09-stack-e-principi.md`.
 - **Resend** per l'email di conferma, chiamato con `fetch` alla sua API REST
   dall'endpoint del webhook. **Nessun pacchetto npm**
 - **Vitest** per la logica critica, `astro check` e build a ogni push
+- **Playwright Test** (`@playwright/test`, solo sviluppo, approvato da Pietro il
+  2026-10-21) per i flussi dello shop nel browser: `npm run test:e2e`, file
+  `e2e/*.e2e.ts`, sulla build **mock** (niente chiavi, mai quelle vere). Gira
+  anche in CI. Attenzione: rifà la build in `dist/` in modalità mock
 
 ## Ordine di lavoro
 Dettagli in `docs/04-build-plan.md`.
