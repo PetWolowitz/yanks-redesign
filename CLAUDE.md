@@ -275,6 +275,11 @@ con il pulsante "Carica contenuto". Così il sito resta senza banner cookie.
 - Intestazioni di sicurezza in `public/_headers`
 - `localStorage` sempre dentro `try/catch`
 - Segreti solo nelle variabili di Cloudflare; in locale in `.dev.vars`, fuori da git
+- **Mai usare `!` per inserire un segreto** (né `wrangler secret put` dal prompt
+  di Claude Code): i segreti online si caricano dalla dashboard di Cloudflare
+  (Workers → yanks-redesign → Settings → Variables and Secrets), copiandoli col
+  pulsante "Copia" dalla fonte. Deciso il 2026-10-21, dopo una secret Turnstile
+  incollata sbagliata
 - **Nessun dato di pagamento tocca il nostro codice. Nessuna chiave segreta nel
   codice che arriva al browser.**
 

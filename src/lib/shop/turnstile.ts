@@ -44,7 +44,12 @@ export async function verifyTurnstile(fetcher: typeof fetch, secret: string, tok
       body: JSON.stringify({ secret, response: token, remoteip: ip }),
       signal: AbortSignal.timeout(8000),
     });
-    if (!response.ok) return reject({ status: response.status });
+    // Anche con un errore HTTP Cloudflare manda i codici: 400 vuol dire secret
+    // mancante o non valida (invalid-input-secret), utile leggerlo nei log
+    if (!response.ok) {
+      const body = (await response.json().catch(() => ({}))) as SiteverifyResult;
+      return reject({ status: response.status, errorCodes: errorCodes(body['error-codes']) });
+    }
     const result = (await response.json()) as SiteverifyResult;
     if (result.success !== true) return reject({ errorCodes: errorCodes(result['error-codes']) });
     if (result.metadata?.result_with_testing_key === true) {

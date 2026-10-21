@@ -17,31 +17,38 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
-## 2026-10-21 — Fase 4: shop online, checkout ancora bloccato da Turnstile
+## 2026-10-21 — Fase 4 chiusa: shop vero online
 Fatto:        widget Turnstile vero (hostname yanks-redesign.pietro-costa25.
-              workers.dev, modalità Managed); TURNSTILE_SECRET_KEY caricata da
-              Pietro con wrangler. Nella config i predefiniti sono quelli online
-              (PUBLIC_SHOP_MODE=live, site key vera); .env locale usa la chiave
-              di prova. Unite #40 (shop live) e #41 (card dello shop in home:
-              la foto della card più stretta lasciava un vuoto sotto). Log del
-              motivo quando Turnstile rifiuta (codici di Cloudflare, hostname e
-              azione ricevuti e attesi, mai token né secret), con test.
-              Fonte del 1984 in docs/03 (bio Instagram ufficiale)
+              workers.dev, modalità Managed). Nella config i predefiniti sono
+              quelli online (PUBLIC_SHOP_MODE=live, site key vera); .env locale
+              usa la chiave di prova. Unite #40 (shop live), #41 (card dello
+              shop in home: la foto della card più stretta lasciava un vuoto
+              sotto), #42 (log del motivo quando Turnstile rifiuta: codici di
+              Cloudflare, hostname e azione ricevuti e attesi, mai token né
+              secret). Acquisto online fatto da Pietro: Turnstile, Stripe,
+              ordine paid, email arrivata. Ordine locale d0bd0110 passato a paid
+              rimandando l'evento con stripe listen. Fonte del 1984 in docs/03
+              (bio Instagram ufficiale)
 Decisioni:    - nei test la secret Turnstile è quella di prova ufficiale di
                 Cloudflare, mai le chiavi vere
+              - mai inserire segreti con "!" o wrangler dal prompt: si caricano
+                dalla dashboard di Cloudflare (regola in CLAUDE.md)
+              - il carrello si svuota quando l'ordine è paid, non alla
+                creazione: chi abbandona il pagamento non perde il carrello
               - la sola foto "vuota" negli screenshot a pagina intera era
                 loading="lazy", non un bug
-Problemi:     l'acquisto online non parte: /api/checkout risponde 400 perché
-              Turnstile rifiuta il token, sia da Playwright sia dal browser di
-              Pietro. In locale passava perché le chiavi di prova saltano i
-              controlli di hostname e azione. Il server di sviluppo, dopo una
-              modifica ad astro.config.mjs, non caricava più il servizio
-              immagini: risolto riavviandolo. PR #38 ancora aperta
-Prossimo:     leggere il motivo nei log (wrangler tail) mentre Pietro riprova,
-              correggere, chiudere la Fase 4. Poi scala tipografica (ramo
-              design/scala-tipografica, in corso) e varianti dell'identità
-Ramo/commit:  chore/chiusura-fase-4 — "Turnstile: log del motivo del rifiuto,
-              fonte del 1984, diario"
+Problemi:     il checkout online rispondeva 400: la TURNSTILE_SECRET_KEY online
+              era sbagliata (siteverify risponde HTTP 400 solo per secret
+              mancante o non valida); ricaricata da Pietro. In locale passava
+              perché le chiavi di prova saltano i controlli. Da Playwright
+              Turnstile rifiuta comunque (corretto). stripe listen ora vuole
+              --events: i quattro checkout.session.* gestiti dal webhook. Gli
+              "OTS parsing error" in console vengono dal riquadro di Turnstile,
+              non dai nostri font. PR #38 (animazioni lente) ancora aperta
+Prossimo:     unire la scala tipografica (design/scala-tipografica), poi
+              varianti A e B dell'identità da far scegliere a Pietro
+Ramo/commit:  chore/fase-4-chiusa — "Fase 4 chiusa: regola sui segreti, codici
+              di Turnstile anche con HTTP 400"
 
 ## 2026-10-19 — Fase 4: shop vero in locale, segreti online, A+ sulle intestazioni
 Fatto:        unite #35 (navbar), #36 (npm audit: wrangler 4.151.1, 0

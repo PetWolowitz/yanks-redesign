@@ -75,6 +75,11 @@ describe('verifyTurnstile, log del rifiuto', () => {
     lines = [];
     expect(await logged(answer({}, 500))).toContain('"status":500');
     lines = [];
+    // Il caso del 2026-10-21: secret sbagliata, Cloudflare risponde 400 con il codice
+    expect(await logged(answer({ success: false, 'error-codes': ['invalid-input-secret'] }, 400))).toContain(
+      '"status":400,"errorCodes":["invalid-input-secret"]',
+    );
+    lines = [];
     const broken = (async () => {
       throw new Error(`rete ${token}`);
     }) as unknown as typeof fetch;

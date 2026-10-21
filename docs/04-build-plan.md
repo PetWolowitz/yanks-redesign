@@ -298,9 +298,12 @@ Leggere `06-shop-architecture.md` prima di iniziare.
       _(2026-10-19: due acquisti con 4242, ordine `paid`, giacenze scalate una
       volta sola anche rimandando il webhook, email arrivata. Resend in prova
       consegna solo a pietro.costa25@hotmail.it)_
-- [ ] Stesso test online _(2026-10-21: non funziona. /api/checkout risponde
-      400, Turnstile rifiuta il token anche dal browser di Pietro. Aggiunto
-      il log del motivo per capire se è la secret, l'hostname o l'azione)_
+- [x] Stesso test online _(2026-10-21: fatto da Pietro dal suo browser su
+      workers.dev: Turnstile, Stripe, ordine `paid`, email arrivata. Prima
+      falliva con 400 perché la TURNSTILE_SECRET_KEY online era sbagliata:
+      siteverify risponde HTTP 400 solo per secret mancante o non valida.
+      Da Playwright Turnstile rifiuta comunque: i flussi automatici si
+      provano in locale, con le chiavi di prova)_
 - [x] Il frontend non è cambiato: se è servito toccare un componente, il
       contratto della Fase 1 era incompleto. Annotarlo _(2026-10-19: nessun
       componente toccato per lo shop live; solo il checkout, per il widget
