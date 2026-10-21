@@ -276,7 +276,9 @@
   "email.link": "Deine Bestellung ansehen:",
   "email.test": "Dies ist ein Konzept-Shop im Testmodus: Es wurde nichts abgebucht und es wird nichts verschickt.",
   "notFound.title": "Seite nicht gefunden",
-  "notFound.text": "Diese Seite gibt es nicht, oder nicht mehr. Wähle deine Sprache, um zurückzugehen.",
-  "notFound.home": "Zur Startseite",
-  "notFound.meta": "Diese Seite gibt es nicht."
+  "notFound.text": "Diese Seite gibt es nicht oder sie ist umgezogen.",
+  "notFound.home": "Zurück zur Startseite",
+  "notFound.meta": "Diese Seite gibt es nicht.",
+  "order.toast.paid": "Zahlung erhalten: Deine Bestellung ist bestätigt.",
+  "order.toast.close": "Meldung schließen"
 }

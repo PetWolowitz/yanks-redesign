@@ -52,7 +52,8 @@ export function initMotion() {
   const all = [...document.querySelectorAll<HTMLElement>(':is(main, footer) :is(h1, h2, h3)')];
   // Solo titoli di solo testo: quelli con elementi dentro (per esempio un numero
   // d'ordine) restano come sono. "off" li rende subito visibili (global.css)
-  const headings = all.filter((heading) => heading.children.length === 0 && (heading.textContent ?? '').trim() !== '');
+  // data-static: mai animato, visibile da subito (l'h1 della hero, docs/02 Movimento)
+  const headings = all.filter((heading) => !('static' in heading.dataset) && heading.children.length === 0 && (heading.textContent ?? '').trim() !== '');
   for (const heading of all) if (reduce || !headings.includes(heading)) heading.dataset.split = 'off';
   if (reduce) return;
 

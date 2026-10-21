@@ -131,6 +131,17 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
+  /* Spazio prima del footer. Se la pagina finisce con una sezione piena, niente
+     spazio: l'onda del footer scende direttamente sul colore di quella sezione,
+     senza una fascia chiara in mezzo (Pietro, 2026-10-21) */
+  main {
+    padding-bottom: 4rem;
+  }
+
+  main:has(> :is(.tone-ink, .tone-sea, .tone-cream):last-child) {
+    padding-bottom: 0;
+  }
+
   /* I fieldset di base non scendono sotto la larghezza del contenuto */
   fieldset {
     min-width: 0;
@@ -179,7 +190,7 @@
 @media (prefers-reduced-motion: no-preference) {
   /* Titoli in attesa di scripts/motion.ts, solo se il JS c'è (data-js). Se lo
      script non parte, dopo 2.5 s compaiono comunque */
-  html[data-js] :is(main, footer) :is(h1, h2, h3):not([data-split]) {
+  html[data-js] :is(main, footer) :is(h1, h2, h3):not([data-split], [data-static]) {
     opacity: 0;
     animation: show-anyway 0s 2.5s forwards;
   }
@@ -244,6 +255,20 @@
   [data-reveal].is-in {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* Toast della pagina ordine: entra dal basso; con movimento ridotto compare e basta */
+@media (prefers-reduced-motion: no-preference) {
+  .toast:not([hidden]) {
+    animation: toast-in 0.4s ease-out;
+  }
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
   }
 }
 

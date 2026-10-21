@@ -276,7 +276,9 @@
   "email.link": "Je bestelling bekijken:",
   "email.test": "Dit is een conceptwinkel in testmodus: er is niets afgerekend en er wordt niets verzonden.",
   "notFound.title": "Pagina niet gevonden",
-  "notFound.text": "Deze pagina bestaat niet, of niet meer. Kies je taal om terug te gaan.",
-  "notFound.home": "Naar de homepage",
-  "notFound.meta": "Deze pagina bestaat niet."
+  "notFound.text": "Deze pagina bestaat niet of is verhuisd.",
+  "notFound.home": "Terug naar de homepage",
+  "notFound.meta": "Deze pagina bestaat niet.",
+  "order.toast.paid": "Betaling ontvangen: je bestelling is bevestigd.",
+  "order.toast.close": "Melding sluiten"
 }

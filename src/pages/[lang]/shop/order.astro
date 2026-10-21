@@ -28,6 +28,7 @@ const messages = {
   unavailable: t(lang, 'shop.unavailable'),
   copied: t(lang, 'order.link.copied'),
   copyFailed: t(lang, 'order.link.copyFailed'),
+  toast: t(lang, 'order.toast.paid'),
 };
 ---
 
@@ -63,6 +64,20 @@ const messages = {
           </button>
           <p data-copy-status role="status" class="mt-2 min-h-6 text-small"></p>
         </section>
+      </div>
+
+      <!-- Toast a ordine pagato: una volta sola, appena tornati da Stripe. La regione
+           role=status c'è sempre (vuota) e contiene solo la frase: il testo che entra
+           viene annunciato, senza il pallino e senza il pulsante -->
+      <p data-toast-live role="status" aria-live="polite" class="sr-only"></p>
+      <div class="pointer-events-none fixed inset-x-4 top-20 z-50 flex justify-end sm:top-auto sm:bottom-4 sm:left-auto">
+        <div data-toast hidden class="toast pointer-events-auto tone-ink flex max-w-sm items-start gap-3 rounded-2xl border-[1.5px] border-text p-4">
+          <span aria-hidden="true" class="mt-0.5 text-neon-open">●</span>
+          <p data-toast-text aria-hidden="true" class="flex-1 font-prose"></p>
+          <button type="button" data-toast-close aria-label={t(lang, 'order.toast.close')} class="-m-2 grid size-11 shrink-0 place-items-center rounded-full hover:text-red-text">
+            <span aria-hidden="true">✕</span>
+          </button>
+        </div>
       </div>
     </order-status>
   </main>
@@ -114,6 +129,23 @@ const messages = {
       this.querySelector('[data-message]')!.textContent = text;
     }
 
+    // Toast di conferma: si chiude da solo dopo 6 s o con la X
+    showToast() {
+      const toast = this.querySelector<HTMLElement>('[data-toast]')!;
+      const texts = [toast.querySelector('[data-toast-text]')!, this.querySelector('[data-toast-live]')!];
+      for (const el of texts) el.textContent = this.#messages.toast!;
+      toast.hidden = false;
+      const hide = () => {
+        toast.hidden = true;
+        for (const el of texts) el.textContent = '';
+      };
+      const timer = window.setTimeout(hide, 6000);
+      toast.querySelector('[data-toast-close]')!.addEventListener('click', () => {
+        window.clearTimeout(timer);
+        hide();
+      }, { once: true });
+    }
+
     async check(access: OrderAccess, attempt: number, justPaid: boolean) {
       let order: OrderStatus;
       try {
@@ -132,10 +164,12 @@ const messages = {
       }
       this.say(this.#messages[order.status]!);
 
-      // Pagato appena ora in questa scheda: il carrello si svuota, una volta sola
+      // Pagato appena ora in questa scheda: il carrello si svuota e compare il toast,
+      // una volta sola (ricaricando la pagina la chiave è già salvata)
       if (order.status === 'paid' && justPaid && storage()?.getItem(CLEARED_KEY) !== order.id) {
         saveCart([]);
         storage()?.setItem(CLEARED_KEY, order.id);
+        this.showToast();
       }
     }
 

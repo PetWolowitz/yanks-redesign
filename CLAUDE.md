@@ -157,12 +157,20 @@ componenti in docs/02; pagina di riferimento: `/en/styleguide/` (noindex).
   `card-title`, più piccoli e spaziati (Yankee Clipper ha un solo peso). L'ombra
   piena al passaggio resta. Pulsanti (`btn`), header e tubo al neon invariati
 - **Foto senza filtri** (duotono e grana provati e scartati)
-- **Footer**: bandiere disegnate da noi al posto dei nomi delle lingue (il nome
-  resta per i lettori di schermo: una bandiera indica un Paese, non una lingua);
-  icone da 32 px (bersaglio da 48) al posto delle scritte Facebook e Instagram.
+- **Footer**: lingue con il nome nella loro lingua (Nederlands, English,
+  Deutsch; le bandiere sono state provate e tolte il 2026-10-21); icone da 32 px (bersaglio da 48) al posto delle scritte Facebook e Instagram.
   Sui link delle pagine **restano le lettere che si scompongono** (Pietro,
   2026-10-21: la sottolineatura rossa è stata provata e scartata)
-- **404** con il marchio, in tutte e tre le lingue (`src/pages/404.astro`)
+- **404** con il marchio, in tutte e tre le lingue (`src/pages/404.astro`): la
+  vede chi apre un indirizzo che non esiste, non compare se il sito è spento
+- **Onde senza fasce in mezzo**: sempre colore della sezione sopra → onda →
+  sezione sotto. Se la pagina finisce con una sezione piena, il footer ci scende
+  sopra direttamente (niente spazio chiaro tra le due)
+- **Toast a ordine pagato** (pagina ordine): una volta sola, appena tornati da
+  Stripe; si chiude da solo dopo 6 s o con la X; `role="status"`
+- **L'h1 della hero è visibile subito** (`data-static`): nessuna animazione
+  d'ingresso. Gli altri tempi in docs/02 (Movimento); la PR #38 con i tempi più
+  lenti è stata chiusa
 
 ## Tipografia — quattro ruoli
 Token in `tokens.css`, dettagli in `docs/02-design-system.md`.
