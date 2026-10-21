@@ -17,6 +17,32 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-21 — Fase 4: shop online, checkout ancora bloccato da Turnstile
+Fatto:        widget Turnstile vero (hostname yanks-redesign.pietro-costa25.
+              workers.dev, modalità Managed); TURNSTILE_SECRET_KEY caricata da
+              Pietro con wrangler. Nella config i predefiniti sono quelli online
+              (PUBLIC_SHOP_MODE=live, site key vera); .env locale usa la chiave
+              di prova. Unite #40 (shop live) e #41 (card dello shop in home:
+              la foto della card più stretta lasciava un vuoto sotto). Log del
+              motivo quando Turnstile rifiuta (codici di Cloudflare, hostname e
+              azione ricevuti e attesi, mai token né secret), con test.
+              Fonte del 1984 in docs/03 (bio Instagram ufficiale)
+Decisioni:    - nei test la secret Turnstile è quella di prova ufficiale di
+                Cloudflare, mai le chiavi vere
+              - la sola foto "vuota" negli screenshot a pagina intera era
+                loading="lazy", non un bug
+Problemi:     l'acquisto online non parte: /api/checkout risponde 400 perché
+              Turnstile rifiuta il token, sia da Playwright sia dal browser di
+              Pietro. In locale passava perché le chiavi di prova saltano i
+              controlli di hostname e azione. Il server di sviluppo, dopo una
+              modifica ad astro.config.mjs, non caricava più il servizio
+              immagini: risolto riavviandolo. PR #38 ancora aperta
+Prossimo:     leggere il motivo nei log (wrangler tail) mentre Pietro riprova,
+              correggere, chiudere la Fase 4. Poi scala tipografica (ramo
+              design/scala-tipografica, in corso) e varianti dell'identità
+Ramo/commit:  chore/chiusura-fase-4 — "Turnstile: log del motivo del rifiuto,
+              fonte del 1984, diario"
+
 ## 2026-10-19 — Fase 4: shop vero in locale, segreti online, A+ sulle intestazioni
 Fatto:        unite #35 (navbar), #36 (npm audit: wrangler 4.151.1, 0
               vulnerabilità), #37 (testi e pulsanti fluidi, classi btn e

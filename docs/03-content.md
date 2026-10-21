@@ -22,7 +22,7 @@ export const venue = {
     dineInUntil: "02:00", // dopo quest'ora solo asporto
     close: "02:45",
   },
-  founded: 1984,          // 2026-10-01: ricamo "1984" sul cappellino del merch (cap/2.jpg), scelto da Pietro
+  founded: 1984,          // ricamo "1984" sul cappellino del merch (cap/2.jpg); confermato il 2026-10-21 dalla bio Instagram ufficiale (@yanksindianclub: "SINCE 1984")
   companyFounded: 1995,   // registrazione societaria
   social: {
     facebook: "https://www.facebook.com/yankscoffeeshop",
@@ -275,7 +275,8 @@ Dal sito originale, da riscrivere più diretto e mettere in una pagina visibile:
 - [x] Pagina Story (2026-10-01). **Anno di apertura: 1984**, dal ricamo sul
       cappellino del merch (src/assets/shop/cap/2.jpg); scelto da Pietro il
       2026-10-01 ("usa le fonti del merch"). Prima era 1989, letto male dalla
-      stessa foto. Il testo di our-story (recuperato il 2026-09-28) è quasi tutto
+      stessa foto. **Confermato il 2026-10-21** dalla bio Instagram ufficiale
+      (@yanksindianclub: "SINCE 1984", "OPEN DAILY 8:00 AM - 2:45 AM"). Il testo di our-story (recuperato il 2026-09-28) è quasi tutto
       promozionale e superato: non si usa. La pagina è una cronologia con soli
       fatti (apertura, registrazione 1995, il motto sul cappellino, oggi al
       Dorpsplein 2), anni presi da venue.ts

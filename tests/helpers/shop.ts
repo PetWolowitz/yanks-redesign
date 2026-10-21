@@ -13,7 +13,8 @@ export const SECRETS = {
   ORDER_TOKEN_SECRET: 'segreto-di-prova-0123456789abcdefghijklmnop',
   STRIPE_SECRET_KEY: 'sk_test_finto',
   STRIPE_WEBHOOK_SECRET: 'whsec_finto_0123456789',
-  TURNSTILE_SECRET_KEY: 'turnstile-finto',
+  // Secret di prova ufficiale di Cloudflare (passa sempre): mai le chiavi vere nei test
+  TURNSTILE_SECRET_KEY: '1x0000000000000000000000000000000AA',
   RESEND_API_KEY: 're_finto',
   EMAIL_FROM: 'Yanks concept <onboarding@resend.dev>',
 };
