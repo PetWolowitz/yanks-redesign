@@ -45,7 +45,9 @@ const limited = merch.filter((item) => item.limited !== null);
                 href={`/${lang}/shop/${item.slug}/`}
                 class="group flex h-full flex-col overflow-hidden rounded-2xl border-3 border-text bg-bg transition duration-300 ease-out hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0_var(--color-text)] motion-reduce:transition-none motion-reduce:hover:translate-x-0 motion-reduce:hover:translate-y-0"
               >
-                <span class="relative block overflow-hidden border-b-3 border-text">
+                <!-- flex-1 e h-full: la card più stretta allunga la foto fino
+                     all'altezza della vicina, invece di lasciare un vuoto sotto -->
+                <span class="relative block flex-1 overflow-hidden border-b-3 border-text">
                   <Image
                     src={productImage(item.slug)}
                     alt=""
@@ -53,13 +55,13 @@ const limited = merch.filter((item) => item.limited !== null);
                     sizes="(min-width: 1024px) 50vw, 100vw"
                     format="webp"
                     loading="lazy"
-                    class="aspect-[16/10] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                    class="aspect-[16/10] h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                   />
                   <span class="absolute bottom-4 left-4 rounded-full bg-neon-board px-5 py-2 font-sign text-h2 leading-none text-gold" aria-hidden="true">
                     1/{item.limited}
                   </span>
                 </span>
-                <span class="flex flex-1 flex-wrap items-end justify-between gap-4 p-5">
+                <span class="flex flex-wrap items-end justify-between gap-4 p-5">
                   <span>
                     <span class="block font-sign text-h3 uppercase">{name}</span>
                     <span class="text-small text-muted">{t(lang, 'home.shop.pieces', { count: String(item.limited) })}</span>
