@@ -25,7 +25,7 @@ const { src, title, buttonLabel, notice, linkHref, linkLabel, ratio = '16 / 9', 
 <click-to-load
   data-src={src}
   data-title={title}
-  class:list={['relative block border-3 border-text bg-surface', !square && 'rounded-2xl', className]}
+  class:list={['relative block border-[1.5px] border-text bg-surface', !square && 'rounded-2xl', className]}
   style={`aspect-ratio: ${ratio}`}
 >
   <!-- min-h-full: se il testo è più alto della proporzione (telefoni stretti) il riquadro si allunga invece di farlo uscire -->
