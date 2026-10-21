@@ -7,7 +7,7 @@ da Yanks Indian Club.
 
 **Online**: https://yanks-redesign.pietro-costa25.workers.dev (nl, en, de)
 
-## Stato (2026-10-01)
+## Stato (2026-10-21)
 
 | Fase | Stato |
 |---|---|
@@ -15,10 +15,13 @@ da Yanks Indian Club.
 | 1 · Fondamenta: stile, lingue, dati, contratto dello shop | fatta |
 | 2A · Sito: header, footer, home, Visit, Menu, Know before you go | fatta, con Story e video dell'hero; mancano le recensioni video (servono i reel) |
 | 2S · Shop sui dati finti: catalogo, scheda, carrello, checkout, ordine | fatta, compreso il pannello laterale del carrello |
-| 3 · Backend dello shop: D1, Stripe, Turnstile, Resend | da fare |
-| 4 · Collegamento mock → live | da fare |
+| 3 · Backend dello shop: D1, Stripe, Turnstile, Resend | fatta |
+| 4 · Collegamento mock → live | fatta: shop vero online, in modalità test, acquisto completo verificato |
 | 5 · Animazioni | in parte: titoli, blocchi, cursore, carrello, footer. Mancano nastro con l'orario e sezioni che si incastrano |
-| 6 · Rifinitura, SEO, sicurezza | in parte: intestazioni di sicurezza e CSP con hash attive. Mancano Lighthouse, JSON-LD, sitemap, Open Graph, informativa privacy |
+| 5C · Design definitivo, variante C | deciso il 2026-10-21, da applicare pagina per pagina |
+| 5S · Shop pronto per un locale (iDEAL, email al negozio, pagine legali, test dei flussi) | da fare |
+| 6 · Rifinitura, SEO, sicurezza | in parte: intestazioni A+ e CSP con hash. Mancano Lighthouse, JSON-LD, sitemap, Open Graph, informativa privacy |
+| 6P · Proposta al locale (email e documento NL/EN) | da fare, per ultima |
 | 7 · Altre lingue (it, fr, es) | da fare, servono traduzioni rilette |
 
 Dettaglio fase per fase in `docs/04-build-plan.md`, cronologia in `docs/diario.md`.
@@ -27,7 +30,8 @@ Dettaglio fase per fase in `docs/04-build-plan.md`, cronologia in `docs/diario.m
 
 Astro 7 con TypeScript strict, pagine tutte statiche (88) · Tailwind CSS v4 (token in
 CSS, niente config) · nessun framework UI: TypeScript e custom element ·
-Cloudflare Workers · Vitest · deploy da GitHub. Animazioni in CSS, `IntersectionObserver`
+Cloudflare Workers e D1 · Stripe Checkout, Turnstile e Resend chiamati con `fetch`, senza
+pacchetti · Vitest · deploy da GitHub. Animazioni in CSS, `IntersectionObserver`
 e Web Animations API, senza librerie. Motivazioni in `docs/09-stack-e-principi.md`.
 
 ## Comandi
@@ -48,7 +52,7 @@ src/
   components/     site/ (header, footer, logo…), home/, shop/
   data/           venue.ts, menu.ts, merch.ts, reviews.ts, pages.ts
   i18n/           nl.json, en.json, de.json, t.ts
-  lib/            open-status.ts, format.ts, shop/ (contratto, mock, validazione, carrello)
+  lib/            open-status.ts, format.ts, shop/ (contratto, mock e live, validazione, carrello, endpoint)
   pages/[lang]/   le pagine, una per lingua
   scripts/        animazioni, cursore, script del tema nell'<head>
   styles/         tokens.css, fonts.css, global.css

@@ -274,8 +274,9 @@ Leggere `06-shop-architecture.md` prima di iniziare.
 - [x] Webhook di Stripe verso `/api/stripe-webhook`; in locale con Stripe CLI
       _(2026-10-19: endpoint online `we_1USECB…` con 4 eventi, segreto diverso da
       quello locale; in locale `stripe listen --forward-to`)_
-- [ ] Sito Turnstile creato, chiavi nei segreti _(2026-10-19: widget e controllo
-      di hostname e azione fatti; mancano le chiavi vere di Pietro)_
+- [x] Sito Turnstile creato, chiavi nei segreti _(2026-10-21: widget Managed su
+      yanks-redesign.pietro-costa25.workers.dev, site key nella config, secret
+      nei segreti di Cloudflare; log del motivo di ogni rifiuto)_
 - [x] Account Resend, `RESEND_API_KEY` nei segreti e in `.dev.vars`,
       `EMAIL_FROM=onboarding@resend.dev` (modalità di prova)
 - [x] `ORDER_TOKEN_SECRET` generato (comando in `06-shop-architecture.md`),
@@ -315,13 +316,44 @@ Leggere `06-shop-architecture.md` prima di iniziare.
 
 Leggere `08-animazioni-risorse.md` prima.
 - [x] Titoli sfalsati (lo script Indian per parola, non per lettera): fatti senza
-      SplitText, entrata laterale e neon che si accende (2026-10-01)
+      SplitText, entrata laterale (2026-10-01; il neon che si accendeva sui titoli
+      è stato tolto lo stesso giorno)
 - [x] Blocchi che salgono in vista, volo nel carrello, lettere del footer, freccia
       per tornare su (2026-09-29)
 - [ ] Nastro con l'orario, con pulsante di pausa
 - [x] Cursore custom, spento su touch
 - [ ] Sezioni che si incastrano con ScrollTrigger
 - [x] Tutto spento con `prefers-reduced-motion`
+
+## Fase 5C — Design definitivo, variante C (deciso il 2026-10-21)
+
+Scelta e regole in CLAUDE.md (Design definitivo) e docs/02 (Direzione
+definitiva). Una PR per passo, screenshot prima e dopo a 390 e 1440 px nei due
+temi, **ok di Pietro prima del passo successivo**.
+- [ ] Design system in docs/02 e nei token: colori, font, scala, spaziature,
+      bordi, pulsanti, card, onde divisorie, foto, animazioni
+- [ ] Pagina "styleguide" interna con tutti i componenti (non nel menu, `noindex`)
+- [ ] Home
+- [ ] Menu
+- [ ] Visit
+- [ ] Shop: catalogo, scheda prodotto, carrello, checkout, ordine
+- [ ] Story
+- [ ] Know before you go
+- [ ] Avviso d'età
+- [ ] 404 con il marchio
+- [ ] Footer: bandiere, icone social, sottolineatura al posto delle lettere che
+      si scompongono
+
+## Fase 5S — Shop pronto per un locale vero
+
+- [ ] iDEAL (e Bancontact): attivarli nella dashboard Stripe in modalità test e
+      provare un acquisto; il checkout non fissa i metodi di pagamento
+- [ ] Email al negozio a ogni ordine pagato (dal webhook, come quella al cliente)
+- [ ] Pagine legali: condizioni di vendita, diritto di recesso di 14 giorni,
+      privacy, spedizioni e resi, dati dell'azienda. Testi da verificare, non
+      inventati
+- [ ] Test automatici dei flussi dello shop con Playwright in locale, con le
+      chiavi di prova di Turnstile (mai quelle vere)
 
 ## Fase 6 — Rifinitura, SEO e sicurezza (4 ore)
 
@@ -340,6 +372,18 @@ Leggere `08-animazioni-risorse.md` prima.
 - [ ] Informativa privacy e condizioni di vendita
 - [ ] README con il caso studio _(README del progetto scritto il 2026-10-01; il
       caso studio vero va in docs/05)_
+
+- [ ] Revisione completa (coerenza, due temi, telefono, contrasti AA, movimento
+      ridotto), poi in CLAUDE.md: design congelato
+
+## Fase 6P — Proposta al locale
+
+- [ ] Email al locale con il link di prova
+- [ ] Documento in olandese e inglese: cosa è stato fatto, costi di gestione dello
+      shop rispetto a Shopify (prezzi verificati sul web al momento), offerta
+      libera oppure regalo. Testi riletti da Pietro prima dell'invio
+- [ ] Prima di un uso vero: licenze commerciali di Indian e Yankee Clipper,
+      dominio del locale verificato su Resend, account Stripe del locale
 
 ## Fase 7 — Altre lingue
 

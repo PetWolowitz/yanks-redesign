@@ -393,10 +393,46 @@ export interface ShopApi {
 Due implementazioni della stessa interfaccia:
 - `mock.ts` — legge `merch.ts`, simula giacenze e pagamento. Serve per costruire
   e provare tutto il frontend subito
-- `http.ts` — chiama gli endpoint veri in `/api/*`
+- `live.ts` — chiama gli endpoint veri in `/api/*` (`http.ts` contiene invece gli
+  aiuti comuni degli endpoint: risposte JSON, intestazioni, `clientKey`)
 
 Quale si usa lo decide `PUBLIC_SHOP_MODE` (`mock` oppure `live`). Il giorno del
-collegamento si cambia quella variabile e basta.
+collegamento si cambia quella variabile e basta. **Dal 2026-10-21 il predefinito
+in `astro.config.mjs` è `live`**, con la site key vera di Turnstile; il `.env`
+locale (fuori da git) usa la site key di prova `1x00000000000000000000AA`.
+
+## Shop vero online (2026-10-21)
+- Acquisto completo verificato da Pietro su workers.dev: Turnstile, Stripe,
+  ordine `paid`, email di conferma
+- **`siteverify` risponde HTTP 400 solo per una secret mancante o non valida**
+  (`missing-input-secret`, `invalid-input-secret`); con una secret valida e un
+  token sbagliato risponde 200. Il log del rifiuto (`turnstile.ts`) scrive lo
+  status, i codici di Cloudflare e hostname e azione ricevuti e attesi, mai token
+  né secret. Il primo 400 online era una secret incollata sbagliata
+- Da un browser automatico (Playwright) Turnstile rifiuta il token online: è
+  giusto. I flussi automatici si provano in locale con le chiavi di prova
+- I segreti si caricano dalla dashboard di Cloudflare, mai con `!` dal prompt
+  (regola in CLAUDE.md)
+- In locale il webhook arriva con la Stripe CLI, che ora vuole l'elenco degli
+  eventi:
+  `stripe listen --events checkout.session.completed,checkout.session.async_payment_succeeded,checkout.session.async_payment_failed,checkout.session.expired --forward-to localhost:4321/api/stripe-webhook`.
+  Un evento perso si rimanda con `stripe events resend <evt_…>`
+- Gli eventi di prova arrivano anche all'endpoint online: un ordine creato in
+  locale lì non esiste e il webhook online risponde comunque 200
+- Il carrello si svuota quando la pagina ordine vede l'ordine `paid`, non alla
+  creazione: chi abbandona il pagamento su Stripe non perde il carrello
+
+## Prima di uno shop vero (per un locale)
+- iDEAL e Bancontact attivi nella dashboard Stripe del locale
+- email al negozio a ogni ordine pagato
+- pagine legali: condizioni di vendita, recesso di 14 giorni, privacy,
+  spedizioni e resi, dati dell'azienda
+- account Stripe del locale (verifica aziendale), dominio del locale verificato
+  su Resend al posto di `onboarding@resend.dev`
+- dominio proprio con una regola di rate limiting nel pannello Cloudflare
+- licenze commerciali di Indian e Yankee Clipper
+- la giacenza oggi non si prenota al checkout: con pezzi numerati (1/50, 1/250)
+  valutare una prenotazione a tempo
 
 Regole che tengono in piedi il contratto:
 - **Nessun componente chiama `fetch` direttamente.** Tutto passa da `ShopApi`
