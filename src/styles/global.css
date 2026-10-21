@@ -55,6 +55,110 @@
     background-color: var(--bg);
     color: var(--text);
   }
+
+  /* Variante C (docs/02). Sezioni piene: ridefiniscono i token al loro interno,
+     così card, pulsanti e testi seguono il fondo della sezione da soli */
+  .tone-ink,
+  .tone-sea,
+  .tone-cream {
+    background-color: var(--bg);
+    color: var(--text);
+  }
+
+  .tone-ink {
+    --bg: var(--ink);
+    --surface: var(--ink-surface);
+    --text: var(--ink-text);
+    --muted: var(--ink-muted);
+    --red: var(--ink-accent);
+    --red-text: var(--ink-accent);
+    --matte: var(--ink-text);
+  }
+
+  .tone-sea {
+    --bg: var(--sea);
+    --surface: var(--sea-surface);
+    --text: var(--sea-text);
+    --muted: var(--sea-muted);
+    --red: var(--sea-text);
+    --red-text: var(--sea-text);
+    --matte: var(--sea-text);
+  }
+
+  .tone-cream {
+    --bg: var(--surface);
+  }
+
+  /* Le onde del badge: bordo superiore ondulato, nel colore della sezione stessa,
+     che si sovrappone al fondo di quella prima. Su una sezione senza tono l'onda
+     ha il colore del fondo pagina */
+  .wave-top {
+    position: relative;
+  }
+
+  .wave-top::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: calc(var(--wave-h) * -1 + 1px);
+    height: var(--wave-h);
+    background-color: var(--bg);
+    mask: var(--wave) repeat-x left bottom / 120px var(--wave-h);
+    pointer-events: none;
+  }
+
+  /* Titoli delle card: Yankee Clipper ha un solo peso, quindi più piccoli e
+     più spaziati per alleggerirli (Pietro, 2026-10-21) */
+  .card-title {
+    font-family: var(--font-sign);
+    font-size: clamp(0.95rem, 0.9rem + 0.3vw, 1.15rem);
+    letter-spacing: 0.04em;
+    line-height: 1.15;
+    text-transform: uppercase;
+  }
+
+  /* Link con sottolineatura rossa che compare al passaggio (al posto delle
+     lettere che si scompongono). Si anima solo transform */
+  .link-line {
+    position: relative;
+    text-decoration: none;
+  }
+
+  .link-line::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: -0.2em;
+    height: 2px;
+    background-color: var(--red-text);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  .link-line:is(:hover, :focus-visible, [aria-current])::after {
+    transform: scaleX(1);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .link-line::after {
+      transition: transform 0.35s ease-out;
+    }
+  }
+}
+
+/* Variante C, misure dei testi che non sono titoli: un po' più piccole. Qui solo
+   con html[data-design="c"]; quando si converte la home passano nei token */
+:root[data-design="c"] body {
+  font-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1.0625rem);
+  background-image: var(--grain);
+}
+
+:root[data-design="c"] .text-lead {
+  font-size: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+}
+
+:root[data-design="c"] :is(.text-small, .btn, .btn-solid) {
+  font-size: clamp(0.78rem, 0.75rem + 0.1vw, 0.84rem);
 }
 
 /* Ruoli dei font (docs/02): l'interfaccia è Martian Mono, i paragrafi lunghi

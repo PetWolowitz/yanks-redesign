@@ -12,24 +12,36 @@ interface Props {
   lang: Lang;
   title: string;
   description: string;
+  // 'c': la palette della variante C (docs/02), finché non passa su :root
+  design?: 'c';
+  // pagine interne (styleguide): non indicizzate, senza link alle altre lingue
+  noindex?: boolean;
 }
 
-const { lang, title, description } = Astro.props;
+const { lang, title, description, design, noindex = false } = Astro.props;
 
 // Stessa pagina nelle altre lingue: cambia solo il primo segmento (/en/… → /nl/…)
 const urlFor = (l: Lang) => new URL(Astro.url.pathname.replace(/^\/[^/]+\//, `/${l}/`), Astro.site).href;
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang={lang} data-design={design}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={urlFor(lang)} />
-    {locales.map((l) => <link rel="alternate" hreflang={l} href={urlFor(l)} />)}
-    <link rel="alternate" hreflang="x-default" href={urlFor(defaultLang)} />
+    {
+      noindex ? (
+        <meta name="robots" content="noindex, nofollow" />
+      ) : (
+        <>
+          <link rel="canonical" href={urlFor(lang)} />
+          {locales.map((l) => <link rel="alternate" hreflang={l} href={urlFor(l)} />)}
+          <link rel="alternate" hreflang="x-default" href={urlFor(defaultLang)} />
+        </>
+      )
+    }
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preload" href="/fonts/martian-mono/martian-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />

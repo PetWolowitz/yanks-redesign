@@ -48,6 +48,64 @@
   --matte: var(--text);
 }
 
+/* ---------------------------------------------------------------------------
+   Variante C (decisa il 2026-10-21, docs/02 Direzione definitiva).
+   I colori delle sezioni piene (inchiostro e blu Mare del Nord) valgono ovunque:
+   sono nomi nuovi, li usano solo le classi tone-* di global.css. La palette che
+   sostituisce quella di oggi vale per ora solo con html[data-design="c"]
+   (la styleguide); si sposta su :root quando si converte la home.
+   Contrasti misurati: docs/02
+   --------------------------------------------------------------------------- */
+:root {
+  --ink: #1C1B1A;
+  --ink-surface: #262422;
+  --ink-text: #D9D0C2;   /* 11.26 su ink, 10.13 su ink-surface: sotto il tetto di 13 */
+  --ink-muted: #A89F93;  /* 6.59 · 5.93 */
+  --ink-accent: #E58A76; /* 6.74 · 6.06 */
+  --sea: #34566F;        /* blu Mare del Nord: sezione shop */
+  --sea-surface: #2C4A60;
+  --sea-text: #FBFAF7;   /* 7.43 · 8.92 */
+  --sea-muted: #DCE6EE;  /* 6.13 · 7.36 */
+  /* Onda del badge, un periodo: si ripete in orizzontale (classe wave-top) */
+  --wave-h: 18px;
+  --wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 18' preserveAspectRatio='none'%3E%3Cpath d='M0 10 C 20 0, 40 0, 60 10 S 100 20, 120 10 V18 H0 Z'/%3E%3C/svg%3E");
+}
+
+:root[data-theme="dark"] {
+  --ink: #141311;
+  --ink-surface: #1E1C1A;
+  --ink-text: #D9D0C2;   /* 12.16 · 11.12 */
+  --ink-muted: #A89F93;  /* 7.11 */
+  --sea: #2C4A60;
+  --sea-surface: #253F52;
+  --sea-text: #EDE7DD;   /* 7.57 · 8.93 */
+  --sea-muted: #CFDAE3;  /* 6.56 */
+}
+
+:root[data-design="c"] {
+  --bg: #FBFAF7;         /* bianco caldo */
+  --surface: #F3EEE4;    /* il crema, solo come accento */
+  --text: #1C1B1A;       /* 16.48 su bg, 14.87 su surface */
+  --muted: #625C55;      /* 6.32 · 5.71 */
+  --red-text: #A54C3D;   /* 5.44 · 4.91 */
+  --sage-text: #526B64;  /* 5.52 · 4.98 */
+  --matte: #1C1B1A;
+  --section-shadow: transparent;
+  /* Grana da sabbia quasi invisibile sul fondo */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.38 0 0 0 0 0.3 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.09'/%3E%3C/svg%3E");
+}
+
+:root[data-design="c"][data-theme="dark"] {
+  --bg: #1E1C1A;
+  --surface: #282521;
+  --text: #DDD2C0;       /* 11.37 · 10.21 */
+  --muted: #A79E90;      /* 6.42 · 5.76 */
+  --red-text: var(--red);
+  --sage-text: var(--sage);
+  --matte: var(--text);
+  --grain: none;
+}
+
 /* Collega le variabili alle classi di Tailwind (bg-bg, text-red-text, font-ui…) */
 @theme inline {
   --color-*: initial;

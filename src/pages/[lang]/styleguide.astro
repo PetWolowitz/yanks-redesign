@@ -1,0 +1,238 @@
+---
+// Styleguide interna della variante C (docs/02, Direzione definitiva). Strumento di
+// lavoro, non contenuto: non indicizzata, fuori dal menu e dalla sitemap. In tutte le
+// lingue solo perché il selettore della lingua porta alla stessa pagina.
+// Eccezione voluta alla regola dei testi: le etichette della guida sono scritte qui
+// in inglese; gli esempi di contenuto usano i testi veri dei file di lingua.
+import type { GetStaticPaths } from 'astro';
+import { Image } from 'astro:assets';
+import Flag from '../../components/site/Flag.astro';
+import Hours from '../../components/site/Hours.astro';
+import OpenStatus from '../../components/site/OpenStatus.astro';
+import SocialIcon from '../../components/site/SocialIcon.astro';
+import { merch } from '../../data/merch';
+import { venue } from '../../data/venue';
+import Base from '../../layouts/Base.astro';
+import { langPaths, languageNames, locales, type Lang } from '../../i18n/locales';
+import { formatPrice } from '../../lib/format';
+import { productImage } from '../../lib/shop/images';
+import { t, type Key } from '../../i18n/t';
+
+export const getStaticPaths = langPaths satisfies GetStaticPaths;
+
+const { lang } = Astro.props as { lang: Lang };
+const product = merch.find((item) => item.limited !== null)!;
+const productName = t(lang, `shop.products.${product.slug}.name` as Key);
+const late = t(lang, 'home.late.text', { close: venue.hours.close, dineInUntil: venue.hours.dineInUntil });
+
+const tokens = [
+  ['--bg', 'page background'],
+  ['--surface', 'cream accent'],
+  ['--text', 'text'],
+  ['--muted', 'secondary text'],
+  ['--red-text', 'red text'],
+  ['--red', 'red surfaces'],
+  ['--gold', 'details'],
+  ['--ink', 'ink section'],
+  ['--ink-text', 'text on ink'],
+  ['--sea', 'North Sea section (shop)'],
+  ['--sea-text', 'text on sea'],
+];
+const tones = [
+  ['', 'paper (no tone)'],
+  ['tone-ink', 'tone-ink'],
+  ['tone-sea', 'tone-sea'],
+  ['', 'paper again'],
+  ['tone-cream', 'tone-cream'],
+];
+const label = 'font-ui text-small text-muted';
+---
+
+<Base lang={lang} title="Styleguide · variant C" description="Internal styleguide of the Yanks redesign, variant C." design="c" noindex>
+  <main id="content">
+    <div class="mx-auto max-w-360 px-page pt-10 pb-12 lg:pt-16">
+      <h1 class="text-h1">Styleguide</h1>
+      <p class="max-w-[60ch] font-prose text-lead">
+        Variant C, chosen on 2026-10-21. Internal page, not translated and not indexed. Switch the theme in the
+        header to check both.
+      </p>
+
+      <h2 class="mt-12 text-h2">Colours</h2>
+      <ul class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          tokens.map(([name, use]) => (
+            <li class="overflow-hidden rounded-2xl border-[1.5px] border-text">
+              <span class="block h-20 border-b-[1.5px] border-text" style={`background: var(${name})`} />
+              <span class="block p-4">
+                <code class="block">{name}</code>
+                <span class={label} data-token={name} />
+                <span class="block text-small">{use}</span>
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <h2 class="mt-12 text-h2">Typography</h2>
+      <div class="mt-6 grid gap-8 lg:grid-cols-2">
+        <div>
+          <p class={label}>text-display · Indian · hero only</p>
+          <p class="mt-3 pb-[0.45em] font-script text-display leading-none text-red">Yanks</p>
+          <p class={label}>h1 · text-h1 · Indian, never uppercase</p>
+          <p class="mt-3 pb-[0.45em] font-script text-h1 leading-none">{t(lang, 'nav.visit')}</p>
+          <p class:list={["mt-6", label]}>h2 · text-h2 · Yankee Clipper, always uppercase</p>
+          <p class="font-sign text-h2 uppercase">{t(lang, 'hours.title')}</p>
+          <p class={label}>h3 · text-h3</p>
+          <p class="font-sign text-h3 uppercase">{t(lang, 'home.late.title')}</p>
+          <p class={label}>card-title</p>
+          <p class="card-title">{productName}</p>
+        </div>
+        <div>
+          <p class={label}>text-lead · Literata · introductions</p>
+          <p class="font-prose text-lead">{t(lang, 'home.shop.text')}</p>
+          <p class:list={["mt-6", label]}>body · Literata · long paragraphs</p>
+          <p class="max-w-[65ch] font-prose">{t(lang, 'home.about.text')}</p>
+          <p class:list={["mt-6", label]}>body · Martian Mono · interface, prices, hours</p>
+          <p>{formatPrice(product.priceCents, lang)} · 08:00–02:45</p>
+          <p class:list={["mt-6", label]}>text-small</p>
+          <p class="text-small">{t(lang, 'home.shop.pieces', { count: String(product.limited) })}</p>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="mx-auto max-w-360 px-page pb-10 text-h2">Sections and waves</h2>
+    {
+      tones.map(([tone, name], index) => (
+        <section class:list={[index > 0 && 'wave-top', tone]}>
+          <div class="mx-auto grid max-w-360 gap-6 px-page py-12 sm:grid-cols-2 lg:grid-cols-3">
+            <div>
+              <p class={label}>{name}</p>
+              <h3 class="mt-2 text-h3">{t(lang, 'home.late.title')}</h3>
+              <p class="mt-2 font-prose">{late}</p>
+              <p class="mt-2 text-small text-muted">{t(lang, 'home.since', { year: String(venue.founded) })}</p>
+              <a href={`/${lang}/visit/`} class="mt-4 inline-block text-red-text underline underline-offset-4">
+                {t(lang, 'home.planVisit')}
+              </a>
+            </div>
+            <div class="rounded-2xl border-[1.5px] border-text bg-surface p-5">
+              <p class="card-title">{t(lang, 'home.beach.title')}</p>
+              <p class="mt-2 font-prose">{t(lang, 'home.beach.text')}</p>
+            </div>
+            <div class="flex flex-wrap items-start gap-3">
+              <a href={`/${lang}/shop/`} class="btn">{t(lang, 'home.shop.link')}</a>
+              <a href={`/${lang}/visit/`} class="btn-solid">{t(lang, 'home.planVisit')}</a>
+            </div>
+          </div>
+        </section>
+      ))
+    }
+
+    <div class="mx-auto max-w-360 px-page py-12">
+      <h2 class="text-h2">Buttons</h2>
+      <div class="mt-6 flex flex-wrap items-center gap-4">
+        <button type="button" class="btn">btn</button>
+        <button type="button" class="btn-solid">btn-solid</button>
+        <button type="button" class="btn" disabled>disabled</button>
+      </div>
+      <p class="mt-3 text-small text-muted">Hover fills or empties; Tab shows the focus ring. Minimum height 44 px.</p>
+
+      <h2 class="mt-12 text-h2">Cards</h2>
+      <ul class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-12">
+        <li class="lg:col-span-7">
+          <a
+            href={`/${lang}/shop/${product.slug}/`}
+            class="group flex h-full flex-col overflow-hidden rounded-2xl border-[1.5px] border-text bg-bg transition duration-300 ease-out hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0_var(--color-text)] motion-reduce:transition-none motion-reduce:hover:translate-x-0 motion-reduce:hover:translate-y-0"
+          >
+            <span class="relative block flex-1 overflow-hidden border-b-[1.5px] border-text">
+              <Image src={productImage(product.slug)} alt="" widths={[480, 800]} sizes="(min-width: 1024px) 50vw, 100vw" format="webp" class="aspect-[16/10] h-full w-full object-cover" />
+              <span class="absolute bottom-4 left-4 rounded-full bg-neon-board px-5 py-2 font-sign text-h2 leading-none text-gold" aria-hidden="true">1/{product.limited}</span>
+            </span>
+            <span class="flex flex-wrap items-end justify-between gap-4 p-5">
+              <span class="card-title">{productName}</span>
+              <span class="rounded-full border-[1.5px] border-text px-4 py-1 tabular-nums">{formatPrice(product.priceCents, lang)}</span>
+            </span>
+          </a>
+        </li>
+        <li class="rounded-2xl border-[1.5px] border-text bg-surface p-5 lg:col-span-5">
+          <p class="card-title">{t(lang, 'home.late.title')}</p>
+          <p class="mt-2 font-prose">{late}</p>
+        </li>
+      </ul>
+
+      <h2 class="mt-12 text-h2">Opening status</h2>
+      <div class="mt-6 flex flex-wrap items-start gap-10">
+        <OpenStatus lang={lang} />
+        <Hours lang={lang} />
+      </div>
+      <p class="mt-3 text-small text-muted">Live state; it is never shown by colour alone (text and icon too).</p>
+
+      <h2 class="mt-12 text-h2">Footer pieces</h2>
+      <div class="mt-6 grid gap-10 sm:grid-cols-3">
+        <div>
+          <p class={label}>languages: flags, name for screen readers</p>
+          <ul class="mt-3 flex gap-3">
+            {
+              locales.map((l) => (
+                <li>
+                  <a
+                    href={`/${l}/`}
+                    hreflang={l}
+                    lang={l}
+                    title={languageNames[l]}
+                    aria-current={l === lang ? 'true' : undefined}
+                    class="block rounded-md p-1 aria-[current]:ring-2 aria-[current]:ring-red-text"
+                  >
+                    <Flag lang={l} />
+                    <span class="sr-only">{languageNames[l]}</span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div>
+          <p class={label}>social: icons, 44 px target</p>
+          <ul class="mt-1 flex gap-1">
+            <li>
+              <a href={venue.social.instagram} rel="noopener" class="grid size-11 place-items-center rounded-full hover:text-red-text">
+                <SocialIcon name="instagram" />
+                <span class="sr-only">Instagram</span>
+              </a>
+            </li>
+            <li>
+              <a href={venue.social.facebook} rel="noopener" class="grid size-11 place-items-center rounded-full hover:text-red-text">
+                <SocialIcon name="facebook" />
+                <span class="sr-only">Facebook</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <p class={label}>links: red line on hover (replaces the scattering letters)</p>
+          <ul class="mt-3 space-y-2">
+            <li><a href={`/${lang}/menu/`} class="link-line">{t(lang, 'nav.menu')}</a></li>
+            <li><a href={`/${lang}/styleguide/`} class="link-line" aria-current="page">Styleguide</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <h2 class="mt-12 text-h2">Motion</h2>
+      <ul class="mt-6 max-w-[65ch] list-disc space-y-2 pl-5 font-prose">
+        <li>Only transform and opacity are animated; prefers-reduced-motion switches everything off.</li>
+        <li>Titles slide in from the left (Indian by word, Yankee Clipper by letter), blocks rise into view.</li>
+        <li>Cards lift with a solid offset shadow on hover; the photo zooms slightly.</li>
+        <li>Footer links: the red line grows from the left in 0.35 s.</li>
+      </ul>
+    </div>
+  </main>
+</Base>
+
+<script>
+  // Valore reale di ogni token, nel tema attivo: la guida non ripete i colori a mano
+  const show = () =>
+    document.querySelectorAll<HTMLElement>('[data-token]').forEach((el) => {
+      el.textContent = getComputedStyle(document.documentElement).getPropertyValue(el.dataset.token!).trim();
+    });
+  show();
+  new MutationObserver(show).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+</script>

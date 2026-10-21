@@ -1,0 +1,62 @@
+---
+// Bandiere disegnate da noi per il selettore della lingua nel footer (variante C).
+// Solo decorative: il nome della lingua lo dà il link che le contiene, perché una
+// bandiera indica un Paese, non una lingua. Per l'inglese il Regno Unito.
+import type { Lang } from '../../i18n/locales';
+
+interface Props {
+  lang: Lang;
+  class?: string;
+}
+
+const { lang, class: className } = Astro.props;
+---
+
+<svg
+  viewBox="0 0 30 20"
+  preserveAspectRatio="xMidYMid slice"
+  aria-hidden="true"
+  focusable="false"
+  class:list={['flag', className]}
+>
+  {
+    lang === 'nl' && (
+      <>
+        <path fill="#AE1C28" d="M0 0h30v7H0z" />
+        <path fill="#FFFFFF" d="M0 7h30v6H0z" />
+        <path fill="#21468B" d="M0 13h30v7H0z" />
+      </>
+    )
+  }
+  {
+    lang === 'de' && (
+      <>
+        <path fill="#000000" d="M0 0h30v7H0z" />
+        <path fill="#DD0000" d="M0 7h30v6H0z" />
+        <path fill="#FFCE00" d="M0 13h30v7H0z" />
+      </>
+    )
+  }
+  {
+    lang === 'en' && (
+      <>
+        <rect width="30" height="20" fill="#012169" />
+        <path d="M0 0L30 20M30 0L0 20" stroke="#FFFFFF" stroke-width="4" />
+        <path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" stroke-width="1.5" />
+        <path d="M15 0v20M0 10h30" stroke="#FFFFFF" stroke-width="6" />
+        <path d="M15 0v20M0 10h30" stroke="#C8102E" stroke-width="3.5" />
+      </>
+    )
+  }
+</svg>
+
+<style>
+  .flag {
+    display: block;
+    width: 2.25rem;
+    height: 1.5rem;
+    border-radius: 4px;
+    outline: 1px solid color-mix(in srgb, var(--text) 35%, transparent);
+    outline-offset: -1px;
+  }
+</style>
