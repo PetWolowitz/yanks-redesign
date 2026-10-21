@@ -33,7 +33,7 @@ const { open, close } = venue.hours;
         <p class="mt-4 font-sign text-h2 leading-none text-matte uppercase">{venue.tagline}</p>
         {venue.founded && <p class="mt-4 text-small tracking-[0.35em] text-muted uppercase">{t(lang, 'home.since', { year: String(venue.founded) })}</p>}
       </div>
-      <p class="mt-8 max-w-[45ch] font-prose text-h3 leading-snug">{t(lang, 'home.intro', { open, close })}</p>
+      <p class="mt-8 max-w-[45ch] font-prose text-lead leading-snug">{t(lang, 'home.intro', { open, close })}</p>
       <div class="mt-8 flex flex-wrap items-end gap-x-10 gap-y-6">
         <Hours lang={lang} />
         <a

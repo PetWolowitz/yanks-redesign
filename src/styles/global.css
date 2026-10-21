@@ -95,12 +95,13 @@
   }
 
   /* h1 in Indian, come la scritta "Yanks" del logo (2026-10-01). Mai maiuscolo: le
-     maiuscole corsive si accavallano. Le code delle lettere scendono molto: spazio sotto */
+     maiuscole corsive si accavallano. Le code delle lettere (la "Y" di "Your")
+     scendono di quasi mezza altezza: con 0.25em toccavano la riga sotto */
   h1 {
     font-family: var(--font-script);
     font-weight: 400;
     line-height: 1;
-    padding-bottom: 0.25em;
+    padding-bottom: 0.45em;
   }
 
   /* h2 e h3 in Yankee Clipper, sempre maiuscolo: in minuscolo la "u" sembra "ú" e la

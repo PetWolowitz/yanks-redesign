@@ -145,19 +145,25 @@ linguaggio delle insegne americane.
 cliente vero serve la licenza commerciale. Sostituti liberi: Yellowtail (script),
 Syne (display), Literata (testo), Martian Mono (dati).
 
-**Scala fluida** (2026-10-19, variante C scelta da Pietro). Tutto cresce con lo
-schermo tra il telefono da 320 px e circa 1400 px; la parte in rem segue lo zoom
-del browser. Valori solo in `tokens.css`:
+**Scala fluida** (2026-10-19, variante C scelta da Pietro; **ridotta il
+2026-10-21**: la prosa d'introduzione arrivava a 28 px, gli h1 a 144). Tutto
+cresce con lo schermo tra il telefono da 320 px e circa 1400 px; la parte in rem
+segue lo zoom del browser. Valori solo in `tokens.css`:
 ```css
---text-display: clamp(3rem, 12vw, 9rem);
---text-h2:      clamp(1.9rem, 1.2rem + 3.6vw, 3.5rem);
---text-h3:      clamp(1.2rem, 1rem + 1vw, 1.75rem);
---text-body:    clamp(0.9375rem, 0.88rem + 0.3vw, 1.125rem);
---text-small:   clamp(0.8rem, 0.75rem + 0.22vw, 0.9375rem);
+--text-display: clamp(3rem, 2rem + 5vw, 6rem);          /* 48-96 px, solo la hero */
+--text-h1:      clamp(2.5rem, 1.9rem + 2.6vw, 4rem);    /* 40-64 px, h1 delle pagine */
+--text-h2:      clamp(1.625rem, 1.2rem + 2vw, 2.5rem);  /* 26-40 px */
+--text-h3:      clamp(1.125rem, 1rem + 0.5vw, 1.375rem);/* 18-22 px */
+--text-lead:    clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);/* 17-20 px, introduzioni */
+--text-body:    clamp(1rem, 0.95rem + 0.2vw, 1.125rem); /* 16-18 px */
+--text-small:   clamp(0.8125rem, 0.78rem + 0.12vw, 0.875rem);
 --text-xs:      clamp(0.72rem, 0.69rem + 0.15vw, 0.8125rem);
---text-btn:     clamp(0.8125rem, 0.76rem + 0.25vw, 0.9375rem);
+--text-btn:     clamp(0.8125rem, 0.78rem + 0.12vw, 0.875rem);
 --btn-x:        clamp(1rem, 0.7rem + 1.5vw, 1.75rem);   /* spazio ai lati dei pulsanti */
 ```
+I paragrafi d'introduzione sono `font-prose text-lead`, mai `text-h3`. Gli h1 in
+Indian hanno sotto `padding-bottom: 0.45em`: le code (la "Y") scendono di quasi
+mezza altezza e con meno toccano la riga sotto.
 
 **Pulsanti**: classi `btn` (bordo, si riempie al passaggio) e `btn-solid` (pieno,
 si svuota), definite una volta in `global.css`. Testo e spazio ai lati fluidi,
