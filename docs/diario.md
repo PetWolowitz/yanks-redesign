@@ -17,6 +17,31 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-21 — Fase 4 chiusa: shop vero online
+Fatto:        widget Turnstile vero (hostname yanks-redesign.pietro-costa25.
+              workers.dev, modalità Managed); TURNSTILE_SECRET_KEY caricata da
+              Pietro con wrangler. Nella config i predefiniti sono quelli online
+              (PUBLIC_SHOP_MODE=live, site key vera); .env locale usa la chiave
+              di prova. Unite #40 (shop live) e #41 (card dello shop in home:
+              la foto della card più stretta lasciava un vuoto sotto). Acquisto
+              di prova online fatto da Pietro dal suo browser: funziona. Log del
+              motivo quando Turnstile rifiuta (codici di Cloudflare, sì/no su
+              hostname e azione, mai token né secret), con 4 test: 242 verdi.
+              Fonte del 1984 in docs/03 (bio Instagram ufficiale)
+Decisioni:    - nei test la secret Turnstile è quella di prova ufficiale di
+                Cloudflare, mai le chiavi vere
+              - la sola foto "vuota" negli screenshot a pagina intera era
+                loading="lazy", non un bug
+Problemi:     da Playwright il checkout online fallisce: Turnstile riconosce il
+              browser automatico e il server rifiuta il token (corretto). Il
+              server di sviluppo, dopo una modifica ad astro.config.mjs, non
+              caricava più il servizio immagini: risolto riavviandolo. PR #38
+              (animazioni lente) ancora aperta
+Prossimo:     scala tipografica più piccola e correzione delle discendenti degli
+              h1; poi varianti A e B dell'identità visiva da confrontare
+Ramo/commit:  chore/chiusura-fase-4 — "Fase 4 chiusa: log dei rifiuti di
+              Turnstile, fonte del 1984, diario"
+
 ## 2026-10-19 — Fase 4: shop vero in locale, segreti online, A+ sulle intestazioni
 Fatto:        unite #35 (navbar), #36 (npm audit: wrangler 4.151.1, 0
               vulnerabilità), #37 (testi e pulsanti fluidi, classi btn e
