@@ -280,5 +280,10 @@
   "notFound.home": "Back to the homepage",
   "notFound.meta": "This page does not exist.",
   "order.toast.paid": "Payment received: your order is confirmed.",
-  "order.toast.close": "Close message"
+  "order.toast.close": "Close message",
+  "shopEmail.subject": "New order {number}",
+  "shopEmail.intro": "A new order has been paid. Please ship it to the address below.",
+  "shopEmail.address": "Shipping address",
+  "shopEmail.customer": "Customer email",
+  "shopEmail.language": "Order language"
 }

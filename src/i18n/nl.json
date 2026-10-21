@@ -280,5 +280,10 @@
   "notFound.home": "Terug naar de homepage",
   "notFound.meta": "Deze pagina bestaat niet.",
   "order.toast.paid": "Betaling ontvangen: je bestelling is bevestigd.",
-  "order.toast.close": "Melding sluiten"
+  "order.toast.close": "Melding sluiten",
+  "shopEmail.subject": "Nieuwe bestelling {number}",
+  "shopEmail.intro": "Er is een nieuwe bestelling betaald. Verstuur hem naar het adres hieronder.",
+  "shopEmail.address": "Verzendadres",
+  "shopEmail.customer": "E-mailadres van de klant",
+  "shopEmail.language": "Taal van de bestelling"
 }
