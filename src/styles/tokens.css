@@ -5,15 +5,16 @@
 
 :root {
   color-scheme: light;
-  --bg: #F7F0E4;        /* crema */
-  --surface: #F1E4CC;   /* sabbia */
-  --text: #2B2724;      /* inchiostro */
-  --muted: #6B645C;
-  --red: #C75B4A;       /* superfici e bordi */
+  /* Variante C (2026-10-21, docs/02): bianco caldo, il crema solo come accento */
+  --bg: #FBFAF7;        /* bianco caldo */
+  --surface: #F3EEE4;   /* crema, accento */
+  --text: #1C1B1A;      /* inchiostro: 16.48 su bg, 14.87 su surface */
+  --muted: #625C55;     /* 6.32 · 5.71 */
+  --red: #C75B4A;       /* superfici, bordi, testo grande */
   --gold: #E3BE72;
   --sage: #6E8F85;      /* superfici e bordi */
-  --red-text: #A54C3D;  /* testo: 5.01:1 su crema, 4.51:1 su sabbia */
-  --sage-text: #526B64; /* testo: 5.08:1 su crema, 4.58:1 su sabbia */
+  --red-text: #A54C3D;  /* testo: 5.44 su bg, 4.91 su surface */
+  --sage-text: #526B64; /* testo: 5.52 su bg, 4.98 su surface */
   /* Orologio a insegna, uguale nei due temi: tubi al neon su una tavola scura.
      Contrasti misurati sulla tavola: 11.85 · 9.74 · 6.12 */
   --neon-board: #1F1B17;
@@ -22,41 +23,11 @@
   --neon-closed: #FF6B5E;
   /* Margine laterale delle pagine: cresce con lo schermo (2026-10-01) */
   --page-x: clamp(1.25rem, 4.5vw, 3.5rem);
-  /* Ombra morbida tra una sezione e l'altra */
-  --section-shadow: rgb(43 39 36 / 0.2);
   /* sfondo dietro il pannello del carrello */
-  --overlay: rgb(43 39 36 / 0.55);
-  /* Nero opaco della riga "Home of the Medicine Man": 15.18:1 su crema */
+  --overlay: rgb(28 27 26 / 0.55);
+  /* Nero opaco della riga "Home of the Medicine Man" */
   --matte: #1C1B1A;
-}
-
-/* Ritarati uno per uno, mai invertiti in automatico */
-:root[data-theme="dark"] {
-  color-scheme: dark;
-  --bg: #1F1B17;        /* marrone scuro caldo, non nero: stanca meno */
-  --surface: #2A251F;
-  --text: #DDD2C0;      /* ammorbidito: 11.45:1 su bg, 10.16:1 su surface */
-  --muted: #A79E90;     /* 6.47 · 5.74 */
-  --red: #E0705A;       /* schiarito: sul fondo scuro il rosso pieno non passa 4.5:1. 5.41 · 4.80 */
-  --gold: #E3BE72;
-  --sage: #8FB0A5;      /* 7.27 · 6.45 */
-  --red-text: var(--red);
-  --sage-text: var(--sage);
-  --section-shadow: rgb(0 0 0 / 0.6);
-  --overlay: rgb(0 0 0 / 0.7);
-  /* Il nero opaco sul fondo scuro sparirebbe: qui è il colore del testo */
-  --matte: var(--text);
-}
-
-/* ---------------------------------------------------------------------------
-   Variante C (decisa il 2026-10-21, docs/02 Direzione definitiva).
-   I colori delle sezioni piene (inchiostro e blu Mare del Nord) valgono ovunque:
-   sono nomi nuovi, li usano solo le classi tone-* di global.css. La palette che
-   sostituisce quella di oggi vale per ora solo con html[data-design="c"]
-   (la styleguide); si sposta su :root quando si converte la home.
-   Contrasti misurati: docs/02
-   --------------------------------------------------------------------------- */
-:root {
+  /* Sezioni piene: inchiostro e blu Mare del Nord (classi tone-* in global.css) */
   --ink: #1C1B1A;
   --ink-surface: #262422;
   --ink-text: #D9D0C2;   /* 11.26 su ink, 10.13 su ink-surface: sotto il tetto di 13 */
@@ -69,9 +40,25 @@
   /* Onda del badge, un periodo: si ripete in orizzontale (classe wave-top) */
   --wave-h: 18px;
   --wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 18' preserveAspectRatio='none'%3E%3Cpath d='M0 10 C 20 0, 40 0, 60 10 S 100 20, 120 10 V18 H0 Z'/%3E%3C/svg%3E");
+  /* Grana da sabbia quasi invisibile sul fondo */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.38 0 0 0 0 0.3 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.09'/%3E%3C/svg%3E");
 }
 
+/* Ritarati uno per uno, mai invertiti in automatico */
 :root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #1E1C1A;        /* scuro caldo, non nero: stanca meno */
+  --surface: #282521;
+  --text: #DDD2C0;      /* ammorbidito: 11.37 su bg, 10.21 su surface */
+  --muted: #A79E90;     /* 6.42 · 5.76 */
+  --red: #E0705A;       /* schiarito: sul fondo scuro il rosso pieno non passa 4.5:1. 5.37 · 4.82 */
+  --gold: #E3BE72;
+  --sage: #8FB0A5;
+  --red-text: var(--red);
+  --sage-text: var(--sage);
+  --overlay: rgb(0 0 0 / 0.7);
+  /* Il nero opaco sul fondo scuro sparirebbe: qui è il colore del testo */
+  --matte: var(--text);
   --ink: #141311;
   --ink-surface: #1E1C1A;
   --ink-text: #D9D0C2;   /* 12.16 · 11.12 */
@@ -80,29 +67,6 @@
   --sea-surface: #253F52;
   --sea-text: #EDE7DD;   /* 7.57 · 8.93 */
   --sea-muted: #CFDAE3;  /* 6.56 */
-}
-
-:root[data-design="c"] {
-  --bg: #FBFAF7;         /* bianco caldo */
-  --surface: #F3EEE4;    /* il crema, solo come accento */
-  --text: #1C1B1A;       /* 16.48 su bg, 14.87 su surface */
-  --muted: #625C55;      /* 6.32 · 5.71 */
-  --red-text: #A54C3D;   /* 5.44 · 4.91 */
-  --sage-text: #526B64;  /* 5.52 · 4.98 */
-  --matte: #1C1B1A;
-  --section-shadow: transparent;
-  /* Grana da sabbia quasi invisibile sul fondo */
-  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.38 0 0 0 0 0.3 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.09'/%3E%3C/svg%3E");
-}
-
-:root[data-design="c"][data-theme="dark"] {
-  --bg: #1E1C1A;
-  --surface: #282521;
-  --text: #DDD2C0;       /* 11.37 · 10.21 */
-  --muted: #A79E90;      /* 6.42 · 5.76 */
-  --red-text: var(--red);
-  --sage-text: var(--sage);
-  --matte: var(--text);
   --grain: none;
 }
 
@@ -136,17 +100,17 @@
   /* Scala fluida (2026-10-19): ogni misura cresce con lo schermo tra un minimo
      (telefono da 320 px) e un massimo (circa 1400 px). La parte in rem segue lo
      zoom del browser, la parte in vw la larghezza */
-  /* Ridotta il 2026-10-21 (Pietro): testo 16-18 px, introduzioni fino a 20,
-     h1 delle pagine fino a 64, titolo della hero fino a 96 */
+  /* Ridotta il 2026-10-21 (Pietro): h1 delle pagine fino a 64, hero fino a 96;
+     con la variante C testi non titoli un po' più piccoli */
   --text-display: clamp(3rem, 2rem + 5vw, 6rem);         /* solo la hero */
   --text-h1: clamp(2.5rem, 1.9rem + 2.6vw, 4rem);         /* h1 delle pagine */
   --text-h2: clamp(1.625rem, 1.2rem + 2vw, 2.5rem);
   --text-h3: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
-  --text-lead: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);   /* paragrafi d'introduzione */
-  --text-body: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
-  --text-small: clamp(0.8125rem, 0.78rem + 0.12vw, 0.875rem);
+  --text-lead: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);      /* 16-18 px, introduzioni */
+  --text-body: clamp(0.9375rem, 0.9rem + 0.15vw, 1.0625rem); /* 15-17 px */
+  --text-small: clamp(0.78rem, 0.75rem + 0.1vw, 0.84rem);   /* 12.5-13.5 px */
   --text-xs: clamp(0.72rem, 0.69rem + 0.15vw, 0.8125rem);
   /* Pulsanti: testo e spazio ai lati; l'altezza minima resta 44 px (min-h-11) */
-  --text-btn: clamp(0.8125rem, 0.78rem + 0.12vw, 0.875rem);
+  --text-btn: clamp(0.78rem, 0.75rem + 0.1vw, 0.84rem);
   --btn-x: clamp(1rem, 0.7rem + 1.5vw, 1.75rem);
 }

@@ -28,9 +28,9 @@ const skus = (item.sizes.length > 0 ? item.sizes : [null]).map((size) => skuOf(i
 <li data-card class={className}>
   <a
     href={`/${lang}/shop/${item.slug}/`}
-    class="group flex h-full flex-col overflow-hidden rounded-2xl border-3 border-text bg-bg transition duration-300 ease-out hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0_var(--color-text)] motion-reduce:transition-none motion-reduce:hover:translate-x-0 motion-reduce:hover:translate-y-0"
+    class="group flex h-full flex-col overflow-hidden rounded-2xl border-[1.5px] border-text bg-bg transition duration-300 ease-out hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0_var(--color-text)] motion-reduce:transition-none motion-reduce:hover:translate-x-0 motion-reduce:hover:translate-y-0"
   >
-    <span class="relative block overflow-hidden border-b-3 border-text">
+    <span class="relative block overflow-hidden border-b-[1.5px] border-text">
       <Image
         src={productImage(item.slug)}
         alt=""
@@ -51,8 +51,8 @@ const skus = (item.sizes.length > 0 ? item.sizes : [null]).map((size) => skuOf(i
       <StockStatus lang={lang} skus={skus} class="absolute top-3 right-3 rounded-full bg-bg px-3 py-1 empty:hidden" />
     </span>
     <span class="flex flex-1 flex-wrap items-end justify-between gap-3 p-4">
-      <span class:list={['min-w-0 font-sign leading-tight uppercase break-words hyphens-auto', large ? 'text-h3' : 'text-base']}>{name}</span>
-      <span class="shrink-0 rounded-full border-2 border-text px-3 py-1 text-small tabular-nums transition-colors group-hover:bg-text group-hover:text-bg">
+      <span class="card-title min-w-0 break-words hyphens-auto">{name}</span>
+      <span class="shrink-0 rounded-full border-[1.5px] border-text px-3 py-1 text-small tabular-nums transition-colors group-hover:bg-text group-hover:text-bg">
         {formatPrice(item.priceCents, lang)}
       </span>
     </span>

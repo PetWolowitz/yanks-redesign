@@ -37,7 +37,7 @@ const images = productImages(item.slug);
           sizes="(min-width: 1024px) 55vw, 100vw"
           format="webp"
           fetchpriority="high"
-          class="w-full border-3 rounded-2xl border-text"
+          class="w-full border-[1.5px] rounded-2xl border-text"
         />
         {
           images.length > 1 && (
@@ -51,7 +51,7 @@ const images = productImages(item.slug);
                     sizes="(min-width: 1024px) 18vw, 50vw"
                     format="webp"
                     loading="lazy"
-                    class="aspect-[4/5] w-full border-3 rounded-2xl border-text object-cover"
+                    class="aspect-[4/5] w-full border-[1.5px] rounded-2xl border-text object-cover"
                   />
                 </li>
               ))}
@@ -68,7 +68,7 @@ const images = productImages(item.slug);
         <p class="mt-4 text-small text-muted">
           {t(lang, 'shop.size')}: {item.sizes.length > 0 ? item.sizes.join(' · ') : t(lang, 'shop.oneSize')}
         </p>
-        <div class="mt-8 border-t-3 border-text pt-6">
+        <div class="mt-8 border-t-[1.5px] border-text pt-6">
           <AddToCart lang={lang} item={item} />
         </div>
         <p class="mt-8 text-small text-muted">{t(lang, 'shop.testMode')}</p>

@@ -12,20 +12,18 @@ interface Props {
   lang: Lang;
   title: string;
   description: string;
-  // 'c': la palette della variante C (docs/02), finché non passa su :root
-  design?: 'c';
   // pagine interne (styleguide): non indicizzate, senza link alle altre lingue
   noindex?: boolean;
 }
 
-const { lang, title, description, design, noindex = false } = Astro.props;
+const { lang, title, description, noindex = false } = Astro.props;
 
 // Stessa pagina nelle altre lingue: cambia solo il primo segmento (/en/… → /nl/…)
 const urlFor = (l: Lang) => new URL(Astro.url.pathname.replace(/^\/[^/]+\//, `/${l}/`), Astro.site).href;
 ---
 
 <!doctype html>
-<html lang={lang} data-design={design}>
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />

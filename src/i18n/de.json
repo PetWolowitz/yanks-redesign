@@ -274,5 +274,9 @@
   "email.subject": "Deine Bestellung bei Yanks Indian Club ({number})",
   "email.intro": "Danke! Wir haben deine Zahlung erhalten. Hier ist deine Bestellung.",
   "email.link": "Deine Bestellung ansehen:",
-  "email.test": "Dies ist ein Konzept-Shop im Testmodus: Es wurde nichts abgebucht und es wird nichts verschickt."
+  "email.test": "Dies ist ein Konzept-Shop im Testmodus: Es wurde nichts abgebucht und es wird nichts verschickt.",
+  "notFound.title": "Seite nicht gefunden",
+  "notFound.text": "Diese Seite gibt es nicht, oder nicht mehr. Wähle deine Sprache, um zurückzugehen.",
+  "notFound.home": "Zur Startseite",
+  "notFound.meta": "Diese Seite gibt es nicht."
 }

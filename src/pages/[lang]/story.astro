@@ -72,10 +72,10 @@ const steps: {
             <li data-anim={anims[index % anims.length]} class="flex shrink-0 basis-[85%] snap-start flex-col sm:basis-[60%] lg:basis-[34rem]">
               <!-- La linea del tempo: un pallino per tappa su una riga continua -->
               <div aria-hidden="true" class="mb-4 flex items-center gap-3">
-                <span class="size-4 shrink-0 rounded-full border-3 border-text bg-red" />
+                <span class="size-4 shrink-0 rounded-full border-[1.5px] border-text bg-red" />
                 <span class="h-0.75 flex-1 bg-text" />
               </div>
-              <article class="flex flex-1 flex-col overflow-hidden rounded-2xl border-3 border-text bg-surface">
+              <article class="flex flex-1 flex-col overflow-hidden rounded-2xl border-[1.5px] border-text bg-surface">
                 {step.image && (
                   <Image
                     src={step.image.src}
@@ -84,7 +84,7 @@ const steps: {
                     sizes="(min-width: 1024px) 544px, 85vw"
                     format="webp"
                     loading="lazy"
-                    class="aspect-3/2 w-full border-b-3 border-text object-cover"
+                    class="aspect-3/2 w-full border-b-[1.5px] border-text object-cover"
                   />
                 )}
                 <div class="flex flex-1 flex-col p-6 lg:p-8">
@@ -102,10 +102,10 @@ const steps: {
 
       <!-- Pulsanti per chi usa il mouse: compaiono solo con JS -->
       <div data-controls hidden class="mx-auto flex max-w-360 justify-end gap-3 px-page">
-        <button type="button" data-dir="-1" aria-label={t(lang, 'story.prev')} class="inline-flex size-11 items-center justify-center rounded-full border-3 border-text hover:bg-text hover:text-bg aria-disabled:opacity-40 aria-disabled:hover:bg-transparent aria-disabled:hover:text-text">
+        <button type="button" data-dir="-1" aria-label={t(lang, 'story.prev')} class="inline-flex size-11 items-center justify-center rounded-full border-[1.5px] border-text hover:bg-text hover:text-bg aria-disabled:opacity-40 aria-disabled:hover:bg-transparent aria-disabled:hover:text-text">
           <span aria-hidden="true">←</span>
         </button>
-        <button type="button" data-dir="1" aria-label={t(lang, 'story.next')} class="inline-flex size-11 items-center justify-center rounded-full border-3 border-text hover:bg-text hover:text-bg aria-disabled:opacity-40 aria-disabled:hover:bg-transparent aria-disabled:hover:text-text">
+        <button type="button" data-dir="1" aria-label={t(lang, 'story.next')} class="inline-flex size-11 items-center justify-center rounded-full border-[1.5px] border-text hover:bg-text hover:text-bg aria-disabled:opacity-40 aria-disabled:hover:bg-transparent aria-disabled:hover:text-text">
           <span aria-hidden="true">→</span>
         </button>
       </div>

@@ -18,11 +18,11 @@ interface Props {
 
 const { lang } = Astro.props;
 const { close, dineInUntil } = venue.hours;
-const tile = 'rounded-2xl border-3 border-text';
+const tile = 'rounded-2xl border-[1.5px] border-text';
 const card = `${tile} bg-surface p-6 lg:p-8`;
 ---
 
-<section class="edge-shadow border-t-3 border-text">
+<section class="wave-top tone-ink">
   <div class="mx-auto grid max-w-360 gap-4 px-page py-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6 lg:py-16">
     <div data-card data-anim="left" class:list={[card, 'sm:col-span-2']}>
       <h2 class="text-h2 leading-none">{t(lang, 'home.about.title')}</h2>
@@ -43,12 +43,12 @@ const card = `${tile} bg-surface p-6 lg:p-8`;
     </div>
 
     <div data-card data-anim="tilt" class={card}>
-      <h3 class="text-h3">{t(lang, 'home.late.title')}</h3>
+      <h3 class="card-title">{t(lang, 'home.late.title')}</h3>
       <p class="mt-2 font-prose">{t(lang, 'home.late.text', { close, dineInUntil })}</p>
     </div>
 
     <div data-card data-anim="up" class={card}>
-      <h3 class="text-h3">{t(lang, 'home.beach.title')}</h3>
+      <h3 class="card-title">{t(lang, 'home.beach.title')}</h3>
       <p class="mt-2 font-prose">{t(lang, 'home.beach.text')}</p>
     </div>
 
@@ -70,8 +70,8 @@ const card = `${tile} bg-surface p-6 lg:p-8`;
           class="absolute inset-0 size-full object-cover"
         />
       </div>
-      <figcaption class="border-t-3 border-text p-6 lg:p-8">
-        <h3 class="text-h3">{t(lang, 'home.terrace.title')}</h3>
+      <figcaption class="border-t-[1.5px] border-text p-6 lg:p-8">
+        <h3 class="card-title">{t(lang, 'home.terrace.title')}</h3>
         <p class="mt-2 max-w-[50ch] font-prose">{t(lang, 'home.terrace.text')}</p>
       </figcaption>
     </figure>

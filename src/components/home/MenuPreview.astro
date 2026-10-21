@@ -17,7 +17,7 @@ const items = coffee?.kind === 'items' ? coffee.items.filter((item) => item.pric
 const softDrinksPrice = softDrinks?.kind === 'drinks' ? softDrinks.priceCents : null;
 ---
 
-<section class="edge-shadow border-t-3 border-text">
+<section class="wave-top">
   <div class="mx-auto grid max-w-360 gap-10 px-page py-12 lg:grid-cols-12 lg:gap-6 lg:py-16">
     <div class="lg:col-span-4">
       <h2 class="text-h2 leading-none">{t(lang, 'nav.menu')}</h2>
@@ -40,7 +40,7 @@ const softDrinksPrice = softDrinks?.kind === 'drinks' ? softDrinks.priceCents : 
       </ul>
       {
         softDrinksPrice !== null && (
-          <p class="mt-6 border-3 rounded-2xl border-text px-4 py-3 uppercase">
+          <p class="mt-6 border-[1.5px] rounded-2xl border-text px-4 py-3 uppercase">
             {t(lang, 'home.menu.softDrinks', { price: formatPrice(softDrinksPrice, lang) })}
           </p>
         )

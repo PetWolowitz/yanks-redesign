@@ -136,29 +136,33 @@ Lo shop **non è opzionale**. Regole del contratto:
 - L'immaginario è **americana anni '50**: moto, diner, insegne. Non tribale
 - Da evitare: clipart a tema usata come riempitivo. Il segno forte è il logo
 
-## Design definitivo — variante C (decisa il 2026-10-21, in applicazione)
+## Design definitivo — variante C (decisa e applicata il 2026-10-21)
 Scelta da Pietro tra cinque prove della home (attuale, A, B con due font, C).
-La C è il sito di oggi con questi cambi. **Finché una pagina non è convertita
-valgono le regole e i colori scritti sotto**; a ogni pagina convertita si
-aggiornano qui e in docs/02, così codice e documenti non si contraddicono.
+La C è il sito di prima con questi cambi, applicati a tutte le pagine. Classi e
+componenti in docs/02; pagina di riferimento: `/en/styleguide/` (noindex).
 - **Fondo** bianco caldo `#FBFAF7` con una grana da sabbia quasi invisibile; il
   crema (`#F3EEE4`) solo come accento (footer, card delle recensioni)
 - **Sezioni alternate**: bianco, inchiostro (`#1C1B1A`), e la sezione shop in
-  **blu Mare del Nord `#34566F`** (testo bianco 7.4:1). Il testo chiaro
-  sull'inchiostro va ammorbidito: nella prova era 14.9:1, il tetto è 13:1
+  **blu Mare del Nord `#34566F`** (testo bianco 7.4:1). Classi `tone-ink`,
+  `tone-sea`, `tone-cream`: ridefiniscono i token dentro la sezione. Testo chiaro
+  sull'inchiostro `#D9D0C2`, 11.3:1 (nella prova era 14.9, il tetto è 13)
 - **Un solo elemento grafico firma**: le **onde del badge come divisori** tra le
-  sezioni, al posto delle righe nere spesse e dell'ombra sopra le sezioni
+  sezioni (classe `wave-top`), al posto delle righe nere spesse e dell'ombra
+  sopra le sezioni. Le righe interne alle pagine restano, da 1.5 px
 - **Font e ruoli invariati** (Pietro preferisce Literata e Martian Mono a
   Bricolage e Familjen, provati e scartati)
 - **Testi che non sono titoli un po' più piccoli** della scala del 2026-10-21:
   prosa 15-17 px, introduzioni 16-18, etichette e pulsanti 12.5-13.5
-- **Card**: bordo nero da 1.5 px (era 3), titoli più piccoli e più spaziati
-  (Yankee Clipper ha un solo peso). L'ombra piena al passaggio resta
+- **Card, campi e riquadri**: bordo da 1.5 px (era 3); titoli delle card con
+  `card-title`, più piccoli e spaziati (Yankee Clipper ha un solo peso). L'ombra
+  piena al passaggio resta. Pulsanti (`btn`), header e tubo al neon invariati
 - **Foto senza filtri** (duotono e grana provati e scartati)
 - **Footer**: bandiere disegnate da noi al posto dei nomi delle lingue (il nome
   resta per i lettori di schermo: una bandiera indica un Paese, non una lingua);
-  icone cliccabili al posto delle scritte Facebook e Instagram; sottolineatura
-  rossa al passaggio al posto delle lettere che si scompongono
+  icone da 32 px (bersaglio da 48) al posto delle scritte Facebook e Instagram.
+  Sui link delle pagine **restano le lettere che si scompongono** (Pietro,
+  2026-10-21: la sottolineatura rossa è stata provata e scartata)
+- **404** con il marchio, in tutte e tre le lingue (`src/pages/404.astro`)
 
 ## Tipografia — quattro ruoli
 Token in `tokens.css`, dettagli in `docs/02-design-system.md`.
@@ -190,23 +194,26 @@ I loro rosso e oro, ammorbiditi. Valori completi in `docs/02-design-system.md`.
 
 | Token | Chiaro | Scuro |
 |---|---|---|
-| `--bg` | `#F7F0E4` | `#1F1B17` |
-| `--surface` | `#F1E4CC` | `#2A251F` |
-| `--text` | `#2B2724` | `#DDD2C0` |
-| `--muted` | `#6B645C` | `#A79E90` |
+| `--bg` | `#FBFAF7` | `#1E1C1A` |
+| `--surface` (crema, accento) | `#F3EEE4` | `#282521` |
+| `--text` | `#1C1B1A` | `#DDD2C0` |
+| `--muted` | `#625C55` | `#A79E90` |
 | `--red` | `#C75B4A` | `#E0705A` |
 | `--gold` | `#E3BE72` | `#E3BE72` |
 | `--sage` | `#6E8F85` | `#8FB0A5` |
 | `--red-text` | `#A54C3D` | = `--red` |
 | `--sage-text` | `#526B64` | = `--sage` |
-| `--neon-open` | `#176B37` | `#5DF28C` |
-| `--neon-takeaway` | `#8A5700` | `#FFB547` |
-| `--neon-closed` | `#B3261E` | `#FF6B5E` |
+| `--ink` / `--ink-text` | `#1C1B1A` / `#D9D0C2` | `#141311` / `#D9D0C2` |
+| `--sea` / `--sea-text` | `#34566F` / `#FBFAF7` | `#2C4A60` / `#EDE7DD` |
+| `--neon-open` | `#5DF28C` | = |
+| `--neon-takeaway` | `#FFB547` | = |
+| `--neon-closed` | `#FF6B5E` | = |
 
 Testo rosso o salvia sempre con `--red-text` e `--sage-text`: nel tema chiaro
 `--red` e `--sage` non arrivano a 4.5:1. Nel tema scuro il testo principale sta
-tra 10:1 e 13:1 sul fondo (ora 11.45): più alto affatica gli occhi. I
-`--neon-*` servono solo all'orologio. Gli stati dell'orologio non si
+tra 10:1 e 13:1 sul fondo (ora 11.37): più alto affatica gli occhi. I
+`--neon-*` servono solo all'orologio: tubi accesi sulla tavola scura
+`--neon-board`, uguali nei due temi. Gli stati dell'orologio non si
 distinguono mai solo col colore, sempre anche con testo e icona.
 
 **Dark mode obbligatoria.** Interruttore sempre in header. Colori ritarati uno
@@ -279,9 +286,8 @@ Dettagli in `docs/08-animazioni-risorse.md` e `docs/02-design-system.md`
   movimento diverso per tessera. Tempi volutamente lenti
 - Cursore custom che inverte i colori sopra le immagini, spento su touch
 - Volo della foto nel carrello all'aggiunta; lettere dei link del footer che si
-  scompongono al passaggio (**da sostituire** con una sottolineatura rossa che
-  compare al passaggio, deciso il 2026-10-21 con la variante C); freccia per
-  tornare su in fondo alle pagine
+  scompongono al passaggio (restano con la variante C, scelta di Pietro del
+  2026-10-21); freccia per tornare su in fondo alle pagine
 - Ancora da fare, con GSAP se servirà: nastro con l'orario che scorre, sezioni
   che si incastrano con `position: sticky` e ScrollTrigger
 

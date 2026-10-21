@@ -9,6 +9,7 @@ import { Image } from 'astro:assets';
 import Flag from '../../components/site/Flag.astro';
 import Hours from '../../components/site/Hours.astro';
 import OpenStatus from '../../components/site/OpenStatus.astro';
+import ScatterText from '../../components/site/ScatterText.astro';
 import SocialIcon from '../../components/site/SocialIcon.astro';
 import { merch } from '../../data/merch';
 import { venue } from '../../data/venue';
@@ -48,13 +49,13 @@ const tones = [
 const label = 'font-ui text-small text-muted';
 ---
 
-<Base lang={lang} title="Styleguide · variant C" description="Internal styleguide of the Yanks redesign, variant C." design="c" noindex>
+<Base lang={lang} title="Styleguide · variant C" description="Internal styleguide of the Yanks redesign, variant C." noindex>
   <main id="content">
     <div class="mx-auto max-w-360 px-page pt-10 pb-12 lg:pt-16">
       <h1 class="text-h1">Styleguide</h1>
       <p class="max-w-[60ch] font-prose text-lead">
-        Variant C, chosen on 2026-10-21. Internal page, not translated and not indexed. Switch the theme in the
-        header to check both.
+        Variant C, chosen on 2026-10-21 and applied to the whole site. Internal page, not translated and not
+        indexed. Switch the theme in the header to check both.
       </p>
 
       <h2 class="mt-12 text-h2">Colours</h2>
@@ -191,27 +192,27 @@ const label = 'font-ui text-small text-muted';
           </ul>
         </div>
         <div>
-          <p class={label}>social: icons, 44 px target</p>
+          <p class={label}>social: 32 px icons, 48 px target</p>
           <ul class="mt-1 flex gap-1">
             <li>
-              <a href={venue.social.instagram} rel="noopener" class="grid size-11 place-items-center rounded-full hover:text-red-text">
-                <SocialIcon name="instagram" />
+              <a href={venue.social.instagram} rel="noopener" class="grid size-12 place-items-center rounded-full hover:text-red-text">
+                <SocialIcon name="instagram" class="size-8" />
                 <span class="sr-only">Instagram</span>
               </a>
             </li>
             <li>
-              <a href={venue.social.facebook} rel="noopener" class="grid size-11 place-items-center rounded-full hover:text-red-text">
-                <SocialIcon name="facebook" />
+              <a href={venue.social.facebook} rel="noopener" class="grid size-12 place-items-center rounded-full hover:text-red-text">
+                <SocialIcon name="facebook" class="size-8" />
                 <span class="sr-only">Facebook</span>
               </a>
             </li>
           </ul>
         </div>
         <div>
-          <p class={label}>links: red line on hover (replaces the scattering letters)</p>
+          <p class={label}>page links: the letters scatter on hover</p>
           <ul class="mt-3 space-y-2">
-            <li><a href={`/${lang}/menu/`} class="link-line">{t(lang, 'nav.menu')}</a></li>
-            <li><a href={`/${lang}/styleguide/`} class="link-line" aria-current="page">Styleguide</a></li>
+            <li><a href={`/${lang}/menu/`} class="scatter-host inline-block"><ScatterText text={t(lang, 'nav.menu')} /></a></li>
+            <li><a href={`/${lang}/visit/`} class="scatter-host inline-block"><ScatterText text={t(lang, 'nav.visit')} /></a></li>
           </ul>
         </div>
       </div>
@@ -221,7 +222,7 @@ const label = 'font-ui text-small text-muted';
         <li>Only transform and opacity are animated; prefers-reduced-motion switches everything off.</li>
         <li>Titles slide in from the left (Indian by word, Yankee Clipper by letter), blocks rise into view.</li>
         <li>Cards lift with a solid offset shadow on hover; the photo zooms slightly.</li>
-        <li>Footer links: the red line grows from the left in 0.35 s.</li>
+        <li>Footer page links: the letters scatter and come back on hover (ScatterText, CSS only).</li>
       </ul>
     </div>
   </main>

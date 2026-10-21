@@ -1,0 +1,32 @@
+---
+// Pagina 404 con il marchio (Fase 5C). Una sola pagina per tutte le lingue: chi
+// arriva qui non ha una lingua certa, quindi il messaggio c'è in tutte e tre, ognuno
+// col suo lang, e porta alla home di quella lingua. Non indicizzata.
+import Logo from '../components/site/Logo.astro';
+import Base from '../layouts/Base.astro';
+import { defaultLang, languageNames, locales } from '../i18n/locales';
+import { t } from '../i18n/t';
+---
+
+<Base lang={defaultLang} title={t(defaultLang, 'notFound.title')} description={t(defaultLang, 'notFound.meta')} noindex>
+  <main id="content" class="mx-auto grid max-w-360 items-center gap-10 px-page py-12 lg:grid-cols-12 lg:py-20">
+    <Logo variant="badge" size={260} alt="" class="mx-auto size-44 sm:size-56 lg:col-span-4 lg:size-64" priority />
+    <div class="lg:col-span-8">
+      <h1 tabindex="-1" class="text-h1 focus:outline-none">{t(defaultLang, 'notFound.title')}</h1>
+      <ul class="grid gap-4 sm:grid-cols-3">
+        {
+          locales.map((l) => (
+            <li lang={l} class="flex flex-col rounded-2xl border-[1.5px] border-text bg-surface p-5">
+              <p class="card-title" aria-hidden={l === defaultLang ? 'true' : undefined}>{t(l, 'notFound.title')}</p>
+              <p class="mt-2 flex-1 font-prose">{t(l, 'notFound.text')}</p>
+              <a href={`/${l}/`} hreflang={l} class="btn mt-4 self-start">
+                {t(l, 'notFound.home')}
+                <span class="sr-only">({languageNames[l]})</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </main>
+</Base>

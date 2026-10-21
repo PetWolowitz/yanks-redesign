@@ -17,7 +17,7 @@ const { lang } = Astro.props as { lang: Lang };
 <Base lang={lang} title={`${t(lang, 'cart.title')} · ${venue.name}`} description={t(lang, 'cart.description')}>
   <main id="content">
     <PageIntro title={t(lang, 'cart.title')} intro={t(lang, 'shop.testMode')}>
-      <noscript><p class="mt-6 rounded-2xl border-3 border-text px-4 py-3">{t(lang, 'shop.noscript')}</p></noscript>
+      <noscript><p class="mt-6 rounded-2xl border-[1.5px] border-text px-4 py-3">{t(lang, 'shop.noscript')}</p></noscript>
     </PageIntro>
 
     <CartView lang={lang} variant="page" focusFallback="main h1" class="mx-auto max-w-360 px-page pb-12" />
