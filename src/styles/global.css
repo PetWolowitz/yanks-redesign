@@ -4,11 +4,6 @@
 
 /* dark: segue il tema scelto (data-theme su <html>), non quello del sistema */
 /* Margine laterale comune a tutte le pagine (token --page-x) */
-/* Ombra leggera sopra ogni sezione, su tutte le pagine (Pietro, 2026-10-01) */
-@utility edge-shadow {
-  box-shadow: 0 -18px 32px -22px var(--section-shadow);
-}
-
 /* Fila che scorre in orizzontale a tutta larghezza, ma con la prima scheda
    allineata al margine della pagina (max-w-360 = 90rem) */
 @utility px-bleed {
@@ -116,49 +111,6 @@
     line-height: 1.15;
     text-transform: uppercase;
   }
-
-  /* Link con sottolineatura rossa che compare al passaggio (al posto delle
-     lettere che si scompongono). Si anima solo transform */
-  .link-line {
-    position: relative;
-    text-decoration: none;
-  }
-
-  .link-line::after {
-    content: "";
-    position: absolute;
-    inset-inline: 0;
-    bottom: -0.2em;
-    height: 2px;
-    background-color: var(--red-text);
-    transform: scaleX(0);
-    transform-origin: left;
-  }
-
-  .link-line:is(:hover, :focus-visible, [aria-current])::after {
-    transform: scaleX(1);
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .link-line::after {
-      transition: transform 0.35s ease-out;
-    }
-  }
-}
-
-/* Variante C, misure dei testi che non sono titoli: un po' più piccole. Qui solo
-   con html[data-design="c"]; quando si converte la home passano nei token */
-:root[data-design="c"] body {
-  font-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1.0625rem);
-  background-image: var(--grain);
-}
-
-:root[data-design="c"] .text-lead {
-  font-size: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
-}
-
-:root[data-design="c"] :is(.text-small, .btn, .btn-solid) {
-  font-size: clamp(0.78rem, 0.75rem + 0.1vw, 0.84rem);
 }
 
 /* Ruoli dei font (docs/02): l'interfaccia è Martian Mono, i paragrafi lunghi
@@ -190,6 +142,8 @@
     font-family: var(--font-ui);
     font-size: var(--text-body);
     line-height: 1.6;
+    /* grana da sabbia quasi invisibile (variante C); niente nel tema scuro */
+    background-image: var(--grain);
   }
 
   /* Focus sempre visibile da tastiera, nei due temi */
