@@ -39,7 +39,7 @@ const { lang } = Astro.props;
     </div>
 
     <div data-age-denied hidden class="flex flex-col items-center gap-4">
-      <p class="font-prose text-h3" role="status">{t(lang, 'age.denied')}</p>
+      <p class="font-prose text-lead" role="status">{t(lang, 'age.denied')}</p>
       <button type="button" data-age-back class="min-h-11 text-small text-muted underline underline-offset-4 hover:text-text">
         {t(lang, 'age.back')}
       </button>
