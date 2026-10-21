@@ -18,7 +18,7 @@ interface Props {
 }
 
 const { lang } = Astro.props;
-const tile = 'rounded-2xl border-3 border-text';
+const tile = 'rounded-2xl border-[1.5px] border-text';
 // Posto e movimento delle prime tre recensioni; le altre, se arrivano, vanno in coda
 const layout = [
   { place: 'sm:row-span-2 lg:col-start-1 lg:row-start-1 lg:row-span-3', anim: 'left' },
@@ -27,7 +27,7 @@ const layout = [
 ];
 ---
 
-<section class="edge-shadow border-t-3 border-text">
+<section class="wave-top">
   <div class="mx-auto grid max-w-360 gap-4 px-page py-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6 lg:py-16">
     <div data-anim="down" class="flex flex-col justify-end sm:col-span-2 lg:col-span-1 lg:col-start-2 lg:row-start-1">
       <h2 class="text-h2 leading-none">{t(lang, 'home.reviews.title')}</h2>
