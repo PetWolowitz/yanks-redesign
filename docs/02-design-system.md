@@ -35,6 +35,34 @@ Bandiere: SVG disegnati da noi (Paesi Bassi, Regno Unito per l'inglese,
 Germania), angoli arrotondati, bordo sottile, lingua attiva cerchiata in rosso; il
 nome della lingua resta in `sr-only` e nel `title`.
 
+**Come è costruita** (Fase 5C, passo 1):
+- `tokens.css`: i colori delle sezioni piene (`--ink*`, `--sea*`) e l'onda
+  (`--wave`, `--wave-h`) valgono ovunque, perché sono nomi nuovi. La palette che
+  sostituisce quella di oggi (`--bg`, `--surface`, `--text`…) e la grana valgono
+  **solo con `html[data-design="c"]`**: `Base.astro` lo mette con `design="c"`.
+  Quando si converte la home si spostano su `:root` e `data-design` sparisce
+- `global.css`, nel layer components:
+  - `tone-ink`, `tone-sea`, `tone-cream`: sezioni piene che **ridefiniscono i
+    token al loro interno**, così card, pulsanti e link seguono il fondo da soli
+  - `wave-top`: l'onda del badge come bordo superiore della sezione, nel colore
+    della sezione stessa (maschera CSS con un SVG `data:`, ammesso dalla CSP)
+  - `card-title`: titoli delle card, Yankee Clipper più piccolo e spaziato
+  - `link-line`: sottolineatura rossa che cresce da sinistra al passaggio (solo
+    `transform`, ferma con il movimento ridotto)
+- misure più piccole dei testi non titoli: per ora regole sotto
+  `html[data-design="c"]`, poi nei token della scala
+- componenti: `Flag.astro` (bandiere) e `SocialIcon.astro` (Instagram, Facebook a
+  tratto), entrambi decorativi: il nome lo dà il link (`sr-only`)
+- bordo delle card: `border-[1.5px]`
+
+**Styleguide**: `/en/styleguide/` (`src/pages/[lang]/styleguide.astro`), generata
+anche in nl e de solo perché il selettore della lingua porta alla stessa pagina.
+`noindex`, fuori dal menu e dalla sitemap. **Eccezione voluta alla regola
+dei testi**: le etichette della guida sono scritte nella pagina, perché è uno
+strumento di lavoro e non contenuto; gli esempi usano i testi veri dei file di
+lingua. Mostra colori (con il valore letto dal tema attivo), tipografia, sezioni e
+onde, pulsanti, card, orologio, pezzi del footer, movimento.
+
 ## Il marchio
 - **Logo nuovo dal 2026-10-01**, scelto da Pietro: il "timbro" della proposta 01
   di `07-prompt-loghi.md` (`brand/sorgente/logo1-timbro.png`): disco nero, "Yanks"
