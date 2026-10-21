@@ -15,7 +15,9 @@ ufficiali dei produttori, e si aggiungono nella fase in cui servono.
 | **Stripe** | documentazione e pagamenti di prova | Fase 3 | sì, **solo modalità test** |
 
 Astro Docs e Playwright stanno in `.mcp.json`, nel repository. Stripe accede al
-tuo account: si installa a livello personale e non va nel repository.
+tuo account: si installa a livello personale e non va nel repository. **Finora
+non è stato installato** (2026-10-21): per le Fasi 3 e 4 sono bastate la
+dashboard e la Stripe CLI (`stripe listen`, `stripe events resend`).
 
 **Resend: niente MCP per ora.** Per le email di conferma basta la dashboard di
 Resend; se nella Fase 3 servirà, si valuterà allora.

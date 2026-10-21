@@ -11,7 +11,7 @@ dipendenze, pochi punti di rottura, sito veloce e trovabile.
 | Linguaggio | **TypeScript strict** | Gli errori saltano fuori mentre scrivi, non in produzione |
 | Stile | **Tailwind CSS v4** + `@tailwindcss/vite` | Token in un solo file CSS, niente configurazione separata |
 | Interattività | **TypeScript puro** in `<script>` e custom element | Niente framework UI: orologio, carrello e cursore non ne hanno bisogno |
-| Animazioni | **GSAP** + ScrollTrigger + SplitText | Gratuito anche per uso commerciale, caricato solo dove serve |
+| Animazioni | **CSS e TypeScript**, senza librerie | Titoli, blocchi, cursore, carrello e footer non ne hanno avuto bisogno. GSAP + ScrollTrigger (gratuito anche per uso commerciale) **non è installato**: si valuta solo per nastro e sezioni incastrate, chiedendo prima |
 | Lingue | **i18n integrato di Astro** + file JSON + helper `t()` | Nessuna libreria esterna |
 | Immagini | **`astro:assets`** | Conversione in AVIF e WebP al momento della build |
 | Hosting | **Cloudflare Workers** (asset statici + endpoint) | File statici illimitati, 100.000 richieste al giorno per gli endpoint |
@@ -99,10 +99,11 @@ Conseguenza: anche se il backend avesse un problema, il sito resta in piedi.
 
 ## Regole sulle dipendenze (niente casini con npm)
 
-1. **Poche dipendenze.** Lista di partenza completa: `astro`,
-   `@astrojs/cloudflare`, `tailwindcss`, `@tailwindcss/vite`, `gsap`, `stripe`.
-   In sviluppo: `wrangler`, `vitest`, `@astrojs/check`, `typescript`.
-   Ogni pacchetto in più va motivato
+1. **Poche dipendenze.** Lista di partenza: `astro`, `@astrojs/cloudflare`,
+   `tailwindcss`, `@tailwindcss/vite`. In sviluppo: `wrangler`, `vitest`,
+   `@astrojs/check`, `typescript`. **`gsap` e `stripe` erano previsti e non sono
+   stati installati**: le animazioni sono in CSS e TypeScript, e Stripe, Turnstile
+   e Resend si chiamano con `fetch` (2026-10-02). Ogni pacchetto in più va motivato
 2. **Versioni esatte.** File `.npmrc` con `save-exact=true`: niente aggiornamenti
    a sorpresa
 3. **`package-lock.json` sempre nel repository**

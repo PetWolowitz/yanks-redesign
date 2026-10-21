@@ -17,6 +17,33 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-21 — Variante C scelta, documenti allineati
+Fatto:        scala tipografica più piccola unita (#44). Cinque prove della home
+              (attuale, A, B con Bricolage e con Familjen, C) fatte con CSS
+              iniettato da Playwright, senza toccare il codice; confronto in
+              .playwright-mcp/varianti/confronto.html (fuori da git). Pietro ha
+              scelto la C. Controllo di CLAUDE.md, README e docs: corretti GSAP
+              (non installato), MCP Stripe (mai installato), stato delle fasi,
+              h1 e h2/h3 scambiati in docs/02, http.ts → live.ts in docs/06.
+              Aggiunte le fasi 5C (design C), 5S (shop per un locale vero) e 6P
+              (proposta al locale)
+Decisioni:    - C: fondo #FBFAF7 con grana, crema solo accento, sezioni bianco /
+                inchiostro / shop blu Mare del Nord #34566F, onde del badge come
+                divisori, card con bordo 1.5 px e titoli più piccoli, testi non
+                titoli più piccoli, font e foto invariati
+              - footer: bandiere nostre al posto dei nomi delle lingue, icone
+                social, sottolineatura rossa al posto delle lettere scomposte
+              - C scritta come "decisa, in applicazione": tabella dei colori e
+                regole cambiano pagina per pagina, insieme al codice
+              - iDEAL probabilmente si attiva solo dalla dashboard Stripe
+Problemi:     nelle prove su telefono il layout sembrava spostato: era la barra
+              di scorrimento del Chrome automatico (15 px), non il sito.
+              Testo chiaro sull'inchiostro a 14.9:1, da ritarare sotto 13:1
+Prossimo:     Fase 5C, primo passo: design system C in docs/02 e nei token, più
+              la pagina styleguide; ok di Pietro prima delle pagine
+Ramo/commit:  docs/allineamento — "Documenti allineati: variante C, nuove fasi,
+              correzioni"
+
 ## 2026-10-21 — Fase 4 chiusa: shop vero online
 Fatto:        widget Turnstile vero (hostname yanks-redesign.pietro-costa25.
               workers.dev, modalità Managed). Nella config i predefiniti sono

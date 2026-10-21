@@ -32,7 +32,10 @@ Motivazioni complete in `docs/09-stack-e-principi.md`.
   niente PostCSS**: i token stanno in CSS con `@theme`
 - **Nessun framework UI.** Interattività in TypeScript puro dentro `<script>` e
   custom element. Niente React, niente librerie di stato
-- **GSAP** + ScrollTrigger + SplitText, caricato solo nelle pagine che lo usano
+- **Animazioni in CSS e TypeScript, senza librerie.** GSAP + ScrollTrigger
+  **non è installato**: si aggiunge solo se servirà (nastro con l'orario, sezioni
+  che si incastrano), chiedendo prima a Pietro come ogni dipendenza, e solo
+  nelle pagine che lo usano
 - **i18n integrato di Astro**, testi in JSON, helper `t()` scritto a mano
 - **`astro:assets`** per le immagini
 - **Cloudflare Workers** con adapter `@astrojs/cloudflare`, deploy da GitHub
@@ -47,7 +50,24 @@ Dettagli in `docs/04-build-plan.md`.
 1. Fondamenta comuni, compreso il **contratto dello shop** (`ShopApi`)
 2. Sito statico e frontend dello shop **in parallelo**, lo shop su dati finti
 3. Backend dello shop
-4. Collegamento: `PUBLIC_SHOP_MODE` da `mock` a `live`
+4. Collegamento: `PUBLIC_SHOP_MODE` da `mock` a `live` _(fatte 1-4: shop vero
+   online dal 2026-10-21, sempre in modalità test)_
+
+Da qui, deciso il 2026-10-21 (in quest'ordine):
+5. **Design definitivo, variante C** (vedi Identità): design system in docs/02 e
+   nei token, pagina "styleguide" interna, poi applicato pagina per pagina (home,
+   menu, visit, shop, story, know before you go, avviso d'età, 404). **Una PR per
+   pagina**, screenshot prima e dopo, **ok di Pietro prima della successiva**
+6. **Shop pronto per un locale vero**: iDEAL (probabilmente basta attivarlo nella
+   dashboard Stripe: il checkout non fissa i metodi), email al negozio a ogni
+   ordine, pagine legali (condizioni, recesso 14 giorni, privacy, spedizioni),
+   test automatici dei flussi con Playwright in locale con le chiavi di prova
+7. Fase 6: SEO, Lighthouse nei due temi, revisione completa; poi in questo file
+   si scrive che il design è congelato
+8. **Proposta al locale**: email con il link di prova e documento in olandese e
+   inglese (cosa è stato fatto, costi dello shop rispetto a Shopify, offerta
+   libera o regalo). Prezzi di Shopify e Stripe verificati sul web al momento;
+   testi riletti da Pietro prima dell'invio
 
 Lo shop **non è opzionale**. Regole del contratto:
 - `ShopApi` ha **tre funzioni**: `getProducts()`, `createCheckout(req)`,
@@ -115,6 +135,30 @@ Lo shop **non è opzionale**. Regole del contratto:
   accanto al nuovo
 - L'immaginario è **americana anni '50**: moto, diner, insegne. Non tribale
 - Da evitare: clipart a tema usata come riempitivo. Il segno forte è il logo
+
+## Design definitivo — variante C (decisa il 2026-10-21, in applicazione)
+Scelta da Pietro tra cinque prove della home (attuale, A, B con due font, C).
+La C è il sito di oggi con questi cambi. **Finché una pagina non è convertita
+valgono le regole e i colori scritti sotto**; a ogni pagina convertita si
+aggiornano qui e in docs/02, così codice e documenti non si contraddicono.
+- **Fondo** bianco caldo `#FBFAF7` con una grana da sabbia quasi invisibile; il
+  crema (`#F3EEE4`) solo come accento (footer, card delle recensioni)
+- **Sezioni alternate**: bianco, inchiostro (`#1C1B1A`), e la sezione shop in
+  **blu Mare del Nord `#34566F`** (testo bianco 7.4:1). Il testo chiaro
+  sull'inchiostro va ammorbidito: nella prova era 14.9:1, il tetto è 13:1
+- **Un solo elemento grafico firma**: le **onde del badge come divisori** tra le
+  sezioni, al posto delle righe nere spesse e dell'ombra sopra le sezioni
+- **Font e ruoli invariati** (Pietro preferisce Literata e Martian Mono a
+  Bricolage e Familjen, provati e scartati)
+- **Testi che non sono titoli un po' più piccoli** della scala del 2026-10-21:
+  prosa 15-17 px, introduzioni 16-18, etichette e pulsanti 12.5-13.5
+- **Card**: bordo nero da 1.5 px (era 3), titoli più piccoli e più spaziati
+  (Yankee Clipper ha un solo peso). L'ombra piena al passaggio resta
+- **Foto senza filtri** (duotono e grana provati e scartati)
+- **Footer**: bandiere disegnate da noi al posto dei nomi delle lingue (il nome
+  resta per i lettori di schermo: una bandiera indica un Paese, non una lingua);
+  icone cliccabili al posto delle scritte Facebook e Instagram; sottolineatura
+  rossa al passaggio al posto delle lettere che si scompongono
 
 ## Tipografia — quattro ruoli
 Token in `tokens.css`, dettagli in `docs/02-design-system.md`.
@@ -235,7 +279,9 @@ Dettagli in `docs/08-animazioni-risorse.md` e `docs/02-design-system.md`
   movimento diverso per tessera. Tempi volutamente lenti
 - Cursore custom che inverte i colori sopra le immagini, spento su touch
 - Volo della foto nel carrello all'aggiunta; lettere dei link del footer che si
-  scompongono al passaggio; freccia per tornare su in fondo alle pagine
+  scompongono al passaggio (**da sostituire** con una sottolineatura rossa che
+  compare al passaggio, deciso il 2026-10-21 con la variante C); freccia per
+  tornare su in fondo alle pagine
 - Ancora da fare, con GSAP se servirà: nastro con l'orario che scorre, sezioni
   che si incastrano con `position: sticky` e ScrollTrigger
 
@@ -286,7 +332,8 @@ con il pulsante "Carica contenuto". Così il sito resta senza banner cookie.
 ## MCP disponibili
 `astro-docs` e `playwright` sono in `.mcp.json`; `stripe` accede all'account di
 Pietro, quindi si installa a livello personale e non sta nel repository (vedi
-`docs/10-mcp-e-collegamenti.md`). Usali, non sono decorativi:
+`docs/10-mcp-e-collegamenti.md`). **Finora non è stato installato**: per le Fasi
+3 e 4 sono bastate la dashboard e la Stripe CLI. Usali, non sono decorativi:
 - **astro-docs** — prima di scrivere configurazione o API di Astro, verifica
   sulla documentazione della versione installata. Non fidarti della memoria
 - **playwright** — dopo ogni modifica visibile, apri la pagina e guardala a

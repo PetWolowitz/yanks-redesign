@@ -7,6 +7,34 @@ alle tre di notte.** Tre parole: caldo, notturno, schietto.
 Struttura contemporanea (bordi netti, blocchi pieni, zero decorazione) che fa da
 cornice a un marchio d'epoca. Il contrasto tra i due è il punto.
 
+## Direzione definitiva: variante C (decisa il 2026-10-21, in applicazione)
+Pietro ha confrontato cinque prove della home (attuale; A "Notte al neon", rosso e
+foto in duotono; B "Mare del Nord", verde mare, grana analogica, con Bricolage
+Grotesque o Familjen Grotesk; C) e ha scelto **C: il sito di oggi con palette
+nuova, onde e shop blu**. Le prove erano CSS iniettato con Playwright, senza
+toccare il codice. Le regole qui sotto restano valide **finché una pagina non è
+convertita**; a ogni pagina convertita si riscrive la sezione che la riguarda.
+
+| Cosa | Oggi | Variante C |
+|---|---|---|
+| Fondo | crema `#F7F0E4` | bianco caldo `#FBFAF7` con grana da sabbia quasi invisibile; crema `#F3EEE4` solo come accento |
+| Sezioni | tutte crema o sabbia, riga nera da 3 px e ombra sopra | alternate: bianco, inchiostro `#1C1B1A`, shop in blu Mare del Nord `#34566F` |
+| Divisori | riga nera spessa | **onde del badge** (bordo superiore ondulato della sezione), l'unico elemento grafico firma |
+| Card | bordo 3 px | bordo 1.5 px, titoli più piccoli e spaziati; l'ombra piena al passaggio resta |
+| Testi non titoli | scala del 2026-10-21 | un po' più piccoli: prosa 15-17 px, introduzioni 16-18, etichette e pulsanti 12.5-13.5 |
+| Font | quattro ruoli | invariati (Bricolage e Familjen provati e scartati) |
+| Foto | naturali | naturali (duotono e grana provati e scartati) |
+| Footer | nomi delle lingue, scritte social, lettere che si scompongono | bandiere nostre, icone social cliccabili, sottolineatura rossa al passaggio |
+
+Contrasti misurati nella prova (tutti sopra 4.5:1): testo bianco sul blu 7.43,
+secondario sul blu 6.13; sul fondo chiaro testo 16.48, secondario 6.32, rosso
+5.44. **Da ritarare**: il testo chiaro sull'inchiostro era 14.89:1, sopra il
+tetto di 13:1 che vale per il tema scuro.
+
+Bandiere: SVG disegnati da noi (Paesi Bassi, Regno Unito per l'inglese,
+Germania), angoli arrotondati, bordo sottile, lingua attiva cerchiata in rosso; il
+nome della lingua resta in `sr-only` e nel `title`.
+
 ## Il marchio
 - **Logo nuovo dal 2026-10-01**, scelto da Pietro: il "timbro" della proposta 01
   di `07-prompt-loghi.md` (`brand/sorgente/logo1-timbro.png`): disco nero, "Yanks"
@@ -109,8 +137,9 @@ Controllato: nessun titolo sfora a 360, 390 e 1440 px, in nl, en, de.
   future (`à è é ì ò ù ç ñ`, maiuscole accentate, `€`)
 - **a Indian mancano `– — ‘ ’ “ ” …`**: il browser li prende dal font di riserva e
   si vede. Negli h1 niente trattini, virgolette curve o puntini di sospensione
-- **Indian scende molto sotto la riga** (lo svolazzo della "Y"): h2 e h3 hanno
-  `padding-bottom: 0.12em` e `line-height: 1.1`
+- **Indian scende molto sotto la riga** (lo svolazzo della "Y"): gli h1 hanno
+  `line-height: 1` e `padding-bottom: 0.45em` (dal 2026-10-21; con 0.25em la "Y"
+  di "Your order" toccava il paragrafo sotto)
 - **Indian in maiuscolo non si legge**: le maiuscole corsive si accavallano
   ("ZANDVOORT"). Sempre con la sola iniziale maiuscola
 - **Indian personal use, niente cifre**: al posto di 0-9 c'è il marchio
@@ -119,9 +148,10 @@ Controllato: nessun titolo sfora a 360, 390 e 1440 px, in nl, en, de.
   logo ("Since 1984")
 - **Yankee Clipper minuscolo**: la "u" ha un uncino che la fa sembrare "ú", e
   la "ß" è disegnata come una beta e si legge quasi "B" ("STRAßE"). Per questo
-  gli h1 sono sempre in maiuscolo: si usano solo le maiuscole, che sono pulite,
+  h2 e h3 sono sempre in maiuscolo: si usano solo le maiuscole, che sono pulite,
   e il browser scrive "ß" come "SS". Se usi `font-sign` fuori dagli h1,
-  aggiungi la classe `uppercase`
+  aggiungi la classe `uppercase` (l'unico h1 in Yankee Clipper è quello della
+  scheda prodotto)
 - **Yankee Clipper, cifre illeggibili**: l'8 sembra uno 0 ("18" si legge "10"),
   il 9 è deformato. In `fonts.css` il font ha un `unicode-range` che esclude le
   cifre: le disegna il font successivo della pila, Impact (poi Arial Narrow).
@@ -215,7 +245,8 @@ pillola nel colore dello stato; il dettaglio dopo il punto resta `--muted`.
 suo testo e la sua icona (cerchio pieno, mezzo, vuoto), così si leggono anche
 senza vedere i colori.
 
-Sempre visibile in header (su mobile nella striscia sotto la fascia). Calcolato su `Europe/Amsterdam` con
+Sempre visibile in header, anche su telefono sulla stessa fascia del logo (dal
+2026-10-19; prima stava in una striscia sotto). Calcolato su `Europe/Amsterdam` con
 `Intl.DateTimeFormat`, mai sull'orologio del dispositivo: Italia e Paesi Bassi
 hanno lo stesso fuso, ma chi guarda da Londra è un'ora indietro.
 
