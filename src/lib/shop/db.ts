@@ -181,3 +181,12 @@ export async function orderLinesForEmail(db: D1Database, orderId: number) {
     .all<{ slug: string; size: string | null; quantity: number; price_cents: number }>();
   return results.map((row) => ({ slug: row.slug, size: row.size, quantity: row.quantity, priceCents: row.price_cents }));
 }
+
+// Indirizzo di spedizione, solo per l'email al negozio (chi spedisce deve saperlo)
+export async function shippingAddressForEmail(db: D1Database, orderId: number) {
+  const row = await db
+    .prepare('SELECT full_name, street, postal_code, city, country FROM shipping_addresses WHERE order_id = ?')
+    .bind(orderId)
+    .first<{ full_name: string; street: string; postal_code: string; city: string; country: string }>();
+  return row && { fullName: row.full_name, street: row.street, postalCode: row.postal_code, city: row.city, country: row.country };
+}

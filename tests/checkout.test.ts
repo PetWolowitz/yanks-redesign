@@ -249,6 +249,57 @@ describe('POST /api/stripe-webhook', () => {
     expect(String(email.subject)).toContain('Je bestelling');
   });
 
+  describe('avviso al negozio', () => {
+    const shop = 'negozio@example.com';
+    const resendBodies = (calls: { url: string; init: RequestInit }[]) =>
+      calls.filter((call) => call.url.includes('resend')).map((call) => JSON.parse(String(call.init.body)) as Record<string, unknown>);
+
+    it('con SHOP_NOTIFY_EMAIL parte anche l\'avviso: in olandese, con indirizzo ed email del cliente, senza token', async () => {
+      const { db, response: checkoutResponse } = await checkout();
+      const { token } = (await checkoutResponse.json()) as { token: string };
+      const fake = fakeFetch();
+      await handleStripeWebhook(webhookRequest(paidEvent()), makeEnv(db, { SHOP_NOTIFY_EMAIL: shop }), deps(fake.fetcher));
+      const bodies = resendBodies(fake.calls);
+      expect(bodies).toHaveLength(2);
+      const notice = bodies.find((body) => (body.to as string[])[0] === shop)!;
+      expect(String(notice.subject)).toContain('Nieuwe bestelling');
+      for (const part of ['Mario Rossi', 'Dorpsplein 2', '2042 JK Zandvoort', 'cliente@example.com', 'Verzendadres']) {
+        expect(String(notice.text)).toContain(part);
+      }
+      expect(JSON.stringify(notice)).not.toContain(token);
+      expect(String(notice.text)).not.toContain('#id=');
+      // chiave di idempotenza diversa da quella della conferma
+      const keys = fake.calls.filter((call) => call.url.includes('resend')).map((call) => (call.init.headers as Record<string, string>)['Idempotency-Key']);
+      expect(new Set(keys).size).toBe(2);
+    });
+
+    it('senza SHOP_NOTIFY_EMAIL parte solo la conferma al cliente', async () => {
+      const { db } = await checkout();
+      const fake = fakeFetch();
+      await handleStripeWebhook(webhookRequest(paidEvent()), makeEnv(db), deps(fake.fetcher));
+      expect(resendBodies(fake.calls).map((body) => body.to)).toEqual([['cliente@example.com']]);
+    });
+
+    it('lo stesso webhook due volte manda un solo avviso', async () => {
+      const { db } = await checkout();
+      const fake = fakeFetch();
+      const env = makeEnv(db, { SHOP_NOTIFY_EMAIL: shop });
+      await handleStripeWebhook(webhookRequest(paidEvent()), env, deps(fake.fetcher));
+      await handleStripeWebhook(webhookRequest(paidEvent()), env, deps(fake.fetcher));
+      expect(resendBodies(fake.calls).filter((body) => (body.to as string[])[0] === shop)).toHaveLength(1);
+    });
+
+    it('se l\'avviso non parte l\'ordine resta paid e il webhook risponde 200', async () => {
+      const { db } = await checkout();
+      const errors = vi.spyOn(console, 'error').mockImplementation(() => {});
+      const response = await handleStripeWebhook(webhookRequest(paidEvent()), makeEnv(db, { SHOP_NOTIFY_EMAIL: shop }), deps(fakeFetch({ resend: 500 }).fetcher));
+      expect(response.status).toBe(200);
+      expect(row<{ status: string }>(db, 'SELECT status FROM orders WHERE public_id = ?', ID).status).toBe('paid');
+      expect(errors.mock.calls.flat().join(' ')).toContain('avviso al negozio non inviato');
+      expect(errors.mock.calls.flat().join(' ')).not.toContain('Mario Rossi');
+    });
+  });
+
   it('dopo il pagamento la pagina ordine vede lo stato paid', async () => {
     const { db, response: checkoutResponse } = await checkout();
     const { token } = (await checkoutResponse.json()) as { token: string };

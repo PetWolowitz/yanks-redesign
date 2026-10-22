@@ -104,6 +104,19 @@ pezzi tra le taglie. Comandi: `npm run db:migrate:local`, `npm run db:seed:local
 
 ## Email di conferma — Resend
 
+**Avviso al negozio** (dal 2026-10-21). Dopo la conferma al cliente il webhook
+manda un secondo messaggio a `SHOP_NOTIFY_EMAIL`, se è impostata: in olandese
+(la lingua del locale), con numero d'ordine, articoli, totale, **indirizzo di
+spedizione ed email del cliente** (servono a spedire), lingua dell'ordine.
+**Niente link all'ordine né token.** Chiave di idempotenza `order-shop/<public_id>`,
+diversa da quella della conferma. Se non parte, l'ordine resta pagato e nei log
+c'è solo una frase fissa. Senza le righe dell'ordine non parte.
+`SHOP_NOTIFY_EMAIL` è un indirizzo personale: **mai nel repository**. Online va
+nella dashboard di Cloudflare come **Secret** (una variabile in chiaro aggiunta
+dalla dashboard verrebbe cancellata dal deploy successivo, che usa solo le `vars`
+di `wrangler.jsonc`); in locale in `.dev.vars`. Con Resend in prova arriva solo
+all'indirizzo di Pietro, quindi nel concept il "negozio" è lui.
+
 **Obbligatoria.** È il modo in cui il cliente ritrova l'ordine da un'altra scheda
 o da un altro dispositivo.
 

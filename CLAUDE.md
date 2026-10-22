@@ -62,8 +62,8 @@ Da qui, deciso il 2026-10-21 (in quest'ordine):
    nei token, pagina "styleguide" interna, poi applicato pagina per pagina (home,
    menu, visit, shop, story, know before you go, avviso d'età, 404). **Una PR per
    pagina**, screenshot prima e dopo, **ok di Pietro prima della successiva**
-6. **Shop pronto per un locale vero**: iDEAL (probabilmente basta attivarlo nella
-   dashboard Stripe: il checkout non fissa i metodi), email al negozio a ogni
+6. **Shop pronto per un locale vero**: iDEAL (attivato nella dashboard Stripe il
+   2026-10-21, il checkout non fissa i metodi; manca un acquisto di prova), email al negozio a ogni
    ordine, pagine legali (condizioni, recesso 14 giorni, privacy, spedizioni),
    test automatici dei flussi con Playwright in locale con le chiavi di prova
 7. Fase 6: SEO, Lighthouse nei due temi, revisione completa; poi in questo file
@@ -106,6 +106,9 @@ Lo shop **non è opzionale**. Regole del contratto:
   - **se l'invio fallisce l'ordine resta valido** (`paid`): l'errore va nei log
     e il webhook risponde comunque 200. Nei log mai token né corpo dell'email
   - contiene il link alla pagina ordine con `#id=…&t=…` nel fragment
+  - **avviso al negozio**: un secondo messaggio a `SHOP_NOTIFY_EMAIL` (Secret su
+    Cloudflare e in `.dev.vars`, mai nel repository), in olandese, con indirizzo
+    di spedizione, **senza link né token**. Se manca la variabile non parte
   - nel concept si usa la modalità di prova di Resend (mittente
     `onboarding@resend.dev`, consegna solo all'indirizzo di Pietro); per un
     cliente vero si verifica il suo dominio

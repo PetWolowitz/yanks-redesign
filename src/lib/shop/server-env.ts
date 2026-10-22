@@ -41,6 +41,10 @@ export interface ShopEnv {
   RESEND_API_KEY: string;
   // mittente dell'email, non segreto (vars in wrangler.jsonc)
   EMAIL_FROM: string;
+  // facoltativo: a chi mandare l'avviso di ogni ordine pagato. Dalla dashboard di
+  // Cloudflare e in .dev.vars, mai nel repository (è un indirizzo personale).
+  // Se manca, l'avviso al negozio non parte
+  SHOP_NOTIFY_EMAIL?: string;
   // facoltativo: se Cloudflare non lo fornisce, gli endpoint funzionano lo stesso
   SHOP_LIMITER?: RateLimit;
 }
