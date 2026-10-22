@@ -17,6 +17,23 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-22 — Fase 6: tastiera, tutte le PR unite
+Fatto:        #51-#57 unite (le ultime da Claude: regola `Bash(gh pr merge:*)`
+              aggiunta in .claude/settings.local.json con l'ok di Pietro). Online
+              verificati noindex, robots.txt e sitemap. Navigazione da tastiera
+              su 11 pagine del sito online: nessun problema, tranne il menu su
+              telefono (il Tab finiva sugli elementi nascosti dietro). Corretto:
+              pagina inert con il menu aperto, focus sul ✕ all'apertura
+Decisioni:    - il menu resta un popover (funziona senza JS); l'inert lo aggiunge
+                il JS, con beforetoggle così Esc riporta il focus al pulsante
+              - Cloudflare aggiunge in cima a robots.txt i suoi commenti sui
+                "content signals": innocui, lasciati
+Problemi:     prova da telefono vero (Pietro), acquisto di prova con iDEAL,
+              rilettura dei testi nl e de
+Prossimo:     revisione finale e design congelato in CLAUDE.md; poi Fase 6P
+              (proposta al locale)
+Ramo/commit:  a11y/menu-inert — "Menu su telefono: pagina inert mentre è aperto"
+
 ## 2026-10-22 — Fase 6: SEO e Lighthouse
 Fatto:        #49 e #50 unite da Pietro. Controlli saltati recuperati (checkout,
               footer, pagina legale nel tema scuro e a 390/1440). #56 Open Graph

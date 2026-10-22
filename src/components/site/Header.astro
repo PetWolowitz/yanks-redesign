@@ -315,6 +315,22 @@ const iconButton = 'inline-flex size-11 items-center justify-center rounded-full
     });
   }
 
+  // Menu a tutto schermo (popover): mentre è aperto il resto della pagina è inert, così
+  // Tab e lettori di schermo non finiscono sugli elementi nascosti dietro. beforetoggle
+  // e non toggle: alla chiusura l'inert si toglie prima, e Esc riporta il focus sul
+  // pulsante del menu. Senza JS il menu funziona lo stesso, senza questo blocco
+  const menu = document.getElementById('site-menu');
+  menu?.addEventListener('beforetoggle', (event) => {
+    const open = (event as ToggleEvent).newState === 'open';
+    for (const element of document.body.children) {
+      if (element !== menu && element instanceof HTMLElement) element.inert = open;
+    }
+  });
+  // Aperto il menu, il focus va sul pulsante ✕: quello che l'ha aperto ora è inert
+  menu?.addEventListener('toggle', (event) => {
+    if ((event as ToggleEvent).newState === 'open') menu.querySelector<HTMLElement>('[popovertargetaction="hide"]')?.focus();
+  });
+
   // Scorrendo, la fascia diventa capsula: si animano solo opacity e transform
   const header = document.querySelector<HTMLElement>('[data-header]');
   if (header) {
