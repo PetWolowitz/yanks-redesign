@@ -5,6 +5,7 @@
 // reindirizzamento e si aprono anche da un'altra scheda col link copiato.
 import { merch, skuOf } from '../../data/merch';
 import type { ShopApi } from './api';
+import { shippingCents } from './shipping';
 import { ShopError, type CheckoutResponse, type OrderStatus, type Product } from './types';
 import { validateCheckout } from './validate';
 
@@ -102,7 +103,7 @@ export function createMockShopApi(options: MockOptions = {}): ShopApi {
     async createCheckout(req): Promise<CheckoutResponse> {
       const result = validateCheckout(req);
       if (!result.ok) throw new ShopError('invalid', result.errors);
-      const { lang, items } = result.value;
+      const { lang, items, address } = result.value;
 
       const products = buildProducts();
       const lines: OrderStatus['items'] = [];
@@ -118,7 +119,8 @@ export function createMockShopApi(options: MockOptions = {}): ShopApi {
         id: crypto.randomUUID(),
         token: randomToken(),
         createdAt: now(),
-        totalCents: lines.reduce((sum, line) => sum + line.priceCents * line.quantity, 0),
+        // come il server: spedizione del paese dentro il totale
+        totalCents: lines.reduce((sum, line) => sum + line.priceCents * line.quantity, 0) + shippingCents[address.country],
         items: lines,
       };
       saveOrders([...loadOrders(), order]);

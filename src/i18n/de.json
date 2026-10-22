@@ -187,7 +187,7 @@
   "cart.empty": "Dein Warenkorb ist leer.",
   "cart.remove": "Entfernen",
   "cart.subtotal": "Zwischensumme",
-  "cart.note": "Der Endbetrag wird beim Bezahlen berechnet.",
+  "cart.note": "Zuzüglich Versand ab {price}, je nach Land: Du siehst ihn vor dem Bezahlen.",
   "cart.checkout": "Zur Kasse",
   "cart.itemCount": "{count} Artikel",
   "checkout.title": "Kasse",
@@ -304,9 +304,6 @@
   "legal.withdrawal.4": "Hast du ein Produkt mehr benutzt, als zum Prüfen nötig ist, wie du es im Laden tun würdest, dürfen wir den Wertverlust abziehen.",
   "legal.withdrawal.costs": "Rücksendung",
   "legal.shipping.title": "Versand",
-  "legal.shipping.countries": "Länder",
-  "legal.shipping.cost": "Versandkosten",
-  "legal.shipping.free": "Kostenlos",
   "legal.shipping.time": "Lieferzeit",
   "legal.privacy.title": "Datenschutz",
   "legal.privacy.1": "Für eine Bestellung fragen wir nach deiner E-Mail-Adresse, deinem Namen und deiner Lieferadresse und speichern die gewählten Produkte und die Sprache der Seite. Wir nutzen sie nur, um die Bestellung zu liefern und dir die E-Mails dazu zu schicken.",
@@ -323,5 +320,8 @@
   "legal.company.address": "Adresse",
   "legal.company.email": "E-Mail",
   "legal.company.returnAddress": "Rücksendeadresse",
-  "legal.link": "AGB und Datenschutz"
+  "legal.link": "AGB und Datenschutz",
+  "shop.shipping": "Versand",
+  "checkout.totalNote": "Preise inklusive Mehrwertsteuer. Du bezahlst im nächsten Schritt auf der Seite von Stripe.",
+  "legal.shipping.1": "Die Versandkosten hängen vom Land ab und enthalten die Mehrwertsteuer. Du siehst sie an der Kasse, vor dem Bezahlen, und sie sind im Gesamtbetrag enthalten."
 }

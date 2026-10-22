@@ -187,7 +187,7 @@
   "cart.empty": "Your cart is empty.",
   "cart.remove": "Remove",
   "cart.subtotal": "Subtotal",
-  "cart.note": "The final total is calculated when you check out.",
+  "cart.note": "Plus shipping from {price}, depending on the country: you see it before paying.",
   "cart.checkout": "Check out",
   "cart.itemCount": "{count} items",
   "checkout.title": "Checkout",
@@ -304,9 +304,6 @@
   "legal.withdrawal.4": "If a product has been used more than needed to check it, as you would in a shop, we may deduct the loss in value.",
   "legal.withdrawal.costs": "Return shipping",
   "legal.shipping.title": "Shipping",
-  "legal.shipping.countries": "Countries",
-  "legal.shipping.cost": "Shipping costs",
-  "legal.shipping.free": "Free",
   "legal.shipping.time": "Delivery time",
   "legal.privacy.title": "Privacy",
   "legal.privacy.1": "For an order we ask for your email, name and shipping address, and we keep the products you chose and the language of the site. We only use them to deliver the order and send you its emails.",
@@ -323,5 +320,8 @@
   "legal.company.address": "Address",
   "legal.company.email": "Email",
   "legal.company.returnAddress": "Return address",
-  "legal.link": "Terms and privacy"
+  "legal.link": "Terms and privacy",
+  "shop.shipping": "Shipping",
+  "checkout.totalNote": "Prices include VAT. You pay in the next step, on the Stripe page.",
+  "legal.shipping.1": "Shipping costs depend on the country and include VAT. You see them at checkout, before paying, and they are part of the total."
 }

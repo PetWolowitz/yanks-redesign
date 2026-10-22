@@ -45,18 +45,22 @@ function orderNumber(publicId: string): string {
   return publicId.slice(0, 8).toUpperCase();
 }
 
-function orderLines(lang: Lang, items: EmailOrder['items']) {
-  return items.map((item) => {
+// Righe dell'ordine più la spedizione, che è il totale meno gli articoli: il totale
+// salvato la comprende (lib/shop/shipping.ts) e così vale anche per gli ordini vecchi
+function orderLines(lang: Lang, order: Pick<EmailOrder, 'items' | 'totalCents'>) {
+  const lines = order.items.map((item) => {
     const name = t(lang, `shop.products.${item.slug}.name` as Key) + (item.size ? ` (${item.size})` : '');
     return { label: `${item.quantity} × ${name}`, price: formatPrice(item.priceCents * item.quantity, lang) };
   });
+  const shipping = order.totalCents - order.items.reduce((sum, item) => sum + item.priceCents * item.quantity, 0);
+  return shipping > 0 ? [...lines, { label: t(lang, 'shop.shipping'), price: formatPrice(shipping, lang) }] : lines;
 }
 
 export function confirmationEmail(origin: string, order: EmailOrder): Email {
   const { lang } = order;
   const link = orderLink(origin, lang, { id: order.publicId, token: order.token });
   const number = orderNumber(order.publicId);
-  const lines = orderLines(lang, order.items);
+  const lines = orderLines(lang, order);
   const total = formatPrice(order.totalCents, lang);
   const subject = t(lang, 'email.subject', { number });
 
@@ -92,7 +96,7 @@ export function confirmationEmail(origin: string, order: EmailOrder): Email {
 export function shopNotificationEmail(order: Omit<EmailOrder, 'token'>, address: ShippingAddress, customerEmail: string): Email {
   const lang: Lang = 'nl';
   const number = orderNumber(order.publicId);
-  const lines = orderLines(lang, order.items);
+  const lines = orderLines(lang, order);
   const total = formatPrice(order.totalCents, lang);
   const addressLines = [address.fullName, address.street, `${address.postalCode} ${address.city}`, address.country];
 

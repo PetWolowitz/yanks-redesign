@@ -80,10 +80,15 @@ pezzi tra le taglie. Comandi: `npm run db:migrate:local`, `npm run db:seed:local
 1. Carrello in `localStorage`, dentro `try/catch`, solo identificativi e quantità
 2. Checkout: email, indirizzo, verifica Turnstile invisibile
 3. `api/checkout`: verifica Turnstile lato server, valida i campi, **legge i
-   prezzi dal database e ricalcola il totale**, controlla le giacenze, crea
+   prezzi dal database e ricalcola il totale**, più la spedizione del paese
+   (`src/lib/shop/shipping.ts`, tariffa fissa IVA compresa: NL 6,95, BE/LU/DE
+   9,95, AT/FR/IT/ES 13,95, base PostNL 2026, dal 2026-10-22), controlla le giacenze, crea
    l'ordine `pending`, crea la sessione Stripe con `success_url` uguale a
    `/[lang]/shop/order`, **senza parametri**. Risponde con id, token e
-   l'indirizzo della pagina di Stripe
+   l'indirizzo della pagina di Stripe. La spedizione va a Stripe come
+   `shipping_options` a importo fisso, quindi `amount_total` la comprende e il
+   webhook lo confronta col totale salvato. Pagina ordine ed email la mostrano
+   come totale meno articoli: nessuna colonna in più nel database
 4. Il browser salva id e token in `sessionStorage` (dentro `try/catch`), poi va
    su Stripe. Il cliente paga e torna alla pagina ordine
 5. `api/stripe-webhook`: verifica la firma, e solo allora ordine `paid` e giacenze

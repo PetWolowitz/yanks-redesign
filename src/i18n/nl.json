@@ -187,7 +187,7 @@
   "cart.empty": "Je winkelwagen is leeg.",
   "cart.remove": "Verwijderen",
   "cart.subtotal": "Subtotaal",
-  "cart.note": "Het eindbedrag wordt berekend bij het afrekenen.",
+  "cart.note": "Plus verzendkosten vanaf {price}, afhankelijk van het land: je ziet ze voordat je betaalt.",
   "cart.checkout": "Afrekenen",
   "cart.itemCount": "{count} artikelen",
   "checkout.title": "Afrekenen",
@@ -304,9 +304,6 @@
   "legal.withdrawal.4": "Heb je een product meer gebruikt dan nodig is om het te bekijken, zoals je in een winkel zou doen, dan mogen we de waardevermindering inhouden.",
   "legal.withdrawal.costs": "Terugzenden",
   "legal.shipping.title": "Verzending",
-  "legal.shipping.countries": "Landen",
-  "legal.shipping.cost": "Verzendkosten",
-  "legal.shipping.free": "Gratis",
   "legal.shipping.time": "Levertijd",
   "legal.privacy.title": "Privacy",
   "legal.privacy.1": "Voor een bestelling vragen we je e-mailadres, naam en verzendadres, en bewaren we de gekozen producten en de taal van de site. We gebruiken ze alleen om de bestelling te leveren en je de e-mails erover te sturen.",
@@ -323,5 +320,8 @@
   "legal.company.address": "Adres",
   "legal.company.email": "E-mail",
   "legal.company.returnAddress": "Retouradres",
-  "legal.link": "Voorwaarden en privacy"
+  "legal.link": "Voorwaarden en privacy",
+  "shop.shipping": "Verzending",
+  "checkout.totalNote": "Prijzen inclusief btw. Je betaalt in de volgende stap, op de pagina van Stripe.",
+  "legal.shipping.1": "De verzendkosten hangen af van het land en zijn inclusief btw. Je ziet ze bij het afrekenen, voordat je betaalt, en ze zitten in het totaal."
 }
