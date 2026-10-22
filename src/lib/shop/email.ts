@@ -37,7 +37,7 @@ interface Email {
 // font: Gmail e Outlook non caricano i nostri, quindi sostituti di sistema. Georgia
 // per la prosa, Courier per numeri e pulsanti (al posto di Martian Mono), Impact in
 // maiuscolo per i titoli (al posto di Yankee Clipper)
-const C = { bg: '#FBFAF7', ink: '#1C1B1A', inkText: '#D9D0C2', cream: '#F3EEE4', muted: '#625C55', redText: '#A54C3D' };
+const C = { bg: '#FBFAF7', ink: '#1C1B1A', inkText: '#D9D0C2', cream: '#EFEEEB', muted: '#625C55', redText: '#A54C3D' };
 const PROSE = "font-family:Georgia,'Times New Roman',serif";
 const MONO = "font-family:'Courier New',Courier,monospace";
 const SIGN = "font-family:Impact,'Arial Narrow Bold',sans-serif;font-weight:normal;text-transform:uppercase;letter-spacing:1px";
@@ -68,7 +68,7 @@ function orderBox(lang: Lang, number: string, lines: { label: string; price: str
 }
 
 // Cornice comune alle due email, larga 560 px: testata inchiostro col timbro, onda del
-// badge, contenuto su bianco caldo, footer crema con indirizzo, orari e link.
+// badge, contenuto su bianco caldo, footer grigio caldo con indirizzo, orari e link.
 // Le immagini sono PNG in public/email/: i programmi di posta non mostrano gli SVG
 function layout(lang: Lang, origin: string, title: string, content: string): string {
   const { street, postalCode, city } = venue.address;

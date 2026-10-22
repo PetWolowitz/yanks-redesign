@@ -17,7 +17,7 @@ sezioni più sotto (Colori, Spaziatura, Navigazione) dicono altro, vale questa.
 
 | Cosa | Oggi | Variante C |
 |---|---|---|
-| Fondo | crema `#F7F0E4` | bianco caldo `#FBFAF7` con grana da sabbia quasi invisibile; crema `#F3EEE4` solo come accento |
+| Fondo | crema `#F7F0E4` | bianco caldo `#FBFAF7` con grana da sabbia quasi invisibile; grigio caldo `#EFEEEB` solo come accento (crema `#F3EEE4` fino al 2026-10-22) |
 | Sezioni | tutte crema o sabbia, riga nera da 3 px e ombra sopra | alternate: bianco, inchiostro `#1C1B1A`, shop in blu Mare del Nord `#34566F` |
 | Divisori | riga nera spessa | **onde del badge** (bordo superiore ondulato della sezione), l'unico elemento grafico firma |
 | Card | bordo 3 px | bordo 1.5 px, titoli più piccoli e spaziati; l'ombra piena al passaggio resta |
@@ -353,16 +353,16 @@ Regole che ne sono uscite:
   spazio, così tutto resta in vista
 - oltre i 1440 px il contenuto resta centrato su 1440 (max-w-360)
 
-## Story in orizzontale (dal 2026-10-02)
+## Story a bento (dal 2026-10-22)
 
-La cronologia è una fila di schede che scorre da sinistra a destra (Pietro:
-scorrere molto in giù fa perdere le cose). Scroll-snap nativo, una linea del tempo
-con un pallino per tappa sopra le schede, pulsanti ← → per il mouse (con JS),
-barra di scorrimento sottile nei colori del tema. Le schede aderiscono al
-contenuto. La rotella non viene mai dirottata in orizzontale. Telefono: una
-scheda all'85% della larghezza, così si vede che ce n'è un'altra.
-Attenzione: la fila è `relative`, altrimenti il testo `sr-only` dei titoli
-animati (posizione assoluta) esce dalla fila e allarga la pagina.
+La cronologia è una griglia a bento, in ordine di tempo da sinistra a destra e
+dall'alto in basso. Dal 2026-10-02 scorreva in orizzontale con scroll-snap e
+pulsanti ← →: a Pietro non piaceva; lo scorrimento automatico è stato scartato
+(serve un pulsante di pausa, WCAG 2.2.2, e le schede scappano mentre si legge).
+Telefono: una colonna. Tablet: due colonne, 1984 e 1995 affiancate, le tappe
+con foto a tutta larghezza. Desktop: tre colonne, l'insegna con la foto sopra
+alta quanto la griglia a destra, "oggi" largo due colonne con la foto a lato.
+Ogni tessera entra con un movimento suo (`data-anim`), niente JavaScript proprio.
 
 ## Movimento (dal 2026-09-29)
 
@@ -429,5 +429,5 @@ etichette da insegna, corte e in maiuscolo.
 - Il carrello mostra il numero di articoli; senza JS è un link alla pagina
   carrello
 
-**Footer** (variante C): crema con l'onda sopra; indirizzo, orari, link alle
+**Footer** (variante C): grigio caldo (`--surface`) con l'onda sopra; indirizzo, orari, link alle
 pagine, lingue (nomi nella loro lingua), icone social, disclaimer del concept.
