@@ -24,16 +24,23 @@ sezioni più sotto (Colori, Spaziatura, Navigazione) dicono altro, vale questa.
 | Testi non titoli | scala del 2026-10-21 | un po' più piccoli: prosa 15-17 px, introduzioni 16-18, etichette e pulsanti 12.5-13.5 |
 | Font | quattro ruoli | invariati (Bricolage e Familjen provati e scartati) |
 | Foto | naturali | naturali (duotono e grana provati e scartati) |
-| Footer | nomi delle lingue, scritte social | bandiere nostre, icone social da 32 px; le lettere che si scompongono restano sui link delle pagine (sottolineatura rossa provata e scartata) |
+| Footer | nomi delle lingue, scritte social | nomi delle lingue nella loro lingua (bandiere provate e tolte), icone social da 32 px; le lettere che si scompongono restano (sottolineatura rossa provata e scartata) |
 
 Contrasti misurati (tutti sopra 4.5:1; i valori accanto ai token in
 `tokens.css`): testo bianco sul blu 7.43, secondario sul blu 6.13; sul fondo
 chiaro testo 16.48, secondario 6.32, rosso 5.44. Testo chiaro sull'inchiostro
 `#D9D0C2`: 11.26:1 (nella prova era 14.89, sopra il tetto di 13).
 
-Bandiere: SVG disegnati da noi (Paesi Bassi, Regno Unito per l'inglese,
-Germania), angoli arrotondati, bordo sottile, lingua attiva cerchiata in rosso; il
-nome della lingua resta in `sr-only` e nel `title`.
+Bandiere: provate il 2026-10-21 (SVG nostri al posto dei nomi delle lingue) e
+tolte lo stesso giorno su richiesta di Pietro: nel footer le lingue sono
+"Nederlands", "English", "Deutsch", ognuna nella sua lingua.
+
+**Onde, regola delle intersezioni**: sempre colore della sezione sopra → onda →
+sezione sotto, senza fasce in mezzo, nei due temi. L'onda è il bordo superiore
+della sezione sotto (`wave-top`) e si sovrappone al fondo di quella sopra. Lo
+spazio prima del footer è il `padding-bottom` del `<main>` (4rem), che si annulla
+quando il main finisce con una sezione piena (`tone-*`): così sulla home l'onda
+crema del footer sale direttamente sul nero della mappa.
 
 **Come è costruita**:
 - `tokens.css`: palette C nei due temi, colori delle sezioni piene (`--ink*`,
@@ -47,19 +54,24 @@ nome della lingua resta in `sr-only` e nel `title`.
 - misure più piccole dei testi non titoli direttamente nella scala dei token
   (`--text-body` 15-17, `--text-lead` 16-18, `--text-small` e `--text-btn`
   12.5-13.5)
-- componenti: `Flag.astro` (bandiere) e `SocialIcon.astro` (Instagram, Facebook a
-  tratto), entrambi decorativi: il nome lo dà il link (`sr-only`)
+- componente `SocialIcon.astro` (Instagram, Facebook a tratto), decorativo: il
+  nome lo dà il link (`sr-only`)
 - bordo di card, campi, riquadri e righe interne: `border-[1.5px]` (pulsanti,
   header e tubo al neon restano com'erano). L'ombra sopra le sezioni
   (`edge-shadow`) non c'è più
 - home: hero bianca, foto dell'esterno, "chi siamo" `tone-ink`, menu bianco,
   shop `tone-sea`, recensioni bianche, mappa `tone-ink`; footer `tone-cream`
   con l'onda, su tutte le pagine
-- `LangSwitch` con `flags`: bandiere nel footer. Su una pagina senza lingua
-  nell'indirizzo (la 404) il selettore porta alla home della lingua
+- `LangSwitch`: su una pagina senza lingua nell'indirizzo (la 404) il selettore
+  porta alla home della lingua
 - 404 (`src/pages/404.astro`): logo grande e un riquadro per lingua, ognuno col
-  suo `lang`; testi in `notFound.*`, **da far rileggere a Pietro** (nl e de
-  scritti da Claude)
+  suo `lang`; testi in `notFound.*` (riletti il 2026-10-21: "la pagina non
+  esiste o si è spostata", "torna alla home")
+- toast della pagina ordine: regione `role="status"` sempre presente e vuota (il
+  testo che entra viene annunciato), riquadro `tone-ink` in basso a destra; su
+  telefono in alto sotto l'header, per non coprire il pulsante "Copia link", chiusura dopo 6 s o con la X. Compare
+  una volta sola: stessa condizione che svuota il carrello (pagato, appena
+  tornati da Stripe, chiave in `sessionStorage`). Testi `order.toast.*`
 
 **Styleguide**: `/en/styleguide/` (`src/pages/[lang]/styleguide.astro`), generata
 anche in nl e de solo perché il selettore della lingua porta alla stessa pagina.
@@ -357,8 +369,11 @@ spegne tutto; si animano solo `transform` e `opacity`; senza JS si vede tutto.
   Indian per parola (200 ms l'una), Yankee Clipper per lettera (55 ms l'una).
   Nessun tremolio dopo l'ingresso (provato e tolto il 2026-10-01). Gli screen
   reader leggono il titolo intero (`sr-only`)
-- **Tempi**: volutamente lenti (titoli 1.3-1.7 s dal 2026-10-02, blocchi 1.1 s,
-  volo nel carrello 1 s)
+- **Tempi** (fissati il 2026-10-21; la PR #38 con tempi più lenti, 1.8-2.6 s, è
+  stata chiusa): titoli 1.3 s per lettera e 1.7 s per parola (Indian), blocchi
+  1.1 s, volo nel carrello 1 s, toast 0.4 s, lettere del footer 0.25 s
+- **L'h1 della hero non si anima** (`data-static`): "Yanks" è visibile al primo
+  disegno della pagina, senza aspettare lo script
 - **Blocchi in ingresso**: schede, foto, citazioni e moduli sotto la piega salgono
   quando arrivano in vista. Quello che è a schermo al caricamento non si anima.
   Nelle bento ogni tessera ha un movimento suo (`data-anim`: left, right, up,
@@ -368,7 +383,7 @@ spegne tutto; si animano solo `transform` e `opacity`; senza JS si vede tutto.
   il numero salta, il pulsante mostra "✓ Aggiunto" per 1.6 s
 - **Footer**: al passaggio del mouse le lettere dei link delle pagine si
   scompongono e tornano a posto quando esce (`ScatterText.astro`, solo CSS).
-  Bandiere e icone social non hanno lettere, quindi non si scompongono
+  Le icone social non hanno lettere, quindi non si scompongono
 - **Cursore**: un punto che inverte i colori, più grande su link e pulsanti, un
   blocco pieno sulle foto. Solo con un mouse vero; nei campi di testo resta il
   cursore di testo; con avviso d'età o menu aperti torna quello di sistema
@@ -410,4 +425,4 @@ etichette da insegna, corte e in maiuscolo.
   carrello
 
 **Footer** (variante C): crema con l'onda sopra; indirizzo, orari, link alle
-pagine, bandiere per le lingue, icone social, disclaimer del concept.
+pagine, lingue (nomi nella loro lingua), icone social, disclaimer del concept.

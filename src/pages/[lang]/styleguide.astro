@@ -6,7 +6,7 @@
 // in inglese; gli esempi di contenuto usano i testi veri dei file di lingua.
 import type { GetStaticPaths } from 'astro';
 import { Image } from 'astro:assets';
-import Flag from '../../components/site/Flag.astro';
+import LangSwitch from '../../components/site/LangSwitch.astro';
 import Hours from '../../components/site/Hours.astro';
 import OpenStatus from '../../components/site/OpenStatus.astro';
 import ScatterText from '../../components/site/ScatterText.astro';
@@ -14,7 +14,7 @@ import SocialIcon from '../../components/site/SocialIcon.astro';
 import { merch } from '../../data/merch';
 import { venue } from '../../data/venue';
 import Base from '../../layouts/Base.astro';
-import { langPaths, languageNames, locales, type Lang } from '../../i18n/locales';
+import { langPaths, type Lang } from '../../i18n/locales';
 import { formatPrice } from '../../lib/format';
 import { productImage } from '../../lib/shop/images';
 import { t, type Key } from '../../i18n/t';
@@ -170,26 +170,8 @@ const label = 'font-ui text-small text-muted';
       <h2 class="mt-12 text-h2">Footer pieces</h2>
       <div class="mt-6 grid gap-10 sm:grid-cols-3">
         <div>
-          <p class={label}>languages: flags, name for screen readers</p>
-          <ul class="mt-3 flex gap-3">
-            {
-              locales.map((l) => (
-                <li>
-                  <a
-                    href={`/${l}/`}
-                    hreflang={l}
-                    lang={l}
-                    title={languageNames[l]}
-                    aria-current={l === lang ? 'true' : undefined}
-                    class="block rounded-md p-1 aria-[current]:ring-2 aria-[current]:ring-red-text"
-                  >
-                    <Flag lang={l} />
-                    <span class="sr-only">{languageNames[l]}</span>
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
+          <p class={label}>languages: each name in its own language, letters scatter on hover</p>
+          <LangSwitch lang={lang} scatter dense class="mt-3" />
         </div>
         <div>
           <p class={label}>social: 32 px icons, 48 px target</p>

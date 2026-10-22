@@ -343,8 +343,10 @@ prima/dopo di tutte le pagine in `.playwright-mcp/pagine/`)_
 - [x] Know before you go
 - [x] Avviso d'età
 - [x] 404 con il marchio
-- [x] Footer: bandiere, icone social da 32 px; le lettere che si scompongono
-      restano (sottolineatura provata e scartata)
+- [x] Footer: nomi delle lingue (bandiere provate e tolte), icone social da 32
+      px; le lettere che si scompongono restano
+- [x] Onde senza fasce in mezzo, toast a ordine pagato, h1 della hero subito
+      visibile (2026-10-21)
 
 ## Fase 5S — Shop pronto per un locale vero
 

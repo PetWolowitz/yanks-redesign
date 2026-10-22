@@ -24,7 +24,7 @@ const headingClass = 'mb-3 text-h3';
 const linkClass = 'scatter-host inline-block py-2.5 lg:py-1';
 ---
 
-<footer class="wave-top tone-cream mt-16">
+<footer class="wave-top tone-cream">
   <!-- text-small: testi più piccoli (Pietro, 2026-10-02); i titoli restano text-h3 -->
   <div class="mx-auto grid max-w-360 gap-x-8 gap-y-10 px-page pt-14 pb-10 text-small sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-12">
     <div class="flex items-start gap-5 sm:col-span-2 lg:col-span-5 xl:col-span-3 xl:flex-col">
@@ -61,7 +61,7 @@ const linkClass = 'scatter-host inline-block py-2.5 lg:py-1';
 
     <div class="xl:col-span-2">
       <h2 class={headingClass}>{t(lang, 'nav.languages')}</h2>
-      <LangSwitch lang={lang} flags />
+      <LangSwitch lang={lang} scatter dense />
     </div>
 
     <div class="xl:col-span-2">

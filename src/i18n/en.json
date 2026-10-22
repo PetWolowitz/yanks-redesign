@@ -276,7 +276,9 @@
   "email.link": "View your order:",
   "email.test": "This is a concept shop in test mode: nothing has been charged and nothing will be shipped.",
   "notFound.title": "Page not found",
-  "notFound.text": "This page does not exist, or not anymore. Choose your language to go back.",
-  "notFound.home": "To the homepage",
-  "notFound.meta": "This page does not exist."
+  "notFound.text": "This page does not exist, or it has moved.",
+  "notFound.home": "Back to the homepage",
+  "notFound.meta": "This page does not exist.",
+  "order.toast.paid": "Payment received: your order is confirmed.",
+  "order.toast.close": "Close message"
 }
