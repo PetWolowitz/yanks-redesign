@@ -1,21 +1,20 @@
 ---
-// Link alla stessa pagina nelle altre lingue, con le bandiere (Pietro, 2026-10-22:
-// bandiere ovunque al posto dei nomi). Il nome della lingua, nella sua lingua, resta
-// per i lettori di schermo e nel title; lang e hreflang giusti.
-// compact: capsula dell'header (bandiere piccole, la lingua attiva su fondo pieno);
-// altrimenti footer (bandiere grandi, la lingua attiva cerchiata in rosso).
-// Al clic la bandiera sventola, poi si cambia pagina; con movimento ridotto si cambia subito.
+// Link alla stessa pagina nelle altre lingue, con lang e hreflang giusti.
+// short: codici NL EN DE nella capsula dell'header, come prima.
+// Altrimenti bandiere (footer, Pietro 2026-10-22, su ogni dispositivo): il nome della
+// lingua, nella sua lingua, resta per i lettori di schermo e nel title. Al clic la
+// bandiera sventola, poi si cambia pagina; con movimento ridotto si cambia subito.
 import { languageNames, locales, type Lang } from '../../i18n/locales';
 import { t } from '../../i18n/t';
 import Flag from './Flag.astro';
 
 interface Props {
   lang: Lang;
-  compact?: boolean;
+  short?: boolean;
   class?: string;
 }
 
-const { lang, compact = false, class: className } = Astro.props;
+const { lang, short = false, class: className } = Astro.props;
 
 // /en/menu/ → /nl/menu/: cambia solo il primo segmento, come gli hreflang di Base.astro
 // Una pagina senza lingua nell'indirizzo (la 404) porta alla home della lingua
@@ -24,7 +23,7 @@ const hrefFor = (l: Lang) => (hasLang ? Astro.url.pathname.replace(/^\/[^/]+\//,
 ---
 
 <nav aria-label={t(lang, 'nav.languages')} class={className}>
-  <ul class:list={['flex', compact ? 'gap-0.5' : 'flex-wrap gap-2']}>
+  <ul class:list={['flex', short ? 'gap-0.5' : 'flex-wrap gap-2']}>
     {
       locales.map((l) => (
         <li>
@@ -33,16 +32,18 @@ const hrefFor = (l: Lang) => (hasLang ? Astro.url.pathname.replace(/^\/[^/]+\//,
             hreflang={l}
             lang={l}
             aria-current={l === lang ? 'true' : undefined}
-            title={languageNames[l]}
-            data-flag-link
+            title={short ? undefined : languageNames[l]}
+            data-flag-link={short ? undefined : ''}
             class:list={[
               'inline-flex min-h-11 min-w-11 items-center justify-center',
-              compact
-                ? 'rounded-full [--flag-w:1.375rem] aria-[current]:bg-text lg:min-h-9 lg:min-w-9 xl:min-w-10'
-                : 'rounded-lg aria-[current]:ring-2 aria-[current]:ring-red-text',
+              short
+                ? // pillole della capsula: la lingua attiva è piena
+                  'rounded-full px-2 uppercase not-aria-[current]:hover:text-red-text aria-[current]:bg-text aria-[current]:text-bg lg:min-h-9 lg:min-w-9 xl:min-w-10'
+                : // bandiera dentro un bersaglio da 44 px; la lingua attiva è cerchiata in rosso
+                  'rounded-lg aria-[current]:ring-2 aria-[current]:ring-red-text',
             ]}
           >
-            <Flag lang={l} />
+            {short ? <span aria-hidden="true">{l}</span> : <Flag lang={l} />}
             <span class="sr-only">{languageNames[l]}</span>
           </a>
         </li>

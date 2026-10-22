@@ -343,7 +343,7 @@ prima/dopo di tutte le pagine in `.playwright-mcp/pagine/`)_
 - [x] Know before you go
 - [x] Avviso d'età
 - [x] 404 con il marchio
-- [x] Footer: bandiere (rimesse il 2026-10-22, anche nell'header, sventolano al
+- [x] Footer: bandiere (rimesse il 2026-10-22, solo nel footer, sventolano al
       clic; su telefono accanto ai social), icone social da 32
       px; le lettere che si scompongono restano
 - [x] Onde senza fasce in mezzo, toast a ordine pagato, h1 della hero subito

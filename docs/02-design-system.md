@@ -24,7 +24,7 @@ sezioni più sotto (Colori, Spaziatura, Navigazione) dicono altro, vale questa.
 | Testi non titoli | scala del 2026-10-21 | un po' più piccoli: prosa 15-17 px, introduzioni 16-18, etichette e pulsanti 12.5-13.5 |
 | Font | quattro ruoli | invariati (Bricolage e Familjen provati e scartati) |
 | Foto | naturali | naturali (duotono e grana provati e scartati) |
-| Footer | nomi delle lingue, scritte social | bandiere al posto dei nomi delle lingue (dal 2026-10-22, anche nell'header), icone social da 32 px; le lettere che si scompongono restano (sottolineatura rossa provata e scartata) |
+| Footer | nomi delle lingue, scritte social | bandiere al posto dei nomi delle lingue (dal 2026-10-22, su ogni dispositivo; nella navbar restano i codici), icone social da 32 px; le lettere che si scompongono restano (sottolineatura rossa provata e scartata) |
 
 Contrasti misurati (tutti sopra 4.5:1; i valori accanto ai token in
 `tokens.css`): testo bianco sul blu 7.43, secondario sul blu 6.13; sul fondo
@@ -32,7 +32,7 @@ chiaro testo 16.48, secondario 6.32, rosso 5.44. Testo chiaro sull'inchiostro
 `#D9D0C2`: 11.26:1 (nella prova era 14.89, sopra il tetto di 13).
 
 Bandiere: provate il 2026-10-21, tolte lo stesso giorno e **rimesse il
-2026-10-22 su richiesta di Pietro, ovunque** (header e footer, `Flag.astro`,
+2026-10-22 su richiesta di Pietro, nel footer su ogni dispositivo** (nella navbar restano i codici NL EN DE; `Flag.astro`,
 SVG nostri, Regno Unito per l'inglese). Il nome della lingua nella sua lingua
 resta per i lettori di schermo e nel `title`, perché una bandiera indica un
 Paese, non una lingua. Al clic la bandiera sventola (360 ms, solo `transform`),
