@@ -341,7 +341,10 @@ con il pulsante "Carica contenuto". Così il sito resta senza banner cookie.
 - Immagini WebP, `loading="lazy"`, `width` e `height` espliciti
 - Lighthouse su **entrambi i temi**: prestazioni 90+, accessibilità 95+
 - Contrasto minimo 4.5:1, HTML semantico, navigabile da tastiera
-- SEO: meta per pagina e per lingua, Open Graph, JSON-LD `LocalBusiness`
+- SEO: meta per pagina e per lingua, Open Graph, JSON-LD `LocalBusiness`, sitemap.
+  **Indicizzazione spenta** (`INDEXABLE = false` in `src/lib/seo.ts`, Pietro
+  2026-10-22): `noindex` su ogni pagina finché il locale non approva, perché il
+  concept non passi per il sito ufficiale su Google. Si accende con `true`
 - Intestazioni di sicurezza in `public/_headers`
 - `localStorage` sempre dentro `try/catch`
 - Segreti solo nelle variabili di Cloudflare; in locale in `.dev.vars`, fuori da git

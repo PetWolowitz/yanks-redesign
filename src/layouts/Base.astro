@@ -6,7 +6,7 @@ import esterno from '../assets/home/esterno.jpg';
 import { venue } from '../data/venue';
 import { defaultLang, locales, type Lang } from '../i18n/locales';
 import { t } from '../i18n/t';
-import { localBusiness } from '../lib/seo';
+import { INDEXABLE, localBusiness } from '../lib/seo';
 import themeInit from '../scripts/theme-init.js?raw';
 import AgeGate from '../components/site/AgeGate.astro';
 import Footer from '../components/site/Footer.astro';
@@ -47,6 +47,8 @@ const isHome = Astro.url.pathname === `/${lang}/`;
         <meta name="robots" content="noindex, nofollow" />
       ) : (
         <>
+          {/* Indicizzazione spenta finché il locale non approva (lib/seo.ts, INDEXABLE) */}
+          {!INDEXABLE && <meta name="robots" content="noindex" />}
           <link rel="canonical" href={urlFor(lang)} />
           {locales.map((l) => <link rel="alternate" hreflang={l} href={urlFor(l)} />)}
           <link rel="alternate" hreflang="x-default" href={urlFor(defaultLang)} />

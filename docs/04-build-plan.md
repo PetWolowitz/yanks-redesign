@@ -380,13 +380,20 @@ prima/dopo di tutte le pagine in `.playwright-mcp/pagine/`)_
 - [x] JSON-LD `LocalBusiness` generato da `venue.ts` _(2026-10-22: `lib/seo.ts`,
       solo nella home di ogni lingua, senza email; escluso dal test della CSP
       perché non si esegue)_
-- [ ] Sitemap
+- [x] Sitemap _(2026-10-22: `/sitemap.xml` e `/robots.txt` generati in build, senza
+      pacchetti. Indicizzazione spenta con `INDEXABLE` in `lib/seo.ts` finché il
+      locale non approva: `noindex` ovunque, robots.txt senza sitemap)_
 - [ ] CSP rifinita: niente `unsafe-inline` dove si può evitare; hash dello script
       del tema aggiornato _(script: fatto, con test; stili: `unsafe-inline` resta per
       gli attributi `style`, vedi docs/06 Stato della sicurezza)_
 - [x] Verifica su securityheaders.com _(2026-10-19: A+)_
 - [x] `npm audit` _(2026-10-01, PR #17: `npm audit fix` senza `--force`, 0 vulnerabilità)_
-- [ ] Lighthouse su entrambi i temi: 90+ prestazioni, 95+ accessibilità
+- [x] Lighthouse su entrambi i temi: 90+ prestazioni, 95+ accessibilità
+      _(2026-10-22, Lighthouse 13.5.0, telefono: sito online, 7 pagine per tema,
+      prestazioni 99-100, accessibilità, buone pratiche e SEO 100. Pagine nuove
+      (legale, carrello, checkout) in locale: accessibilità 100 nei due temi; SEO
+      69 solo per il `noindex` voluto. Tema e avviso d'età impostati in un profilo
+      di Chrome prima della misura, controllati sugli screenshot finali)_
 - [ ] Navigazione completa da tastiera
 - [ ] Prova da telefono vero
 - [x] Informativa privacy e condizioni di vendita _(2026-10-22, PR #51: `/[lang]/legal/`)_

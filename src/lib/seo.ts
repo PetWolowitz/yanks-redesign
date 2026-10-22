@@ -5,6 +5,26 @@
 // Orario continuo 08:00-02:45 (chiusura dopo mezzanotte, la forma che Google accetta);
 // l'asporto dopo le 02:00 lo spiega la pagina Visit.
 import { venue } from '../data/venue';
+import { locales } from '../i18n/locales';
+
+// Interruttore dell'indicizzazione (Pietro, 2026-10-22). Spento finché il locale non
+// approva il sito: il concept non deve passare per il sito ufficiale su Google.
+// Spento: ogni pagina ha "noindex" e robots.txt non indica la sitemap. Il resto (Open
+// Graph, JSON-LD, sitemap) è già pronto: per accenderlo basta true
+export const INDEXABLE = false;
+
+// Sitemap con le versioni nelle altre lingue (hreflang) di ogni pagina.
+// paths: percorsi dopo la lingua, per esempio "" (home) o "menu/"
+export function sitemapXml(site: URL, paths: string[]): string {
+  const url = (lang: string, path: string) => new URL(`/${lang}/${path}`, site).href;
+  const entries = paths.flatMap((path) =>
+    locales.map((lang) => {
+      const alternates = locales.map((l) => `<xhtml:link rel="alternate" hreflang="${l}" href="${url(l, path)}"/>`).join('');
+      return `<url><loc>${url(lang, path)}</loc>${alternates}</url>`;
+    }),
+  );
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${entries.join('\n')}\n</urlset>\n`;
+}
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 

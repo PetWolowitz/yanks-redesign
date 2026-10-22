@@ -17,6 +17,25 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-22 — Fase 6: SEO e Lighthouse
+Fatto:        #49 e #50 unite da Pietro. Controlli saltati recuperati (checkout,
+              footer, pagina legale nel tema scuro e a 390/1440). #56 Open Graph
+              su ogni pagina e JSON-LD LocalBusiness nella home, da venue.ts.
+              #57 indicizzazione spenta (`INDEXABLE` in lib/seo.ts), sitemap e
+              robots.txt generati in build. Lighthouse 13.5.0 nei due temi:
+              online 99-100 ovunque; pagine nuove in locale accessibilità 100
+Decisioni:    - noindex finché il locale non approva: il concept non deve passare
+                per il sito ufficiale su Google (il loro ha noindex)
+              - robots.txt permette la scansione, così Google vede il noindex
+              - JSON-LD senza email; tipo LocalBusiness generico
+              - Lighthouse installato solo nello scratchpad, non nel progetto
+                (ok di Pietro)
+Problemi:     PR da unire da Pietro, in ordine #51 → #57. Testi legali nl e de da
+              rileggere. Acquisto di prova con iDEAL da fare
+Prossimo:     navigazione completa da tastiera, prova da telefono vero, revisione
+              finale; poi design congelato in CLAUDE.md
+Ramo/commit:  seo/noindex-sitemap — "Risultati di Lighthouse; diario"
+
 ## 2026-10-22 — Fase 5S: legale, spedizioni, bandiere nel footer, email
 Fatto:        #48 unita da Pietro. PR nuove, in catena: #51 pagina legale
               `/[lang]/legal/` (condizioni, recesso, spedizioni, privacy, dati
