@@ -1,7 +1,12 @@
 ---
-// Layout comune a tutte le pagine: lingua, meta, hreflang, tema.
+// Layout comune a tutte le pagine: lingua, meta, hreflang, Open Graph, tema.
+import { getImage } from 'astro:assets';
 import '../styles/global.css';
+import esterno from '../assets/home/esterno.jpg';
+import { venue } from '../data/venue';
 import { defaultLang, locales, type Lang } from '../i18n/locales';
+import { t } from '../i18n/t';
+import { localBusiness } from '../lib/seo';
 import themeInit from '../scripts/theme-init.js?raw';
 import AgeGate from '../components/site/AgeGate.astro';
 import Footer from '../components/site/Footer.astro';
@@ -20,6 +25,14 @@ const { lang, title, description, noindex = false } = Astro.props;
 
 // Stessa pagina nelle altre lingue: cambia solo il primo segmento (/en/… → /nl/…)
 const urlFor = (l: Lang) => new URL(Astro.url.pathname.replace(/^\/[^/]+\//, `/${l}/`), Astro.site).href;
+
+// Anteprima quando si condivide un link (Open Graph): il locale dal Dorpsplein,
+// 1200×630 come chiedono Facebook, WhatsApp e LinkedIn. getImage ritaglia in build
+const ogImage = await getImage({ src: esterno, width: 1200, height: 630, format: 'jpg' });
+const ogImageUrl = new URL(ogImage.src, Astro.site).href;
+const ogLocale: Record<Lang, string> = { nl: 'nl_NL', en: 'en_GB', de: 'de_DE' };
+// Dati del locale per i motori di ricerca (lib/seo.ts): solo nella home di ogni lingua
+const isHome = Astro.url.pathname === `/${lang}/`;
 ---
 
 <!doctype html>
@@ -37,6 +50,19 @@ const urlFor = (l: Lang) => new URL(Astro.url.pathname.replace(/^\/[^/]+\//, `/$
           <link rel="canonical" href={urlFor(lang)} />
           {locales.map((l) => <link rel="alternate" hreflang={l} href={urlFor(l)} />)}
           <link rel="alternate" hreflang="x-default" href={urlFor(defaultLang)} />
+          <meta property="og:type" content="website" />
+          <meta property="og:site_name" content={venue.name} />
+          <meta property="og:title" content={title} />
+          <meta property="og:description" content={description} />
+          <meta property="og:url" content={urlFor(lang)} />
+          <meta property="og:locale" content={ogLocale[lang]} />
+          {locales.filter((l) => l !== lang).map((l) => <meta property="og:locale:alternate" content={ogLocale[l]} />)}
+          <meta property="og:image" content={ogImageUrl} />
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+          <meta property="og:image:alt" content={t(lang, 'home.exterior.alt')} />
+          <meta name="twitter:card" content="summary_large_image" />
+          {isHome && <script type="application/ld+json" set:html={JSON.stringify(localBusiness(urlFor(lang), ogImageUrl))} />}
         </>
       )
     }

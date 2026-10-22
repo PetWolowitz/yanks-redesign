@@ -15,8 +15,10 @@ function htmlFiles(dir: string): string[] {
   });
 }
 
+// Esclusi i blocchi di dati JSON-LD (type="application/ld+json"): il browser non li
+// esegue, quindi la CSP non li riguarda
 function inlineScripts(html: string): string[] {
-  const scripts = html.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/g);
+  const scripts = html.matchAll(/<script(?![^>]*\bsrc=)(?![^>]*application\/ld\+json)[^>]*>([\s\S]*?)<\/script>/g);
   return [...scripts].map((match) => match[1] ?? '');
 }
 
