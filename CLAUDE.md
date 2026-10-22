@@ -148,7 +148,8 @@ Scelta da Pietro tra cinque prove della home (attuale, A, B con due font, C).
 La C è il sito di prima con questi cambi, applicati a tutte le pagine. Classi e
 componenti in docs/02; pagina di riferimento: `/en/styleguide/` (noindex).
 - **Fondo** bianco caldo `#FBFAF7` con una grana da sabbia quasi invisibile; il
-  crema (`#F3EEE4`) solo come accento (footer, card delle recensioni)
+  grigio caldo (`#EFEEEB`) solo come accento (footer, card). Era crema `#F3EEE4`:
+  tolto il 2026-10-22 (Pietro: "troppo visibile che l'hai fatto te")
 - **Sezioni alternate**: bianco, inchiostro (`#1C1B1A`), e la sezione shop in
   **blu Mare del Nord `#34566F`** (testo bianco 7.4:1). Classi `tone-ink`,
   `tone-sea`, `tone-cream`: ridefiniscono i token dentro la sezione. Testo chiaro
@@ -213,7 +214,7 @@ I loro rosso e oro, ammorbiditi. Valori completi in `docs/02-design-system.md`.
 | Token | Chiaro | Scuro |
 |---|---|---|
 | `--bg` | `#FBFAF7` | `#1E1C1A` |
-| `--surface` (crema, accento) | `#F3EEE4` | `#282521` |
+| `--surface` (grigio caldo, accento) | `#EFEEEB` | `#282521` |
 | `--text` | `#1C1B1A` | `#DDD2C0` |
 | `--muted` | `#625C55` | `#A79E90` |
 | `--red` | `#C75B4A` | `#E0705A` |
@@ -274,8 +275,8 @@ altre tre. Regole in `docs/04-build-plan.md`, fase i18n.
 1. **Home** — hero con video, stato di apertura, chi sono, anteprima menu,
    anteprima shop, recensioni (video e scritte), mappa
 2. **Story** — cronologia con soli fatti verificati (il testo di `our-story` è
-   promozionale e non si usa); apertura nel 1984, dal merch. Scorre in
-   orizzontale (schede con scroll-snap), per non far scorrere tanto in giù
+   promozionale e non si usa); apertura nel 1984, dal merch. Griglia a
+   bento (dal 2026-10-22; prima scorreva in orizzontale, non piaceva)
 3. **Menu** — food e drink, bibite raggruppate per marca, prezzo unico una volta
 4. **Shop** — catalogo, scheda prodotto, carrello, checkout, stato ordine.
    Pagamento Stripe in modalità test

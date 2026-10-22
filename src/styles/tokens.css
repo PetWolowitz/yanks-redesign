@@ -5,16 +5,16 @@
 
 :root {
   color-scheme: light;
-  /* Variante C (2026-10-21, docs/02): bianco caldo, il crema solo come accento */
+  /* Variante C (2026-10-21, docs/02): bianco caldo, il grigio caldo (surface) solo come accento */
   --bg: #FBFAF7;        /* bianco caldo */
-  --surface: #F3EEE4;   /* crema, accento */
-  --text: #1C1B1A;      /* inchiostro: 16.48 su bg, 14.87 su surface */
-  --muted: #625C55;     /* 6.32 · 5.71 */
+  --surface: #EFEEEB;   /* grigio caldo, accento (era crema #F3EEE4 fino al 2026-10-22) */
+  --text: #1C1B1A;      /* inchiostro: 16.48 su bg, 14.82 su surface */
+  --muted: #625C55;     /* 6.32 · 5.69 */
   --red: #C75B4A;       /* superfici, bordi, testo grande */
   --gold: #E3BE72;
   --sage: #6E8F85;      /* superfici e bordi */
-  --red-text: #A54C3D;  /* testo: 5.44 su bg, 4.91 su surface */
-  --sage-text: #526B64; /* testo: 5.52 su bg, 4.98 su surface */
+  --red-text: #A54C3D;  /* testo: 5.44 su bg, 4.89 su surface */
+  --sage-text: #526B64; /* testo: 5.52 su bg, 4.96 su surface */
   /* Orologio a insegna, uguale nei due temi: tubi al neon su una tavola scura.
      Contrasti misurati sulla tavola: 11.85 · 9.74 · 6.12 */
   --neon-board: #1F1B17;

@@ -2,10 +2,14 @@
 // Story (CLAUDE.md, Struttura delle pagine): una cronologia breve, solo fatti
 // verificati (docs/03). Il testo originale di our-story è promozionale e non si usa.
 // Gli anni vengono da venue.ts: se cambiano lì, cambia anche questa pagina.
-// Dal 2026-10-02 la cronologia scorre in orizzontale (Pietro: "scrollare in giù
-// fa perdere le cose"): schede affiancate con scroll-snap, una linea del tempo
-// sopra, pulsanti ← → per il mouse. Senza JS lo scorrimento funziona lo stesso;
-// la rotella non viene mai dirottata.
+// Dal 2026-10-22 la cronologia è una griglia a bento (Pietro: lo scorrimento di
+// lato non piaceva), mobile first, in ordine di tempo da sinistra a destra e
+// dall'alto in basso:
+// - telefono: una colonna
+// - tablet: due colonne, le due tappe con foto a tutta larghezza
+// - desktop: tre colonne, l'insegna alta quanto tutta la griglia a destra e
+//   "oggi" largo due colonne sotto le prime due tappe
+// Ogni tessera entra con un movimento diverso (data-anim, global.css).
 import type { GetStaticPaths } from 'astro';
 import { Image } from 'astro:assets';
 import interno from '../../assets/home/interno.jpg';
@@ -21,8 +25,26 @@ export const getStaticPaths = langPaths satisfies GetStaticPaths;
 const { lang } = Astro.props as { lang: Lang };
 const { open, close } = venue.hours;
 const year = String(venue.founded ?? '');
-// Ogni scheda entra con un movimento diverso (data-anim, global.css)
-const anims = ['left', 'zoom', 'tilt', 'right'];
+
+// Le tre forme delle tessere: solo testo, alta con la foto sopra, larga con la foto a lato
+type Shape = 'text' | 'tall' | 'wide';
+const shapes: Record<Shape, { tile: string; article: string; photo: string; body: string; sizes: string }> = {
+  text: { tile: '', article: '', photo: '', body: 'flex-1', sizes: '' },
+  tall: {
+    tile: 'sm:col-span-2 lg:col-span-1 lg:col-start-3 lg:row-span-2 lg:row-start-1',
+    article: '',
+    photo: 'aspect-3/2 border-b-[1.5px] lg:aspect-auto lg:min-h-64 lg:flex-1',
+    body: 'lg:flex-none',
+    sizes: '(min-width: 1024px) 440px, 100vw',
+  },
+  wide: {
+    tile: 'sm:col-span-2 lg:col-start-1 lg:row-start-2',
+    article: 'sm:flex-row',
+    photo: 'aspect-3/2 border-b-[1.5px] sm:aspect-auto sm:min-h-72 sm:w-1/2 sm:border-r-[1.5px] sm:border-b-0',
+    body: 'flex-1',
+    sizes: '(min-width: 1024px) 440px, (min-width: 640px) 50vw, 100vw',
+  },
+};
 
 // Ogni tappa: l'anno (o un'etichetta se l'anno non si sa), titolo, testo, foto facoltativa
 const steps: {
@@ -33,14 +55,20 @@ const steps: {
   text: Key;
   params?: Record<string, string>;
   image?: { src: ImageMetadata; alt: Key };
+  shape: Shape;
+  anim: string;
 }[] = [
-  ...(venue.founded ? [{ when: year, isYear: true, title: 'story.opened.title', text: 'story.opened.text' } as const] : []),
-  { when: String(venue.companyFounded), isYear: true, title: 'story.company.title', text: 'story.company.text' },
+  ...(venue.founded
+    ? [{ when: year, isYear: true, title: 'story.opened.title', text: 'story.opened.text', shape: 'text', anim: 'left' } as const]
+    : []),
+  { when: String(venue.companyFounded), isYear: true, title: 'story.company.title', text: 'story.company.text', shape: 'text', anim: 'down' },
   {
     when: t(lang, 'story.sign.label'),
     title: 'story.sign.title',
     text: 'story.sign.text',
     image: { src: capBack, alt: 'story.sign.alt' },
+    shape: 'tall',
+    anim: 'right',
   },
   {
     when: t(lang, 'story.today.label'),
@@ -48,6 +76,8 @@ const steps: {
     text: 'story.today.text',
     params: { open, close },
     image: { src: interno, alt: 'home.interior.alt' },
+    shape: 'wide',
+    anim: 'tilt',
   },
 ];
 ---
@@ -60,34 +90,30 @@ const steps: {
   <main id="content">
     <PageIntro title={t(lang, 'story.title')} intro={t(lang, 'story.intro', { year })} />
 
-    <story-track class="block pb-12">
-      <ol
-        data-track
-        tabindex="0"
-        aria-label={t(lang, 'story.title')}
-        class="story-track relative flex items-start snap-x snap-mandatory gap-4 overflow-x-auto px-bleed pb-6 focus:outline-none focus-visible:ring-3 focus-visible:ring-red lg:gap-6"
-      >
-        {
-          steps.map((step, index) => (
-            <li data-anim={anims[index % anims.length]} class="flex shrink-0 basis-[85%] snap-start flex-col sm:basis-[60%] lg:basis-[34rem]">
-              <!-- La linea del tempo: un pallino per tappa su una riga continua -->
-              <div aria-hidden="true" class="mb-4 flex items-center gap-3">
-                <span class="size-4 shrink-0 rounded-full border-[1.5px] border-text bg-red" />
-                <span class="h-0.75 flex-1 bg-text" />
-              </div>
-              <article class="flex flex-1 flex-col overflow-hidden rounded-2xl border-[1.5px] border-text bg-surface">
+    <ol
+      aria-label={t(lang, 'story.title')}
+      class="mx-auto grid max-w-360 gap-4 px-page pb-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6"
+    >
+      {
+        steps.map((step) => {
+          const shape = shapes[step.shape];
+          return (
+            <li data-anim={step.anim} class:list={['flex', shape.tile]}>
+              <article class:list={['flex w-full flex-col overflow-hidden rounded-2xl border-[1.5px] border-text bg-surface', shape.article]}>
                 {step.image && (
-                  <Image
-                    src={step.image.src}
-                    alt={t(lang, step.image.alt)}
-                    widths={[360, 667]}
-                    sizes="(min-width: 1024px) 544px, 85vw"
-                    format="webp"
-                    loading="lazy"
-                    class="aspect-3/2 w-full border-b-[1.5px] border-text object-cover"
-                  />
+                  <div class:list={['relative shrink-0 border-text', shape.photo]}>
+                    <Image
+                      src={step.image.src}
+                      alt={t(lang, step.image.alt)}
+                      widths={[360, 667]}
+                      sizes={shape.sizes}
+                      format="webp"
+                      loading="lazy"
+                      class="absolute inset-0 size-full object-cover"
+                    />
+                  </div>
                 )}
-                <div class="flex flex-1 flex-col p-6 lg:p-8">
+                <div class:list={['flex flex-col p-6 lg:p-8', shape.body]}>
                   <p class:list={['font-sign leading-none text-red-text uppercase', step.isYear ? 'text-display' : 'text-h2']}>
                     {step.when}
                   </p>
@@ -96,20 +122,10 @@ const steps: {
                 </div>
               </article>
             </li>
-          ))
-        }
-      </ol>
-
-      <!-- Pulsanti per chi usa il mouse: compaiono solo con JS -->
-      <div data-controls hidden class="mx-auto flex max-w-360 justify-end gap-3 px-page">
-        <button type="button" data-dir="-1" aria-label={t(lang, 'story.prev')} class="inline-flex size-11 items-center justify-center rounded-full border-[1.5px] border-text hover:bg-text hover:text-bg aria-disabled:opacity-40 aria-disabled:hover:bg-transparent aria-disabled:hover:text-text">
-          <span aria-hidden="true">←</span>
-        </button>
-        <button type="button" data-dir="1" aria-label={t(lang, 'story.next')} class="inline-flex size-11 items-center justify-center rounded-full border-[1.5px] border-text hover:bg-text hover:text-bg aria-disabled:opacity-40 aria-disabled:hover:bg-transparent aria-disabled:hover:text-text">
-          <span aria-hidden="true">→</span>
-        </button>
-      </div>
-    </story-track>
+          );
+        })
+      }
+    </ol>
 
     <div class="mx-auto max-w-360 px-page pb-16">
       <a
@@ -121,37 +137,3 @@ const steps: {
     </div>
   </main>
 </Base>
-
-<script>
-  // Pulsanti ← →: spostano di una scheda; spenti (aria-disabled) agli estremi.
-  // Con movimento ridotto lo spostamento è immediato
-  class StoryTrack extends HTMLElement {
-    connectedCallback() {
-      const track = this.querySelector<HTMLElement>('[data-track]');
-      const controls = this.querySelector<HTMLElement>('[data-controls]');
-      if (!track || !controls) return;
-      controls.hidden = false;
-      const buttons = [...controls.querySelectorAll<HTMLButtonElement>('[data-dir]')];
-      const update = () => {
-        const max = track.scrollWidth - track.clientWidth - 2;
-        for (const button of buttons) {
-          const atEdge = button.dataset.dir === '-1' ? track.scrollLeft <= 2 : track.scrollLeft >= max;
-          button.toggleAttribute('aria-disabled', atEdge);
-        }
-      };
-      for (const button of buttons) {
-        button.addEventListener('click', () => {
-          const card = track.querySelector('li');
-          const step = (card?.getBoundingClientRect().width ?? track.clientWidth) + 16;
-          const smooth = !matchMedia('(prefers-reduced-motion: reduce)').matches;
-          track.scrollBy({ left: Number(button.dataset.dir) * step, behavior: smooth ? 'smooth' : 'auto' });
-        });
-      }
-      track.addEventListener('scroll', update, { passive: true });
-      addEventListener('resize', update);
-      update();
-    }
-  }
-
-  customElements.define('story-track', StoryTrack);
-</script>
