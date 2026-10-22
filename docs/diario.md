@@ -17,6 +17,28 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-22 — Chiusura del design, test e2e, avviso al negozio
+Fatto:        #48 (onde senza fasce, toast a ordine pagato, lingue per nome nel
+              footer, h1 della hero subito visibile, 404 riletta), #49 (test dei
+              flussi dello shop con Playwright sulla build mock, 12 test, anche
+              in CI), #50 (avviso al negozio a ogni ordine pagato, in olandese,
+              senza link né token; email nei colori della C; 250 test). Unite in
+              main in quest'ordine. iDEAL attivato da Pietro nella dashboard
+              Stripe (modalità test)
+Decisioni:    - `SHOP_NOTIFY_EMAIL` come Secret, non come variabile in chiaro:
+                quelle aggiunte dalla dashboard le cancella il deploy successivo
+              - chiave di idempotenza propria per l'avviso (`order-shop/<id>`)
+              - package-lock.json cambiato da un npm install non voluto:
+                annullato, nessun aggiornamento non deciso
+Problemi:     manca un acquisto di prova pagato con iDEAL. Il Secret
+              `SHOP_NOTIFY_EMAIL` online va aggiunto da Pietro nella dashboard
+              Cloudflare, se non l'ha già fatto
+Prossimo:     Fase 5S: pagine legali (condizioni, recesso 14 giorni, privacy,
+              spedizioni e resi, dati dell'azienda); prima il layout a parole e
+              l'elenco dei dati da verificare
+Ramo/commit:  shop/email-negozio — "Diario: chiusura del design, e2e, avviso al
+              negozio; iDEAL attivato"
+
 ## 2026-10-21 — Variante C scelta, documenti allineati
 Fatto:        scala tipografica più piccola unita (#44). Cinque prove della home
               (attuale, A, B con Bricolage e con Familjen, C) fatte con CSS

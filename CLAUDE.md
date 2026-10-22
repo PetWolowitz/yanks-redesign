@@ -62,8 +62,8 @@ Da qui, deciso il 2026-10-21 (in quest'ordine):
    nei token, pagina "styleguide" interna, poi applicato pagina per pagina (home,
    menu, visit, shop, story, know before you go, avviso d'età, 404). **Una PR per
    pagina**, screenshot prima e dopo, **ok di Pietro prima della successiva**
-6. **Shop pronto per un locale vero**: iDEAL (probabilmente basta attivarlo nella
-   dashboard Stripe: il checkout non fissa i metodi), email al negozio a ogni
+6. **Shop pronto per un locale vero**: iDEAL (attivato nella dashboard Stripe il
+   2026-10-21, il checkout non fissa i metodi; manca un acquisto di prova), email al negozio a ogni
    ordine, pagine legali (condizioni, recesso 14 giorni, privacy, spedizioni),
    test automatici dei flussi con Playwright in locale con le chiavi di prova
 7. Fase 6: SEO, Lighthouse nei due temi, revisione completa; poi in questo file

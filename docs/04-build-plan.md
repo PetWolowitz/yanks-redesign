@@ -352,6 +352,8 @@ prima/dopo di tutte le pagine in `.playwright-mcp/pagine/`)_
 
 - [ ] iDEAL (e Bancontact): attivarli nella dashboard Stripe in modalità test e
       provare un acquisto; il checkout non fissa i metodi di pagamento
+      _(2026-10-21: iDEAL attivato da Pietro nella dashboard; manca l'acquisto
+      di prova pagato con iDEAL)_
 - [x] Email al negozio a ogni ordine pagato (dal webhook, come quella al cliente)
       _(2026-10-21: `SHOP_NOTIFY_EMAIL`, in olandese, con indirizzo e senza
       token; 4 test. Online: Secret da aggiungere da Pietro nella dashboard)_
