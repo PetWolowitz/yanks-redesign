@@ -6,7 +6,9 @@
 // script inline: CSP). Il subtotale è indicativo: l'addebito lo calcola il server (docs/06).
 import type { Lang } from '../../i18n/locales';
 import { t } from '../../i18n/t';
+import { formatPrice } from '../../lib/format';
 import { buildCatalog } from '../../lib/shop/catalog';
+import { shippingCents } from '../../lib/shop/shipping';
 
 interface Props {
   lang: Lang;
@@ -19,6 +21,8 @@ interface Props {
 const { lang, variant, focusFallback, class: className } = Astro.props;
 const catalog = await buildCatalog(lang);
 const page = variant === 'page';
+// La spedizione più bassa, scritta in build: quella vera si vede nel checkout, per paese
+const shippingFrom = formatPrice(Math.min(...Object.values(shippingCents)), lang);
 ---
 
 <cart-view
@@ -44,7 +48,7 @@ const page = variant === 'page';
         <span>{t(lang, 'cart.subtotal')}</span>
         <span data-subtotal class="tabular-nums"></span>
       </p>
-      <p class="mt-2 text-small text-muted">{t(lang, 'cart.note')}</p>
+      <p class="mt-2 text-small text-muted">{t(lang, 'cart.note', { price: shippingFrom })}</p>
       <a
         href={`/${lang}/shop/checkout/`}
         class="btn-solid mt-6 flex"

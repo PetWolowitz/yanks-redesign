@@ -20,6 +20,8 @@ export interface SessionInput {
   successUrl: string;
   cancelUrl: string;
   lines: SessionLine[];
+  // spedizione a tariffa fissa: Stripe la somma in amount_total
+  shipping: { name: string; amountCents: number };
   // secondi Unix; Stripe accetta da 30 minuti a 24 ore
   expiresAt: number;
 }
@@ -41,6 +43,11 @@ export function sessionForm(input: SessionInput): URLSearchParams {
     form.set(`line_items[${i}][price_data][unit_amount]`, String(line.unitAmountCents));
     form.set(`line_items[${i}][price_data][product_data][name]`, line.name);
   });
+  // docs.stripe.com/payments/during-payment/charge-shipping
+  form.set('shipping_options[0][shipping_rate_data][type]', 'fixed_amount');
+  form.set('shipping_options[0][shipping_rate_data][fixed_amount][amount]', String(input.shipping.amountCents));
+  form.set('shipping_options[0][shipping_rate_data][fixed_amount][currency]', 'eur');
+  form.set('shipping_options[0][shipping_rate_data][display_name]', input.shipping.name);
   return form;
 }
 

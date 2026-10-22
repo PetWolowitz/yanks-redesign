@@ -49,14 +49,14 @@ describe('mock ShopApi', () => {
     expect(checkout.token).toMatch(/^[A-Za-z0-9_-]{43}$/);
     expect(checkout.redirectUrl).toBe('/de/shop/order/');
     const order = await api.getOrder(checkout.id, checkout.token);
-    expect(order.totalCents).toBe(2 * 4500 + 350);
+    expect(order.totalCents).toBe(2 * 4500 + 350 + 695);
   });
 
   it('un prezzo aggiunto dal browser non cambia il totale', async () => {
     const { api } = setup();
     const tampered = { ...request, items: [{ sku: 'hoodie-m', quantity: 1, priceCents: 1 }], totalCents: 1 };
     const checkout = await api.createCheckout(tampered as CheckoutRequest);
-    expect((await api.getOrder(checkout.id, checkout.token)).totalCents).toBe(4500);
+    expect((await api.getOrder(checkout.id, checkout.token)).totalCents).toBe(4500 + 695);
   });
 
   it('l\'ordine è pending, poi pagato dopo il finto pagamento', async () => {

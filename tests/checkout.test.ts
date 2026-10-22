@@ -40,7 +40,7 @@ function paidEvent(overrides: Record<string, unknown> = {}) {
   return {
     id: 'evt_1',
     type: 'checkout.session.completed',
-    data: { object: { id: 'cs_test_123', client_reference_id: ID, payment_status: 'paid', amount_total: 10500, currency: 'eur', ...overrides } },
+    data: { object: { id: 'cs_test_123', client_reference_id: ID, payment_status: 'paid', amount_total: 11195, currency: 'eur', ...overrides } },
   };
 }
 
@@ -63,8 +63,8 @@ describe('POST /api/checkout', () => {
     const body = (await response.json()) as { id: string; token: string; redirectUrl: string };
     expect(body).toEqual({ id: ID, token: await orderToken(SECRETS.ORDER_TOKEN_SECRET, ID), redirectUrl: 'https://checkout.stripe.com/c/pay/cs_test_123' });
     const order = row<{ status: string; total_cents: number; stripe_session_id: string }>(db, 'SELECT status, total_cents, stripe_session_id FROM orders WHERE public_id = ?', ID);
-    // 2 cappellini a 30 euro + una felpa a 45
-    expect(order).toEqual({ status: 'pending', total_cents: 10500, stripe_session_id: 'cs_test_123' });
+    // 2 cappellini a 30 euro + una felpa a 45 + spedizione in Olanda 6,95
+    expect(order).toEqual({ status: 'pending', total_cents: 11195, stripe_session_id: 'cs_test_123' });
   });
 
   it('un prezzo modificato dal browser non cambia l\'addebito', async () => {
@@ -75,7 +75,19 @@ describe('POST /api/checkout', () => {
     const form = new URLSearchParams(String(stripe.init.body));
     expect(form.get('line_items[0][price_data][unit_amount]')).toBe('3000');
     expect(form.get('line_items[0][quantity]')).toBe('2');
-    expect(row<{ total_cents: number }>(db, 'SELECT total_cents FROM orders').total_cents).toBe(6000);
+    expect(row<{ total_cents: number }>(db, 'SELECT total_cents FROM orders').total_cents).toBe(6000 + 695);
+  });
+
+  it('la spedizione dipende dal paese, sta nel totale e arriva a Stripe come opzione di spedizione', async () => {
+    const toGermany = { ...validBody, address: { ...validBody.address, postalCode: '10115', city: 'Berlin', country: 'DE' } };
+    const { db, fake, response } = await checkout(toGermany);
+    expect(response.status).toBe(200);
+    expect(row<{ total_cents: number }>(db, 'SELECT total_cents FROM orders').total_cents).toBe(10500 + 995);
+    const form = new URLSearchParams(String(fake.calls.find((call) => call.url.includes('api.stripe.com'))!.init.body));
+    expect(form.get('shipping_options[0][shipping_rate_data][type]')).toBe('fixed_amount');
+    expect(form.get('shipping_options[0][shipping_rate_data][fixed_amount][amount]')).toBe('995');
+    expect(form.get('shipping_options[0][shipping_rate_data][fixed_amount][currency]')).toBe('eur');
+    expect(form.get('shipping_options[0][shipping_rate_data][display_name]')).toBe('Verzending');
   });
 
   it('il success_url non contiene il token né l\'id: il token non passa da Stripe', async () => {
@@ -207,7 +219,7 @@ describe('POST /api/stripe-webhook', () => {
     const tampered = new Request(`${ORIGIN}/api/stripe-webhook`, {
       method: 'POST',
       headers: { 'Stripe-Signature': stripeSignature(body) },
-      body: body.replace('10500', '1'),
+      body: body.replace('11195', '1'),
     });
     expect((await handleStripeWebhook(tampered, makeEnv(db), deps(fakeFetch().fetcher))).status).toBe(400);
     expect(row<{ status: string }>(db, 'SELECT status FROM orders').status).toBe('pending');
@@ -329,7 +341,7 @@ describe('POST /api/stripe-webhook', () => {
 
   it('eventi sconosciuti o di sessioni non nostre: 200 senza toccare niente', async () => {
     const { db } = await checkout();
-    const other = { type: 'checkout.session.completed', data: { object: { id: 'cs_altro', client_reference_id: ID, payment_status: 'paid', amount_total: 10500, currency: 'eur' } } };
+    const other = { type: 'checkout.session.completed', data: { object: { id: 'cs_altro', client_reference_id: ID, payment_status: 'paid', amount_total: 11195, currency: 'eur' } } };
     for (const event of [{ type: 'charge.refunded', data: { object: { id: 'ch_1' } } }, other]) {
       const response = await handleStripeWebhook(webhookRequest(event), makeEnv(db), deps(fakeFetch().fetcher));
       expect(response.status).toBe(200);

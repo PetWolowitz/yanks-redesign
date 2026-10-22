@@ -16,6 +16,7 @@ import {
 import { sendConfirmation, sendShopNotification } from './email';
 import { apiError, clientKey, isSameOrigin, json, methodNotAllowed, readJson } from './http';
 import type { ShopEnv } from './server-env';
+import { shippingCents } from './shipping';
 import { createSession, verifyStripeSignature } from './stripe';
 import { orderToken, verifyOrderToken } from './token';
 import { verifyTurnstile } from './turnstile';
@@ -136,7 +137,10 @@ export async function handleCheckout(request: Request, env: ShopEnv, deps: Deps 
       const variant = bySku.get(item.sku)!;
       return { variant, quantity: item.quantity, priceCents: variant.price_cents };
     });
-    const totalCents = lines.reduce((sum, line) => sum + line.priceCents * line.quantity, 0);
+    // Spedizione dalla tariffa del paese (lib/shop/shipping.ts), dentro il totale:
+    // il webhook lo confronta con amount_total di Stripe, che la comprende
+    const shipping = shippingCents[req.address.country];
+    const totalCents = lines.reduce((sum, line) => sum + line.priceCents * line.quantity, 0) + shipping;
 
     await insertPendingOrder(env.DB, {
       publicId,
@@ -161,6 +165,7 @@ export async function handleCheckout(request: Request, env: ShopEnv, deps: Deps 
         unitAmountCents: line.priceCents,
         quantity: line.quantity,
       })),
+      shipping: { name: t(req.lang, 'shop.shipping'), amountCents: shipping },
     });
     if (!session) {
       console.error('api/checkout: sessione Stripe non creata');

@@ -49,6 +49,11 @@ const messages = {
         <section data-details hidden class="border-[1.5px] rounded-2xl border-text p-6 lg:col-span-7">
           <h2 class="text-h3">{t(lang, 'order.number')} <span data-id class="font-ui text-small normal-case"></span></h2>
           <ul data-lines class="mt-4"></ul>
+          <!-- Spedizione = totale meno articoli (lib/shop/shipping.ts); nascosta se zero -->
+          <p data-shipping-row hidden class="flex items-baseline justify-between gap-4 border-b border-muted py-2">
+            <span>{t(lang, 'shop.shipping')}</span>
+            <span data-shipping class="tabular-nums"></span>
+          </p>
           <p class="mt-4 flex items-baseline justify-between gap-4 text-h3">
             <span>{t(lang, 'order.total')}</span>
             <span data-total class="tabular-nums"></span>
@@ -191,6 +196,9 @@ const messages = {
           return li;
         }),
       );
+      const shipping = order.totalCents - order.items.reduce((sum, item) => sum + item.priceCents * item.quantity, 0);
+      this.querySelector<HTMLElement>('[data-shipping-row]')!.hidden = shipping <= 0;
+      this.querySelector('[data-shipping]')!.textContent = formatPrice(shipping, lang);
       this.querySelector('[data-total]')!.textContent = formatPrice(order.totalCents, lang);
     }
 

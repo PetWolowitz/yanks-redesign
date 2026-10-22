@@ -9,18 +9,30 @@ import { venue } from '../../data/venue';
 import Base from '../../layouts/Base.astro';
 import { langPaths, type Lang } from '../../i18n/locales';
 import { t, type Key } from '../../i18n/t';
+import { formatPrice } from '../../lib/format';
+import { shippingCents } from '../../lib/shop/shipping';
 import { shippingCountries } from '../../lib/shop/types';
 
 export const getStaticPaths = langPaths satisfies GetStaticPaths;
 
 const { lang } = Astro.props as { lang: Lang };
 const regionName = new Intl.DisplayNames([lang], { type: 'region' });
-const countries = shippingCountries.map((code) => regionName.of(code)).join(', ');
+// Una riga per tariffa, con i paesi che la condividono (lib/shop/shipping.ts)
+const rates = [...new Set(shippingCountries.map((code) => shippingCents[code]))].sort((a, b) => a - b);
+const shippingRows = rates.map((cents) => ({
+  text: shippingCountries
+    .filter((code) => shippingCents[code] === cents)
+    .map((code) => regionName.of(code) ?? code)
+    .join(', '),
+  value: formatPrice(cents, lang),
+}));
 const { street, postalCode, city } = venue.address;
 const missing = `[${t(lang, 'legal.missing')}]`;
 
-// Righe "etichetta: valore" delle sezioni; null = segnaposto
-type Row = { label: Key; value: string | null };
+// Righe "etichetta: valore" delle sezioni; null = segnaposto. text: etichetta già
+// pronta al posto della chiave (i paesi delle tariffe)
+type Row = ({ label: Key } | { text: string }) & { value: string | null };
+const rowLabel = (row: Row) => ('text' in row ? row.text : t(lang, row.label));
 const sections: { id: string; title: Key; paragraphs: number; rows?: Row[] }[] = [
   { id: 'terms', title: 'legal.terms.title', paragraphs: 5 },
   {
@@ -32,13 +44,8 @@ const sections: { id: string; title: Key; paragraphs: number; rows?: Row[] }[] =
   {
     id: 'shipping',
     title: 'legal.shipping.title',
-    paragraphs: 0,
-    rows: [
-      { label: 'legal.shipping.countries', value: countries },
-      // Il checkout non addebita spedizione (lib/shop/stripe.ts)
-      { label: 'legal.shipping.cost', value: t(lang, 'legal.shipping.free') },
-      { label: 'legal.shipping.time', value: null },
-    ],
+    paragraphs: 1,
+    rows: [...shippingRows, { label: 'legal.shipping.time', value: null }],
   },
   { id: 'privacy', title: 'legal.privacy.title', paragraphs: 6 },
 ];
@@ -91,10 +98,10 @@ const missingClass = 'box-decoration-clone rounded border-[1.5px] border-dashed 
             </div>
             {rows && (
               <dl class:list={[rowsClass, 'mt-5 max-w-[65ch]']}>
-                {rows.map(({ label, value }) => (
+                {rows.map((row) => (
                   <>
-                    <dt class="text-muted">{t(lang, label)}</dt>
-                    <dd>{value ?? <span class={missingClass}>{missing}</span>}</dd>
+                    <dt class="text-muted">{rowLabel(row)}</dt>
+                    <dd>{row.value ?? <span class={missingClass}>{missing}</span>}</dd>
                   </>
                 ))}
               </dl>
@@ -107,10 +114,10 @@ const missingClass = 'box-decoration-clone rounded border-[1.5px] border-dashed 
         <h2 id="company-title" class="text-h2">{t(lang, 'legal.company.title')}</h2>
         <dl class:list={[rowsClass, 'mt-5']}>
           {
-            company.map(({ label, value }) => (
+            company.map((row) => (
               <>
-                <dt class="text-muted">{t(lang, label)}</dt>
-                <dd>{value ?? <span class={missingClass}>{missing}</span>}</dd>
+                <dt class="text-muted">{rowLabel(row)}</dt>
+                <dd>{row.value ?? <span class={missingClass}>{missing}</span>}</dd>
               </>
             ))
           }

@@ -104,11 +104,20 @@ const legendClass = 'mb-4 font-sign text-h3 uppercase';
         <aside class="h-fit border-[1.5px] rounded-2xl border-text p-6 lg:col-span-5">
           <h2 class="text-h3">{t(lang, 'checkout.summary')}</h2>
           <ul data-lines class="mt-4"></ul>
-          <p class="mt-4 flex flex-wrap items-baseline justify-between gap-x-4 text-h3">
+          <p class="mt-4 flex flex-wrap items-baseline justify-between gap-x-4">
             <span>{t(lang, 'cart.subtotal')}</span>
             <span data-subtotal class="tabular-nums"></span>
           </p>
-          <p class="mt-2 text-small text-muted">{t(lang, 'cart.note')}</p>
+          <!-- Spedizione del paese scelto (lib/shop/shipping.ts): cambia col menu dei paesi -->
+          <p class="mt-2 flex flex-wrap items-baseline justify-between gap-x-4">
+            <span>{t(lang, 'shop.shipping')} <span data-shipping-country class="text-muted"></span></span>
+            <span data-shipping class="tabular-nums"></span>
+          </p>
+          <p class="mt-4 flex flex-wrap items-baseline justify-between gap-x-4 border-t-[1.5px] border-text pt-4 text-h3">
+            <span>{t(lang, 'order.total')}</span>
+            <span data-total class="tabular-nums"></span>
+          </p>
+          <p class="mt-2 text-small text-muted">{t(lang, 'checkout.totalNote')}</p>
           <a href={`/${lang}/shop/cart/`} class="mt-4 inline-block py-3 text-small underline underline-offset-4">{t(lang, 'shop.viewCart')}</a>
         </aside>
       </div>
@@ -123,7 +132,8 @@ const legendClass = 'mb-4 font-sign text-h3 uppercase';
   import { shopApi } from '../../../lib/shop/api';
   import { loadCart } from '../../../lib/shop/cart';
   import type { CatalogEntry } from '../../../lib/shop/catalog';
-  import { ShopError, type CheckoutErrors, type CheckoutField, type FieldError } from '../../../lib/shop/types';
+  import { shippingCents } from '../../../lib/shop/shipping';
+  import { ShopError, type CheckoutErrors, type CheckoutField, type Country, type FieldError } from '../../../lib/shop/types';
   import { validateCheckout } from '../../../lib/shop/validate';
 
   type Messages = Record<'required' | 'tooLong' | 'invalid' | 'email' | 'postalCode' | 'items' | 'outOfStock' | 'summary' | 'unavailable' | 'wait', string>;
@@ -175,6 +185,15 @@ const legendClass = 'mb-4 font-sign text-h3 uppercase';
       );
       const subtotal = cart.reduce((sum, item) => sum + catalog[item.sku]!.priceCents * item.quantity, 0);
       this.querySelector('[data-subtotal]')!.textContent = formatPrice(subtotal, lang);
+      const country = this.#form.elements.namedItem('country') as HTMLSelectElement;
+      const showShipping = () => {
+        const shipping = shippingCents[country.value as Country] ?? 0;
+        this.querySelector('[data-shipping-country]')!.textContent = `(${country.selectedOptions[0]?.textContent ?? ''})`;
+        this.querySelector('[data-shipping]')!.textContent = formatPrice(shipping, lang);
+        this.querySelector('[data-total]')!.textContent = formatPrice(subtotal + shipping, lang);
+      };
+      showShipping();
+      country.addEventListener('change', showShipping);
 
       // Errore di un campo appena lo si lascia, se ci si era scritto qualcosa
       for (const name of FIELDS) {
