@@ -375,8 +375,11 @@ prima/dopo di tutte le pagine in `.playwright-mcp/pagine/`)_
 ## Fase 6 — Rifinitura, SEO e sicurezza (4 ore)
 
 - [x] Immagini con `astro:assets`, dimensioni esplicite
-- [ ] Meta per pagina e per lingua, Open Graph, `hreflang`
-- [ ] JSON-LD `LocalBusiness` generato da `venue.ts`
+- [x] Meta per pagina e per lingua, Open Graph, `hreflang` _(2026-10-22: Open
+      Graph in Base.astro, immagine 1200×630 ritagliata in build da esterno.jpg)_
+- [x] JSON-LD `LocalBusiness` generato da `venue.ts` _(2026-10-22: `lib/seo.ts`,
+      solo nella home di ogni lingua, senza email; escluso dal test della CSP
+      perché non si esegue)_
 - [ ] Sitemap
 - [ ] CSP rifinita: niente `unsafe-inline` dove si può evitare; hash dello script
       del tema aggiornato _(script: fatto, con test; stili: `unsafe-inline` resta per
@@ -386,7 +389,7 @@ prima/dopo di tutte le pagine in `.playwright-mcp/pagine/`)_
 - [ ] Lighthouse su entrambi i temi: 90+ prestazioni, 95+ accessibilità
 - [ ] Navigazione completa da tastiera
 - [ ] Prova da telefono vero
-- [ ] Informativa privacy e condizioni di vendita
+- [x] Informativa privacy e condizioni di vendita _(2026-10-22, PR #51: `/[lang]/legal/`)_
 - [ ] README con il caso studio _(README del progetto scritto il 2026-10-01; il
       caso studio vero va in docs/05)_
 
