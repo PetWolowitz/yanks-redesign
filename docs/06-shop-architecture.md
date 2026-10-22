@@ -145,6 +145,14 @@ Idempotency-Key: order-confirmation/<public_id>
   lingua di `orders.lang`. Mai scritti nel codice
 - La costruzione dell'email è una funzione pura in `src/lib/shop/email.ts`,
   testata con Vitest: il link porta id e token **nel fragment**, mai nella query
+- Aspetto (2026-10-22): cornice comune alle due email, larga 560 px, con tabelle
+  e stili in linea. Testata inchiostro col timbro e l'onda del badge (PNG in
+  `public/email/`, perché i programmi di posta non mostrano gli SVG), riquadro
+  dell'ordine come le card, pulsante come `btn-solid` col link intero sotto,
+  footer crema con indirizzo, orari, link e avviso del concept. Font di sistema
+  (Georgia, Courier, Impact in maiuscolo): Gmail e Outlook non caricano i nostri.
+  La conferma riporta il diritto di recesso e il link a `/[lang]/legal/`: la
+  legge vuole queste informazioni anche su un supporto durevole
 - L'API di Resend va verificata sulla documentazione aggiornata prima di
   scrivere il codice: indice in `https://resend.com/docs/llms.txt`
 

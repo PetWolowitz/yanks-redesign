@@ -334,5 +334,9 @@
   "legal.form.4": "Anschrift des/der Verbraucher(s)",
   "legal.form.5": "Unterschrift des/der Verbraucher(s) (nur bei Mitteilung auf Papier)",
   "legal.form.6": "Datum",
-  "legal.form.footnote": "(*) Unzutreffendes streichen."
+  "legal.form.footnote": "(*) Unzutreffendes streichen.",
+  "email.title": "Danke für deine Bestellung",
+  "email.button": "Bestellung ansehen",
+  "email.withdrawal": "Du kannst deinen Kauf innerhalb von 14 Tagen nach Erhalt ohne Angabe von Gründen widerrufen. Unsere AGB, das Widerrufsformular und die Datenschutzhinweise stehen auf dieser Seite:",
+  "shopEmail.title": "Neue Bestellung"
 }

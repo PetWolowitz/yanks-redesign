@@ -240,7 +240,7 @@ export async function handleStripeWebhook(request: Request, env: ShopEnv, deps: 
     if (await markOrderPaid(env.DB, order.id)) {
       // Da qui l'ordine è pagato: qualunque problema con l'email non lo cambia e
       // non fa riprovare Stripe. Nei log mai token né email
-      let emailOrder: Parameters<typeof sendShopNotification>[4] | null = null;
+      let emailOrder: Parameters<typeof sendShopNotification>[5] | null = null;
       try {
         emailOrder = {
           publicId: order.public_id,
@@ -261,7 +261,7 @@ export async function handleStripeWebhook(request: Request, env: ShopEnv, deps: 
       if (env.SHOP_NOTIFY_EMAIL && emailOrder) {
         try {
           const address = await shippingAddressForEmail(env.DB, order.id);
-          const sent = address && (await sendShopNotification(deps.fetch, env.RESEND_API_KEY, env.EMAIL_FROM, env.SHOP_NOTIFY_EMAIL, emailOrder, address, order.email));
+          const sent = address && (await sendShopNotification(deps.fetch, env.RESEND_API_KEY, env.EMAIL_FROM, env.SHOP_NOTIFY_EMAIL, new URL(request.url).origin, emailOrder, address, order.email));
           if (!sent) console.error('api/stripe-webhook: avviso al negozio non inviato');
         } catch {
           console.error('api/stripe-webhook: avviso al negozio non preparato');

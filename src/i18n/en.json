@@ -334,5 +334,9 @@
   "legal.form.4": "Address of consumer(s),",
   "legal.form.5": "Signature of consumer(s) (only if this form is notified on paper),",
   "legal.form.6": "Date",
-  "legal.form.footnote": "(*) Delete as appropriate."
+  "legal.form.footnote": "(*) Delete as appropriate.",
+  "email.title": "Thanks for your order",
+  "email.button": "View your order",
+  "email.withdrawal": "You can withdraw from your purchase within 14 days of receiving it, without giving a reason. Our terms, the withdrawal form and the privacy notice are on this page:",
+  "shopEmail.title": "New order"
 }
