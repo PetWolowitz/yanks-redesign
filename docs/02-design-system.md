@@ -370,12 +370,13 @@ Tutto in CSS e poco TypeScript, senza librerie (docs/08). `prefers-reduced-motio
 spegne tutto; si animano solo `transform` e `opacity`; senza JS si vede tutto.
 - **Titoli in ingresso** (h1, h2, h3 di pagina e footer, `scripts/motion.ts`),
   dal 2026-10-01: ogni pezzo entra **da sinistra**, inclinato, e si raddrizza;
-  Indian per parola (200 ms l'una), Yankee Clipper per lettera (55 ms l'una).
+  Indian per parola, Yankee Clipper per lettera (tempi sotto).
   Nessun tremolio dopo l'ingresso (provato e tolto il 2026-10-01). Gli screen
   reader leggono il titolo intero (`sr-only`)
-- **Tempi** (fissati il 2026-10-21; la PR #38 con tempi più lenti, 1.8-2.6 s, è
-  stata chiusa): titoli 1.3 s per lettera e 1.7 s per parola (Indian), blocchi
-  1.1 s, volo nel carrello 1 s, toast 0.4 s, lettere del footer 0.25 s
+- **Tempi** (rallentati il 2026-10-22 su richiesta di Pietro, a metà tra quelli
+  del 2026-10-21 e la PR #38 chiusa): titoli 1.8 s per lettera (75 ms l'una) e
+  2.3 s per parola (Indian, 280 ms l'una), blocchi 1.6 s (130 ms l'uno, spostamenti
+  40-72 px), volo nel carrello 1 s, toast 0.4 s, lettere del footer 0.25 s
 - **L'h1 della hero non si anima** (`data-static`): "Yanks" è visibile al primo
   disegno della pagina, senza aspettare lo script
 - **Blocchi in ingresso**: schede, foto, citazioni e moduli sotto la piega salgono
