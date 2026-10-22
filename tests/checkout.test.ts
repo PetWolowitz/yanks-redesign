@@ -258,6 +258,10 @@ describe('POST /api/stripe-webhook', () => {
     expect(email.to).toEqual(['cliente@example.com']);
     expect(email.from).toBe(SECRETS.EMAIL_FROM);
     expect(String(email.text)).toContain(`${ORIGIN}/nl/shop/order/#id=${ID}&t=${token}`);
+    // nell'HTML la & è scritta come entità; c'è anche il link a condizioni e recesso
+    expect(String(email.html)).toContain(`${ORIGIN}/nl/shop/order/#id=${ID}&#38;t=${token}`);
+    expect(String(email.html)).toContain(`${ORIGIN}/nl/legal/`);
+    expect(String(email.text)).toContain(`${ORIGIN}/nl/legal/`);
     expect(String(email.subject)).toContain('Je bestelling');
   });
 
@@ -280,6 +284,8 @@ describe('POST /api/stripe-webhook', () => {
       }
       expect(JSON.stringify(notice)).not.toContain(token);
       expect(String(notice.text)).not.toContain('#id=');
+      expect(String(notice.html)).not.toContain('#id=');
+      expect(String(notice.html)).not.toContain('/shop/order/');
       // chiave di idempotenza diversa da quella della conferma
       const keys = fake.calls.filter((call) => call.url.includes('resend')).map((call) => (call.init.headers as Record<string, string>)['Idempotency-Key']);
       expect(new Set(keys).size).toBe(2);

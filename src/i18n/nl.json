@@ -334,5 +334,9 @@
   "legal.form.4": "Adres consument(en),",
   "legal.form.5": "Handtekening van consument(en) (alleen wanneer dit formulier op papier wordt ingediend),",
   "legal.form.6": "Datum",
-  "legal.form.footnote": "(*) Doorhalen wat niet van toepassing is."
+  "legal.form.footnote": "(*) Doorhalen wat niet van toepassing is.",
+  "email.title": "Bedankt voor je bestelling",
+  "email.button": "Bekijk je bestelling",
+  "email.withdrawal": "Je kunt je aankoop binnen 14 dagen na ontvangst herroepen, zonder opgave van reden. Onze voorwaarden, het herroepingsformulier en de privacyverklaring staan op deze pagina:",
+  "shopEmail.title": "Nieuwe bestelling"
 }

@@ -17,6 +17,32 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-22 — Fase 5S: legale, spedizioni, bandiere nel footer, email
+Fatto:        #48 unita da Pietro. PR nuove, in catena: #51 pagina legale
+              `/[lang]/legal/` (condizioni, recesso, spedizioni, privacy, dati
+              dell'azienda con segnaposto), #52 bandiere nel footer che
+              sventolano al clic (navbar con NL EN DE), lingue e social sulla
+              stessa riga su telefono, #53 spese di spedizione per paese, #54
+              modulo tipo di recesso (testo ufficiale per lingua), #55 email
+              nello stile del sito con recesso e link alle condizioni
+Decisioni:    - spedizione a tariffa fissa per zona, IVA compresa: NL 6,95;
+                BE LU DE 9,95; AT FR IT ES 13,95 (base PostNL 2026). Stripe la
+                riceve come shipping_options; nel database solo il totale
+              - niente banner cookie: nessun cookie, embed solo al clic
+              - link alla piattaforma ODR non più obbligatorio (chiusa il
+                20/7/2025)
+              - dati dell'azienda mai inventati: segnaposto finché il locale non
+                li dà (`src/data/legal.ts`); info@yanks.nl non usata senza permesso
+              - le condizioni di shop.yanks.nl sono il modello Shopify mai
+                compilato: argomento per la proposta (docs/01, punto 5)
+Problemi:     `gh pr merge` bloccato dai permessi automatici di Claude Code: le PR
+              le unisce Pietro, in ordine #49 → #55. Testi legali nl e de da far
+              rileggere; per un cliente vero serve un controllo di un esperto
+              legale. Manca ancora l'acquisto di prova con iDEAL
+Prossimo:     unire #49-#55; acquisto di prova con iDEAL; poi Fase 6 (SEO,
+              Lighthouse nei due temi)
+Ramo/commit:  shop/email-design — "Diario: legale, spedizioni, bandiere, email"
+
 ## 2026-10-22 — Chiusura del design, test e2e, avviso al negozio
 Fatto:        #48 (onde senza fasce, toast a ordine pagato, lingue per nome nel
               footer, h1 della hero subito visibile, 404 riletta), #49 (test dei
