@@ -323,5 +323,16 @@
   "legal.link": "Terms and privacy",
   "shop.shipping": "Shipping",
   "checkout.totalNote": "Prices include VAT. You pay in the next step, on the Stripe page.",
-  "legal.shipping.1": "Shipping costs depend on the country and include VAT. You see them at checkout, before paying, and they are part of the total."
+  "legal.shipping.1": "Shipping costs depend on the country and include VAT. You see them at checkout, before paying, and they are part of the total.",
+  "legal.withdrawal.5": "You can use the model withdrawal form below, but you do not have to: any clear message is enough.",
+  "legal.form.title": "Model withdrawal form",
+  "legal.form.note": "(complete and return this form only if you wish to withdraw from the contract)",
+  "legal.form.to": "To",
+  "legal.form.1": "I/We (*) hereby give notice that I/We (*) withdraw from my/our (*) contract of sale of the following goods (*)/for the provision of the following service (*),",
+  "legal.form.2": "Ordered on (*)/received on (*),",
+  "legal.form.3": "Name of consumer(s),",
+  "legal.form.4": "Address of consumer(s),",
+  "legal.form.5": "Signature of consumer(s) (only if this form is notified on paper),",
+  "legal.form.6": "Date",
+  "legal.form.footnote": "(*) Delete as appropriate."
 }

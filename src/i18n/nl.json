@@ -323,5 +323,16 @@
   "legal.link": "Voorwaarden en privacy",
   "shop.shipping": "Verzending",
   "checkout.totalNote": "Prijzen inclusief btw. Je betaalt in de volgende stap, op de pagina van Stripe.",
-  "legal.shipping.1": "De verzendkosten hangen af van het land en zijn inclusief btw. Je ziet ze bij het afrekenen, voordat je betaalt, en ze zitten in het totaal."
+  "legal.shipping.1": "De verzendkosten hangen af van het land en zijn inclusief btw. Je ziet ze bij het afrekenen, voordat je betaalt, en ze zitten in het totaal.",
+  "legal.withdrawal.5": "Je kunt het modelformulier hieronder gebruiken, maar het hoeft niet: elk duidelijk bericht is genoeg.",
+  "legal.form.title": "Modelformulier voor herroeping",
+  "legal.form.note": "(dit formulier alleen invullen en terugzenden als u de overeenkomst wilt herroepen)",
+  "legal.form.to": "Aan",
+  "legal.form.1": "Ik/Wij (*) deel/delen (*) u hierbij mede dat ik/wij (*) onze overeenkomst betreffende de verkoop van de volgende producten (*)/de levering van de volgende dienst (*) herroep/herroepen (*),",
+  "legal.form.2": "Besteld op (*)/ontvangen op (*),",
+  "legal.form.3": "Naam/Namen consument(en),",
+  "legal.form.4": "Adres consument(en),",
+  "legal.form.5": "Handtekening van consument(en) (alleen wanneer dit formulier op papier wordt ingediend),",
+  "legal.form.6": "Datum",
+  "legal.form.footnote": "(*) Doorhalen wat niet van toepassing is."
 }

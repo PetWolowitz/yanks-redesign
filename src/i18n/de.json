@@ -323,5 +323,16 @@
   "legal.link": "AGB und Datenschutz",
   "shop.shipping": "Versand",
   "checkout.totalNote": "Preise inklusive Mehrwertsteuer. Du bezahlst im nächsten Schritt auf der Seite von Stripe.",
-  "legal.shipping.1": "Die Versandkosten hängen vom Land ab und enthalten die Mehrwertsteuer. Du siehst sie an der Kasse, vor dem Bezahlen, und sie sind im Gesamtbetrag enthalten."
+  "legal.shipping.1": "Die Versandkosten hängen vom Land ab und enthalten die Mehrwertsteuer. Du siehst sie an der Kasse, vor dem Bezahlen, und sie sind im Gesamtbetrag enthalten.",
+  "legal.withdrawal.5": "Du kannst das Muster-Widerrufsformular unten verwenden, musst es aber nicht: Jede eindeutige Nachricht genügt.",
+  "legal.form.title": "Muster-Widerrufsformular",
+  "legal.form.note": "(Wenn Sie den Vertrag widerrufen wollen, dann füllen Sie bitte dieses Formular aus und senden Sie es zurück.)",
+  "legal.form.to": "An",
+  "legal.form.1": "Hiermit widerrufe(n) ich/wir (*) den von mir/uns (*) abgeschlossenen Vertrag über den Kauf der folgenden Waren (*)/die Erbringung der folgenden Dienstleistung (*)",
+  "legal.form.2": "Bestellt am (*)/erhalten am (*)",
+  "legal.form.3": "Name des/der Verbraucher(s)",
+  "legal.form.4": "Anschrift des/der Verbraucher(s)",
+  "legal.form.5": "Unterschrift des/der Verbraucher(s) (nur bei Mitteilung auf Papier)",
+  "legal.form.6": "Datum",
+  "legal.form.footnote": "(*) Unzutreffendes streichen."
 }
