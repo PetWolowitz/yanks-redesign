@@ -38,7 +38,7 @@ const sections: { id: string; title: Key; paragraphs: number; rows?: Row[] }[] =
   {
     id: 'withdrawal',
     title: 'legal.withdrawal.title',
-    paragraphs: 4,
+    paragraphs: 5,
     rows: [{ label: 'legal.withdrawal.costs', value: null }],
   },
   {
@@ -59,6 +59,10 @@ const company: Row[] = [
   { label: 'legal.company.email', value: legal.email },
   { label: 'legal.company.returnAddress', value: legal.returnAddress },
 ];
+
+// Destinatario del modulo di recesso: nome, indirizzo ed email del venditore, come
+// chiede il modello; i dati mancanti restano segnaposto
+const formTo: (string | null)[] = [legal.legalName, `${street}, ${postalCode} ${city}`, legal.email];
 
 const rowsClass = 'grid gap-x-6 gap-y-3 sm:grid-cols-[minmax(0,14rem)_1fr]';
 // box-decoration-clone: se va a capo, ogni riga ha il suo bordo
@@ -105,6 +109,29 @@ const missingClass = 'box-decoration-clone rounded border-[1.5px] border-dashed 
                   </>
                 ))}
               </dl>
+            )}
+            {id === 'withdrawal' && (
+              // Modulo tipo (direttiva 2011/83/UE, allegato I B): testo ufficiale di ogni
+              // lingua, per questo in olandese e tedesco dà del "u" e del "Sie"
+              <div class="mt-8 max-w-[65ch] rounded-2xl border-[1.5px] border-text p-6">
+                <h3 class="card-title">{t(lang, 'legal.form.title')}</h3>
+                <p class="mt-2 text-small text-muted">{t(lang, 'legal.form.note')}</p>
+                <ul class="mt-4 list-['—_'] space-y-2 ps-5 font-prose">
+                  <li>
+                    {t(lang, 'legal.form.to')}:{' '}
+                    {formTo.map((value, i) => (
+                      <>
+                        {i > 0 && ', '}
+                        {value ?? <span class={missingClass}>{missing}</span>}
+                      </>
+                    ))}
+                  </li>
+                  {[1, 2, 3, 4, 5, 6].map((n) => (
+                    <li>{t(lang, `legal.form.${n}` as Key)}</li>
+                  ))}
+                </ul>
+                <p class="mt-4 text-small text-muted">{t(lang, 'legal.form.footnote')}</p>
+              </div>
             )}
           </section>
         ))

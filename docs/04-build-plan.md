@@ -364,7 +364,7 @@ prima/dopo di tutte le pagine in `.playwright-mcp/pagine/`)_
       indice, link nel footer e nel checkout. Ragione sociale, KvK, BTW, email,
       indirizzo per i resi, tempi di consegna e spese di reso sono segnaposto
       tratteggiati finché il locale non li dà: `src/data/legal.ts`. Testi nl e de
-      da far rileggere)_
+      da far rileggere. Modulo tipo di recesso, testo ufficiale per lingua)_
 - [x] Test automatici dei flussi dello shop con Playwright _(2026-10-21:
       `e2e/shop.e2e.ts`, 6 flussi su desktop e telefono, sulla build mock:
       catalogo senza JS, carrello, errori del checkout, ordine pagato con toast
