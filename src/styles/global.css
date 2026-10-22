@@ -4,13 +4,6 @@
 
 /* dark: segue il tema scelto (data-theme su <html>), non quello del sistema */
 /* Margine laterale comune a tutte le pagine (token --page-x) */
-/* Fila che scorre in orizzontale a tutta larghezza, ma con la prima scheda
-   allineata al margine della pagina (max-w-360 = 90rem) */
-@utility px-bleed {
-  padding-inline: max(var(--page-x), calc((100% - 90rem) / 2 + var(--page-x)));
-  scroll-padding-inline: max(var(--page-x), calc((100% - 90rem) / 2 + var(--page-x)));
-}
-
 @utility px-page {
   padding-inline: var(--page-x);
 }
@@ -395,8 +388,3 @@ html:has(.cart-drawer[open]) {
 }
 
 
-/* Barra di scorrimento sottile e nei colori del tema: dice che si scorre di lato */
-.story-track {
-  scrollbar-width: thin;
-  scrollbar-color: var(--text) transparent;
-}
