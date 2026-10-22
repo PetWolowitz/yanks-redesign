@@ -1,0 +1,121 @@
+---
+// Condizioni e privacy (Fase 5S, docs/04): una pagina, quattro sezioni con indice in
+// alto, poi i dati dell'azienda. Ogni dato che il locale non ha dato (src/data/legal.ts)
+// o che deve decidere lui appare come segnaposto tratteggiato, mai inventato.
+import type { GetStaticPaths } from 'astro';
+import PageIntro from '../../components/site/PageIntro.astro';
+import { legal } from '../../data/legal';
+import { venue } from '../../data/venue';
+import Base from '../../layouts/Base.astro';
+import { langPaths, type Lang } from '../../i18n/locales';
+import { t, type Key } from '../../i18n/t';
+import { shippingCountries } from '../../lib/shop/types';
+
+export const getStaticPaths = langPaths satisfies GetStaticPaths;
+
+const { lang } = Astro.props as { lang: Lang };
+const regionName = new Intl.DisplayNames([lang], { type: 'region' });
+const countries = shippingCountries.map((code) => regionName.of(code)).join(', ');
+const { street, postalCode, city } = venue.address;
+const missing = `[${t(lang, 'legal.missing')}]`;
+
+// Righe "etichetta: valore" delle sezioni; null = segnaposto
+type Row = { label: Key; value: string | null };
+const sections: { id: string; title: Key; paragraphs: number; rows?: Row[] }[] = [
+  { id: 'terms', title: 'legal.terms.title', paragraphs: 5 },
+  {
+    id: 'withdrawal',
+    title: 'legal.withdrawal.title',
+    paragraphs: 4,
+    rows: [{ label: 'legal.withdrawal.costs', value: null }],
+  },
+  {
+    id: 'shipping',
+    title: 'legal.shipping.title',
+    paragraphs: 0,
+    rows: [
+      { label: 'legal.shipping.countries', value: countries },
+      // Il checkout non addebita spedizione (lib/shop/stripe.ts)
+      { label: 'legal.shipping.cost', value: t(lang, 'legal.shipping.free') },
+      { label: 'legal.shipping.time', value: null },
+    ],
+  },
+  { id: 'privacy', title: 'legal.privacy.title', paragraphs: 6 },
+];
+
+const company: Row[] = [
+  { label: 'legal.company.tradeName', value: venue.name },
+  { label: 'legal.company.legalName', value: legal.legalName },
+  { label: 'legal.company.kvk', value: legal.kvk },
+  { label: 'legal.company.vat', value: legal.vat },
+  { label: 'legal.company.address', value: `${street}, ${postalCode} ${city}` },
+  { label: 'legal.company.email', value: legal.email },
+  { label: 'legal.company.returnAddress', value: legal.returnAddress },
+];
+
+const rowsClass = 'grid gap-x-6 gap-y-3 sm:grid-cols-[minmax(0,14rem)_1fr]';
+// box-decoration-clone: se va a capo, ogni riga ha il suo bordo
+const missingClass = 'box-decoration-clone rounded border-[1.5px] border-dashed border-red-text px-1.5 text-red-text';
+---
+
+<Base lang={lang} title={`${t(lang, 'legal.title')} · ${venue.name}`} description={t(lang, 'legal.description')}>
+  <main id="content">
+    <PageIntro title={t(lang, 'legal.title')} intro={t(lang, 'legal.intro')}>
+      <nav aria-labelledby="legal-toc" class="mt-8">
+        <h2 id="legal-toc" class="text-h3">{t(lang, 'legal.toc')}</h2>
+        <ul class="mt-2 flex flex-wrap gap-x-6 gap-y-1">
+          {
+            [...sections.map(({ id, title }) => ({ id, title })), { id: 'company', title: 'legal.company.title' as Key }].map(({ id, title }) => (
+              <li>
+                <a href={`#${id}`} class="inline-block py-2 underline underline-offset-4">
+                  {t(lang, title)}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </PageIntro>
+
+    <div class="mx-auto max-w-360 px-page pb-14">
+      {
+        sections.map(({ id, title, paragraphs, rows }) => (
+          <section id={id} aria-labelledby={`${id}-title`} class="scroll-mt-24 border-t-[1.5px] border-text py-8">
+            <h2 id={`${id}-title`} class="text-h2">
+              {t(lang, title)}
+            </h2>
+            <div class="mt-4 max-w-[65ch] space-y-3 font-prose">
+              {Array.from({ length: paragraphs }, (_, i) => (
+                <p>{t(lang, `legal.${id}.${i + 1}` as Key)}</p>
+              ))}
+            </div>
+            {rows && (
+              <dl class:list={[rowsClass, 'mt-5 max-w-[65ch]']}>
+                {rows.map(({ label, value }) => (
+                  <>
+                    <dt class="text-muted">{t(lang, label)}</dt>
+                    <dd>{value ?? <span class={missingClass}>{missing}</span>}</dd>
+                  </>
+                ))}
+              </dl>
+            )}
+          </section>
+        ))
+      }
+
+      <section id="company" aria-labelledby="company-title" class="scroll-mt-24 rounded-2xl border-[1.5px] border-text p-6 lg:p-8">
+        <h2 id="company-title" class="text-h2">{t(lang, 'legal.company.title')}</h2>
+        <dl class:list={[rowsClass, 'mt-5']}>
+          {
+            company.map(({ label, value }) => (
+              <>
+                <dt class="text-muted">{t(lang, label)}</dt>
+                <dd>{value ?? <span class={missingClass}>{missing}</span>}</dd>
+              </>
+            ))
+          }
+        </dl>
+      </section>
+    </div>
+  </main>
+</Base>

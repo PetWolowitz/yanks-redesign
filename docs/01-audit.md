@@ -26,6 +26,12 @@ informazioni su Yanks si trovano solo su siti terzi.
 **4. Due brand scollegati.** Grafica, lingua, tono e tecnologia diversi tra sito e
 shop.
 
+**5. Condizioni dello shop mai compilate** (controllato il 2026-10-22). Le pagine
+legali di shop.yanks.nl sono il modello di Shopify: il negozio si chiama "Mijn
+winkel", l'indirizzo per i resi è "[RETOURADRES INVOEREN]", l'email per i resi è
+di un dominio esterno (ezramoot.nl). Mancano ragione sociale, KvK e BTW, che per
+legge un negozio online olandese deve mostrare.
+
 ## Problemi di contenuto
 
 **5. Testi da template mai modificati.** Sullo shop: "Trusted by 500+ Customers",

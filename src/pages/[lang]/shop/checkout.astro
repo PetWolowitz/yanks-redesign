@@ -91,7 +91,10 @@ const legendClass = 'mb-4 font-sign text-h3 uppercase';
           </div>
 
           <div class="space-y-4">
-            <p class="text-small text-muted">{t(lang, 'checkout.privacy')}</p>
+            <p class="text-small text-muted">
+              {t(lang, 'checkout.privacy')}
+              <a href={`/${lang}/legal/`} class="underline underline-offset-4">{t(lang, 'legal.link')}</a>
+            </p>
             <button type="submit" class="btn-solid w-full disabled:cursor-wait disabled:opacity-60 sm:w-auto">
               {t(lang, 'checkout.pay')}
             </button>
