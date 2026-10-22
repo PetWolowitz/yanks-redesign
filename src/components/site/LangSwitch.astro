@@ -1,21 +1,20 @@
 ---
-// Link alla stessa pagina nelle altre lingue. Ogni nome è scritto nella sua lingua,
-// con lang e hreflang giusti. short: codici NL EN DE (header); altrimenti nomi interi.
+// Link alla stessa pagina nelle altre lingue, con lang e hreflang giusti.
+// short: codici NL EN DE nella capsula dell'header, come prima.
+// Altrimenti bandiere (footer, Pietro 2026-10-22, su ogni dispositivo): il nome della
+// lingua, nella sua lingua, resta per i lettori di schermo e nel title. Al clic la
+// bandiera sventola, poi si cambia pagina; con movimento ridotto si cambia subito.
 import { languageNames, locales, type Lang } from '../../i18n/locales';
 import { t } from '../../i18n/t';
-import ScatterText from './ScatterText.astro';
+import Flag from './Flag.astro';
 
 interface Props {
   lang: Lang;
   short?: boolean;
-  // lettere che si scompongono al passaggio del mouse (footer)
-  scatter?: boolean;
-  // elenco compatto, con la stessa spaziatura degli altri elenchi
-  dense?: boolean;
   class?: string;
 }
 
-const { lang, short = false, scatter = false, dense = false, class: className } = Astro.props;
+const { lang, short = false, class: className } = Astro.props;
 
 // /en/menu/ → /nl/menu/: cambia solo il primo segmento, come gli hreflang di Base.astro
 // Una pagina senza lingua nell'indirizzo (la 404) porta alla home della lingua
@@ -24,7 +23,7 @@ const hrefFor = (l: Lang) => (hasLang ? Astro.url.pathname.replace(/^\/[^/]+\//,
 ---
 
 <nav aria-label={t(lang, 'nav.languages')} class={className}>
-  <ul class:list={['flex', short ? 'gap-0.5' : dense ? 'flex-col gap-1' : 'flex-col gap-2']}>
+  <ul class:list={['flex', short ? 'gap-0.5' : 'flex-wrap gap-2']}>
     {
       locales.map((l) => (
         <li>
@@ -33,29 +32,51 @@ const hrefFor = (l: Lang) => (hasLang ? Astro.url.pathname.replace(/^\/[^/]+\//,
             hreflang={l}
             lang={l}
             aria-current={l === lang ? 'true' : undefined}
+            title={short ? undefined : languageNames[l]}
+            data-flag-link={short ? undefined : ''}
             class:list={[
-              'inline-flex items-center',
+              'inline-flex min-h-11 min-w-11 items-center justify-center',
               short
                 ? // pillole della capsula: la lingua attiva è piena
-                  'min-h-11 min-w-11 justify-center rounded-full px-2 uppercase not-aria-[current]:hover:text-red-text aria-[current]:bg-text aria-[current]:text-bg lg:min-h-9 lg:min-w-9 xl:min-w-10'
-                : 'decoration-red-text decoration-[3px] underline-offset-[6px] hover:underline aria-[current]:underline',
-              !short && (dense ? 'py-2.5 lg:py-1' : 'min-h-11'),
-              scatter && 'scatter-host hover:no-underline',
+                  'rounded-full px-2 uppercase not-aria-[current]:hover:text-red-text aria-[current]:bg-text aria-[current]:text-bg lg:min-h-9 lg:min-w-9 xl:min-w-10'
+                : // bandiera dentro un bersaglio da 44 px; la lingua attiva è cerchiata in rosso
+                  'rounded-lg aria-[current]:ring-2 aria-[current]:ring-red-text',
             ]}
           >
-            {short ? (
-              <>
-                <span aria-hidden="true">{l}</span>
-                <span class="sr-only">{languageNames[l]}</span>
-              </>
-            ) : scatter ? (
-              <ScatterText text={languageNames[l]} />
-            ) : (
-              languageNames[l]
-            )}
+            {short ? <span aria-hidden="true">{l}</span> : <Flag lang={l} />}
+            <span class="sr-only">{languageNames[l]}</span>
           </a>
         </li>
       ))
     }
   </ul>
 </nav>
+
+<style is:global>
+  /* Sventolio: solo transform, come tutte le animazioni del sito (docs/02, Movimento) */
+  @keyframes flag-wave {
+    0% { transform: none; }
+    25% { transform: perspective(60px) rotateY(-18deg) skewY(-4deg); }
+    50% { transform: perspective(60px) rotateY(14deg) skewY(3deg) scale(1.08); }
+    75% { transform: perspective(60px) rotateY(-8deg) skewY(-2deg); }
+    100% { transform: none; }
+  }
+  [data-flag-link].is-waving .flag {
+    animation: flag-wave 360ms ease-in-out;
+    transform-origin: left center;
+  }
+</style>
+
+<script>
+  // Fa sventolare la bandiera e cambia pagina a fine animazione. Senza JavaScript, o
+  // con un tasto modificatore (nuova scheda), il link funziona normalmente.
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  document.addEventListener('click', (event) => {
+    const link = (event.target as Element).closest<HTMLAnchorElement>('[data-flag-link]');
+    if (!link || reduced.matches || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    link.classList.add('is-waving');
+    // Stessa durata dello sventolio
+    setTimeout(() => window.location.assign(link.href), 360);
+  });
+</script>
