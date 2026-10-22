@@ -394,7 +394,12 @@ prima/dopo di tutte le pagine in `.playwright-mcp/pagine/`)_
       (legale, carrello, checkout) in locale: accessibilità 100 nei due temi; SEO
       69 solo per il `noindex` voluto. Tema e avviso d'età impostati in un profilo
       di Chrome prima della misura, controllati sugli screenshot finali)_
-- [ ] Navigazione completa da tastiera
+- [x] Navigazione completa da tastiera _(2026-10-22, con Playwright sul sito
+      online: 11 pagine percorse con Tab, focus sempre visibile, ogni elemento con
+      un nome, nessuna trappola; avviso d'età e pannello del carrello corretti.
+      Corretto il menu su telefono: il Tab usciva sugli elementi nascosti dietro
+      il menu, ora il resto della pagina è `inert` mentre è aperto. Dentro il
+      widget Turnstile il focus è di Cloudflare)_
 - [ ] Prova da telefono vero
 - [x] Informativa privacy e condizioni di vendita _(2026-10-22, PR #51: `/[lang]/legal/`)_
 - [ ] README con il caso studio _(README del progetto scritto il 2026-10-01; il
