@@ -83,8 +83,11 @@ const linkClass = 'scatter-host inline-block py-2.5 lg:py-1';
       </ul>
     </div>
 
-    <div class="border-t-[1.5px] border-text pt-6 sm:col-span-2 lg:col-span-5 xl:col-span-12">
+    <div class="flex flex-col gap-4 border-t-[1.5px] border-text pt-6 sm:col-span-2 lg:col-span-5 lg:flex-row lg:justify-between xl:col-span-12">
       <p class="max-w-[70ch] font-prose text-small text-muted">{t(lang, 'footer.disclaimer')}</p>
+      <a href={`/${lang}/legal/`} class={`${linkClass} shrink-0 self-start`}>
+        <ScatterText text={t(lang, 'legal.link')} />
+      </a>
     </div>
   </div>
 </footer>
