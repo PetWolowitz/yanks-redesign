@@ -164,8 +164,11 @@ componenti in docs/02; pagina di riferimento: `/en/styleguide/` (noindex).
   `card-title`, più piccoli e spaziati (Yankee Clipper ha un solo peso). L'ombra
   piena al passaggio resta. Pulsanti (`btn`), header e tubo al neon invariati
 - **Foto senza filtri** (duotono e grana provati e scartati)
-- **Footer**: lingue con il nome nella loro lingua (Nederlands, English,
-  Deutsch; le bandiere sono state provate e tolte il 2026-10-21); icone da 32 px (bersaglio da 48) al posto delle scritte Facebook e Instagram.
+- **Lingue con le bandiere, ovunque** (header e footer): tolte il 2026-10-21,
+  rimesse il 2026-10-22 da Pietro. Il nome della lingua resta per i lettori di
+  schermo; al clic la bandiera sventola, poi si cambia pagina. Su telefono, nel
+  footer, lingue e social sulla stessa riga
+- **Footer**: icone da 32 px (bersaglio da 48) al posto delle scritte Facebook e Instagram.
   Sui link delle pagine **restano le lettere che si scompongono** (Pietro,
   2026-10-21: la sottolineatura rossa è stata provata e scartata)
 - **404** con il marchio, in tutte e tre le lingue (`src/pages/404.astro`): la
