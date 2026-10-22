@@ -22,3 +22,16 @@ jobs:
       # Il test della CSP legge l'HTML generato: prima la build, poi i test
       - run: npm run build
       - run: npm test
+
+  # Flussi dello shop nel browser, sulla build mock (playwright.config.ts)
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
