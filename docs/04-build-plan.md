@@ -380,7 +380,9 @@ prima/dopo di tutte le pagine in `.playwright-mcp/pagine/`)_
 - [x] JSON-LD `LocalBusiness` generato da `venue.ts` _(2026-10-22: `lib/seo.ts`,
       solo nella home di ogni lingua, senza email; escluso dal test della CSP
       perché non si esegue)_
-- [ ] Sitemap
+- [x] Sitemap _(2026-10-22: `/sitemap.xml` e `/robots.txt` generati in build, senza
+      pacchetti. Indicizzazione spenta con `INDEXABLE` in `lib/seo.ts` finché il
+      locale non approva: `noindex` ovunque, robots.txt senza sitemap)_
 - [ ] CSP rifinita: niente `unsafe-inline` dove si può evitare; hash dello script
       del tema aggiornato _(script: fatto, con test; stili: `unsafe-inline` resta per
       gli attributi `style`, vedi docs/06 Stato della sicurezza)_

@@ -1,7 +1,17 @@
 // JSON-LD LocalBusiness (lib/seo.ts): tutto da venue.ts, niente email
 import { describe, expect, it } from 'vitest';
 import { venue } from '../src/data/venue';
-import { localBusiness } from '../src/lib/seo';
+import { localBusiness, sitemapXml } from '../src/lib/seo';
+
+describe('sitemapXml', () => {
+  const xml = sitemapXml(new URL('https://example.com'), ['', 'menu/']);
+
+  it('una voce per pagina e per lingua, con le versioni nelle altre lingue', () => {
+    expect(xml.match(/<url>/g)).toHaveLength(2 * 3);
+    expect(xml).toContain('<loc>https://example.com/nl/menu/</loc>');
+    expect(xml).toContain('<xhtml:link rel="alternate" hreflang="de" href="https://example.com/de/"/>');
+  });
+});
 
 describe('localBusiness', () => {
   const data = localBusiness('https://example.com/nl/', 'https://example.com/og.jpg');
