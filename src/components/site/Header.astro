@@ -60,6 +60,12 @@ const iconButton = 'inline-flex size-11 items-center justify-center rounded-full
         priority
         class="size-12 origin-left transition-transform duration-300 group-data-scrolled/header:scale-80 motion-reduce:transition-none lg:size-12 xl:size-14"
       />
+      <!-- Il nome accanto al logo su telefono e tablet (Pietro, 2026-10-26: senza è anonimo);
+           sotto i 360 px non ci sta (in tedesco il menu uscirebbe dallo schermo).
+           aria-hidden: il nome del link è già nell'alt del logo -->
+      <span aria-hidden="true" class="ms-2 pt-1 font-script text-[1.75rem] leading-none text-red-text max-[359px]:hidden origin-left transition-[translate,scale] duration-300 group-data-scrolled/header:-translate-x-2.5 group-data-scrolled/header:scale-85 motion-reduce:transition-none lg:hidden">
+        {t(lang, 'header.wordmark')}
+      </span>
     </a>
 
     <nav aria-label={t(lang, 'nav.label')} class="relative hidden flex-1 lg:block">
@@ -120,6 +126,7 @@ const iconButton = 'inline-flex size-11 items-center justify-center rounded-full
     <div class="flex h-16 shrink-0 items-center justify-between">
       <a href={`/${lang}/`} class="inline-flex items-center">
         <Logo alt={t(lang, 'header.home')} variant="indiano" size={56} class="size-12" />
+        <span aria-hidden="true" class="ms-2 pt-1 font-script text-[1.75rem] leading-none text-red-text">{t(lang, 'header.wordmark')}</span>
       </a>
       <button type="button" popovertarget="site-menu" popovertargetaction="hide" class={iconButton}>
         <span class="sr-only">{t(lang, 'nav.close')}</span>
