@@ -292,7 +292,7 @@
   "legal.terms.title": "Terms of sale",
   "legal.terms.1": "The seller is the company listed under Company details at the bottom of this page. Prices are in euros and include VAT.",
   "legal.terms.2": "Your order is final once the payment is confirmed. You then receive a confirmation email with the link to your order.",
-  "legal.terms.3": "Payment is handled by Stripe: card, iDEAL and the other methods shown at checkout. Your payment details never pass through this website.",
+  "legal.terms.3": "Payment is handled by Stripe: {methods}. Your payment details never pass through this website.",
   "legal.terms.4": "By law, every product must match its description and work as it should. If it does not, write to us and we will repair it, replace it or refund you.",
   "legal.terms.5": "Dutch law applies. If you live in another EU country, you keep the consumer protection of that country.",
   "legal.withdrawal.title": "Withdrawal and returns",
@@ -336,5 +336,8 @@
   "email.title": "Thanks for your order",
   "email.button": "View your order",
   "email.withdrawal": "You can withdraw from your purchase within 14 days of receiving it, without giving a reason. Our terms, the withdrawal form and the privacy notice are on this page:",
-  "shopEmail.title": "New order"
+  "shopEmail.title": "New order",
+  "payments.title": "You pay via Stripe, with:",
+  "payments.card": "card",
+  "payments.wallets": "Apple Pay and Google Pay only on devices that support them."
 }

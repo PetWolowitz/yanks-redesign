@@ -292,7 +292,7 @@
   "legal.terms.title": "Verkaufsbedingungen",
   "legal.terms.1": "Verkäufer ist das Unternehmen unter Unternehmensangaben unten auf dieser Seite. Die Preise sind in Euro, inklusive Mehrwertsteuer.",
   "legal.terms.2": "Deine Bestellung ist verbindlich, sobald die Zahlung bestätigt ist. Du bekommst dann eine Bestätigung per E-Mail mit dem Link zu deiner Bestellung.",
-  "legal.terms.3": "Die Zahlung läuft über Stripe: Karte, iDEAL und die anderen Methoden, die du an der Kasse siehst. Deine Zahlungsdaten gehen nie über diese Website.",
+  "legal.terms.3": "Die Zahlung läuft über Stripe: {methods}. Deine Zahlungsdaten gehen nie über diese Website.",
   "legal.terms.4": "Laut Gesetz muss jedes Produkt der Beschreibung entsprechen und richtig funktionieren. Wenn nicht, schreib uns: Wir reparieren es, tauschen es um oder erstatten dir den Preis.",
   "legal.terms.5": "Es gilt niederländisches Recht. Wohnst du in einem anderen EU-Land, behältst du den Verbraucherschutz dieses Landes.",
   "legal.withdrawal.title": "Widerruf und Rücksendung",
@@ -336,5 +336,8 @@
   "email.title": "Danke für deine Bestellung",
   "email.button": "Bestellung ansehen",
   "email.withdrawal": "Du kannst deinen Kauf innerhalb von 14 Tagen nach Erhalt ohne Angabe von Gründen widerrufen. Unsere AGB, das Widerrufsformular und die Datenschutzhinweise stehen auf dieser Seite:",
-  "shopEmail.title": "Neue Bestellung"
+  "shopEmail.title": "Neue Bestellung",
+  "payments.title": "Du bezahlst über Stripe, mit:",
+  "payments.card": "Karte",
+  "payments.wallets": "Apple Pay und Google Pay nur auf Geräten, die sie unterstützen."
 }

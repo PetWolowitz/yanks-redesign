@@ -292,7 +292,7 @@
   "legal.terms.title": "Verkoopvoorwaarden",
   "legal.terms.1": "De verkoper is het bedrijf onder Bedrijfsgegevens onderaan deze pagina. Prijzen zijn in euro en inclusief btw.",
   "legal.terms.2": "Je bestelling is definitief zodra de betaling is bevestigd. Je krijgt dan een bevestiging per e-mail met de link naar je bestelling.",
-  "legal.terms.3": "De betaling loopt via Stripe: kaart, iDEAL en de andere methoden die je bij het afrekenen ziet. Je betaalgegevens komen nooit langs deze website.",
+  "legal.terms.3": "De betaling loopt via Stripe: {methods}. Je betaalgegevens komen nooit langs deze website.",
   "legal.terms.4": "Volgens de wet moet elk product overeenkomen met de beschrijving en goed werken. Is dat niet zo, mail ons dan: we repareren het, vervangen het of betalen je terug.",
   "legal.terms.5": "Het Nederlands recht is van toepassing. Woon je in een ander EU-land, dan houd je de consumentenbescherming van dat land.",
   "legal.withdrawal.title": "Herroeping en retour",
@@ -336,5 +336,8 @@
   "email.title": "Bedankt voor je bestelling",
   "email.button": "Bekijk je bestelling",
   "email.withdrawal": "Je kunt je aankoop binnen 14 dagen na ontvangst herroepen, zonder opgave van reden. Onze voorwaarden, het herroepingsformulier en de privacyverklaring staan op deze pagina:",
-  "shopEmail.title": "Nieuwe bestelling"
+  "shopEmail.title": "Nieuwe bestelling",
+  "payments.title": "Je betaalt via Stripe, met:",
+  "payments.card": "kaart",
+  "payments.wallets": "Apple Pay en Google Pay alleen op apparaten die ze ondersteunen."
 }

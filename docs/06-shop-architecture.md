@@ -34,6 +34,13 @@ endpoint: è una chiamata in uscita fatta dal webhook.
 ## Pagamenti — Stripe Checkout in modalità test
 - Accessibile subito, senza verifica aziendale
 - Supporta iDEAL, il metodo più usato nei Paesi Bassi, più carte e wallet
+- **Metodi mostrati prima del pagamento** (dal 2026-10-26): la legge vuole che il
+  cliente li conosca all'inizio dell'ordine, non solo sulla pagina di Stripe.
+  Elenco in `lib/shop/payments.ts` (iDEAL, carta, Apple Pay, Google Pay, PayPal,
+  Klarna, Bancontact, Amazon Pay: quelli accesi nella dashboard secondo Pietro),
+  in etichette di testo nel carrello e nel checkout (`PaymentMethods.astro`) e in
+  una frase nella pagina legale. Niente loghi dei marchi. Il checkout non fissa i
+  metodi: se in dashboard se ne accende o spegne uno, si aggiorna la lista
 - **I webhook sono firmati**: si verifica la firma con la chiave del webhook, con
   il provider crittografico compatibile con i Workers
 - Carte di prova, nessun addebito reale

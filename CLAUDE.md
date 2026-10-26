@@ -63,7 +63,9 @@ Da qui, deciso il 2026-10-21 (in quest'ordine):
    menu, visit, shop, story, know before you go, avviso d'età, 404). **Una PR per
    pagina**, screenshot prima e dopo, **ok di Pietro prima della successiva**
 6. **Shop pronto per un locale vero**: iDEAL (attivato nella dashboard Stripe il
-   2026-10-21, il checkout non fissa i metodi; manca un acquisto di prova), email al negozio a ogni
+   2026-10-21, il checkout non fissa i metodi; manca un acquisto di prova; i metodi
+   accesi sono elencati in `lib/shop/payments.ts`, che li mostra in carrello,
+   checkout e pagina legale: si aggiorna se cambia la dashboard), email al negozio a ogni
    ordine, pagine legali (condizioni, recesso 14 giorni, privacy, spedizioni),
    test automatici dei flussi con Playwright in locale con le chiavi di prova
 7. Fase 6: SEO, Lighthouse nei due temi, revisione completa; poi in questo file
