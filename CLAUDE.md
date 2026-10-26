@@ -19,6 +19,7 @@ Documenti in `docs/`, da leggere prima di lavorare su quell'area:
 - `08-animazioni-risorse.md` — effetti, librerie e limiti
 - `09-stack-e-principi.md` — lo stack, perché, e le regole di ingegneria
 - `10-mcp-e-collegamenti.md` — gli MCP del progetto e come usarli
+- `11-messaggi-yanks.md` — bozze del DM Instagram e dell'email per il locale (Fase 6P)
 - `diario.md` — il diario delle sessioni, da aggiornare (vedi sotto)
 
 Se due documenti si contraddicono, vale questo file. Segnalalo invece di scegliere.
