@@ -51,18 +51,33 @@ function paragraph(text: string, style = ''): string {
   return `<p style="margin:0 0 16px;${PROSE};font-size:16px;line-height:1.5;${style}">${escapeHtml(text)}</p>`;
 }
 
+// Un testo nella lingua giusta: la conferma usa quella del cliente, l'avviso al
+// negozio olandese e inglese insieme (both)
+type Label = (key: Key, params?: Record<string, string>) => string;
+
+function inLang(lang: Lang): Label {
+  return (key, params) => t(lang, key, params);
+}
+
+// Olandese e inglese insieme, per chi al negozio non legge l'olandese (Pietro,
+// 2026-10-26); una volta sola se sono uguali
+const both: Label = (key, params) => {
+  const [nl, en] = [t('nl', key, params), t('en', key, params)];
+  return nl === en ? nl : `${nl} / ${en}`;
+};
+
 // Riquadro dell'ordine, come le card del sito: bordo da 1.5 px, prezzi a destra,
 // totale sotto una riga piena
-function orderBox(lang: Lang, number: string, lines: { label: string; price: string }[], total: string): string {
+function orderBox(label: Label, number: string, lines: { label: string; price: string }[], total: string): string {
   const cell = `padding:8px 0;border-bottom:1px solid ${C.muted}`;
   const rows = lines
     .map((line) => `<tr><td style="${PROSE};font-size:15px;${cell}">${escapeHtml(line.label)}</td><td align="right" style="${MONO};font-size:14px;white-space:nowrap;${cell};padding-left:12px">${escapeHtml(line.price)}</td></tr>`)
     .join('');
   return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1.5px solid ${C.ink};border-radius:16px;border-collapse:separate;margin:8px 0 24px">
 <tr><td style="padding:20px 22px">
-<p style="margin:0 0 8px;${SIGN};font-size:18px">${escapeHtml(t(lang, 'order.number'))} <span style="${MONO};font-size:14px;text-transform:none;letter-spacing:0">${escapeHtml(number)}</span></p>
+<p style="margin:0 0 8px;${SIGN};font-size:18px">${escapeHtml(label('order.number'))} <span style="${MONO};font-size:14px;text-transform:none;letter-spacing:0">${escapeHtml(number)}</span></p>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${rows}
-<tr><td style="${SIGN};font-size:20px;padding-top:14px">${escapeHtml(t(lang, 'order.total'))}</td><td align="right" style="${MONO};font-size:18px;font-weight:bold;white-space:nowrap;padding-top:14px">${escapeHtml(total)}</td></tr>
+<tr><td style="${SIGN};font-size:20px;padding-top:14px">${escapeHtml(label('order.total'))}</td><td align="right" style="${MONO};font-size:18px;font-weight:bold;white-space:nowrap;padding-top:14px">${escapeHtml(total)}</td></tr>
 </table>
 </td></tr></table>`;
 }
@@ -114,20 +129,20 @@ function orderNumber(publicId: string): string {
 
 // Righe dell'ordine più la spedizione, che è il totale meno gli articoli: il totale
 // salvato la comprende (lib/shop/shipping.ts) e così vale anche per gli ordini vecchi
-function orderLines(lang: Lang, order: Pick<EmailOrder, 'items' | 'totalCents'>) {
+function orderLines(lang: Lang, label: Label, order: Pick<EmailOrder, 'items' | 'totalCents'>) {
   const lines = order.items.map((item) => {
-    const name = t(lang, `shop.products.${item.slug}.name` as Key) + (item.size ? ` (${item.size})` : '');
+    const name = label(`shop.products.${item.slug}.name` as Key) + (item.size ? ` (${item.size})` : '');
     return { label: `${item.quantity} × ${name}`, price: formatPrice(item.priceCents * item.quantity, lang) };
   });
   const shipping = order.totalCents - order.items.reduce((sum, item) => sum + item.priceCents * item.quantity, 0);
-  return shipping > 0 ? [...lines, { label: t(lang, 'shop.shipping'), price: formatPrice(shipping, lang) }] : lines;
+  return shipping > 0 ? [...lines, { label: label('shop.shipping'), price: formatPrice(shipping, lang) }] : lines;
 }
 
 export function confirmationEmail(origin: string, order: EmailOrder): Email {
   const { lang } = order;
   const link = orderLink(origin, lang, { id: order.publicId, token: order.token });
   const number = orderNumber(order.publicId);
-  const lines = orderLines(lang, order);
+  const lines = orderLines(lang, inLang(lang), order);
   const total = formatPrice(order.totalCents, lang);
   const subject = t(lang, 'email.subject', { number });
   // Condizioni e recesso anche nella conferma: la legge le vuole su un supporto durevole
@@ -154,7 +169,7 @@ export function confirmationEmail(origin: string, order: EmailOrder): Email {
   // secondo paracadute, si copia a mano anche se il pulsante non funziona)
   const content = [
     paragraph(t(lang, 'email.intro')),
-    orderBox(lang, number, lines, total),
+    orderBox(inLang(lang), number, lines, total),
     `<p style="margin:0 0 12px"><a href="${escapeHtml(link)}" style="display:inline-block;background:${C.ink};color:${C.bg};${MONO};font-size:14px;text-transform:uppercase;text-decoration:none;padding:12px 24px;border:3px solid ${C.ink};border-radius:9999px">${escapeHtml(t(lang, 'email.button'))}</a></p>`,
     `<p style="margin:0 0 4px;${MONO};font-size:12px;line-height:1.5;word-break:break-all"><a href="${escapeHtml(link)}" style="color:${C.redText}">${escapeHtml(link)}</a></p>`,
     paragraph(t(lang, 'order.link.text'), `font-size:14px;color:${C.muted}`),
@@ -165,43 +180,46 @@ export function confirmationEmail(origin: string, order: EmailOrder): Email {
   return { subject, text, html: layout(lang, origin, t(lang, 'email.title'), content) };
 }
 
-// Avviso al negozio: in olandese, la lingua del locale. Serve a spedire, quindi porta
-// indirizzo ed email del cliente; niente link all'ordine né token, non servono
+// Avviso al negozio: olandese e inglese insieme (both); la cornice in olandese, la
+// lingua del locale. Serve a spedire, quindi porta indirizzo ed email del cliente;
+// niente link all'ordine né token, non servono
 export function shopNotificationEmail(origin: string, order: Omit<EmailOrder, 'token'>, address: ShippingAddress, customerEmail: string): Email {
   const lang: Lang = 'nl';
   const number = orderNumber(order.publicId);
-  const lines = orderLines(lang, order);
+  const lines = orderLines(lang, both, order);
   const total = formatPrice(order.totalCents, lang);
   const addressLines = [address.fullName, address.street, `${address.postalCode} ${address.city}`, address.country];
+  const intro = [t('nl', 'shopEmail.intro'), t('en', 'shopEmail.intro')] as const;
 
   const text = [
-    t(lang, 'shopEmail.intro'),
+    ...intro,
     '',
-    `${t(lang, 'order.number')}: ${number}`,
+    `${both('order.number')}: ${number}`,
     ...lines.map((line) => `${line.label}  ${line.price}`),
-    `${t(lang, 'order.total')}: ${total}`,
+    `${both('order.total')}: ${total}`,
     '',
-    `${t(lang, 'shopEmail.address')}:`,
+    `${both('shopEmail.address')}:`,
     ...addressLines,
     '',
-    `${t(lang, 'shopEmail.customer')}: ${customerEmail}`,
-    `${t(lang, 'shopEmail.language')}: ${order.lang}`,
+    `${both('shopEmail.customer')}: ${customerEmail}`,
+    `${both('shopEmail.language')}: ${order.lang}`,
     '',
-    t(lang, 'email.test'),
+    both('email.test'),
   ].join('\n');
 
   // Stessa cornice della conferma; al posto del pulsante l'indirizzo, in un riquadro
   const content = [
-    paragraph(t(lang, 'shopEmail.intro')),
-    orderBox(lang, number, lines, total),
+    paragraph(intro[0], 'margin-bottom:4px'),
+    paragraph(intro[1], `color:${C.muted}`),
+    orderBox(both, number, lines, total),
     `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1.5px solid ${C.ink};border-radius:16px;border-collapse:separate;margin:0 0 24px"><tr><td style="padding:20px 22px">
-<p style="margin:0 0 8px;${SIGN};font-size:18px">${escapeHtml(t(lang, 'shopEmail.address'))}</p>
+<p style="margin:0 0 8px;${SIGN};font-size:18px">${escapeHtml(both('shopEmail.address'))}</p>
 <p style="margin:0 0 12px;${PROSE};font-size:16px;line-height:1.5">${addressLines.map(escapeHtml).join('<br>')}</p>
-<p style="margin:0;${MONO};font-size:13px;line-height:1.6">${escapeHtml(t(lang, 'shopEmail.customer'))}: ${escapeHtml(customerEmail)}<br>${escapeHtml(t(lang, 'shopEmail.language'))}: ${escapeHtml(order.lang)}</p>
+<p style="margin:0;${MONO};font-size:13px;line-height:1.6">${escapeHtml(both('shopEmail.customer'))}: ${escapeHtml(customerEmail)}<br>${escapeHtml(both('shopEmail.language'))}: ${escapeHtml(order.lang)}</p>
 </td></tr></table>`,
   ].join('\n');
 
-  return { subject: t(lang, 'shopEmail.subject', { number }), text, html: layout(lang, origin, t(lang, 'shopEmail.title'), content) };
+  return { subject: `${both('shopEmail.title')} ${number}`, text, html: layout(lang, origin, both('shopEmail.title'), content) };
 }
 
 // true se Resend ha accettato l'email. La chiave di idempotenza evita doppioni se

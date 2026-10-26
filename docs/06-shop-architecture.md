@@ -110,8 +110,9 @@ pezzi tra le taglie. Comandi: `npm run db:migrate:local`, `npm run db:seed:local
 ## Email di conferma — Resend
 
 **Avviso al negozio** (dal 2026-10-21). Dopo la conferma al cliente il webhook
-manda un secondo messaggio a `SHOP_NOTIFY_EMAIL`, se è impostata: in olandese
-(la lingua del locale), con numero d'ordine, articoli, totale, **indirizzo di
+manda un secondo messaggio a `SHOP_NOTIFY_EMAIL`, se è impostata: in olandese e inglese
+insieme (dal 2026-10-26, per chi al negozio non legge l'olandese; la cornice resta
+in olandese), con numero d'ordine, articoli, totale, **indirizzo di
 spedizione ed email del cliente** (servono a spedire), lingua dell'ordine.
 **Niente link all'ordine né token.** Chiave di idempotenza `order-shop/<public_id>`,
 diversa da quella della conferma. Se non parte, l'ordine resta pagato e nei log
@@ -254,7 +255,9 @@ nell'intestazione `Referer`. E passa nel body di una `POST`, non nell'indirizzo.
   `Referrer-Policy`, `Permissions-Policy` (camera, microfono, posizione,
   pagamenti spenti), `Cross-Origin-Opener-Policy`, `Cross-Origin-Resource-Policy`
   e `X-Frame-Options: DENY` (dal 2026-10-19). **securityheaders.com: A+**
-  (2026-10-19)
+  (2026-10-19). Eccezione: `/email/*` senza `Cross-Origin-Resource-Policy`
+  (2026-10-26), altrimenti Outlook web, Yahoo e Proton non mostrano le immagini
+  delle email
 - **CSP**: script solo da `'self'` più l'hash dell'unico script inline (tema e
   avviso d'età); niente `'unsafe-inline'` sugli script. Un test controlla che ogni
   script inline di ogni pagina abbia il suo hash. Script dei componenti sempre

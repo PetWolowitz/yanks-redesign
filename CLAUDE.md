@@ -107,7 +107,7 @@ Lo shop **non è opzionale**. Regole del contratto:
     e il webhook risponde comunque 200. Nei log mai token né corpo dell'email
   - contiene il link alla pagina ordine con `#id=…&t=…` nel fragment
   - **avviso al negozio**: un secondo messaggio a `SHOP_NOTIFY_EMAIL` (Secret su
-    Cloudflare e in `.dev.vars`, mai nel repository), in olandese, con indirizzo
+    Cloudflare e in `.dev.vars`, mai nel repository), in olandese e inglese insieme, con indirizzo
     di spedizione, **senza link né token**. Se manca la variabile non parte
   - nel concept si usa la modalità di prova di Resend (mittente
     `onboarding@resend.dev`, consegna solo all'indirizzo di Pietro); per un

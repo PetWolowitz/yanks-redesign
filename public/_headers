@@ -11,3 +11,9 @@
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
   X-Frame-Options: DENY
+
+# Immagini delle email (lib/shop/email.ts): le caricano i programmi di posta, da un
+# altro dominio. Con same-origin Outlook web, Yahoo e Proton le bloccano (Gmail no:
+# passa dal suo proxy). Si stacca solo l'intestazione, il resto resta come sopra
+/email/*
+  ! Cross-Origin-Resource-Policy
