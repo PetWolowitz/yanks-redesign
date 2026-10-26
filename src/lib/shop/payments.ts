@@ -8,7 +8,12 @@
 import type { Lang } from '../../i18n/locales';
 import { t } from '../../i18n/t';
 
-export const paymentMethods = [
+interface PaymentMethod {
+  name: string;
+  icons: { file: string; alt: string }[];
+}
+
+export const paymentMethods: PaymentMethod[] = [
   { name: 'iDEAL', icons: [{ file: 'ideal', alt: 'iDEAL' }] },
   { name: 'card', icons: [{ file: 'visa', alt: 'Visa' }, { file: 'mastercard', alt: 'Mastercard' }] },
   { name: 'Apple Pay', icons: [{ file: 'apple-pay', alt: 'Apple Pay' }] },
@@ -17,7 +22,7 @@ export const paymentMethods = [
   { name: 'Klarna', icons: [{ file: 'klarna', alt: 'Klarna' }] },
   { name: 'Bancontact', icons: [{ file: 'bancontact', alt: 'Bancontact' }] },
   { name: 'Amazon Pay', icons: [{ file: 'amazon-pay', alt: 'Amazon Pay' }] },
-] as const;
+];
 
 export const paymentIcons = paymentMethods.flatMap((method) => method.icons);
 
