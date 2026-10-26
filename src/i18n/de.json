@@ -339,5 +339,6 @@
   "shopEmail.title": "Neue Bestellung",
   "payments.title": "Du bezahlst über Stripe, mit:",
   "payments.card": "Karte",
-  "payments.wallets": "Apple Pay und Google Pay nur auf Geräten, die sie unterstützen."
+  "payments.wallets": "Apple Pay und Google Pay nur auf Geräten, die sie unterstützen.",
+  "legal.credits": "Logos der Zahlungsmethoden: {source}, Lizenz CC BY-SA 4.0. Die Marken gehören ihren Inhabern."
 }

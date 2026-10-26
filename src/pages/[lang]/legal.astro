@@ -30,6 +30,8 @@ const shippingRows = rates.map((cents) => ({
 const { street, postalCode, city } = venue.address;
 const missing = `[${t(lang, 'legal.missing')}]`;
 const methods = paymentList(lang);
+// Il link alla fonte delle icone sta al posto di {source}
+const credits = t(lang, 'legal.credits').split('{source}');
 
 // Righe "etichetta: valore" delle sezioni; null = segnaposto. text: etichetta già
 // pronta al posto della chiave (i paesi delle tariffe)
@@ -152,6 +154,11 @@ const missingClass = 'box-decoration-clone rounded border-[1.5px] border-dashed 
           }
         </dl>
       </section>
+
+      <!-- Attribuzione chiesta dalla licenza delle icone (lib/shop/payments.ts) -->
+      <p class="text-small text-muted">
+        {credits[0]}<a href="https://github.com/datatrans/payment-logos" class="underline underline-offset-4">datatrans/payment-logos</a>{credits[1]}
+      </p>
     </div>
   </main>
 </Base>

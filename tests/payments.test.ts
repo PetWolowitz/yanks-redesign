@@ -1,15 +1,18 @@
-// Metodi di pagamento (lib/shop/payments.ts): stessa lista per etichette e frase
+// Metodi di pagamento (lib/shop/payments.ts): stessa lista per icone e frase
+import { existsSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { paymentList, paymentNames } from '../src/lib/shop/payments';
+import { paymentIcons, paymentList } from '../src/lib/shop/payments';
 
 describe('metodi di pagamento', () => {
-  it('nelle etichette "card" diventa la parola della lingua, con la maiuscola; i marchi restano uguali', () => {
-    expect(paymentNames('nl', true)).toEqual(['iDEAL', 'Kaart', 'Apple Pay', 'Google Pay', 'PayPal', 'Klarna', 'Bancontact', 'Amazon Pay']);
-    expect(paymentNames('de', true)).toContain('Karte');
+  it('ogni icona esiste in public/payments/ e ha un nome per i lettori di schermo', () => {
+    for (const { file, alt } of paymentIcons) {
+      expect(existsSync(`public/payments/${file}.svg`), file).toBe(true);
+      expect(alt).not.toBe('');
+    }
   });
 
-  it('in una frase, minuscola e con la congiunzione della lingua', () => {
+  it('in una frase, "card" nella lingua e la congiunzione della lingua', () => {
     expect(paymentList('nl')).toBe('iDEAL, kaart, Apple Pay, Google Pay, PayPal, Klarna, Bancontact en Amazon Pay');
-    expect(paymentList('en')).toMatch(/, card, .* and Amazon Pay$/);
+    expect(paymentList('de')).toMatch(/, Karte, .* und Amazon Pay$/);
   });
 });

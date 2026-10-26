@@ -38,8 +38,10 @@ endpoint: è una chiamata in uscita fatta dal webhook.
   cliente li conosca all'inizio dell'ordine, non solo sulla pagina di Stripe.
   Elenco in `lib/shop/payments.ts` (iDEAL, carta, Apple Pay, Google Pay, PayPal,
   Klarna, Bancontact, Amazon Pay: quelli accesi nella dashboard secondo Pietro),
-  in etichette di testo nel carrello e nel checkout (`PaymentMethods.astro`) e in
-  una frase nella pagina legale. Niente loghi dei marchi. Il checkout non fissa i
+  con le icone dei marchi nel carrello e nel checkout (`PaymentMethods.astro`,
+  SVG in `public/payments/` da datatrans/payment-logos, CC BY-SA 4.0: la fonte è
+  citata nella pagina legale; Simple Icons non ha iDEAL, Bancontact e Amazon Pay)
+  e in una frase nella pagina legale. Il checkout non fissa i
   metodi: se in dashboard se ne accende o spegne uno, si aggiorna la lista
 - **I webhook sono firmati**: si verifica la firma con la chiave del webhook, con
   il provider crittografico compatibile con i Workers

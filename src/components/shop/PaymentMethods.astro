@@ -1,10 +1,10 @@
 ---
 // I metodi di pagamento prima di arrivare a Stripe (lib/shop/payments.ts): nel
-// carrello e nel checkout. Etichette di testo come le pastiglie dei prezzi, niente
-// loghi dei marchi (hanno regole d'uso proprie)
+// carrello e nel checkout. Icone dei marchi a tessera (public/payments/), con il
+// nome nell'alt per i lettori di schermo
 import type { Lang } from '../../i18n/locales';
 import { t } from '../../i18n/t';
-import { paymentNames } from '../../lib/shop/payments';
+import { paymentIcons } from '../../lib/shop/payments';
 
 interface Props {
   lang: Lang;
@@ -17,7 +17,13 @@ const { lang, class: className } = Astro.props;
 <div class={className}>
   <p class="text-small text-muted">{t(lang, 'payments.title')}</p>
   <ul class="mt-2 flex flex-wrap gap-1.5">
-    {paymentNames(lang, true).map((name) => <li class="rounded-full border-[1.5px] border-text px-2.5 py-0.5 text-xs whitespace-nowrap">{name}</li>)}
+    {
+      paymentIcons.map(({ file, alt }) => (
+        <li>
+          <img src={`/payments/${file}.svg`} alt={alt} width="42" height="28" class="block rounded border border-muted/40" />
+        </li>
+      ))
+    }
   </ul>
   <p class="mt-2 text-xs text-muted">{t(lang, 'payments.wallets')}</p>
 </div>
