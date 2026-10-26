@@ -270,7 +270,7 @@ describe('POST /api/stripe-webhook', () => {
     const resendBodies = (calls: { url: string; init: RequestInit }[]) =>
       calls.filter((call) => call.url.includes('resend')).map((call) => JSON.parse(String(call.init.body)) as Record<string, unknown>);
 
-    it('con SHOP_NOTIFY_EMAIL parte anche l\'avviso: in olandese, con indirizzo ed email del cliente, senza token', async () => {
+    it('con SHOP_NOTIFY_EMAIL parte anche l\'avviso: in olandese e inglese, con indirizzo ed email del cliente, senza token', async () => {
       const { db, response: checkoutResponse } = await checkout();
       const { token } = (await checkoutResponse.json()) as { token: string };
       const fake = fakeFetch();
@@ -278,8 +278,8 @@ describe('POST /api/stripe-webhook', () => {
       const bodies = resendBodies(fake.calls);
       expect(bodies).toHaveLength(2);
       const notice = bodies.find((body) => (body.to as string[])[0] === shop)!;
-      expect(String(notice.subject)).toContain('Nieuwe bestelling');
-      for (const part of ['Mario Rossi', 'Dorpsplein 2', '2042 JK Zandvoort', 'cliente@example.com', 'Verzendadres']) {
+      expect(String(notice.subject)).toContain('Nieuwe bestelling / New order');
+      for (const part of ['Mario Rossi', 'Dorpsplein 2', '2042 JK Zandvoort', 'cliente@example.com', 'Verzendadres / Shipping address', 'A new order has been paid']) {
         expect(String(notice.text)).toContain(part);
       }
       expect(JSON.stringify(notice)).not.toContain(token);

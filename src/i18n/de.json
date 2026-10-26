@@ -279,7 +279,6 @@
   "notFound.meta": "Diese Seite gibt es nicht.",
   "order.toast.paid": "Zahlung erhalten: Deine Bestellung ist bestätigt.",
   "order.toast.close": "Meldung schließen",
-  "shopEmail.subject": "Neue Bestellung {number}",
   "shopEmail.intro": "Eine neue Bestellung wurde bezahlt. Bitte an die Adresse unten versenden.",
   "shopEmail.address": "Lieferadresse",
   "shopEmail.customer": "E-Mail-Adresse der Kundschaft",
