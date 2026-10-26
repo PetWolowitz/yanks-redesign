@@ -165,6 +165,8 @@ componenti in docs/02; pagina di riferimento: `/en/styleguide/` (noindex).
   `card-title`, più piccoli e spaziati (Yankee Clipper ha un solo peso). L'ombra
   piena al passaggio resta. Pulsanti (`btn`), header e tubo al neon invariati
 - **Foto senza filtri** (duotono e grana provati e scartati)
+- **Scritta "Yanks" in Indian accanto al logo** nella navbar sotto i 1024 px e nel
+  menu aperto (Pietro, 2026-10-26: senza è anonimo); sotto i 360 px non ci sta
 - **Lingue con le bandiere nel footer, su ogni dispositivo** (nella navbar
   restano i codici NL EN DE): tolte il 2026-10-21, rimesse il 2026-10-22 da Pietro. Il nome della lingua resta per i lettori di
   schermo; al clic la bandiera sventola, poi si cambia pagina. Su telefono, nel
