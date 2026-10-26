@@ -4,6 +4,7 @@
 // quindi le righe le costruisce il JS. Nomi, taglie, prezzi e miniature di tutti gli
 // SKU arrivano preparati in build in data-catalog (JSON in un attributo, non uno
 // script inline: CSP). Il subtotale è indicativo: l'addebito lo calcola il server (docs/06).
+import PaymentMethods from './PaymentMethods.astro';
 import type { Lang } from '../../i18n/locales';
 import { t } from '../../i18n/t';
 import { formatPrice } from '../../lib/format';
@@ -49,6 +50,7 @@ const shippingFrom = formatPrice(Math.min(...Object.values(shippingCents)), lang
         <span data-subtotal class="tabular-nums"></span>
       </p>
       <p class="mt-2 text-small text-muted">{t(lang, 'cart.note', { price: shippingFrom })}</p>
+      {page && <PaymentMethods lang={lang} class="mt-4" />}
       <a
         href={`/${lang}/shop/checkout/`}
         class="btn-solid mt-6 flex"

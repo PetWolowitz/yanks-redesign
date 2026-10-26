@@ -63,7 +63,7 @@ const iconButton = 'inline-flex size-11 items-center justify-center rounded-full
       <!-- Il nome accanto al logo su telefono e tablet (Pietro, 2026-10-26: senza è anonimo);
            sotto i 360 px non ci sta (in tedesco il menu uscirebbe dallo schermo).
            aria-hidden: il nome del link è già nell'alt del logo -->
-      <span aria-hidden="true" class="ms-2 pt-1 font-script text-[1.75rem] leading-none text-red-text max-[359px]:hidden origin-left transition-[translate,scale] duration-300 group-data-scrolled/header:-translate-x-2.5 group-data-scrolled/header:scale-85 motion-reduce:transition-none lg:hidden">
+      <span aria-hidden="true" class="ms-2 pt-1 font-script text-[1.5rem] leading-none text-red-text max-[359px]:hidden origin-left transition-[translate,scale] duration-300 group-data-scrolled/header:-translate-x-2.5 group-data-scrolled/header:scale-85 motion-reduce:transition-none lg:hidden">
         {t(lang, 'header.wordmark')}
       </span>
     </a>
@@ -120,13 +120,13 @@ const iconButton = 'inline-flex size-11 items-center justify-center rounded-full
 <div
   id="site-menu"
   popover
-  class="site-menu m-0 h-dvh max-h-none w-full max-w-none overflow-y-auto border-0 bg-bg p-0 text-text lg:hidden"
+  class="site-menu m-0 h-svh max-h-none w-full max-w-none overflow-y-auto border-0 bg-bg p-0 text-text lg:hidden"
 >
   <div class="flex min-h-full flex-col px-page pb-8">
     <div class="flex h-16 shrink-0 items-center justify-between">
       <a href={`/${lang}/`} class="inline-flex items-center">
         <Logo alt={t(lang, 'header.home')} variant="indiano" size={56} class="size-12" />
-        <span aria-hidden="true" class="ms-2 pt-1 font-script text-[1.75rem] leading-none text-red-text">{t(lang, 'header.wordmark')}</span>
+        <span aria-hidden="true" class="ms-2 pt-1 font-script text-[1.5rem] leading-none text-red-text">{t(lang, 'header.wordmark')}</span>
       </a>
       <button type="button" popovertarget="site-menu" popovertargetaction="hide" class={iconButton}>
         <span class="sr-only">{t(lang, 'nav.close')}</span>
@@ -174,8 +174,11 @@ const iconButton = 'inline-flex size-11 items-center justify-center rounded-full
     <dialog
       data-cart-drawer
       aria-labelledby="cart-drawer-title"
-      class="cart-drawer m-0 ms-auto h-dvh max-h-none w-full max-w-md border-0 border-s-3 border-text bg-bg p-0 text-text"
+      class="cart-drawer m-0 ms-auto h-svh max-h-none w-full max-w-md border-0 border-s-3 border-text bg-bg p-0 text-text"
     >
+      <!-- h-svh sul dialog, non h-dvh: alto quanto lo schermo con le barre del browser
+           visibili, così su telefono "Afrekenen" non finisce sotto la barra (Pietro,
+           2026-10-26). Lo stesso per il menu e l'avviso d'età -->
       <div class="flex h-full flex-col gap-4 p-6">
         <div class="flex items-center justify-between">
           <h2 id="cart-drawer-title" tabindex="-1" class="text-h2 leading-none focus:outline-none">{t(lang, 'cart.title')}</h2>

@@ -7,6 +7,7 @@
 // caricato solo qui (azione "checkout", controllata anche dal server).
 import type { GetStaticPaths } from 'astro';
 import Field from '../../../components/shop/Field.astro';
+import PaymentMethods from '../../../components/shop/PaymentMethods.astro';
 import PageIntro from '../../../components/site/PageIntro.astro';
 import { venue } from '../../../data/venue';
 import Base from '../../../layouts/Base.astro';
@@ -91,8 +92,9 @@ const legendClass = 'mb-4 font-sign text-h3 uppercase';
           </div>
 
           <div class="space-y-4">
+            <PaymentMethods lang={lang} />
             <p class="text-small text-muted">
-              {t(lang, 'checkout.privacy')}
+              {t(lang, 'checkout.privacy')}{' '}
               <a href={`/${lang}/legal/`} class="underline underline-offset-4">{t(lang, 'legal.link')}</a>
             </p>
             <button type="submit" class="btn-solid w-full disabled:cursor-wait disabled:opacity-60 sm:w-auto">

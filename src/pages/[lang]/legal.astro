@@ -10,6 +10,7 @@ import Base from '../../layouts/Base.astro';
 import { langPaths, type Lang } from '../../i18n/locales';
 import { t, type Key } from '../../i18n/t';
 import { formatPrice } from '../../lib/format';
+import { paymentList } from '../../lib/shop/payments';
 import { shippingCents } from '../../lib/shop/shipping';
 import { shippingCountries } from '../../lib/shop/types';
 
@@ -28,6 +29,9 @@ const shippingRows = rates.map((cents) => ({
 }));
 const { street, postalCode, city } = venue.address;
 const missing = `[${t(lang, 'legal.missing')}]`;
+const methods = paymentList(lang);
+// Il link alla fonte delle icone sta al posto di {source}
+const credits = t(lang, 'legal.credits').split('{source}');
 
 // Righe "etichetta: valore" delle sezioni; null = segnaposto. text: etichetta già
 // pronta al posto della chiave (i paesi delle tariffe)
@@ -97,7 +101,7 @@ const missingClass = 'box-decoration-clone rounded border-[1.5px] border-dashed 
             </h2>
             <div class="mt-4 max-w-[65ch] space-y-3 font-prose">
               {Array.from({ length: paragraphs }, (_, i) => (
-                <p>{t(lang, `legal.${id}.${i + 1}` as Key)}</p>
+                <p>{t(lang, `legal.${id}.${i + 1}` as Key, { methods })}</p>
               ))}
             </div>
             {rows && (
@@ -150,6 +154,11 @@ const missingClass = 'box-decoration-clone rounded border-[1.5px] border-dashed 
           }
         </dl>
       </section>
+
+      <!-- Attribuzione chiesta dalla licenza delle icone (lib/shop/payments.ts) -->
+      <p class="text-small text-muted">
+        {credits[0]}<a href="https://github.com/datatrans/payment-logos" class="underline underline-offset-4">datatrans/payment-logos</a>{credits[1]}
+      </p>
     </div>
   </main>
 </Base>
