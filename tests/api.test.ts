@@ -37,7 +37,7 @@ describe('GET /api/products', () => {
     const products = (await response.json()) as { slug: string; priceCents: number; variants: unknown[] }[];
     expect(products.map((p) => p.slug)).toEqual(merch.map((m) => m.slug));
     expect(products.find((p) => p.slug === 'hoodie')?.priceCents).toBe(4500);
-    expect(products.find((p) => p.slug === 'hoodie')?.variants).toHaveLength(6);
+    expect(products.find((p) => p.slug === 'hoodie')?.variants).toHaveLength(4 * 6);
   });
 
   it('ha le intestazioni di sicurezza e non va in cache', async () => {

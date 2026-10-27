@@ -36,7 +36,14 @@ const images = productImages(item.slug);
         {item.limited !== null && <p class="mt-4 text-red-text">{t(lang, 'shop.limitedOf', { count: String(item.limited) })}</p>}
         <p class="mt-6 text-h3 tabular-nums">{formatPrice(item.priceCents, lang)}</p>
         <p class="mt-6 max-w-[50ch] font-prose">{description}</p>
-        <p class="mt-4 text-small text-muted">
+        {
+          item.colors && item.colors.length > 0 && (
+            <p class="mt-4 text-small text-muted">
+              {t(lang, 'shop.colorLabel')}: {item.colors.map((color) => t(lang, `shop.color.${color}` as Key)).join(' · ')}
+            </p>
+          )
+        }
+        <p class:list={['text-small text-muted', item.colors?.length ? 'mt-2' : 'mt-4']}>
           {t(lang, 'shop.size')}: {item.sizes.length > 0 ? item.sizes.join(' · ') : t(lang, 'shop.oneSize')}
         </p>
         <div class="mt-8 border-t-[1.5px] border-text pt-6">

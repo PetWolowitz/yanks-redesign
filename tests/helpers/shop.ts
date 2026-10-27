@@ -1,9 +1,9 @@
 // Strumenti comuni ai test degli endpoint: un SQLite in memoria con schema e seed
 // veri, un adattatore con la parte di D1 che usiamo, e servizi esterni finti.
 import { createHmac } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { DatabaseSync, type SQLInputValue } from 'node:sqlite';
-import { merch, skuOf } from '../../src/data/merch';
+import { merch, skuOf, variantsOf } from '../../src/data/merch';
 import type { Deps } from '../../src/lib/shop/handlers';
 import { seedSql } from '../../src/lib/shop/seed';
 import type { D1Database, D1PreparedStatement, ShopEnv } from '../../src/lib/shop/server-env';
@@ -44,10 +44,20 @@ export function d1(db: DatabaseSync): D1Database {
   };
 }
 
+// Tutte le migrazioni, in ordine: lo schema è quello del database vero
+function schema(): string {
+  const folder = new URL('../../migrations/', import.meta.url);
+  return readdirSync(folder)
+    .filter((file) => file.endsWith('.sql'))
+    .sort()
+    .map((file) => readFileSync(new URL(file, folder), 'utf8'))
+    .join('\n');
+}
+
 export function makeDb(): DatabaseSync {
   const db = new DatabaseSync(':memory:');
-  db.exec(readFileSync(new URL('../../migrations/0001_init.sql', import.meta.url), 'utf8'));
-  db.exec(seedSql(merch, skuOf));
+  db.exec(schema());
+  db.exec(seedSql(merch, { skuOf, variantsOf }));
   return db;
 }
 

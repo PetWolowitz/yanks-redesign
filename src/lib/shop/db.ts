@@ -1,7 +1,7 @@
 // Query dello shop su D1 (docs/06, Database). SQL scritto a mano, sempre con
 // parametri (.bind): mai valori concatenati nel testo della query.
 import type { D1Database } from './server-env';
-import type { Category, OrderState, OrderStatus, Product, Size } from './types';
+import type { Category, Color, OrderState, OrderStatus, Product, Size } from './types';
 
 interface ProductRow {
   slug: string;
@@ -10,6 +10,7 @@ interface ProductRow {
   limited: number | null;
   sku: string;
   size: Size | null;
+  color: Color | null;
   stock: number;
 }
 
@@ -17,7 +18,7 @@ interface ProductRow {
 export async function listProducts(db: D1Database): Promise<Product[]> {
   const { results } = await db
     .prepare(
-      `SELECT p.slug, p.category, p.price_cents, p.limited, v.sku, v.size, v.stock
+      `SELECT p.slug, p.category, p.price_cents, p.limited, v.sku, v.size, v.color, v.stock
        FROM products p JOIN variants v ON v.product_id = p.id
        WHERE p.active = 1
        ORDER BY p.id, v.id`,
@@ -30,7 +31,7 @@ export async function listProducts(db: D1Database): Promise<Product[]> {
       product = { slug: row.slug, category: row.category, priceCents: row.price_cents, limited: row.limited, variants: [] };
       bySlug.set(row.slug, product);
     }
-    product.variants.push({ sku: row.sku, size: row.size, stock: row.stock });
+    product.variants.push({ sku: row.sku, size: row.size, color: row.color, stock: row.stock });
   }
   return [...bySlug.values()];
 }
@@ -75,6 +76,7 @@ export interface VariantRow {
   sku: string;
   slug: string;
   size: Size | null;
+  color: Color | null;
   price_cents: number;
   stock: number;
 }
@@ -86,7 +88,7 @@ export async function loadVariants(db: D1Database, skus: string[]): Promise<Vari
   const marks = skus.map(() => '?').join(', ');
   const { results } = await db
     .prepare(
-      `SELECT v.id AS variant_id, v.sku, p.slug, v.size, p.price_cents, v.stock
+      `SELECT v.id AS variant_id, v.sku, p.slug, v.size, v.color, p.price_cents, v.stock
        FROM variants v JOIN products p ON p.id = v.product_id
        WHERE p.active = 1 AND v.sku IN (${marks})`,
     )
@@ -172,14 +174,14 @@ export async function markOrderPaid(db: D1Database, orderId: number): Promise<bo
 export async function orderLinesForEmail(db: D1Database, orderId: number) {
   const { results } = await db
     .prepare(
-      `SELECT p.slug, v.size, i.quantity, i.price_cents
+      `SELECT p.slug, v.size, v.color, i.quantity, i.price_cents
        FROM order_items i JOIN variants v ON v.id = i.variant_id JOIN products p ON p.id = v.product_id
        WHERE i.order_id = ?
        ORDER BY i.id`,
     )
     .bind(orderId)
-    .all<{ slug: string; size: string | null; quantity: number; price_cents: number }>();
-  return results.map((row) => ({ slug: row.slug, size: row.size, quantity: row.quantity, priceCents: row.price_cents }));
+    .all<{ slug: string; size: string | null; color: Color | null; quantity: number; price_cents: number }>();
+  return results.map((row) => ({ slug: row.slug, size: row.size, color: row.color, quantity: row.quantity, priceCents: row.price_cents }));
 }
 
 // Indirizzo di spedizione, solo per l'email al negozio (chi spedisce deve saperlo)

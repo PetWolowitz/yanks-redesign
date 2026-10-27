@@ -187,7 +187,7 @@ const messages = {
           const entry = this.#catalog[item.sku];
           const li = document.createElement('li');
           li.className = 'flex items-baseline gap-4 border-b border-muted py-2';
-          li.append(`${item.quantity} × ${entry ? `${entry.name}${entry.size ? ` (${entry.size})` : ''}` : item.sku}`);
+          li.append(`${item.quantity} × ${entry ? `${entry.name}${entry.variant ? ` (${entry.variant})` : ''}` : item.sku}`);
           const price = document.createElement('span');
           price.className = 'ms-auto tabular-nums whitespace-nowrap';
           // Prezzi dell'ordine, come li ha registrati il server

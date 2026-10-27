@@ -213,7 +213,10 @@ shop.yanks.nl, con le sue immagini). 21 prodotti in `merch.ts`:
   volti di persone non necessari
 - **descrizioni** riscritte da quelle del negozio, più brevi, con i consigli di
   taglia; tolti i passaggi su "joints" e "pre-rolls"
-- colori: ancora non selezionabili, citati nella descrizione
+- colori: ~~non selezionabili~~ dal 2026-10-27 si scelgono a pastiglie per felpa
+  (blu, verde militare, grigio, nero), Ton sur Ton (marrone, verde militare) e
+  Clipper (otto colori); la foto grande diventa quella del colore. Abbinamento
+  colore → foto in `src/lib/shop/images.ts`, controllato a occhio
 
 **Immagini del negozio usate fuori dallo shop** (dalla home di shop.yanks.nl):
 - **logo in alta risoluzione** (`logo_main_ezrav.png`, 3200 px) in

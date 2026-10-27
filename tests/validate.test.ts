@@ -7,7 +7,7 @@ function request(overrides: Record<string, unknown> = {}, address: Record<string
     lang: 'nl',
     email: 'pietro@example.com',
     address: { fullName: 'Pietro Costa', street: 'Dorpsplein 2', postalCode: '2042 JK', city: 'Zandvoort', country: 'NL', ...address },
-    items: [{ sku: 'hoodie-m', quantity: 1 }],
+    items: [{ sku: 'hoodie-black-m', quantity: 1 }],
     turnstileToken: 'token-di-prova',
     ...overrides,
   };
@@ -70,21 +70,21 @@ describe('validateCheckout', () => {
 
   it('articoli: almeno uno, quantità da 1 a 10, niente doppioni', () => {
     expect(errorsOf(request({ items: [] }))).toEqual({ items: 'required' });
-    expect(errorsOf(request({ items: [{ sku: 'hoodie-m', quantity: 0 }] }))).toEqual({ items: 'invalid' });
-    expect(errorsOf(request({ items: [{ sku: 'hoodie-m', quantity: 11 }] }))).toEqual({ items: 'invalid' });
-    expect(errorsOf(request({ items: [{ sku: 'hoodie-m', quantity: 1.5 }] }))).toEqual({ items: 'invalid' });
-    expect(errorsOf(request({ items: [{ sku: 'hoodie-m', quantity: '2' }] }))).toEqual({ items: 'invalid' });
+    expect(errorsOf(request({ items: [{ sku: 'hoodie-black-m', quantity: 0 }] }))).toEqual({ items: 'invalid' });
+    expect(errorsOf(request({ items: [{ sku: 'hoodie-black-m', quantity: 11 }] }))).toEqual({ items: 'invalid' });
+    expect(errorsOf(request({ items: [{ sku: 'hoodie-black-m', quantity: 1.5 }] }))).toEqual({ items: 'invalid' });
+    expect(errorsOf(request({ items: [{ sku: 'hoodie-black-m', quantity: '2' }] }))).toEqual({ items: 'invalid' });
     expect(errorsOf(request({ items: [{ sku: 'HOODIE M', quantity: 1 }] }))).toEqual({ items: 'invalid' });
-    const twice = [{ sku: 'hoodie-m', quantity: 1 }, { sku: 'hoodie-m', quantity: 2 }];
+    const twice = [{ sku: 'hoodie-black-m', quantity: 1 }, { sku: 'hoodie-black-m', quantity: 2 }];
     expect(errorsOf(request({ items: twice }))).toEqual({ items: 'invalid' });
     const many = Array.from({ length: limits.maxLines + 1 }, (_, i) => ({ sku: `sku-${i}`, quantity: 1 }));
     expect(errorsOf(request({ items: many }))).toEqual({ items: 'tooLong' });
   });
 
   it('non lascia passare campi in più, come un prezzo mandato dal browser', () => {
-    const result = validateCheckout(request({ totalCents: 1, items: [{ sku: 'hoodie-m', quantity: 1, priceCents: 1 }] }));
+    const result = validateCheckout(request({ totalCents: 1, items: [{ sku: 'hoodie-black-m', quantity: 1, priceCents: 1 }] }));
     expect(result.ok && result.value).not.toHaveProperty('totalCents');
-    expect(result.ok && result.value.items[0]).toEqual({ sku: 'hoodie-m', quantity: 1 });
+    expect(result.ok && result.value.items[0]).toEqual({ sku: 'hoodie-black-m', quantity: 1 });
   });
 
   it('token di Turnstile obbligatorio', () => {

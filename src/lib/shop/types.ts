@@ -4,6 +4,9 @@ import type { Lang } from '../../i18n/locales';
 
 export type Category = 'clothing' | 'accessories' | 'smoking' | 'special';
 export type Size = 'S' | 'M' | 'L' | 'XL' | '2XL' | '3XL';
+// Colori dei prodotti che ne hanno più d'uno (dal 2026-10-27); i nomi nei file di
+// lingua, sotto shop.color.<colore>
+export type Color = 'blue' | 'army-green' | 'grey' | 'black' | 'brown' | 'white' | 'pink' | 'red' | 'green' | 'burgundy' | 'yellow';
 
 // Paesi in cui si spedisce: lista chiusa, controllata da validate.ts
 export const shippingCountries = ['NL', 'BE', 'LU', 'DE', 'AT', 'FR', 'IT', 'ES'] as const;
@@ -16,14 +19,18 @@ export interface MerchItem {
   priceCents: number;
   // taglie disponibili; vuoto = taglia unica
   sizes: Size[];
+  // colori tra cui scegliere; assente = un colore solo. Le foto di ogni colore in
+  // lib/shop/images.ts
+  colors?: Color[];
   // pezzi dell'edizione limitata, null se non è limitata
   limited: number | null;
 }
 
-// Una variante vendibile: un prodotto in una taglia
+// Una variante vendibile: un prodotto in un colore e una taglia
 export interface Variant {
   sku: string;
   size: Size | null;
+  color: Color | null;
   stock: number;
 }
 

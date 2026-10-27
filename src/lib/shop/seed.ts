@@ -4,13 +4,20 @@
 // - prezzi, categorie ed edizioni si aggiornano da merch.ts
 // - le giacenze delle varianti già presenti NON si toccano (sono vendite vere)
 // - un prodotto tolto da merch.ts resta nel database (ordini vecchi) ma non è più attivo
+// - se un prodotto ha i colori, le sue varianti vecchie senza colore restano (ordini
+//   vecchi) ma vanno a zero pezzi: un carrello vecchio non può più comprarle
 // Gli unici valori nel testo SQL vengono da merch.ts e sono controllati qui sotto.
-// skuOf arriva come argomento (da merch.ts): così il file si esegue anche con Node,
-// che non risolve gli import senza estensione
-import type { MerchItem, Size } from './types';
+// skuOf e variantsOf arrivano come argomenti (da merch.ts): così il file si esegue
+// anche con Node, che non risolve gli import senza estensione
+import type { Color, MerchItem, Size } from './types';
+
+export interface SeedHelpers {
+  skuOf: (slug: string, size: Size | null, color?: Color | null) => string;
+  variantsOf: (item: MerchItem) => { color: Color | null; size: Size | null }[];
+}
 
 // Giacenza iniziale di ogni variante nuova. Le edizioni limitate dividono i pezzi
-// tra le taglie (i primi resti alle taglie più piccole)
+// tra le varianti (i primi resti alle prime: le taglie più piccole)
 export const INITIAL_STOCK = 20;
 
 const SAFE = /^[a-z0-9-]+$/;
@@ -26,13 +33,13 @@ function int(value: number): string {
 }
 
 export function initialStock(item: MerchItem): number[] {
-  const count = Math.max(item.sizes.length, 1);
+  const count = Math.max(item.sizes.length, 1) * Math.max(item.colors?.length ?? 0, 1);
   if (item.limited === null) return Array.from({ length: count }, () => INITIAL_STOCK);
   const base = Math.floor(item.limited / count);
   return Array.from({ length: count }, (_, i) => base + (i < item.limited! % count ? 1 : 0));
 }
 
-export function seedSql(merch: MerchItem[], skuOf: (slug: string, size: Size | null) => string): string {
+export function seedSql(merch: MerchItem[], { skuOf, variantsOf }: SeedHelpers): string {
   const lines = ['-- Generato da scripts/seed.ts a partire da src/data/merch.ts: non modificare a mano'];
   for (const item of merch) {
     const limited = item.limited === null ? 'NULL' : int(item.limited);
@@ -41,15 +48,18 @@ export function seedSql(merch: MerchItem[], skuOf: (slug: string, size: Size | n
         ` ON CONFLICT(slug) DO UPDATE SET category = excluded.category, price_cents = excluded.price_cents, limited = excluded.limited, active = 1;`,
     );
     const stock = initialStock(item);
-    const sizes = item.sizes.length > 0 ? item.sizes : [null];
-    sizes.forEach((size, i) => {
+    variantsOf(item).forEach(({ color, size }, i) => {
       if (size !== null && !/^[A-Z0-9]+$/.test(size)) throw new Error(`taglia non ammessa nel seed: ${size}`);
       const sizeSql = size === null ? 'NULL' : `'${size}'`;
+      const colorSql = color === null ? 'NULL' : text(color);
       lines.push(
-        `INSERT INTO variants (product_id, size, sku, stock) VALUES ((SELECT id FROM products WHERE slug = ${text(item.slug)}), ${sizeSql}, ${text(skuOf(item.slug, size))}, ${int(stock[i]!)})` +
+        `INSERT INTO variants (product_id, size, color, sku, stock) VALUES ((SELECT id FROM products WHERE slug = ${text(item.slug)}), ${sizeSql}, ${colorSql}, ${text(skuOf(item.slug, size, color))}, ${int(stock[i]!)})` +
           ` ON CONFLICT(sku) DO NOTHING;`,
       );
     });
+    if (item.colors && item.colors.length > 0) {
+      lines.push(`UPDATE variants SET stock = 0 WHERE color IS NULL AND product_id = (SELECT id FROM products WHERE slug = ${text(item.slug)});`);
+    }
   }
   const slugs = merch.map((item) => text(item.slug)).join(', ');
   lines.push(`UPDATE products SET active = 0 WHERE slug NOT IN (${slugs});`);

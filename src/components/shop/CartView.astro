@@ -31,7 +31,6 @@ const shippingFrom = formatPrice(Math.min(...Object.values(shippingCents)), lang
   data-catalog={JSON.stringify(catalog)}
   data-lang={lang}
   data-focus-fallback={focusFallback}
-  data-size-label={t(lang, 'shop.size')}
   data-remove-label={t(lang, 'cart.remove')}
   data-quantity-label={t(lang, 'shop.quantity')}
   data-decrease-label={t(lang, 'cart.decrease')}
@@ -137,9 +136,9 @@ const shippingFrom = formatPrice(Math.min(...Object.values(shippingCents)), lang
           const name = row.querySelector<HTMLAnchorElement>('[data-name]')!;
           name.href = entry.href;
           name.textContent = entry.name;
-          row.querySelector('[data-size]')!.textContent = entry.size ? `${this.dataset.sizeLabel}: ${entry.size}` : '';
+          row.querySelector('[data-size]')!.textContent = entry.details;
           row.querySelector('[data-price]')!.textContent = formatPrice(entry.priceCents * quantity, lang);
-          const label = `${entry.name}${entry.size ? ` ${entry.size}` : ''}`;
+          const label = `${entry.name}${entry.variant ? ` (${entry.variant})` : ''}`;
 
           // − e +: da 1 al massimo per riga. Ai limiti il pulsante resta focalizzabile
           // (aria-disabled, non disabled) così il focus non si perde

@@ -16,6 +16,7 @@ import {
 import { sendConfirmation, sendShopNotification } from './email';
 import { apiError, clientKey, isSameOrigin, json, methodNotAllowed, readJson } from './http';
 import type { ShopEnv } from './server-env';
+import { itemName } from './labels';
 import { shippingCents } from './shipping';
 import { createSession, verifyStripeSignature } from './stripe';
 import { orderToken, verifyOrderToken } from './token';
@@ -104,9 +105,6 @@ export async function handleOrder(request: Request, env: ShopEnv): Promise<Respo
   }
 }
 
-function productName(lang: Lang, slug: string, size: string | null): string {
-  return t(lang, `shop.products.${slug}.name` as Key) + (size ? ` (${size})` : '');
-}
 
 // POST /api/checkout (docs/06, Flusso d'acquisto). L'ordine dei controlli conta:
 // prima quelli che non costano niente, poi Turnstile, poi il database, poi Stripe.
@@ -161,7 +159,7 @@ export async function handleCheckout(request: Request, env: ShopEnv, deps: Deps 
       cancelUrl: `${origin}/${req.lang}/shop/checkout/`,
       expiresAt: Math.floor(deps.now() / 1000) + SESSION_LIFETIME_SECONDS,
       lines: lines.map((line) => ({
-        name: productName(req.lang, line.variant.slug, line.variant.size),
+        name: itemName((key) => t(req.lang, key), line.variant.slug, line.variant.color, line.variant.size),
         unitAmountCents: line.priceCents,
         quantity: line.quantity,
       })),

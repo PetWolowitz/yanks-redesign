@@ -83,7 +83,9 @@ Lo shop **non è opzionale**. Regole del contratto:
 - tipi condivisi in `src/lib/shop/types.ts` tra frontend ed endpoint
 - validazione solo in `src/lib/shop/validate.ts`, usata da form e server
 - `merch.ts` è l'**unica fonte scritta a mano** dei prodotti: solo slug,
-  categoria, prezzo, taglie, `limited`. Il seed del database si genera da lì
+  categoria, prezzo, taglie, colori (dal 2026-10-27, solo felpa, Ton sur Ton e
+  Clipper), `limited`. Il seed del database si genera da lì. Una variante è
+  colore + taglia (SKU `hoodie-black-m`); la foto di ogni colore in `images.ts`
 - **I prezzi mostrati sono nell'HTML statico**, scritti in build da `merch.ts`.
   Un prezzo si cambia solo modificando `merch.ts`, rifacendo il seed e
   ripubblicando. Il JavaScript aggiorna solo la disponibilità
