@@ -12,7 +12,7 @@ describe('metodi di pagamento', () => {
   });
 
   it('in una frase, "card" nella lingua e la congiunzione della lingua', () => {
-    expect(paymentList('nl')).toBe('iDEAL, kaart, Apple Pay, Google Pay, PayPal, Klarna, Bancontact en Amazon Pay');
-    expect(paymentList('de')).toMatch(/, Karte, .* und Amazon Pay$/);
+    expect(paymentList('nl')).toBe('iDEAL | Wero, kaart, Apple Pay, Google Pay, PayPal, Klarna, Bancontact, Amazon Pay en Revolut Pay');
+    expect(paymentList('de')).toMatch(/, Karte, .* und Revolut Pay$/);
   });
 });
