@@ -392,6 +392,10 @@ spegne tutto; si animano solo `transform` e `opacity`; senza JS si vede tutto.
 - **Cursore**: un punto che inverte i colori, più grande su link e pulsanti, un
   blocco pieno sulle foto. Solo con un mouse vero; nei campi di testo resta il
   cursore di testo; con avviso d'età o menu aperti torna quello di sistema
+- **Foto a tutto schermo** (scheda prodotto, dal 2026-10-27, `ProductGallery.astro`):
+  ogni foto è un link alla versione grande; con JS si apre in un `<dialog>` scuro
+  (`tone-ink`), con X, Esc, clic sul fondo, frecce ← → e scorrimento col dito.
+  Dissolvenza di 0.25 s, spenta con movimento ridotto
 - **Freccia per tornare su**: compare negli ultimi 600 px delle pagine lunghe;
   riporta in cima e mette il focus sul titolo della pagina
 

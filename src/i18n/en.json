@@ -340,5 +340,9 @@
   "payments.title": "You pay via Stripe, with:",
   "payments.card": "card",
   "payments.wallets": "Apple Pay and Google Pay only on devices that support them.",
-  "legal.credits": "Payment method logos: {source}, licensed CC BY-SA 4.0. The trademarks belong to their owners."
+  "legal.credits": "Payment method logos: {source}, licensed CC BY-SA 4.0. The trademarks belong to their owners.",
+  "photo.zoom": "enlarge",
+  "photo.close": "Close photo",
+  "photo.prev": "Previous photo",
+  "photo.next": "Next photo"
 }
