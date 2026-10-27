@@ -340,5 +340,9 @@
   "payments.title": "Je betaalt via Stripe, met:",
   "payments.card": "kaart",
   "payments.wallets": "Apple Pay en Google Pay alleen op apparaten die ze ondersteunen.",
-  "legal.credits": "Logo's van de betaalmethoden: {source}, licentie CC BY-SA 4.0. De merken zijn van hun eigenaren."
+  "legal.credits": "Logo's van de betaalmethoden: {source}, licentie CC BY-SA 4.0. De merken zijn van hun eigenaren.",
+  "photo.zoom": "vergroten",
+  "photo.close": "Foto sluiten",
+  "photo.prev": "Vorige foto",
+  "photo.next": "Volgende foto"
 }

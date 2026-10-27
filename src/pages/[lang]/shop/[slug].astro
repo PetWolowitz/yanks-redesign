@@ -3,8 +3,8 @@
 // build, taglie, quantità, aggiunta al carrello. Una pagina per prodotto e lingua.
 // L'h1 è in Yankee Clipper e non in Indian: i nomi dei prodotti sono lunghi (docs/02).
 import type { GetStaticPaths } from 'astro';
-import { Image } from 'astro:assets';
 import AddToCart from '../../../components/shop/AddToCart.astro';
+import ProductGallery from '../../../components/shop/ProductGallery.astro';
 import { merch } from '../../../data/merch';
 import { venue } from '../../../data/venue';
 import Base from '../../../layouts/Base.astro';
@@ -28,37 +28,8 @@ const images = productImages(item.slug);
     <a href={`/${lang}/shop/`} class="inline-block py-3 text-small underline underline-offset-4">← {t(lang, 'shop.back')}</a>
 
     <div class="mt-6 grid gap-10 lg:grid-cols-12 lg:gap-6">
-      <!-- Galleria senza JS: la prima foto grande, le altre in griglia sotto -->
-      <div class="lg:col-span-7">
-        <Image
-          src={images[0]!}
-          alt={images.length > 1 ? t(lang, 'shop.photo', { name, n: '1' }) : name}
-          widths={[480, 800, 1000]}
-          sizes="(min-width: 1024px) 55vw, 100vw"
-          format="webp"
-          fetchpriority="high"
-          class="w-full border-[1.5px] rounded-2xl border-text"
-        />
-        {
-          images.length > 1 && (
-            <ul class="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3">
-              {images.slice(1).map((image, index) => (
-                <li>
-                  <Image
-                    src={image}
-                    alt={t(lang, 'shop.photo', { name, n: String(index + 2) })}
-                    widths={[320, 640]}
-                    sizes="(min-width: 1024px) 18vw, 50vw"
-                    format="webp"
-                    loading="lazy"
-                    class="aspect-[4/5] w-full border-[1.5px] rounded-2xl border-text object-cover"
-                  />
-                </li>
-              ))}
-            </ul>
-          )
-        }
-      </div>
+      <!-- Galleria: la prima foto grande, le altre sotto; si ingrandiscono a tutto schermo -->
+      <ProductGallery lang={lang} name={name} images={images} class="lg:col-span-7" />
 
       <div class="lg:col-span-5 lg:sticky lg:top-24 lg:self-start">
         <h1 class="font-sign text-h2 leading-none uppercase">{name}</h1>

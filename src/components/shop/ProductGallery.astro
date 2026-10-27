@@ -1,0 +1,161 @@
+---
+// Galleria della scheda prodotto: la prima foto grande, le altre in griglia sotto.
+// Ogni foto è un link alla versione grande: senza JS si apre nel browser. Con JS
+// si apre a tutto schermo in un <dialog> (Pietro, 2026-10-27: "come negli shop veri"):
+// X, Esc o clic sul fondo per chiudere, ← → (anche da tastiera) per le altre foto.
+// Con movimento ridotto la finestra appare e basta (global.css)
+import { getImage, Image } from 'astro:assets';
+import type { Lang } from '../../i18n/locales';
+import { t } from '../../i18n/t';
+
+interface Props {
+  lang: Lang;
+  name: string;
+  images: ImageMetadata[];
+  class?: string;
+}
+
+const { lang, name, images, class: className } = Astro.props;
+const many = images.length > 1;
+const alt = (index: number) => (many ? t(lang, 'shop.photo', { name, n: String(index + 1) }) : name);
+// La versione grande: le foto originali sono larghe al massimo 1000 px (lib/shop/images.ts)
+const large = await Promise.all(images.map((src) => getImage({ src, width: Math.min(src.width, 1000), format: 'webp' })));
+const zoom = t(lang, 'photo.zoom');
+---
+
+<product-gallery class:list={['block', className]}>
+  <a href={large[0]!.src} data-zoom="0" class="group relative block cursor-zoom-in" aria-label={`${alt(0)} — ${zoom}`}>
+    <Image
+      src={images[0]!}
+      alt={alt(0)}
+      widths={[480, 800, 1000]}
+      sizes="(min-width: 1024px) 55vw, 100vw"
+      format="webp"
+      fetchpriority="high"
+      class="w-full border-[1.5px] rounded-2xl border-text"
+    />
+    <span aria-hidden="true" class="absolute end-3 bottom-3 inline-flex size-10 items-center justify-center rounded-full border-[1.5px] border-text bg-bg text-lg">⤢</span>
+  </a>
+  {
+    many && (
+      <ul class="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3">
+        {images.slice(1).map((image, index) => (
+          <li>
+            <a href={large[index + 1]!.src} data-zoom={index + 1} class="block cursor-zoom-in" aria-label={`${alt(index + 1)} — ${zoom}`}>
+              <Image
+                src={image}
+                alt={alt(index + 1)}
+                widths={[320, 640]}
+                sizes="(min-width: 1024px) 18vw, 50vw"
+                format="webp"
+                loading="lazy"
+                class="aspect-[4/5] w-full border-[1.5px] rounded-2xl border-text object-cover"
+              />
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  <dialog
+    data-lightbox
+    aria-label={name}
+    class="lightbox tone-ink m-0 h-svh max-h-none w-full max-w-none border-0 bg-bg p-0 text-text"
+  >
+    <div class="flex h-full flex-col">
+      <div class="flex items-center justify-between gap-4 px-page py-3">
+        <p data-counter aria-live="polite" class="text-small tabular-nums"></p>
+        <form method="dialog">
+          <button class="inline-flex size-11 items-center justify-center rounded-full border-[1.5px] border-text hover:bg-text hover:text-bg">
+            <span class="sr-only">{t(lang, 'photo.close')}</span>
+            <svg class="size-5" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            </svg>
+          </button>
+        </form>
+      </div>
+      <!-- La foto intera, grande quanto lo spazio che resta e centrata: intorno c'è il
+           fondo, che al clic chiude. touch-action pan-y: il gesto orizzontale resta a noi -->
+      <div data-stage class="relative flex min-h-0 flex-1 touch-pan-y items-center justify-center px-page pb-4">
+        <img data-photo alt="" draggable="false" class="max-h-full max-w-full select-none object-contain" />
+        {
+          many && (
+            <>
+              <button type="button" data-step="-1" class="absolute start-3 top-1/2 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full border-[1.5px] border-text bg-bg hover:bg-text hover:text-bg">
+                <span class="sr-only">{t(lang, 'photo.prev')}</span>
+                <span aria-hidden="true">←</span>
+              </button>
+              <button type="button" data-step="1" class="absolute end-3 top-1/2 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full border-[1.5px] border-text bg-bg hover:bg-text hover:text-bg">
+                <span class="sr-only">{t(lang, 'photo.next')}</span>
+                <span aria-hidden="true">→</span>
+              </button>
+            </>
+          )
+        }
+      </div>
+    </div>
+  </dialog>
+</product-gallery>
+
+<script>
+  class ProductGallery extends HTMLElement {
+    connectedCallback() {
+      const links = [...this.querySelectorAll<HTMLAnchorElement>('a[data-zoom]')];
+      const dialog = this.querySelector<HTMLDialogElement>('[data-lightbox]')!;
+      const photo = dialog.querySelector<HTMLImageElement>('[data-photo]')!;
+      const counter = dialog.querySelector<HTMLElement>('[data-counter]')!;
+      let current = 0;
+
+      const show = (index: number) => {
+        current = (index + links.length) % links.length;
+        const link = links[current]!;
+        photo.src = link.href;
+        photo.alt = link.querySelector('img')?.alt ?? '';
+        counter.textContent = links.length > 1 ? `${current + 1} / ${links.length}` : '';
+      };
+
+      for (const link of links) {
+        link.addEventListener('click', (event) => {
+          // Con un tasto modificatore il link fa il suo lavoro (nuova scheda)
+          if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+          event.preventDefault();
+          show(Number(link.dataset.zoom));
+          dialog.showModal();
+        });
+      }
+      for (const button of dialog.querySelectorAll<HTMLButtonElement>('[data-step]')) {
+        button.addEventListener('click', () => show(current + Number(button.dataset.step)));
+      }
+      dialog.addEventListener('keydown', (event) => {
+        if (links.length < 2) return;
+        if (event.key === 'ArrowRight') show(current + 1);
+        if (event.key === 'ArrowLeft') show(current - 1);
+      });
+      // Su telefono si scorre col dito: almeno 50 px di lato, più che in verticale
+      let startX = 0;
+      let startY = 0;
+      let swiped = false;
+      dialog.addEventListener('pointerdown', (event) => {
+        startX = event.clientX;
+        startY = event.clientY;
+        swiped = false;
+      });
+      dialog.addEventListener('pointerup', (event) => {
+        const dx = event.clientX - startX;
+        if (links.length < 2 || Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(event.clientY - startY)) return;
+        swiped = true;
+        show(current + (dx < 0 ? 1 : -1));
+      });
+      // Clic sul fondo, fuori dalla foto e dai pulsanti: chiude (non dopo uno scorrimento)
+      dialog.addEventListener('click', (event) => {
+        const target = event.target as HTMLElement;
+        if (!swiped && (target === dialog || target.matches('[data-stage]'))) dialog.close();
+      });
+      // Alla chiusura il focus torna sulla foto da cui si era partiti
+      dialog.addEventListener('close', () => links[current]?.focus());
+    }
+  }
+
+  customElements.define('product-gallery', ProductGallery);
+</script>

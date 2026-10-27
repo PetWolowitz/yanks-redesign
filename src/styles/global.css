@@ -344,8 +344,8 @@ html:has(dialog[open], [popover]:popover-open) .cursor {
   background: var(--overlay);
 }
 
-/* Con il pannello aperto la pagina sotto non scorre */
-html:has(.cart-drawer[open]) {
+/* Con il pannello del carrello o una foto a tutto schermo la pagina sotto non scorre */
+html:has(.cart-drawer[open], .lightbox[open]) {
   overflow: hidden;
 }
 
@@ -388,3 +388,17 @@ html:has(.cart-drawer[open]) {
 }
 
 
+
+/* Foto a tutto schermo (ProductGallery.astro): compare in dissolvenza; con movimento
+   ridotto appare e basta */
+@media (prefers-reduced-motion: no-preference) {
+  .lightbox[open] {
+    animation: lightbox-in 0.25s ease-out;
+  }
+}
+
+@keyframes lightbox-in {
+  from {
+    opacity: 0;
+  }
+}
