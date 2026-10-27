@@ -51,7 +51,7 @@ Wat erin zit:
 - de openingstijden live: open, alleen afhalen of gesloten, altijd op
   Nederlandse tijd
 - een werkende webshop voor de merch, met iDEAL, kaart, Apple Pay, Google Pay,
-  PayPal, Klarna, Bancontact en Amazon Pay via Stripe, een bevestigingsmail
+  PayPal, Klarna, Bancontact, Amazon Pay en Revolut Pay via Stripe, een bevestigingsmail
   voor de klant en een melding voor jullie bij elke bestelling, met het
   verzendadres
 - algemene voorwaarden, herroepingsrecht en privacy op één pagina
@@ -86,7 +86,7 @@ What it includes:
 - the whole site in Dutch, English and German, with a light and a dark theme
 - the opening hours live: open, takeaway only or closed, always on Dutch time
 - a working shop for the merch, with iDEAL, card, Apple Pay, Google Pay,
-  PayPal, Klarna, Bancontact and Amazon Pay via Stripe, a confirmation email
+  PayPal, Klarna, Bancontact, Amazon Pay and Revolut Pay via Stripe, a confirmation email
   for the customer and a notice for you with every order, with the shipping
   address
 - terms, right of withdrawal and privacy on one page

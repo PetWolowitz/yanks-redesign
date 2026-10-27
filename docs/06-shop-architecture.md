@@ -36,11 +36,13 @@ endpoint: è una chiamata in uscita fatta dal webhook.
 - Supporta iDEAL, il metodo più usato nei Paesi Bassi, più carte e wallet
 - **Metodi mostrati prima del pagamento** (dal 2026-10-26): la legge vuole che il
   cliente li conosca all'inizio dell'ordine, non solo sulla pagina di Stripe.
-  Elenco in `lib/shop/payments.ts` (iDEAL, carta, Apple Pay, Google Pay, PayPal,
-  Klarna, Bancontact, Amazon Pay: quelli accesi nella dashboard secondo Pietro),
+  Elenco in `lib/shop/payments.ts` (iDEAL | Wero, carta, Apple Pay, Google Pay,
+  PayPal, Klarna, Bancontact, Amazon Pay, Revolut Pay: quelli visti sulla pagina
+  di Stripe il 2026-10-27; c'è anche Link, il salvataggio dati di Stripe),
   con le icone dei marchi nel carrello e nel checkout (`PaymentMethods.astro`,
   SVG in `public/payments/` da datatrans/payment-logos, CC BY-SA 4.0: la fonte è
-  citata nella pagina legale; Simple Icons non ha iDEAL, Bancontact e Amazon Pay)
+  citata nella pagina legale; Simple Icons non ha iDEAL, Bancontact e Amazon Pay.
+  Revolut Pay: simbolo di Simple Icons, CC0, su tessera bianca)
   e in una frase nella pagina legale. Il checkout non fissa i
   metodi: se in dashboard se ne accende o spegne uno, si aggiorna la lista
 - **I webhook sono firmati**: si verifica la firma con la chiave del webhook, con
