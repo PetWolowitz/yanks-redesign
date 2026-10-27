@@ -176,7 +176,7 @@ const legendClass = 'mb-4 font-sign text-h3 uppercase';
           li.className = 'flex items-baseline gap-4 border-b border-muted py-2 text-small';
           const label = document.createElement('span');
           label.className = 'min-w-0 break-words hyphens-auto';
-          label.textContent = `${quantity} × ${entry.name}${entry.size ? ` (${entry.size})` : ''}`;
+          label.textContent = `${quantity} × ${entry.name}${entry.variant ? ` (${entry.variant})` : ''}`;
           li.append(label);
           const price = document.createElement('span');
           price.className = 'ms-auto tabular-nums whitespace-nowrap';

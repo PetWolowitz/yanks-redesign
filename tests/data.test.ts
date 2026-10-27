@@ -3,7 +3,8 @@
 import { existsSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { menu } from '../src/data/menu';
-import { merch, skuOf } from '../src/data/merch';
+import { merch, skuOf, variantsOf } from '../src/data/merch';
+import { colorPhotoIndex, hasColorPhoto, productImages } from '../src/lib/shop/images';
 import en from '../src/i18n/en.json';
 
 const keys = new Set(Object.keys(en));
@@ -40,9 +41,27 @@ describe('merch.ts', () => {
     expect(merch.filter((item) => !Number.isInteger(item.priceCents) || item.priceCents <= 0)).toEqual([]);
   });
 
-  it('SKU: slug più taglia in minuscolo, solo slug per la taglia unica', () => {
-    expect(skuOf('hoodie', 'XL')).toBe('hoodie-xl');
+  it('SKU: slug, poi colore e taglia in minuscolo se ci sono', () => {
+    expect(skuOf('skull-t-shirt', 'XL')).toBe('skull-t-shirt-xl');
+    expect(skuOf('hoodie', 'XL', 'army-green')).toBe('hoodie-army-green-xl');
+    expect(skuOf('clipper-lighter', null, 'red')).toBe('clipper-lighter-red');
     expect(skuOf('mystery-box', null)).toBe('mystery-box');
+  });
+
+  it('variantsOf: ogni colore con ogni taglia, oppure una variante sola', () => {
+    const hoodie = merch.find((item) => item.slug === 'hoodie')!;
+    expect(variantsOf(hoodie)).toHaveLength(hoodie.colors!.length * hoodie.sizes.length);
+    expect(variantsOf(merch.find((item) => item.slug === 'cap')!)).toEqual([{ color: null, size: null }]);
+  });
+
+  it('ogni colore di merch.ts ha la sua foto e il suo nome in ogni lingua', () => {
+    for (const item of merch) {
+      for (const color of item.colors ?? []) {
+        expect(hasColorPhoto(item.slug, color), `${item.slug} ${color}`).toBe(true);
+        expect(productImages(item.slug).length).toBeGreaterThan(colorPhotoIndex(item.slug, color));
+        expect(en[`shop.color.${color}` as keyof typeof en], color).toBeTruthy();
+      }
+    }
   });
 });
 

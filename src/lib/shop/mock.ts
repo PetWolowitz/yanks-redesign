@@ -3,7 +3,7 @@
 // totale dai prezzi di merch.ts, mai da quelli del browser.
 // Gli ordini finti stanno in localStorage, così sopravvivono al finto
 // reindirizzamento e si aprono anche da un'altra scheda col link copiato.
-import { merch, skuOf } from '../../data/merch';
+import { merch, skuOf, variantsOf } from '../../data/merch';
 import type { ShopApi } from './api';
 import { shippingCents } from './shipping';
 import { ShopError, type CheckoutResponse, type OrderStatus, type Product } from './types';
@@ -61,14 +61,14 @@ function randomToken(): string {
 }
 
 function buildProducts(): Product[] {
-  return merch.map(({ slug, category, priceCents, sizes, limited }) => ({
-    slug,
-    category,
-    priceCents,
-    limited,
-    variants: (sizes.length > 0 ? sizes : [null]).map((size) => {
-      const sku = skuOf(slug, size);
-      return { sku, size, stock: stockOverrides[sku] ?? DEFAULT_STOCK };
+  return merch.map((item) => ({
+    slug: item.slug,
+    category: item.category,
+    priceCents: item.priceCents,
+    limited: item.limited,
+    variants: variantsOf(item).map(({ color, size }) => {
+      const sku = skuOf(item.slug, size, color);
+      return { sku, size, color, stock: stockOverrides[sku] ?? DEFAULT_STOCK };
     }),
   }));
 }

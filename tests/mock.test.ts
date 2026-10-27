@@ -20,7 +20,7 @@ const request: CheckoutRequest = {
   email: 'pietro@example.com',
   address: { fullName: 'Pietro Costa', street: 'Dorpsplein 2', postalCode: '2042 JK', city: 'Zandvoort', country: 'NL' },
   items: [
-    { sku: 'hoodie-m', quantity: 2 },
+    { sku: 'hoodie-black-m', quantity: 2 },
     { sku: 'djeep-lighter', quantity: 1 },
   ],
   turnstileToken: 'token-di-prova',
@@ -36,11 +36,14 @@ async function codeOf(promise: Promise<unknown>) {
 }
 
 describe('mock ShopApi', () => {
-  it('getProducts restituisce tutti i prodotti di merch.ts, una variante per taglia', async () => {
+  it('getProducts restituisce tutti i prodotti di merch.ts, una variante per colore e taglia', async () => {
     const products = await setup().api.getProducts();
     expect(products.map((p) => p.slug)).toEqual(merch.map((m) => m.slug));
-    expect(products.find((p) => p.slug === 'hoodie')?.variants.map((v) => v.sku)).toEqual(['hoodie-s', 'hoodie-m', 'hoodie-l', 'hoodie-xl', 'hoodie-2xl', 'hoodie-3xl']);
-    expect(products.find((p) => p.slug === 'mystery-box')?.variants).toEqual([{ sku: 'mystery-box', size: null, stock: 3 }]);
+    const hoodie = products.find((p) => p.slug === 'hoodie')!.variants.map((v) => v.sku);
+    expect(hoodie).toHaveLength(4 * 6);
+    expect(hoodie.slice(0, 2)).toEqual(['hoodie-blue-s', 'hoodie-blue-m']);
+    expect(hoodie).toContain('hoodie-black-3xl');
+    expect(products.find((p) => p.slug === 'mystery-box')?.variants).toEqual([{ sku: 'mystery-box', size: null, color: null, stock: 3 }]);
   });
 
   it('checkout: totale calcolato dai prezzi di merch.ts, token di 43 caratteri, ritorno alla pagina ordine', async () => {
@@ -54,7 +57,7 @@ describe('mock ShopApi', () => {
 
   it('un prezzo aggiunto dal browser non cambia il totale', async () => {
     const { api } = setup();
-    const tampered = { ...request, items: [{ sku: 'hoodie-m', quantity: 1, priceCents: 1 }], totalCents: 1 };
+    const tampered = { ...request, items: [{ sku: 'hoodie-black-m', quantity: 1, priceCents: 1 }], totalCents: 1 };
     const checkout = await api.createCheckout(tampered as CheckoutRequest);
     expect((await api.getOrder(checkout.id, checkout.token)).totalCents).toBe(4500 + 695);
   });

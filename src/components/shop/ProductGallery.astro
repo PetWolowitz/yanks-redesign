@@ -3,7 +3,9 @@
 // Ogni foto è un link alla versione grande: senza JS si apre nel browser. Con JS
 // si apre a tutto schermo in un <dialog> (Pietro, 2026-10-27: "come negli shop veri"):
 // X, Esc o clic sul fondo per chiudere, ← → (anche da tastiera) per le altre foto.
-// Con movimento ridotto la finestra appare e basta (global.css)
+// Con movimento ridotto la finestra appare e basta (global.css).
+// Scegliendo un colore (AddToCart.astro, evento product-color) la foto grande
+// diventa quella del colore
 import { getImage, Image } from 'astro:assets';
 import type { Lang } from '../../i18n/locales';
 import { t } from '../../i18n/t';
@@ -21,10 +23,12 @@ const alt = (index: number) => (many ? t(lang, 'shop.photo', { name, n: String(i
 // La versione grande: le foto originali sono larghe al massimo 1000 px (lib/shop/images.ts)
 const large = await Promise.all(images.map((src) => getImage({ src, width: Math.min(src.width, 1000), format: 'webp' })));
 const zoom = t(lang, 'photo.zoom');
+// Per lo script: le foto grandi in ordine, con il loro alt
+const photos = large.map((image, index) => ({ src: image.src, alt: alt(index) }));
 ---
 
-<product-gallery class:list={['block', className]}>
-  <a href={large[0]!.src} data-zoom="0" class="group relative block cursor-zoom-in" aria-label={`${alt(0)} — ${zoom}`}>
+<product-gallery class:list={['block', className]} data-photos={JSON.stringify(photos)} data-zoom-label={zoom}>
+  <a href={large[0]!.src} data-zoom="0" data-main class="group relative block cursor-zoom-in" aria-label={`${alt(0)} — ${zoom}`}>
     <Image
       src={images[0]!}
       alt={alt(0)}
@@ -101,25 +105,42 @@ const zoom = t(lang, 'photo.zoom');
 <script>
   class ProductGallery extends HTMLElement {
     connectedCallback() {
+      const photos: { src: string; alt: string }[] = JSON.parse(this.dataset.photos ?? '[]');
       const links = [...this.querySelectorAll<HTMLAnchorElement>('a[data-zoom]')];
+      const main = this.querySelector<HTMLAnchorElement>('a[data-main]')!;
       const dialog = this.querySelector<HTMLDialogElement>('[data-lightbox]')!;
       const photo = dialog.querySelector<HTMLImageElement>('[data-photo]')!;
       const counter = dialog.querySelector<HTMLElement>('[data-counter]')!;
       let current = 0;
+      let opener: HTMLElement | null = null;
 
       const show = (index: number) => {
-        current = (index + links.length) % links.length;
-        const link = links[current]!;
-        photo.src = link.href;
-        photo.alt = link.querySelector('img')?.alt ?? '';
-        counter.textContent = links.length > 1 ? `${current + 1} / ${links.length}` : '';
+        current = (index + photos.length) % photos.length;
+        photo.src = photos[current]!.src;
+        photo.alt = photos[current]!.alt;
+        counter.textContent = photos.length > 1 ? `${current + 1} / ${photos.length}` : '';
       };
+
+      // Colore scelto: la foto grande diventa la sua (la versione grande, già WebP)
+      document.addEventListener('product-color', (event) => {
+        const index = (event as CustomEvent<{ photo: number }>).detail.photo;
+        const target = photos[index];
+        const image = main.querySelector('img');
+        if (!target || !image) return;
+        image.removeAttribute('srcset');
+        image.src = target.src;
+        image.alt = target.alt;
+        main.href = target.src;
+        main.dataset.zoom = String(index);
+        main.setAttribute('aria-label', `${target.alt} — ${this.dataset.zoomLabel}`);
+      });
 
       for (const link of links) {
         link.addEventListener('click', (event) => {
           // Con un tasto modificatore il link fa il suo lavoro (nuova scheda)
           if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
           event.preventDefault();
+          opener = link;
           show(Number(link.dataset.zoom));
           dialog.showModal();
         });
@@ -128,7 +149,7 @@ const zoom = t(lang, 'photo.zoom');
         button.addEventListener('click', () => show(current + Number(button.dataset.step)));
       }
       dialog.addEventListener('keydown', (event) => {
-        if (links.length < 2) return;
+        if (photos.length < 2) return;
         if (event.key === 'ArrowRight') show(current + 1);
         if (event.key === 'ArrowLeft') show(current - 1);
       });
@@ -143,7 +164,7 @@ const zoom = t(lang, 'photo.zoom');
       });
       dialog.addEventListener('pointerup', (event) => {
         const dx = event.clientX - startX;
-        if (links.length < 2 || Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(event.clientY - startY)) return;
+        if (photos.length < 2 || Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(event.clientY - startY)) return;
         swiped = true;
         show(current + (dx < 0 ? 1 : -1));
       });
@@ -153,7 +174,7 @@ const zoom = t(lang, 'photo.zoom');
         if (!swiped && (target === dialog || target.matches('[data-stage]'))) dialog.close();
       });
       // Alla chiusura il focus torna sulla foto da cui si era partiti
-      dialog.addEventListener('close', () => links[current]?.focus());
+      dialog.addEventListener('close', () => opener?.focus());
     }
   }
 

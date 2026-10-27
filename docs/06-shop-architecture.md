@@ -68,7 +68,10 @@ quante volte si vuole. Aggiorna prezzi e categorie da `merch.ts`, **non tocca le
 giacenze** delle varianti già presenti (sono vendite vere), spegne (`active = 0`)
 i prodotti tolti da `merch.ts` senza cancellarli, perché gli ordini vecchi li
 citano. Giacenza iniziale: 20 per variante; le edizioni limitate dividono i loro
-pezzi tra le taglie. Comandi: `npm run db:migrate:local`, `npm run db:seed:local`
+pezzi tra le varianti. Dal 2026-10-27 le varianti hanno anche il colore
+(`migrations/0002_variant_color.sql`, SKU `slug-colore-taglia`): quando un
+prodotto prende i colori, le sue varianti vecchie senza colore restano per gli
+ordini vecchi ma il seed le mette a zero pezzi. Comandi: `npm run db:migrate:local`, `npm run db:seed:local`
 (e `:remote`). Test: `tests/seed.test.ts`, su SQLite in memoria (`node:sqlite`).
 
 
@@ -482,7 +485,7 @@ Regole che tengono in piedi il contratto:
 - **Le regole di validazione stanno in `validate.ts`**, usate dal form per
   l'esperienza utente e dal server per la sicurezza. Scritte una volta sola
 - **I prodotti si scrivono una volta sola** in `merch.ts` (slug, categoria,
-  prezzo, taglie, `limited`): lo script di seed ne genera il contenuto del
+  prezzo, taglie, colori, `limited`): lo script di seed ne genera il contenuto del
   database, e i prezzi scritti nell'HTML statico in build. `getProducts()`
   serve al frontend per la disponibilità; l'addebito lo calcola il server dal
   database

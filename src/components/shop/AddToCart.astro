@@ -1,11 +1,13 @@
 ---
-// Scelta di taglia e quantità e aggiunta al carrello. Serve JS: senza, il modulo
-// resta nascosto e c'è il messaggio <noscript>; le taglie restano scritte sopra.
-// Il JS disattiva le taglie esaurite e non aggiunge più pezzi di quelli rimasti.
-import { skuOf } from '../../data/merch';
+// Scelta di colore, taglia e quantità e aggiunta al carrello. Serve JS: senza, il
+// modulo resta nascosto e c'è il messaggio <noscript>; colori e taglie restano
+// scritti sopra. Il JS disattiva colori e taglie esauriti, non aggiunge più pezzi
+// di quelli rimasti e, scegliendo un colore, mostra la sua foto (ProductGallery).
+// Colori a pastiglie come le taglie (Pietro, 2026-10-27)
 import type { Lang } from '../../i18n/locales';
+import { colorPhotoIndex } from '../../lib/shop/images';
 import type { MerchItem } from '../../lib/shop/types';
-import { t } from '../../i18n/t';
+import { t, type Key } from '../../i18n/t';
 
 interface Props {
   lang: Lang;
@@ -13,30 +15,49 @@ interface Props {
 }
 
 const { lang, item } = Astro.props;
-const sizes = item.sizes.length > 0 ? item.sizes : [null];
+const colors = item.colors ?? [];
 const quantities = Array.from({ length: 10 }, (_, i) => i + 1);
+const pill =
+  'inline-flex min-h-11 min-w-12 cursor-pointer items-center justify-center border-[1.5px] rounded-full border-text px-3 peer-checked:bg-text peer-checked:text-bg peer-disabled:cursor-not-allowed peer-disabled:border-muted peer-disabled:text-muted peer-disabled:line-through peer-focus-visible:outline-3 peer-focus-visible:outline-offset-3 peer-focus-visible:outline-red';
 ---
 
-<add-to-cart data-too-many={t(lang, 'shop.tooMany')} data-sold-out={t(lang, 'shop.soldOut')} data-done={t(lang, 'shop.addedShort')}>
+<add-to-cart
+  data-slug={item.slug}
+  data-too-many={t(lang, 'shop.tooMany')}
+  data-sold-out={t(lang, 'shop.soldOut')}
+  data-done={t(lang, 'shop.addedShort')}
+>
   <form hidden class="space-y-6">
     {
-      item.sizes.length > 0 && (
+      colors.length > 0 && (
         <fieldset>
-          <legend class="mb-2 uppercase">{t(lang, 'shop.size')}</legend>
+          <legend class="mb-2 uppercase">{t(lang, 'shop.colorLabel')}</legend>
           <div class="flex flex-wrap gap-2">
-            {sizes.map((size, index) => (
+            {colors.map((color, index) => (
               <label class="relative">
-                <input type="radio" name="sku" value={skuOf(item.slug, size)} checked={index === 0} required class="peer sr-only" />
-                <span class="inline-flex min-h-11 min-w-12 cursor-pointer items-center justify-center border-[1.5px] rounded-full border-text px-3 peer-checked:bg-text peer-checked:text-bg peer-disabled:cursor-not-allowed peer-disabled:border-muted peer-disabled:text-muted peer-disabled:line-through peer-focus-visible:outline-3 peer-focus-visible:outline-offset-3 peer-focus-visible:outline-red">
-                  {size}
-                </span>
+                <input type="radio" name="color" value={color} data-photo={colorPhotoIndex(item.slug, color)} checked={index === 0} required class="peer sr-only" />
+                <span class={pill}>{t(lang, `shop.color.${color}` as Key)}</span>
               </label>
             ))}
           </div>
         </fieldset>
       )
     }
-    {item.sizes.length === 0 && <input type="hidden" name="sku" value={skuOf(item.slug, null)} />}
+    {
+      item.sizes.length > 0 && (
+        <fieldset>
+          <legend class="mb-2 uppercase">{t(lang, 'shop.size')}</legend>
+          <div class="flex flex-wrap gap-2">
+            {item.sizes.map((size, index) => (
+              <label class="relative">
+                <input type="radio" name="size" value={size} checked={index === 0} required class="peer sr-only" />
+                <span class={pill}>{size}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      )
+    }
 
     <div class="flex flex-wrap items-end gap-4">
       <label class="flex flex-col gap-2">
@@ -60,25 +81,52 @@ const quantities = Array.from({ length: 10 }, (_, i) => i + 1);
 </add-to-cart>
 
 <script>
+  import { skuOf } from '../../data/merch';
   import { addItem, loadCart, saveCart } from '../../lib/shop/cart';
   import { loadProducts } from '../../lib/shop/stock';
+  import type { Color, Size } from '../../lib/shop/types';
   import { flyToCart } from '../../scripts/fly-to-cart';
 
   class AddToCart extends HTMLElement {
     #stock = new Map<string, number>();
 
     async connectedCallback() {
+      const slug = this.dataset.slug!;
       const form = this.querySelector('form')!;
       const message = this.querySelector<HTMLElement>('[data-message]')!;
       const added = this.querySelector<HTMLElement>('[data-added]')!;
       const button = form.querySelector('button')!;
+      const colors = [...form.querySelectorAll<HTMLInputElement>('input[name=color]')];
+      const sizes = [...form.querySelectorAll<HTMLInputElement>('input[name=size]')];
       form.hidden = false;
+
+      const checked = (radios: HTMLInputElement[]) => radios.find((radio) => radio.checked)?.value ?? null;
+      const skuFor = (color: string | null, size: string | null) => skuOf(slug, size as Size | null, color as Color | null);
+      // Prima del caricamento delle giacenze tutto è disponibile
+      const available = (sku: string) => (this.#stock.get(sku) ?? 1) > 0;
+
+      // Per il colore scelto: taglie esaurite non selezionabili; se quella scelta lo
+      // è, passa alla prima libera
+      const updateSizes = () => {
+        const color = checked(colors);
+        for (const radio of sizes) radio.disabled = !available(skuFor(color, radio.value));
+        if (sizes.length > 0 && !sizes.some((radio) => radio.checked && !radio.disabled)) {
+          const first = sizes.find((radio) => !radio.disabled);
+          if (first) first.checked = true;
+        }
+      };
+
+      for (const radio of colors) {
+        radio.addEventListener('change', () => {
+          updateSizes();
+          this.dispatchEvent(new CustomEvent('product-color', { bubbles: true, detail: { photo: Number(radio.dataset.photo) } }));
+        });
+      }
 
       form.addEventListener('submit', (event) => {
         event.preventDefault();
-        const data = new FormData(form);
-        const sku = String(data.get('sku'));
-        const quantity = Number(data.get('quantity'));
+        const sku = skuFor(checked(colors), checked(sizes));
+        const quantity = Number(new FormData(form).get('quantity'));
         const inCart = loadCart().find((item) => item.sku === sku)?.quantity ?? 0;
         const stock = this.#stock.get(sku);
         added.hidden = true;
@@ -101,13 +149,21 @@ const quantities = Array.from({ length: 10 }, (_, i) => i + 1);
       if (!products) return;
       for (const variant of products.flatMap((product) => product.variants)) this.#stock.set(variant.sku, variant.stock);
 
-      // Taglie esaurite non selezionabili; se lo sono tutte, niente pulsante
-      const radios = [...form.querySelectorAll<HTMLInputElement>('input[type=radio]')];
-      for (const radio of radios) radio.disabled = (this.#stock.get(radio.value) ?? 0) === 0;
-      const firstAvailable = radios.find((radio) => !radio.disabled);
-      if (firstAvailable) firstAvailable.checked = true;
-      const single = form.querySelector<HTMLInputElement>('input[type=hidden]');
-      const soldOut = radios.length > 0 ? !firstAvailable : (this.#stock.get(single?.value ?? '') ?? 0) === 0;
+      // Colori senza nessuna taglia disponibile non selezionabili
+      const sizeValues = sizes.length > 0 ? sizes.map((radio) => radio.value) : [null];
+      for (const radio of colors) radio.disabled = !sizeValues.some((size) => available(skuFor(radio.value, size)));
+      if (colors.length > 0 && !colors.some((radio) => radio.checked && !radio.disabled)) {
+        const first = colors.find((radio) => !radio.disabled);
+        if (first) {
+          first.checked = true;
+          first.dispatchEvent(new Event('change'));
+        }
+      }
+      updateSizes();
+
+      // Niente di disponibile: niente pulsante
+      const colorValues = colors.length > 0 ? colors.map((radio) => radio.value) : [null];
+      const soldOut = !colorValues.some((color) => sizeValues.some((size) => available(skuFor(color, size))));
       if (soldOut) {
         button.disabled = true;
         message.textContent = this.dataset.soldOut ?? '';

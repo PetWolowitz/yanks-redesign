@@ -14,7 +14,7 @@ const validBody = {
   address: { fullName: 'Mario Rossi', street: 'Dorpsplein 2', postalCode: '2042 JK', city: 'Zandvoort', country: 'NL' },
   items: [
     { sku: 'cap', quantity: 2 },
-    { sku: 'hoodie-m', quantity: 1 },
+    { sku: 'hoodie-black-m', quantity: 1 },
   ],
   turnstileToken: 'token-del-widget',
 };
@@ -190,7 +190,7 @@ describe('POST /api/stripe-webhook', () => {
     expect(response.status).toBe(200);
     expect(row<{ status: string }>(db, 'SELECT status FROM orders').status).toBe('paid');
     expect(row<{ stock: number }>(db, "SELECT stock FROM variants WHERE sku = 'cap'").stock).toBe(before - 2);
-    expect(row<{ stock: number }>(db, "SELECT stock FROM variants WHERE sku = 'hoodie-m'").stock).toBe(19);
+    expect(row<{ stock: number }>(db, "SELECT stock FROM variants WHERE sku = 'hoodie-black-m'").stock).toBe(19);
   });
 
   it('lo stesso webhook due volte non scala le giacenze due volte e manda una sola email', async () => {
@@ -263,6 +263,8 @@ describe('POST /api/stripe-webhook', () => {
     expect(String(email.html)).toContain(`${ORIGIN}/nl/legal/`);
     expect(String(email.text)).toContain(`${ORIGIN}/nl/legal/`);
     expect(String(email.subject)).toContain('Je bestelling');
+    // colore e taglia nella lingua dell'ordine
+    expect(String(email.text)).toContain('Yanks hoodie (Zwart, M)');
   });
 
   describe('avviso al negozio', () => {
@@ -279,7 +281,7 @@ describe('POST /api/stripe-webhook', () => {
       expect(bodies).toHaveLength(2);
       const notice = bodies.find((body) => (body.to as string[])[0] === shop)!;
       expect(String(notice.subject)).toContain('Nieuwe bestelling / New order');
-      for (const part of ['Mario Rossi', 'Dorpsplein 2', '2042 JK Zandvoort', 'cliente@example.com', 'Verzendadres / Shipping address', 'A new order has been paid']) {
+      for (const part of ['Mario Rossi', 'Dorpsplein 2', '2042 JK Zandvoort', 'cliente@example.com', 'Verzendadres / Shipping address', 'A new order has been paid', 'Yanks hoodie (Zwart / Black, M)']) {
         expect(String(notice.text)).toContain(part);
       }
       expect(JSON.stringify(notice)).not.toContain(token);

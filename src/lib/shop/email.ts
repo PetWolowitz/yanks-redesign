@@ -7,7 +7,9 @@ import type { Lang } from '../../i18n/locales';
 import { t, type Key } from '../../i18n/t';
 import { venue } from '../../data/venue';
 import { formatPrice } from '../format';
+import { itemName } from './labels';
 import { orderLink } from './order-link';
+import type { Color } from './types';
 
 const RESEND = 'https://api.resend.com/emails';
 
@@ -16,7 +18,7 @@ export interface EmailOrder {
   token: string;
   lang: Lang;
   totalCents: number;
-  items: { slug: string; size: string | null; quantity: number; priceCents: number }[];
+  items: { slug: string; size: string | null; color: Color | null; quantity: number; priceCents: number }[];
 }
 
 export interface ShippingAddress {
@@ -131,7 +133,7 @@ function orderNumber(publicId: string): string {
 // salvato la comprende (lib/shop/shipping.ts) e così vale anche per gli ordini vecchi
 function orderLines(lang: Lang, label: Label, order: Pick<EmailOrder, 'items' | 'totalCents'>) {
   const lines = order.items.map((item) => {
-    const name = label(`shop.products.${item.slug}.name` as Key) + (item.size ? ` (${item.size})` : '');
+    const name = itemName(label, item.slug, item.color, item.size);
     return { label: `${item.quantity} × ${name}`, price: formatPrice(item.priceCents * item.quantity, lang) };
   });
   const shipping = order.totalCents - order.items.reduce((sum, item) => sum + item.priceCents * item.quantity, 0);

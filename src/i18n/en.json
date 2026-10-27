@@ -344,5 +344,17 @@
   "photo.zoom": "enlarge",
   "photo.close": "Close photo",
   "photo.prev": "Previous photo",
-  "photo.next": "Next photo"
+  "photo.next": "Next photo",
+  "shop.colorLabel": "Colour",
+  "shop.color.blue": "Blue",
+  "shop.color.army-green": "Army green",
+  "shop.color.grey": "Grey",
+  "shop.color.black": "Black",
+  "shop.color.brown": "Brown",
+  "shop.color.white": "White",
+  "shop.color.pink": "Pink",
+  "shop.color.red": "Red",
+  "shop.color.green": "Green",
+  "shop.color.burgundy": "Burgundy",
+  "shop.color.yellow": "Yellow"
 }

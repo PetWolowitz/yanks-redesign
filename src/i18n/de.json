@@ -344,5 +344,17 @@
   "photo.zoom": "vergrößern",
   "photo.close": "Foto schließen",
   "photo.prev": "Vorheriges Foto",
-  "photo.next": "Nächstes Foto"
+  "photo.next": "Nächstes Foto",
+  "shop.colorLabel": "Farbe",
+  "shop.color.blue": "Blau",
+  "shop.color.army-green": "Armeegrün",
+  "shop.color.grey": "Grau",
+  "shop.color.black": "Schwarz",
+  "shop.color.brown": "Braun",
+  "shop.color.white": "Weiß",
+  "shop.color.pink": "Rosa",
+  "shop.color.red": "Rot",
+  "shop.color.green": "Grün",
+  "shop.color.burgundy": "Bordeaux",
+  "shop.color.yellow": "Gelb"
 }

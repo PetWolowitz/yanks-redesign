@@ -344,5 +344,17 @@
   "photo.zoom": "vergroten",
   "photo.close": "Foto sluiten",
   "photo.prev": "Vorige foto",
-  "photo.next": "Volgende foto"
+  "photo.next": "Volgende foto",
+  "shop.colorLabel": "Kleur",
+  "shop.color.blue": "Blauw",
+  "shop.color.army-green": "Legergroen",
+  "shop.color.grey": "Grijs",
+  "shop.color.black": "Zwart",
+  "shop.color.brown": "Bruin",
+  "shop.color.white": "Wit",
+  "shop.color.pink": "Roze",
+  "shop.color.red": "Rood",
+  "shop.color.green": "Groen",
+  "shop.color.burgundy": "Bordeaux",
+  "shop.color.yellow": "Geel"
 }
