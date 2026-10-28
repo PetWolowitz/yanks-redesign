@@ -10,7 +10,7 @@ import { venue } from '../../../data/venue';
 import Base from '../../../layouts/Base.astro';
 import { locales, type Lang } from '../../../i18n/locales';
 import { formatPrice } from '../../../lib/format';
-import { productImages } from '../../../lib/shop/images';
+import { photoColors, productImages } from '../../../lib/shop/images';
 import type { MerchItem } from '../../../lib/shop/types';
 import { t, type Key } from '../../../i18n/t';
 
@@ -29,23 +29,23 @@ const images = productImages(item.slug);
 
     <div class="mt-6 grid gap-10 lg:grid-cols-12 lg:gap-6">
       <!-- Galleria: la prima foto grande, le altre sotto; si ingrandiscono a tutto schermo -->
-      <ProductGallery lang={lang} name={name} images={images} class="lg:col-span-7" />
+      <ProductGallery lang={lang} name={name} images={images} colors={photoColors(item.slug)} class="lg:col-span-7" />
 
       <div class="lg:col-span-5 lg:sticky lg:top-24 lg:self-start">
         <h1 class="font-sign text-h2 leading-none uppercase">{name}</h1>
         {item.limited !== null && <p class="mt-4 text-red-text">{t(lang, 'shop.limitedOf', { count: String(item.limited) })}</p>}
         <p class="mt-6 text-h3 tabular-nums">{formatPrice(item.priceCents, lang)}</p>
         <p class="mt-6 max-w-[50ch] font-prose">{description}</p>
-        {
-          item.colors && item.colors.length > 0 && (
-            <p class="mt-4 text-small text-muted">
-              {t(lang, 'shop.colorLabel')}: {item.colors.map((color) => t(lang, `shop.color.${color}` as Key)).join(' · ')}
-            </p>
-          )
-        }
-        <p class:list={['text-small text-muted', item.colors?.length ? 'mt-2' : 'mt-4']}>
-          {t(lang, 'shop.size')}: {item.sizes.length > 0 ? item.sizes.join(' · ') : t(lang, 'shop.oneSize')}
-        </p>
+        <div class="mt-4 space-y-2 text-small text-muted">
+          {
+            item.colors && item.colors.length > 0 && (
+              <p data-js-hidden>
+                {t(lang, 'shop.colorLabel')}: {item.colors.map((color) => t(lang, `shop.color.${color}` as Key)).join(' · ')}
+              </p>
+            )
+          }
+          <p>{t(lang, 'shop.size')}: {item.sizes.length > 0 ? item.sizes.join(' · ') : t(lang, 'shop.oneSize')}</p>
+        </div>
         <div class="mt-8 border-t-[1.5px] border-text pt-6">
           <AddToCart lang={lang} item={item} />
         </div>
