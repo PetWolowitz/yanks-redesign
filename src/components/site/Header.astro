@@ -92,6 +92,9 @@ const iconButton = 'inline-flex size-11 items-center justify-center rounded-full
       <LangSwitch lang={lang} short />
       <ThemeToggle lang={lang} class="rounded-full hover:text-red-text lg:size-9" />
     </div>
+    <!-- Sotto i 1024 px il tema si cambia anche dalla barra, non solo dal menu
+         (CLAUDE.md: interruttore sempre in header; Pietro, 2026-10-29) -->
+    <ThemeToggle lang={lang} class="relative shrink-0 rounded-full hover:text-red-text lg:hidden" />
 
     <a href={`/${lang}/shop/cart/`} data-cart-link class:list={['relative shrink-0', iconButton]}>
       <span class="sr-only">{t(lang, 'header.cart')}</span>
