@@ -25,11 +25,12 @@ const { open, close } = venue.hours;
   <!-- Sfondo: foto (o video) e velo, leggero dove c'è il logo e pieno dove c'è il
        testo. Su desktop copre tutto e il velo va da sinistra a destra. Su telefono
        la foto sta solo nella parte alta: rimpicciolita, l'orizzonte con i palazzi
-       finisce dietro il logo invece che dietro il testo, poi sfuma nel fondo
-       (Pietro, 2026-10-29: prima la spiaggia non si vedeva) -->
-  <div class="absolute inset-x-0 top-0 -z-10 h-[55%] lg:inset-y-0 lg:h-auto">
+       finisce dietro il logo invece che dietro il testo (Pietro, 2026-10-29: prima
+       la spiaggia non si vedeva). In fondo sfuma con una maschera fino a
+       trasparente, non con un velo pieno: niente bordo dove finisce la foto -->
+  <div class="absolute inset-x-0 top-0 -z-10 h-[55%] [mask-image:linear-gradient(to_bottom,black_40%,transparent)] lg:inset-y-0 lg:h-auto lg:[mask-image:none]">
     <LoopVideo src="/video/hero-spiaggia.webm" poster={poster} alt="" widths={[960, 1920]} sizes="100vw" priority />
-    <div aria-hidden="true" class="absolute inset-0 bg-linear-to-b from-bg/15 via-bg/35 to-bg lg:bg-linear-to-r lg:from-bg/90 lg:via-bg/80 lg:to-bg/30"></div>
+    <div aria-hidden="true" class="absolute inset-0 bg-linear-to-b from-bg/15 to-bg/50 lg:bg-linear-to-r lg:from-bg/90 lg:via-bg/80 lg:to-bg/30"></div>
   </div>
 
   <div class="mx-auto grid max-w-360 items-center gap-10 px-page py-10 lg:grid-cols-12 lg:gap-6 lg:py-16">
