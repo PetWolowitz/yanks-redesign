@@ -17,6 +17,27 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-29 — Fase 6: footer e stato della pagina legale
+Fatto:        #80 diario unita. #81 footer da 1280 px: indirizzo sotto i social,
+              colonne logo 2, orari 4, pagine 2, lingue 2, social e indirizzo 2;
+              sotto i 1280 px invariato. Riletta la pagina legale (/[lang]/legal/)
+Decisioni:    - la pagina legale NON è definitiva. Mancano i dati del locale
+                (ragione sociale, KvK, BTW, email, indirizzo resi, chi paga il
+                reso, tempi di consegna, forse il telefono: segnaposto in
+                src/data/legal.ts) e, secondo la lettura delle norme da
+                verificare: procedura di reclamo (BW 6:230m), e nella privacy
+                (GDPR art. 13) base giuridica, trasferimenti fuori UE di Stripe,
+                Resend e Cloudflare, elenco completo dei diritti, tempi di
+                conservazione oltre a quelli fiscali. Per un cliente vero serve un
+                esperto legale
+              - la build di Cloudflare della #81 è fallita senza log visibili (la
+                build della CI era passata): rilanciata con un commit vuoto
+Problemi:     su 1024 px nel footer "Know before you go" va a capo (com'era già)
+Prossimo:     se Pietro vuole, PR con i testi legali mancanti nelle tre lingue
+              (i dati del locale restano segnaposto); poi design congelato in
+              CLAUDE.md e Fase 6P
+Ramo/commit:  docs/diario-footer-legale — "Diario: footer e stato della pagina legale"
+
 ## 2026-10-29 — Fase 6: tasto del tema, controllo completo, Lighthouse
 Fatto:        #74-#77 unite (shop blu, velo della hero, video in loop, diario).
               #78 tasto del tema nella barra da 420 px; #79 sotto i 420 px in alto
