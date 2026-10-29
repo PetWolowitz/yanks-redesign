@@ -17,6 +17,31 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-29 — Fase 6: testi legali, menu su telefono, design congelato
+Fatto:        #83 pagina legale: reclami nelle condizioni (6:230m lid 1 onder g
+              BW) e privacy completa (GDPR art. 13: base giuridica, corriere,
+              Stripe titolare autonomo, trasferimenti USA con Data Privacy
+              Framework, conservazione, tutti i diritti, dati obbligatori, nessuna
+              decisione automatizzata), nelle tre lingue. #84 #85 #87 menu su
+              telefono: voci grandi, stato e orari subito sotto le voci
+              (+15 px), #89 lingue in fondo come cerchi rossi, misure in svh,
+              tutto nello schermo a 375×548. #86 #87
+              pagina sotto bloccata con il menu aperto. Design congelato in
+              CLAUDE.md; docs/02 e docs/04 aggiornati
+Decisioni:    - nessuna commissione per le controversie citata (onder t: solo se
+                il locale aderisce); niente tempi di risposta inventati
+              - nessuna cancellazione automatica promessa: il codice non la fa
+              - blocco dello scroll: overflow hidden (#86) non bastava sul telefono
+                di Pietro; body in position: fixed dov'era, poi torna allo stesso
+                punto (#87). Provato da Pietro sul suo telefono
+              - lettera g dell'art. 6:230m letta su wetboekplus.nl (la pagina di
+                wetten.overheid.nl non arrivava all'articolo)
+Problemi:     testi legali nl e de da far rileggere (madrelingua ed esperto
+              legale); dati del locale ancora segnaposto
+Prossimo:     Fase 6P: DM, email e documento nl/en per Yanks, con prezzi di
+              Shopify e Stripe verificati sul web e riletti da Pietro
+Ramo/commit:  docs/design-congelato — "Docs: menu con le lingue in fondo"
+
 ## 2026-10-29 — Fase 6: footer e stato della pagina legale
 Fatto:        #80 diario unita. #81 footer da 1280 px: indirizzo sotto i social,
               colonne logo 2, orari 4, pagine 2, lingue 2, social e indirizzo 2;
