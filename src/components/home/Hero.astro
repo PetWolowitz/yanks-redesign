@@ -23,7 +23,10 @@ const { open, close } = venue.hours;
 
 <section class="relative isolate overflow-hidden">
   <LoopVideo src="/video/hero-spiaggia.webm" poster={poster} alt="" widths={[960, 1920]} sizes="100vw" priority class="-z-20" />
-  <div aria-hidden="true" class="absolute inset-0 -z-10 bg-bg/85 lg:bg-transparent lg:bg-linear-to-r lg:from-bg/90 lg:via-bg/80 lg:to-bg/30"></div>
+  <!-- Il velo è leggero dove c'è il logo e pieno dove c'è il testo: su desktop da
+       destra a sinistra, su telefono dall'alto in basso (logo sopra). Prima, su
+       telefono, era pieno ovunque e la spiaggia non si vedeva (Pietro, 2026-10-29) -->
+  <div aria-hidden="true" class="absolute inset-0 -z-10 bg-linear-to-b from-bg/30 from-0% to-bg/85 to-45% lg:bg-linear-to-r lg:from-bg/90 lg:via-bg/80 lg:to-bg/30"></div>
 
   <div class="mx-auto grid max-w-360 items-center gap-10 px-page py-10 lg:grid-cols-12 lg:gap-6 lg:py-16">
     <div class="lg:col-span-7">
