@@ -173,7 +173,7 @@ const iconButton = 'inline-flex size-11 items-center justify-center rounded-full
       </ol>
     </nav>
 
-    <div class="flex flex-col items-start gap-[clamp(0.75rem,2.5svh,1.25rem)] pt-[clamp(1.25rem,4svh,2.5rem)] text-xs">
+    <div class="flex flex-col items-start gap-[clamp(0.75rem,2.5svh,1.25rem)] pt-[calc(clamp(1.25rem,4svh,2.5rem)+15px)] text-xs">
       <OpenStatus lang={lang} />
       <Hours lang={lang} />
       <div class:list={['inline-flex [&_a]:min-h-9 [&_a]:min-w-9', toolsClass]}>
