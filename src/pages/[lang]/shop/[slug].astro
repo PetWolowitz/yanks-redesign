@@ -44,7 +44,10 @@ const images = productImages(item.slug);
               </p>
             )
           }
-          <p>{t(lang, 'shop.size')}: {item.sizes.length > 0 ? item.sizes.join(' · ') : t(lang, 'shop.oneSize')}</p>
+          {/* Con le taglie a pastiglie la riga serve solo senza JS; "Taglia unica" resta */}
+          <p data-js-hidden={item.sizes.length > 0 ? '' : undefined}>
+            {t(lang, 'shop.size')}: {item.sizes.length > 0 ? item.sizes.join(' · ') : t(lang, 'shop.oneSize')}
+          </p>
         </div>
         <div class="mt-8 border-t-[1.5px] border-text pt-6">
           <AddToCart lang={lang} item={item} />
