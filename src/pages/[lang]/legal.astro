@@ -38,7 +38,7 @@ const credits = t(lang, 'legal.credits').split('{source}');
 type Row = ({ label: Key } | { text: string }) & { value: string | null };
 const rowLabel = (row: Row) => ('text' in row ? row.text : t(lang, row.label));
 const sections: { id: string; title: Key; paragraphs: number; rows?: Row[] }[] = [
-  { id: 'terms', title: 'legal.terms.title', paragraphs: 5 },
+  { id: 'terms', title: 'legal.terms.title', paragraphs: 6 },
   {
     id: 'withdrawal',
     title: 'legal.withdrawal.title',
@@ -51,7 +51,7 @@ const sections: { id: string; title: Key; paragraphs: number; rows?: Row[] }[] =
     paragraphs: 1,
     rows: [...shippingRows, { label: 'legal.shipping.time', value: null }],
   },
-  { id: 'privacy', title: 'legal.privacy.title', paragraphs: 6 },
+  { id: 'privacy', title: 'legal.privacy.title', paragraphs: 9 },
 ];
 
 const company: Row[] = [
