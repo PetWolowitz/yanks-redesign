@@ -129,7 +129,7 @@ const iconButton = 'inline-flex size-11 items-center justify-center rounded-full
   popover
   class="site-menu m-0 h-svh max-h-none w-full max-w-none overflow-y-auto border-0 bg-bg p-0 text-text lg:hidden"
 >
-  <div class="flex min-h-full flex-col px-page pb-8">
+  <div class="flex min-h-full flex-col px-page pb-[clamp(1rem,4svh,2rem)]">
     <div class="flex h-16 shrink-0 items-center justify-between">
       <a href={`/${lang}/`} class="inline-flex items-center">
         <Logo alt={t(lang, 'header.home')} variant="indiano" size={56} class="size-12" />
@@ -148,8 +148,10 @@ const iconButton = 'inline-flex size-11 items-center justify-center rounded-full
       </div>
     </div>
 
-    <!-- Voci grandi in Yankee Clipper, come un'insegna (scelta di Pietro, 2026-10-19) -->
-    <nav aria-label={t(lang, 'nav.label')} class="pt-6">
+    <!-- Voci grandi in Yankee Clipper, come un'insegna (scelta di Pietro, 2026-10-19).
+         Misure verticali in svh: sui telefoni bassi, con le barre del browser, tutto il
+         menu sta nello schermo; sugli schermi alti resta com'era (2026-10-29) -->
+    <nav aria-label={t(lang, 'nav.label')} class="pt-[clamp(0.5rem,3svh,1.5rem)]">
       <ol>
         {
           pages.map(({ slug, key }, i) => (
@@ -157,12 +159,12 @@ const iconButton = 'inline-flex size-11 items-center justify-center rounded-full
               <a
                 href={`/${lang}/${slug}/`}
                 aria-current={isCurrent(slug) ? 'page' : undefined}
-                class="flex items-baseline gap-4 py-3 hover:text-red-text aria-[current=page]:text-red-text"
+                class="flex items-baseline gap-4 py-[clamp(0.375rem,1.2svh,0.75rem)] hover:text-red-text aria-[current=page]:text-red-text"
               >
                 <span class="w-6 shrink-0 text-small text-red-text tabular-nums" aria-hidden="true">
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <span class="font-sign text-[clamp(2rem,9vw,3rem)] leading-none uppercase">{t(lang, key)}</span>
+                <span class="font-sign text-[clamp(1.75rem,min(9vw,5svh),3rem)] leading-none uppercase">{t(lang, key)}</span>
               </a>
             </li>
           ))
@@ -170,7 +172,7 @@ const iconButton = 'inline-flex size-11 items-center justify-center rounded-full
       </ol>
     </nav>
 
-    <div class="mt-auto flex flex-col items-start gap-5 pt-10 text-small">
+    <div class="mt-auto flex flex-col items-start gap-[clamp(0.75rem,2.5svh,1.25rem)] pt-[clamp(1.5rem,5svh,2.5rem)] text-small">
       <OpenStatus lang={lang} />
       <Hours lang={lang} />
       <div class:list={['inline-flex', toolsClass]}>
