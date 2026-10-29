@@ -4,7 +4,7 @@ import { existsSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { menu } from '../src/data/menu';
 import { merch, skuOf, variantsOf } from '../src/data/merch';
-import { colorPhotoIndex, hasColorPhoto, productImages } from '../src/lib/shop/images';
+import { colorPhotoIndex, hasColorPhoto, photoColors, productImages } from '../src/lib/shop/images';
 import en from '../src/i18n/en.json';
 
 const keys = new Set(Object.keys(en));
@@ -59,8 +59,15 @@ describe('merch.ts', () => {
       for (const color of item.colors ?? []) {
         expect(hasColorPhoto(item.slug, color), `${item.slug} ${color}`).toBe(true);
         expect(productImages(item.slug).length).toBeGreaterThan(colorPhotoIndex(item.slug, color));
+        expect(photoColors(item.slug)[colorPhotoIndex(item.slug, color)], `${item.slug} ${color}`).toBe(color);
         expect(en[`shop.color.${color}` as keyof typeof en], color).toBeTruthy();
       }
+    }
+  });
+
+  it('nei prodotti con i colori ogni foto è di un colore (se no, scelto un colore, sparirebbe)', () => {
+    for (const item of merch.filter((item) => item.colors?.length)) {
+      expect(photoColors(item.slug), item.slug).not.toContain(null);
     }
   });
 });

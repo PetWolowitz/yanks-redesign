@@ -140,6 +140,14 @@
     min-width: 0;
   }
 
+  /* Scheda prodotto: con il JS colori e taglie si scelgono a pastiglie, quindi le
+     righe "Colore: …" e "Taglia: …" e le foto degli altri colori spariscono fin dal
+     primo frame. Senza JS (niente data-js su <html>) restano: sono l'unico modo di
+     vederli */
+  html[data-js] :is([data-js-hidden], [data-other-color]) {
+    display: none;
+  }
+
   body {
     background-color: var(--bg);
     color: var(--text);
