@@ -21,7 +21,9 @@ const byCategory = (category: Category) => merch.filter((item) => item.category 
 ---
 
 <Base lang={lang} title={`${t(lang, 'nav.shop')} · ${venue.name}`} description={t(lang, 'shop.description')}>
-  <main id="content">
+  <!-- Tutto lo shop su fondo blu Mare del Nord, come la sua sezione nella home
+       (Pietro, 2026-10-29: "lo shop deve avere sfondo blu ovunque") -->
+  <main id="content" class="tone-sea">
     <PageIntro title={t(lang, 'nav.shop')} intro={t(lang, 'shop.intro')}>
       <p class="mt-4 text-small text-muted">{t(lang, 'shop.testMode')}</p>
       <noscript><p class="mt-4 border-[1.5px] rounded-2xl border-text px-4 py-3">{t(lang, 'shop.noscript')}</p></noscript>

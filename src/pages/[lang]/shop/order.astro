@@ -33,7 +33,9 @@ const messages = {
 ---
 
 <Base lang={lang} title={`${t(lang, 'order.title')} · ${venue.name}`} description={t(lang, 'order.description')}>
-  <main id="content">
+  <!-- Tutto lo shop su fondo blu Mare del Nord, come la sua sezione nella home
+       (Pietro, 2026-10-29: "lo shop deve avere sfondo blu ovunque") -->
+  <main id="content" class="tone-sea">
     <PageIntro title={t(lang, 'order.title')} intro={t(lang, 'shop.testMode')} />
 
     <order-status

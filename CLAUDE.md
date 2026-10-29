@@ -158,7 +158,9 @@ componenti in docs/02; pagina di riferimento: `/en/styleguide/` (noindex).
 - **Sezioni alternate**: bianco, inchiostro (`#1C1B1A`), e la sezione shop in
   **blu Mare del Nord `#34566F`** (testo bianco 7.4:1). Classi `tone-ink`,
   `tone-sea`, `tone-cream`: ridefiniscono i token dentro la sezione. Testo chiaro
-  sull'inchiostro `#D9D0C2`, 11.3:1 (nella prova era 14.9, il tetto è 13)
+  sull'inchiostro `#D9D0C2`, 11.3:1 (nella prova era 14.9, il tetto è 13).
+  **Tutto lo shop è blu** (Pietro, 2026-10-29): catalogo, scheda prodotto,
+  carrello, checkout, pagina ordine e pannello del carrello hanno `tone-sea`
 - **Un solo elemento grafico firma**: le **onde del badge come divisori** tra le
   sezioni (classe `wave-top`), al posto delle righe nere spesse e dell'ombra
   sopra le sezioni. Le righe interne alle pagine restano, da 1.5 px

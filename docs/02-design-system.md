@@ -66,6 +66,8 @@ crema del footer sale direttamente sul nero della mappa.
 - home: hero bianca, foto dell'esterno, "chi siamo" `tone-ink`, menu bianco,
   shop `tone-sea`, recensioni bianche, mappa `tone-ink`; footer `tone-cream`
   con l'onda, su tutte le pagine
+- shop (dal 2026-10-29): tutte le sue pagine e il pannello del carrello in
+  `tone-sea`, a tutta larghezza; il footer ci scende sopra con l'onda
 - `LangSwitch`: su una pagina senza lingua nell'indirizzo (la 404) il selettore
   porta alla home della lingua
 - 404 (`src/pages/404.astro`): logo grande e un riquadro per lingua, ognuno col
