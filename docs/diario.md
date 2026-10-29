@@ -17,6 +17,29 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-29 — Fase 6: tasto del tema, controllo completo, Lighthouse
+Fatto:        #74-#77 unite (shop blu, velo della hero, video in loop, diario).
+              #78 tasto del tema nella barra da 420 px; #79 sotto i 420 px in alto
+              nel menu, accanto alla ✕ (in fondo non si vedeva). Controllo completo
+              sul dev server: 312 caricamenti (13 pagine × 3 lingue × 360/768/1024/
+              1440 × 2 temi) senza errori, 110 link interni a posto, barra senza
+              sovrapposizioni da 320 a 1920 px, 180 controlli sui flussi passati,
+              senza JS tutto leggibile; online intestazioni, CSP, noindex, sitemap
+              e api a posto. Lighthouse 13.5.0 sul sito online, 9 pagine, telefono
+              e desktop, due temi: prestazioni 94-100, accessibilità 100, buone
+              pratiche 100, SEO 69
+Decisioni:    - nella barra, sotto i 420 px, il tasto del tema non ci sta (in
+                tedesco "GEÖFFNET" spingeva l'hamburger fuori dalla capsula): lì
+                sta in alto nel menu (scelta di Pietro)
+              - SEO 69 voluto: è il noindex; torna 100 con INDEXABLE = true
+Problemi:     nessuno aperto sul design. Restano per la proposta: "Sold out"
+              sbagliato nel catalogo, dati dell'azienda segnaposto, rilettura nl e
+              de da madrelingua, licenze dei font, dominio su Resend
+Prossimo:     con l'ok di Pietro, design congelato in CLAUDE.md; poi Fase 6P:
+              DM, email e documento nl/en per Yanks (prezzi Shopify e Stripe
+              verificati sul web, testi riletti da Pietro)
+Ramo/commit:  docs/diario-lighthouse — "Diario: tasto del tema, controllo completo, Lighthouse"
+
 ## 2026-10-28/29 — Fase 6: revisione finale
 Fatto:        Pietro ha fatto l'acquisto di prova con iDEAL e la prova da telefono.
               Chiusa senza unire la #61 (Dependabot). Giro visivo di 12 pagine a
