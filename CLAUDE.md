@@ -154,7 +154,7 @@ La C è il sito di prima con questi cambi, applicati a tutte le pagine. Classi e
 componenti in docs/02; pagina di riferimento: `/en/styleguide/` (noindex).
 
 **Design congelato il 2026-10-29** (revisione completa e Lighthouse fatti, PR fino
-alla #87). Da qui si correggono solo errori, dati e testi: ogni cambio visibile si
+alla #89). Da qui si correggono solo errori, dati e testi: ogni cambio visibile si
 chiede prima a Pietro e si annota qui.
 - **Fondo** bianco caldo `#FBFAF7` con una grana da sabbia quasi invisibile; il
   grigio caldo (`#EFEEEB`) solo come accento (footer, card). Era crema `#F3EEE4`:
@@ -179,7 +179,8 @@ chiede prima a Pietro e si annota qui.
 - **Scritta "Yanks" in Indian accanto al logo** nella navbar sotto i 1024 px e nel
   menu aperto (Pietro, 2026-10-26: senza è anonimo); sotto i 360 px non ci sta
 - **Menu su telefono** (2026-10-29): voci grandi in Yankee Clipper; riga in alto,
-  stato, orari e lingue più piccoli, subito sotto le voci; misure verticali in
+  stato e orari più piccoli, subito sotto le voci; lingue in fondo, cerchi col
+  bordo rosso (l'attiva piena); misure verticali in
   `svh`, così su un telefono basso con le barre del browser sta tutto nello
   schermo. Con il menu aperto la pagina sotto non scorre (`position: fixed` sul
   body; `overflow: hidden` da solo non basta su telefono)
