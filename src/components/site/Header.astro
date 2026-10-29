@@ -135,12 +135,17 @@ const iconButton = 'inline-flex size-11 items-center justify-center rounded-full
         <Logo alt={t(lang, 'header.home')} variant="indiano" size={56} class="size-12" />
         <span aria-hidden="true" class="ms-2 pt-1 font-script text-[1.5rem] leading-none text-red-text">{t(lang, 'header.wordmark')}</span>
       </a>
-      <button type="button" popovertarget="site-menu" popovertargetaction="hide" class={iconButton}>
-        <span class="sr-only">{t(lang, 'nav.close')}</span>
-        <svg class="size-6" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-        </svg>
-      </button>
+      <!-- Il tema accanto alla ✕, in vista appena si apre il menu (Pietro, 2026-10-29):
+           sotto i 420 px nella barra non ci sta -->
+      <div class="flex items-center gap-2">
+        <ThemeToggle lang={lang} class="rounded-full hover:text-red-text" />
+        <button type="button" popovertarget="site-menu" popovertargetaction="hide" class={iconButton}>
+          <span class="sr-only">{t(lang, 'nav.close')}</span>
+          <svg class="size-6" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+        </button>
+      </div>
     </div>
 
     <!-- Voci grandi in Yankee Clipper, come un'insegna (scelta di Pietro, 2026-10-19) -->
@@ -170,7 +175,6 @@ const iconButton = 'inline-flex size-11 items-center justify-center rounded-full
       <Hours lang={lang} />
       <div class:list={['inline-flex', toolsClass]}>
         <LangSwitch lang={lang} short />
-        <ThemeToggle lang={lang} class="rounded-full hover:text-red-text" />
       </div>
     </div>
   </div>
