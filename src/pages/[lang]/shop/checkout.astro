@@ -41,7 +41,9 @@ const legendClass = 'mb-4 font-sign text-h3 uppercase';
 ---
 
 <Base lang={lang} title={`${t(lang, 'checkout.title')} · ${venue.name}`} description={t(lang, 'checkout.description')}>
-  <main id="content">
+  <!-- Tutto lo shop su fondo blu Mare del Nord, come la sua sezione nella home
+       (Pietro, 2026-10-29: "lo shop deve avere sfondo blu ovunque") -->
+  <main id="content" class="tone-sea">
     <PageIntro title={t(lang, 'checkout.title')} intro={t(lang, 'shop.testMode')}>
       <noscript><p class="mt-6 border-[1.5px] rounded-2xl border-text px-4 py-3">{t(lang, 'shop.noscript')}</p></noscript>
     </PageIntro>
