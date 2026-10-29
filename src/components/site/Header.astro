@@ -267,6 +267,15 @@ const iconButton = 'inline-flex size-11 items-center justify-center rounded-full
     transform: scale(0.6, 0.4);
   }
 
+  /* Con il menu aperto la pagina sotto non scorre (Pietro, 2026-10-29) */
+  :global(html:has(#site-menu:popover-open)) {
+    overflow: hidden;
+  }
+
+  .site-menu {
+    overscroll-behavior: contain;
+  }
+
   /* Il menu entra dall'alto, le voci arrivano di lato una dopo l'altra */
   @media (prefers-reduced-motion: no-preference) {
     .site-menu:popover-open {
