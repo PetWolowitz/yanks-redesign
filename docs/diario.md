@@ -17,6 +17,48 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-10-28/29 — Fase 6: revisione finale
+Fatto:        Pietro ha fatto l'acquisto di prova con iDEAL e la prova da telefono.
+              Chiusa senza unire la #61 (Dependabot). Giro visivo di 12 pagine a
+              390 e 1440 px nei due temi; controllo delle regole di CLAUDE.md e
+              docs/02 sulle pagine renderizzate nelle tre lingue; testi nl e de.
+              Unite: #69 scheda prodotto con le sole foto del colore scelto e righe
+              colore/taglia solo senza JS, #70 404 ordinata e refuso, #71 e #73
+              hero su telefono con la spiaggia visibile, #72 orario e nome da
+              venue.ts. Aperte: #74 tutto lo shop blu, #75 velo della hero più
+              leggero dove non c'è testo, #76 video in loop che sfuma alla ripresa
+Decisioni:    - galleria: scelto un colore restano solo le sue foto (images.ts
+                elenca le foto per colore); senza JS si vedono tutte
+              - mappa: resta il riquadro con testo, niente immagine statica
+              - "Sold out" sbagliato nel catalogo per felpa, Ton sur Ton e Clipper
+                (ProductCard conta gli SKU senza colore): lasciato, si corregge se
+                il locale accetta il lavoro
+              - contrasto della hero misurato sul pixel più chiaro dietro ogni
+                testo: ora tutti a norma, anche due che prima non lo erano
+              - video dell'hero: Pexels, licenza verificata (docs/03)
+              - la pagina ordine non riceve indirizzo, nome né email (OrderStatus):
+                nel browser restano solo id e token, in sessionStorage
+Problemi:     mask-b-from di Tailwind lascia una riga sottile in Chrome: usata una
+              maschera a un solo strato. git senza nome ed email configurati: i
+              commit usano l'identità dei precedenti con -c
+Prossimo:     ok di Pietro e unione di #74, #75, #76; poi design congelato in
+              CLAUDE.md e Fase 6P (proposta al locale)
+Ramo/commit:  docs/diario-revisione — "Diario: revisione finale e sessioni del 26-27"
+
+## 2026-10-26/27 — Ritocchi dello shop (ricostruita dai commit)
+Fatto:        scritta "Yanks" accanto al logo sotto i 1024 px; avviso al negozio
+              in olandese e inglese; immagini delle email visibili in Outlook web,
+              Yahoo e Proton; metodi di pagamento con le icone nel carrello, nel
+              checkout e nella pagina legale (Revolut Pay, iDEAL | Wero); carrello
+              e menu alti quanto lo schermo visibile; bozze dei messaggi per Yanks
+              (docs/11); foto a tutto schermo nella scheda prodotto; colori a
+              pastiglie per felpa, Ton sur Ton e Clipper. PR #62-#68
+Decisioni:    in CLAUDE.md e nei messaggi dei commit
+Problemi:     voce scritta dopo, il 2026-10-29: in quelle sessioni il diario non
+              era stato aggiornato
+Prossimo:     revisione finale
+Ramo/commit:  shop/colori — "Shop: scelta del colore a pastiglie per felpa, Ton sur Ton e Clipper"
+
 ## 2026-10-22 — Fase 6: tastiera, tutte le PR unite
 Fatto:        #51-#57 unite (le ultime da Claude: regola `Bash(gh pr merge:*)`
               aggiunta in .claude/settings.local.json con l'ok di Pietro). Online
