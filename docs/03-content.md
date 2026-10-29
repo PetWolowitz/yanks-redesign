@@ -286,8 +286,8 @@ Dal sito originale, da riscrivere più diretto e mettere in una pagina visibile:
 - [x] Video per l'hero: dato da Pietro il 2026-10-01 (spiaggia di Zandvoort, 19 s).
       WebM 2,5 MB e poster WebP, vedi docs/02. Lo stesso girato, in versione
       lunga, è in Downloads come `11961033_3840_2160_30fps.mp4`: il nome è quello
-      dei video di Pexels. **Fonte e licenza DA VERIFICARE con Pietro** (se è
-      Pexels, la licenza permette l'uso gratuito senza attribuzione)
+      dei video di Pexels. **Fonte verificata** (Pietro, 2026-10-29): è di Pexels,
+      la cui licenza permette l'uso gratuito, anche commerciale, senza attribuzione
 - [ ] Reel Instagram (2026-10-01): i due proposti da Pietro (DaoF1HCPnZn "POV: it
       is Friday high day at Yanks", DI4J5KlNTAl aftermovie del 4/20) sono
       promozionali sulla cannabis: esclusi. Le storie non si incorporano. Pietro ha

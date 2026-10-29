@@ -94,7 +94,7 @@ const label = 'font-ui text-small text-muted';
           <p class:list={["mt-6", label]}>body · Literata · long paragraphs</p>
           <p class="max-w-[65ch] font-prose">{t(lang, 'home.about.text')}</p>
           <p class:list={["mt-6", label]}>body · Martian Mono · interface, prices, hours</p>
-          <p>{formatPrice(product.priceCents, lang)} · 08:00–02:45</p>
+          <p>{formatPrice(product.priceCents, lang)} · {venue.hours.open}–{venue.hours.close}</p>
           <p class:list={["mt-6", label]}>text-small</p>
           <p class="text-small">{t(lang, 'home.shop.pieces', { count: String(product.limited) })}</p>
         </div>
