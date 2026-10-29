@@ -359,6 +359,20 @@ const iconButton = 'inline-flex size-11 items-center justify-center rounded-full
       if (element !== menu && element instanceof HTMLElement) element.inert = open;
     }
   });
+  // Con il menu aperto la pagina sotto non scorre. overflow: hidden (nello <style>) a
+  // Safari su iPhone non basta col dito: il body si ferma con position: fixed dov'era,
+  // e alla chiusura torna allo stesso punto (Pietro, 2026-10-29)
+  let lockedY = 0;
+  menu?.addEventListener('beforetoggle', (event) => {
+    const { style } = document.body;
+    if ((event as ToggleEvent).newState === 'open') {
+      lockedY = window.scrollY;
+      Object.assign(style, { position: 'fixed', top: `-${lockedY}px`, insetInline: '0' });
+    } else {
+      Object.assign(style, { position: '', top: '', insetInline: '' });
+      window.scrollTo({ top: lockedY, behavior: 'instant' });
+    }
+  });
   // Aperto il menu, il focus va sul pulsante ✕: quello che l'ha aperto ora è inert
   menu?.addEventListener('toggle', (event) => {
     if ((event as ToggleEvent).newState === 'open') menu.querySelector<HTMLElement>('[popovertargetaction="hide"]')?.focus();
