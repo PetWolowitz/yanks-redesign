@@ -9,24 +9,26 @@ import { t } from '../i18n/t';
 ---
 
 <Base lang={defaultLang} title={t(defaultLang, 'notFound.title')} description={t(defaultLang, 'notFound.meta')} noindex>
-  <main id="content" class="mx-auto grid max-w-360 items-center gap-10 px-page py-12 lg:grid-cols-12 lg:py-20">
-    <Logo variant="badge" size={260} alt="" class="mx-auto size-44 sm:size-56 lg:col-span-4 lg:size-64" priority />
-    <div class="lg:col-span-8">
+  <main id="content" class="mx-auto max-w-360 px-page py-12 lg:py-20">
+    <!-- Logo e titolo sopra, le tre lingue sotto su tutta la larghezza: nelle card
+         strette accanto al logo i pulsanti andavano a capo (revisione, 2026-10-28) -->
+    <div class="flex flex-col items-center gap-6 lg:flex-row lg:gap-10">
+      <Logo variant="badge" size={260} alt="" class="size-44 shrink-0 sm:size-56 lg:size-40" priority />
       <h1 tabindex="-1" class="text-h1 focus:outline-none">{t(defaultLang, 'notFound.title')}</h1>
-      <ul class="grid gap-4 sm:grid-cols-3">
-        {
-          locales.map((l) => (
-            <li lang={l} class="flex flex-col rounded-2xl border-[1.5px] border-text bg-surface p-5">
-              <p class="card-title" aria-hidden={l === defaultLang ? 'true' : undefined}>{t(l, 'notFound.title')}</p>
-              <p class="mt-2 flex-1 font-prose">{t(l, 'notFound.text')}</p>
-              <a href={`/${l}/`} hreflang={l} class="btn mt-4 self-start">
-                {t(l, 'notFound.home')}
-                <span class="sr-only">({languageNames[l]})</span>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
     </div>
+    <ul class="mt-10 grid gap-4 xl:grid-cols-3">
+      {
+        locales.map((l) => (
+          <li lang={l} class="flex flex-col rounded-2xl border-[1.5px] border-text bg-surface p-5">
+            <p class="card-title" aria-hidden={l === defaultLang ? 'true' : undefined}>{t(l, 'notFound.title')}</p>
+            <p class="mt-2 flex-1 font-prose">{t(l, 'notFound.text')}</p>
+            <a href={`/${l}/`} hreflang={l} class="btn mt-4 self-start">
+              {t(l, 'notFound.home')}
+              <span class="sr-only">({languageNames[l]})</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
   </main>
 </Base>
