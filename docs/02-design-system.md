@@ -427,7 +427,7 @@ l'orologio mostra solo icona e stato, senza dettaglio: in tedesco non ci sta.
 Sotto 640 px l'orologio mostra solo icona e stato ("GEÖFFNET"), dal tablet anche
 il dettaglio. Il ☰ apre un menu a tutto schermo: le voci grandi in **Yankee
 Clipper**, numerate 01–05, che entrano di lato una dopo l'altra; in alto, accanto
-alla ✕, il tema; subito sotto le voci, più piccoli, orologio e orari; in fondo
+alla ✕, il tema; subito sotto le voci orologio e orari (12-16 px); in fondo
 allo schermo le lingue, cerchi col bordo rosso (l'attiva piena di rosso).
 Misure verticali in `svh`: su un telefono basso (375×548 con le barre del browser)
 il menu sta tutto nello schermo. Con il menu aperto la pagina sotto non scorre

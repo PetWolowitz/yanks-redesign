@@ -179,7 +179,7 @@ chiede prima a Pietro e si annota qui.
 - **Scritta "Yanks" in Indian accanto al logo** nella navbar sotto i 1024 px e nel
   menu aperto (Pietro, 2026-10-26: senza è anonimo); sotto i 360 px non ci sta
 - **Menu su telefono** (2026-10-29): voci grandi in Yankee Clipper; riga in alto,
-  stato e orari più piccoli, subito sotto le voci; lingue in fondo, cerchi col
+  stato e orari subito sotto le voci (12-16 px secondo l'altezza); lingue in fondo, cerchi col
   bordo rosso (l'attiva piena); misure verticali in
   `svh`, così su un telefono basso con le barre del browser sta tutto nello
   schermo. Con il menu aperto la pagina sotto non scorre (`position: fixed` sul
