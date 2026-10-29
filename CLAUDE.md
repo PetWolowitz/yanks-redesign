@@ -69,8 +69,8 @@ Da qui, deciso il 2026-10-21 (in quest'ordine):
    checkout e pagina legale: si aggiorna se cambia la dashboard), email al negozio a ogni
    ordine, pagine legali (condizioni, recesso 14 giorni, privacy, spedizioni),
    test automatici dei flussi con Playwright in locale con le chiavi di prova
-7. Fase 6: SEO, Lighthouse nei due temi, revisione completa; poi in questo file
-   si scrive che il design è congelato
+7. Fase 6: SEO, Lighthouse nei due temi, revisione completa _(fatte; design
+   congelato il 2026-10-29, vedi Design definitivo)_
 8. **Proposta al locale**: email con il link di prova e documento in olandese e
    inglese (cosa è stato fatto, costi dello shop rispetto a Shopify, offerta
    libera o regalo). Prezzi di Shopify e Stripe verificati sul web al momento;
@@ -152,6 +152,10 @@ Lo shop **non è opzionale**. Regole del contratto:
 Scelta da Pietro tra cinque prove della home (attuale, A, B con due font, C).
 La C è il sito di prima con questi cambi, applicati a tutte le pagine. Classi e
 componenti in docs/02; pagina di riferimento: `/en/styleguide/` (noindex).
+
+**Design congelato il 2026-10-29** (revisione completa e Lighthouse fatti, PR fino
+alla #87). Da qui si correggono solo errori, dati e testi: ogni cambio visibile si
+chiede prima a Pietro e si annota qui.
 - **Fondo** bianco caldo `#FBFAF7` con una grana da sabbia quasi invisibile; il
   grigio caldo (`#EFEEEB`) solo come accento (footer, card). Era crema `#F3EEE4`:
   tolto il 2026-10-22 (Pietro: "troppo visibile che l'hai fatto te")
@@ -174,6 +178,11 @@ componenti in docs/02; pagina di riferimento: `/en/styleguide/` (noindex).
 - **Foto senza filtri** (duotono e grana provati e scartati)
 - **Scritta "Yanks" in Indian accanto al logo** nella navbar sotto i 1024 px e nel
   menu aperto (Pietro, 2026-10-26: senza è anonimo); sotto i 360 px non ci sta
+- **Menu su telefono** (2026-10-29): voci grandi in Yankee Clipper; riga in alto,
+  stato, orari e lingue più piccoli, subito sotto le voci; misure verticali in
+  `svh`, così su un telefono basso con le barre del browser sta tutto nello
+  schermo. Con il menu aperto la pagina sotto non scorre (`position: fixed` sul
+  body; `overflow: hidden` da solo non basta su telefono)
 - **Lingue con le bandiere nel footer, su ogni dispositivo** (nella navbar
   restano i codici NL EN DE): tolte il 2026-10-21, rimesse il 2026-10-22 da Pietro. Il nome della lingua resta per i lettori di
   schermo; al clic la bandiera sventola, poi si cambia pagina. Su telefono, nel

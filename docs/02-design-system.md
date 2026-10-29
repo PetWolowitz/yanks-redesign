@@ -426,8 +426,11 @@ l'orologio mostra solo icona e stato, senza dettaglio: in tedesco non ci sta.
 **Mobile** (sotto 1024 px): logo, orologio, carrello e ☰ sulla stessa fascia.
 Sotto 640 px l'orologio mostra solo icona e stato ("GEÖFFNET"), dal tablet anche
 il dettaglio. Il ☰ apre un menu a tutto schermo: le voci grandi in **Yankee
-Clipper**, numerate 01–05, che entrano di lato una dopo l'altra; in fondo
-orologio, orari, lingue e tema. Le voci in Yankee Clipper sono un'eccezione alla
+Clipper**, numerate 01–05, che entrano di lato una dopo l'altra; in alto, accanto
+alla ✕, il tema; subito sotto le voci, più piccoli, orologio, orari e lingue.
+Misure verticali in `svh`: su un telefono basso (375×548 con le barre del browser)
+il menu sta tutto nello schermo. Con il menu aperto la pagina sotto non scorre
+(2026-10-29). Le voci in Yankee Clipper sono un'eccezione alla
 regola "navigazione in Martian Mono", scelta da Pietro il 2026-10-19: sono
 etichette da insegna, corte e in maiuscolo.
 - Il menu mobile funziona **senza JavaScript** (`<details>` o `popover`): il JS

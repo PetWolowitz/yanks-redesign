@@ -400,13 +400,13 @@ prima/dopo di tutte le pagine in `.playwright-mcp/pagine/`)_
       Corretto il menu su telefono: il Tab usciva sugli elementi nascosti dietro
       il menu, ora il resto della pagina è `inert` mentre è aperto. Dentro il
       widget Turnstile il focus è di Cloudflare)_
-- [ ] Prova da telefono vero
+- [x] Prova da telefono vero _(Pietro, 2026-10-28)_
 - [x] Informativa privacy e condizioni di vendita _(2026-10-22, PR #51: `/[lang]/legal/`)_
 - [ ] README con il caso studio _(README del progetto scritto il 2026-10-01; il
       caso studio vero va in docs/05)_
 
-- [ ] Revisione completa (coerenza, due temi, telefono, contrasti AA, movimento
-      ridotto), poi in CLAUDE.md: design congelato
+- [x] Revisione completa (coerenza, due temi, telefono, contrasti AA, movimento
+      ridotto), poi in CLAUDE.md: design congelato _(2026-10-29)_
 
 ## Fase 6P — Proposta al locale
 
