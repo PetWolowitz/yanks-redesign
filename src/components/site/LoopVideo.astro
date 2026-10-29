@@ -48,6 +48,8 @@ const fill = ['absolute inset-0 size-full object-cover', className];
 
 <script>
   // Parte quando è in vista, si ferma quando esce
+  // Secondi prima della fine in cui comincia a sfumare
+  const FADE = 1.2;
   const allowed = matchMedia('(min-width: 1024px) and (prefers-reduced-motion: no-preference)').matches;
   const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true;
   if (allowed && !saveData) {
@@ -62,6 +64,14 @@ const fill = ['absolute inset-0 size-full object-cover', className];
           video.muted = true;
           video.src = video.dataset.src ?? '';
           video.addEventListener('playing', () => video.classList.remove('opacity-0'), { once: true });
+          // Ripresa del loop dolce (Pietro, 2026-10-29): nell'ultimo secondo il video
+          // sfuma sul poster che sta sotto, e quando riparte ricompare (1 s, la
+          // transizione di opacity della classe)
+          video.addEventListener('timeupdate', () => {
+            const left = video.duration - video.currentTime;
+            if (left < FADE) video.classList.add('opacity-0');
+            else if (video.currentTime > 0.1) video.classList.remove('opacity-0');
+          });
         }
         video.play().catch(() => {});
       }
