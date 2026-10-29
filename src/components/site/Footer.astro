@@ -2,7 +2,8 @@
 // Footer (docs/02): indirizzo, orari, pagine, lingue, social veri, disclaimer del concept.
 // Riordinato il 2026-10-01: ogni colonna ha la stessa forma (titolo, poi elenco) e la
 // stessa spaziatura. Mobile: una colonna; tablet: due; laptop piccolo (lg): logo e
-// indirizzo affiancati sopra, poi quattro colonne; da 1280 px (xl) tutto su una riga.
+// indirizzo affiancati sopra, poi quattro colonne; da 1280 px (xl) tutto su una riga,
+// con l'indirizzo sotto i social (Pietro, 2026-10-29).
 import { pages } from '../../data/pages';
 import { venue } from '../../data/venue';
 import type { Lang } from '../../i18n/locales';
@@ -27,9 +28,10 @@ const linkClass = 'scatter-host inline-block py-2.5 lg:py-1';
 <footer class="wave-top tone-cream">
   <!-- text-small: testi più piccoli (Pietro, 2026-10-02); i titoli restano text-h3 -->
   <div class="mx-auto grid max-w-360 gap-x-8 gap-y-10 px-page pt-14 pb-10 text-small sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-12">
-    <div class="flex items-start gap-5 sm:col-span-2 lg:col-span-5 xl:col-span-3 xl:flex-col">
+    <div class="flex items-start gap-5 sm:col-span-2 lg:col-span-5 xl:col-span-2">
       <Logo alt={venue.name} variant="badge" size={160} class="size-28 lg:size-40" />
-      <div>
+      <!-- Da 1280 px l'indirizzo va sotto i social (Pietro, 2026-10-29): qui solo sotto -->
+      <div class="xl:hidden">
         <h2 class={headingClass}>{t(lang, 'footer.address')}</h2>
         <address class="not-italic">
           {venue.name}<br />
@@ -39,7 +41,7 @@ const linkClass = 'scatter-host inline-block py-2.5 lg:py-1';
       </div>
     </div>
 
-    <div class="lg:col-span-2 xl:col-span-3">
+    <div class="lg:col-span-2 xl:col-span-4">
       <h2 class={headingClass}>{t(lang, 'hours.title')}</h2>
       <Hours lang={lang} />
     </div>
@@ -84,6 +86,15 @@ const linkClass = 'scatter-host inline-block py-2.5 lg:py-1';
             </a>
           </li>
         </ul>
+        <!-- Lo stesso indirizzo di sopra, che da 1280 px sparisce -->
+        <div class="mt-8 hidden xl:block">
+          <h2 class={headingClass}>{t(lang, 'footer.address')}</h2>
+          <address class="not-italic">
+            {venue.name}<br />
+            {street}<br />
+            {postalCode} {city}
+          </address>
+        </div>
       </div>
     </div>
 
