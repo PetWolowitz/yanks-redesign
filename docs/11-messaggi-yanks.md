@@ -1,4 +1,4 @@
-# Messaggi per Yanks — bozze (2026-10-26)
+# Messaggi per Yanks — bozze (2026-10-26, riviste il 2026-10-29)
 
 Da rileggere e mandare **a mano** da Pietro. Prima di mandarli:
 - sostituisci `[il tuo nome]` e controlla che il link funzioni da telefono
@@ -60,7 +60,10 @@ Wat erin zit:
 Kosten: de hosting, de server en de database draaien op gratis abonnementen, dus
 er zijn geen maandelijkse kosten. Er is ook geen Shopify-abonnement. Er blijven
 alleen de kosten van Stripe per betaling, de domeinnaam die jullie al hebben, en
-een licentie voor twee lettertypes als de site echt online gaat.
+een licentie voor twee lettertypes als de site echt online gaat. In de bijlage
+staat een korte uitleg: de kosten vergeleken met Shopify, en wat er nog nodig is
+voor een echte lancering. Daar staat ook eerlijk een open vraag: of Stripe een
+shop van een coffeeshop accepteert, ook als het alleen om merch gaat.
 
 Proberen kan zonder risico: de shop staat in testmodus. Bij het betalen kies je
 iDEAL en dan "Authorize test payment". Er wordt niets afgerekend en er wordt
@@ -95,7 +98,10 @@ What it includes:
 Costs: hosting, server and database run on free plans, so there are no monthly
 costs and no Shopify subscription. What remains is Stripe's fee per payment, the
 domain you already have, and a licence for two fonts if the site really goes
-live.
+live. The attachment has a short explanation: the costs compared with Shopify,
+and what is still needed for a real launch. It also states an open question
+honestly: whether Stripe accepts a coffeeshop's shop, even if it only sells
+merch.
 
 You can try it safely: the shop is in test mode. At checkout choose iDEAL and
 then "Authorize test payment". Nothing is charged and nothing is shipped.
@@ -123,10 +129,13 @@ hear what you think.
 ---
 
 ## Note per Pietro (non mandare)
+- allegato all'email: il documento NL/EN di docs/12 (in PDF), con il confronto
+  con Shopify; prezzi verificati il 2026-10-29, fonti in docs/12. Se l'invio
+  slitta di qualche settimana, si ricontrollano
 - "Nessun costo mensile" è vero per il concept: Cloudflare Workers, D1 e Resend
-  hanno piani gratuiti con limiti alti per un piccolo shop. Le cifre di Stripe e
-  il confronto con Shopify vanno nel documento della Fase 6P, verificati sul web
-  il giorno in cui si manda
+  hanno piani gratuiti con limiti alti per un piccolo shop
+- Stripe e Shopify Payments escludono la cannabis e i business collegati: il
+  documento lo dice apertamente (dettagli e fonti in docs/12)
 - per un locale vero Resend vuole il loro dominio verificato (shop@yanks.nl),
   altrimenti le email ai clienti non partono
 - i font Indian e Yankee Clipper sono gratuiti solo per uso personale: per il

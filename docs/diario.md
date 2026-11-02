@@ -26,8 +26,12 @@ Fatto:        #83 pagina legale: reclami nelle condizioni (6:230m lid 1 onder g
               telefono: voci grandi, stato e orari subito sotto le voci
               (+15 px), #89 lingue in fondo come cerchi rossi, misure in svh,
               tutto nello schermo a 375×548. #86 #87
-              pagina sotto bloccata con il menu aperto. Design congelato in
-              CLAUDE.md; docs/02 e docs/04 aggiornati
+              pagina sotto bloccata con il menu aperto. #90 orari un po' più in
+              basso. Design congelato in CLAUDE.md (#88); docs/02 e docs/04
+              aggiornati. Fase 6P: documento NL/EN per Yanks in docs/12 (cosa è
+              fatto, costi rispetto a Shopify, punti aperti, offerta), email di
+              docs/11 aggiornata con l'allegato. Prezzi verificati oggi sulle
+              pagine ufficiali di Shopify, Stripe, Cloudflare e Resend
 Decisioni:    - nessuna commissione per le controversie citata (onder t: solo se
                 il locale aderisce); niente tempi di risposta inventati
               - nessuna cancellazione automatica promessa: il codice non la fa
@@ -36,11 +40,17 @@ Decisioni:    - nessuna commissione per le controversie citata (onder t: solo se
                 punto (#87). Provato da Pietro sul suo telefono
               - lettera g dell'art. 6:230m letta su wetboekplus.nl (la pagina di
                 wetten.overheid.nl non arrivava all'articolo)
+              - nella proposta, detto apertamente: Stripe vieta "cannabis
+                dispensaries and related businesses" e Shopify Payments esclude
+                "cannabis and related products". Se Stripe dice no, checkout e
+                webhook vanno riscritti per un altro provider
 Problemi:     testi legali nl e de da far rileggere (madrelingua ed esperto
-              legale); dati del locale ancora segnaposto
-Prossimo:     Fase 6P: DM, email e documento nl/en per Yanks, con prezzi di
-              Shopify e Stripe verificati sul web e riletti da Pietro
-Ramo/commit:  docs/design-congelato — "Docs: menu con le lingue in fondo"
+              legale); dati del locale ancora segnaposto. Shopify non dice se i
+              prezzi sono con o senza IVA
+Prossimo:     Pietro rilegge docs/11 e docs/12, decide l'offerta (regalo e/o
+              contributo libero); PDF del documento; invio a mano da Pietro
+Ramo/commit:  docs/proposta-yanks — "Fase 6P: documento per Yanks e bozze
+              aggiornate"
 
 ## 2026-10-29 — Fase 6: footer e stato della pagina legale
 Fatto:        #80 diario unita. #81 footer da 1280 px: indirizzo sotto i social,
