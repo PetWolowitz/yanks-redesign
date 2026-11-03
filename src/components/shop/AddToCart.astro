@@ -4,9 +4,11 @@
 // scritti sopra. Il JS disattiva colori e taglie esauriti, non aggiunge più pezzi
 // di quelli rimasti e, scegliendo un colore, mostra la sua foto (ProductGallery).
 // Se non resta niente, il pulsante diventa "Esaurito", spento.
-// Colori a pastiglie come le taglie (Pietro, 2026-10-27)
+// Colori a quadratini con la tinta vera (Pietro, 2026-11-03; dal 2026-10-27 erano
+// pastiglie col nome): il nome del colore scelto sta accanto a "Colore". Dal
+// catalogo si arriva con ?color=… e quel colore è già scelto
 import type { Lang } from '../../i18n/locales';
-import { colorPhotoIndex } from '../../lib/shop/images';
+import { colorPhotoIndex, swatch } from '../../lib/shop/images';
 import type { MerchItem } from '../../lib/shop/types';
 import { t, type Key } from '../../i18n/t';
 
@@ -20,6 +22,10 @@ const colors = item.colors ?? [];
 const quantities = Array.from({ length: 10 }, (_, i) => i + 1);
 const pill =
   'inline-flex min-h-11 min-w-12 cursor-pointer items-center justify-center border-[1.5px] rounded-full border-text px-3 peer-checked:bg-text peer-checked:text-bg peer-disabled:cursor-not-allowed peer-disabled:border-muted peer-disabled:text-muted peer-disabled:line-through peer-focus-visible:outline-3 peer-focus-visible:outline-offset-3 peer-focus-visible:outline-red';
+// Quadratino da 44 px: quello scelto ha un anello staccato, uno esaurito è sbiadito e barrato
+const square =
+  'block size-11 cursor-pointer rounded-lg border-[1.5px] border-text peer-checked:shadow-[0_0_0_3px_var(--color-bg),0_0_0_5px_var(--color-text)] peer-disabled:cursor-not-allowed peer-disabled:opacity-40 peer-focus-visible:outline-3 peer-focus-visible:outline-offset-[7px] peer-focus-visible:outline-red';
+const colorName = (color: string) => t(lang, `shop.color.${color}` as Key);
 ---
 
 <add-to-cart
@@ -32,12 +38,18 @@ const pill =
     {
       colors.length > 0 && (
         <fieldset>
-          <legend class="mb-2 uppercase">{t(lang, 'shop.colorLabel')}</legend>
-          <div class="flex flex-wrap gap-2">
+          <legend class="mb-3 uppercase">
+            {t(lang, 'shop.colorLabel')}
+            <span aria-hidden="true">{' · '}<span data-color-name>{colorName(colors[0]!)}</span></span>
+          </legend>
+          <div class="flex flex-wrap gap-3">
             {colors.map((color, index) => (
-              <label class="relative">
-                <input type="radio" name="color" value={color} data-photo={colorPhotoIndex(item.slug, color)} checked={index === 0} required class="peer sr-only" />
-                <span class={pill}>{t(lang, `shop.color.${color}` as Key)}</span>
+              <label class="relative" title={colorName(color)}>
+                <input type="radio" name="color" value={color} data-name={colorName(color)} data-photo={colorPhotoIndex(item.slug, color)} checked={index === 0} required class="peer sr-only" />
+                <span class={square} style={`background-color: ${swatch(item.slug, color)}`}>
+                  <span class="sr-only">{colorName(color)}</span>
+                </span>
+                <span aria-hidden="true" class="pointer-events-none absolute top-1/2 left-1/2 hidden h-[1.5px] w-14 -translate-1/2 -rotate-45 bg-text peer-disabled:block"></span>
               </label>
             ))}
           </div>
@@ -117,11 +129,20 @@ const pill =
         }
       };
 
+      const colorName = this.querySelector<HTMLElement>('[data-color-name]');
       for (const radio of colors) {
         radio.addEventListener('change', () => {
           updateSizes();
+          if (colorName) colorName.textContent = radio.dataset.name ?? '';
           this.dispatchEvent(new CustomEvent('product-color', { bubbles: true, detail: { photo: Number(radio.dataset.photo) } }));
         });
+      }
+
+      // Arrivati dal catalogo con ?color=grey: quel colore è già scelto, con la sua foto
+      const wanted = colors.find((radio) => radio.value === new URLSearchParams(location.search).get('color'));
+      if (wanted && !wanted.checked) {
+        wanted.checked = true;
+        wanted.dispatchEvent(new Event('change'));
       }
 
       form.addEventListener('submit', (event) => {

@@ -47,3 +47,9 @@ export function photoColors(slug: string): (Color | null)[] {
 export function hasColorPhoto(slug: string, color: Color): boolean {
   return colorPhotos[slug]?.[color] !== undefined;
 }
+
+// Il quadratino di un colore: la tinta sta in tokens.css (--swatch-<slug>-<colore>),
+// misurata sulla foto di quel colore. Lo usano la scheda prodotto e il catalogo
+export function swatch(slug: string, color: Color): string {
+  return `var(--swatch-${slug}-${color})`;
+}

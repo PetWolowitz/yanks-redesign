@@ -205,6 +205,12 @@ chiede prima a Pietro e si annota qui.
   "Aggiungi al carrello" spento, con la scritta sotto. L'etichetta del catalogo
   somma le giacenze di tutte le varianti, colori compresi (`skusOf` in
   `merch.ts`): senza i colori felpa, Ton sur Ton e Clipper risultavano esauriti
+- **Colori a quadratini** (Pietro, 2026-11-03; prima pastiglie col nome): nella
+  scheda quadratini da 44 px con la tinta vera, "Colore · Grigio" sopra, quello
+  scelto con l'anello, uno esaurito sbiadito e barrato; cliccando cambia la foto.
+  Nel catalogo quadratini da 16 px sotto il nome: col JS aprono la scheda con
+  quel colore (`?color=`). Le tinte, misurate sulle foto prodotto per prodotto,
+  stanno in `tokens.css` (`--swatch-<slug>-<colore>`)
 - **L'h1 della hero è visibile subito** (`data-static`): nessuna animazione
   d'ingresso. Gli altri tempi in docs/02 (Movimento); la PR #38 con i tempi più
   lenti è stata chiusa
