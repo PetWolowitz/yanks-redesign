@@ -8,8 +8,12 @@
 // - tablet: due colonne, la prima recensione alta quanto le due accanto
 // - desktop: tre colonne, la prima recensione alta quanto tutta la griglia
 // Ogni tessera entra con un movimento diverso (data-anim, global.css).
-import { reviews } from '../../data/reviews';
+// Le tre più recenti, con mese e anno (Pietro, 2026-11-03): si aggiornano
+// aggiungendo la recensione nuova in data/reviews.ts. La più lunga delle tre va
+// nella tessera grande, le altre dalla più nuova.
+import { latestReviews, longestFirst, reviews } from '../../data/reviews';
 import { venue } from '../../data/venue';
+import { formatMonth } from '../../lib/format';
 import type { Lang } from '../../i18n/locales';
 import { t } from '../../i18n/t';
 
@@ -18,6 +22,7 @@ interface Props {
 }
 
 const { lang } = Astro.props;
+const shown = longestFirst(latestReviews(reviews));
 const tile = 'rounded-2xl border-[1.5px] border-text';
 // Posto e movimento delle prime tre recensioni; le altre, se arrivano, vanno in coda
 const layout = [
@@ -35,7 +40,7 @@ const layout = [
     </div>
 
     {
-      reviews.map((review, index) => (
+      shown.map((review, index) => (
         <figure
           data-anim={layout[index]?.anim ?? 'up'}
           class:list={[tile, 'relative bg-surface p-6 pt-10 lg:p-8 lg:pt-12', layout[index]?.place]}
@@ -51,6 +56,8 @@ const layout = [
             <a href={review.url} rel="noopener" class="underline underline-offset-4 hover:text-text">
               {t(lang, 'home.reviews.source')}
             </a>
+            <span> · </span>
+            <time datetime={review.date.slice(0, 7)}>{formatMonth(review.date, lang)}</time>
             {review.excerpt && <span> · {t(lang, 'home.reviews.excerpt')}</span>}
           </figcaption>
         </figure>

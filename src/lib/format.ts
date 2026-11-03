@@ -12,3 +12,9 @@ const intlLocale: Record<Lang, string> = {
 export function formatPrice(cents: number, lang: Lang): string {
   return new Intl.NumberFormat(intlLocale[lang], { style: 'currency', currency: 'EUR' }).format(cents / 100);
 }
+
+// Mese e anno di una data AAAA-MM-GG: "oktober 2026", "October 2026", "Oktober 2026".
+// A mezzogiorno UTC, così il fuso non sposta il giorno nel mese prima
+export function formatMonth(date: string, lang: Lang): string {
+  return new Intl.DateTimeFormat(intlLocale[lang], { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${date}T12:00:00Z`));
+}

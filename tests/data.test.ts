@@ -4,6 +4,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { menu } from '../src/data/menu';
 import { merch, skuOf, skusOf, variantsOf } from '../src/data/merch';
+import { latestReviews, longestFirst, reviews, type Review } from '../src/data/reviews';
 import { colorPhotoIndex, hasColorPhoto, photoColors, productImages } from '../src/lib/shop/images';
 import en from '../src/i18n/en.json';
 
@@ -104,5 +105,35 @@ describe('rotte dello shop', () => {
   it('nessuno slug di merch.ts coincide con una pagina fissa dello shop', () => {
     const reserved = ['cart', 'checkout', 'order'];
     expect(merch.filter((item) => reserved.includes(item.slug))).toEqual([]);
+  });
+});
+
+describe('reviews.ts', () => {
+  it('date vere in formato AAAA-MM-GG, lingue del sito', () => {
+    for (const review of reviews) {
+      expect(review.date, review.text).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      expect(Number.isNaN(Date.parse(review.date)), review.date).toBe(false);
+      expect(['nl', 'en', 'de']).toContain(review.lang);
+    }
+  });
+
+  it('latestReviews: le più recenti per prime, tre di serie', () => {
+    const at = (date: string): Review => ({ source: 'google', lang: 'nl', text: date, date, url: '' });
+    const list = [at('2026-08-01'), at('2026-10-20'), at('2026-09-15'), at('2026-10-02')];
+    expect(latestReviews(list).map((review) => review.date)).toEqual(['2026-10-20', '2026-10-02', '2026-09-15']);
+    expect(list[0]!.date).toBe('2026-08-01');
+    expect(latestReviews(reviews)).toHaveLength(Math.min(3, reviews.length));
+  });
+
+  it("longestFirst: la più lunga in testa, le altre nell'ordine dato", () => {
+    const of = (text: string): Review => ({ source: "google", lang: "nl", text, date: "2026-10-01", url: "" });
+    expect(longestFirst([of("aa"), of("aaaa"), of("a")]).map((review) => review.text)).toEqual(["aaaa", "aa", "a"]);
+    expect(longestFirst([])).toEqual([]);
+  });
+
+  // Vincoli legali (docs/03): niente prodotti di cannabis né fumo nelle recensioni pubblicate
+  it('nessuna recensione nomina prodotti di cannabis o il fumare', () => {
+    const banned = /wiet|weed|hasj|hash|cannabis|edible|joint|spliff|\bbud\b|thc|kush|haze|blow|gras\b|rook|smok|rauch|kiffen|qualit|kwaliteit/i;
+    expect(reviews.filter((review) => banned.test(review.text)).map((review) => review.text)).toEqual([]);
   });
 });
