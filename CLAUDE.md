@@ -211,6 +211,9 @@ chiede prima a Pietro e si annota qui.
   Nel catalogo quadratini da 16 px sotto il nome: col JS aprono la scheda con
   quel colore (`?color=`). Le tinte, misurate sulle foto prodotto per prodotto,
   stanno in `tokens.css` (`--swatch-<slug>-<colore>`)
+- **Recensioni in home** (Pietro, 2026-11-03): sempre le tre più recenti, con mese
+  e anno; la più lunga nella tessera grande. Si aggiornano aggiungendo la nuova in
+  `data/reviews.ts`, con le regole di scelta di docs/03 (Recensioni)
 - **L'h1 della hero è visibile subito** (`data-static`): nessuna animazione
   d'ingresso. Gli altri tempi in docs/02 (Movimento); la PR #38 con i tempi più
   lenti è stata chiusa

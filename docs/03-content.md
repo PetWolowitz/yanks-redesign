@@ -241,19 +241,37 @@ Angolo narrativo: il merch è il souvenir di un posto reale. La limited edition
 **Video** — schede verticali 9:16 dall'Instagram del locale. Temi: terrazza di
 sera, merch, spiaggia, tavoli da gioco. Solo embed ufficiale, caricato al click.
 
-**Scritte** — cinque recensioni Google in olandese presenti sul sito originale.
-Restano in olandese, traduzione su richiesta. Altre fonti pubbliche: Tripadvisor
+**Scritte** — recensioni Google, nella lingua in cui sono scritte, traduzione su
+richiesta (all'inizio erano le cinque in olandese del sito originale). Altre fonti pubbliche: Tripadvisor
 (la coppia che torna da 13 anni dal Brabante; il personale accogliente alla
 porta) e Greenmeister. Nessuna stellina disegnata, nessun voto inventato: si cita
 la fonte e si linka il profilo.
 
-**Quali sono pubblicate** (deciso il 2026-09-28, testi in `src/data/reviews.ts`):
-tre delle cinque. Escluse le due che nominano prodotti di cannabis ("weed hash",
-"wiet, hasj", "edibles"), perché citarle sarebbe promozione (Vincoli legali), e
-quella che è una domanda sul caricare uno scooter elettrico. Della recensione lunga
-della coppia del Brabante c'è solo l'estratto su terrazza e personale, segnato con
-[…]. Niente nomi degli autori. Il link porta alla scheda Google del locale.
+**Quali sono pubblicate** (dal 2026-11-03, Pietro: "sempre le più recenti"; testi
+in `src/data/reviews.ts`): le più recenti della scheda Google Maps del locale,
+ordinata per "Nieuwste", nel **testo originale** (non la traduzione di Google). La
+home ne mostra tre con mese e anno; la più lunga va nella tessera grande. Per
+aggiornare si aggiunge la recensione nuova in `reviews.ts`: le più vecchie escono da
+sole. Regole di scelta:
+- escluse quelle che nominano prodotti di cannabis, il fumare o la "qualità" dei
+  prodotti (Vincoli legali); un test in `tests/data.test.ts` cerca le parole vietate
+- solo olandese, inglese e tedesco, le lingue del sito
+- escluse domande, risposte del locale, testi tagliati da Google e recensioni che
+  parlano di Zandvoort e non del locale
+- niente nomi degli autori; il link porta alla scheda Google del locale
+- le date sono ricavate da quelle relative di Google ("3 weken geleden") il giorno
+  della lettura: vale il mese
 Traduzioni: nessuna finché non c'è una rilettura.
+
+Automatiche (valutato il 2026-11-03, scartato per ora): le API Google Places (New)
+danno al massimo 5 recensioni "più pertinenti", senza ordinarle per data (la
+versione Legacy con `reviews_sort=newest` non si attiva più su progetti nuovi da
+ottobre 2026). In più chiedono nome e foto degli autori e un account Google Cloud
+con carta. Al lancio, con l'account Google del locale, la via giusta è la Google
+Business Profile API, che dà davvero le più recenti.
+
+Fino al 2026-11-02 c'erano tre delle cinque recensioni del sito originale (escluse
+quelle con "weed hash", "wiet, hasj", "edibles" e la domanda sullo scooter).
 
 **Riconoscimenti verificati**: Travelers' Choice di Tripadvisor, primo posto nella
 vita notturna di Zandvoort. Nient'altro senza una fonte.
