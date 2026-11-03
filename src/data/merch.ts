@@ -50,3 +50,9 @@ export function variantsOf(item: MerchItem): { color: Color | null; size: Size |
   const sizes: (Size | null)[] = item.sizes.length > 0 ? item.sizes : [null];
   return colors.flatMap((color) => sizes.map((size) => ({ color, size })));
 }
+
+// Tutti gli SKU di un prodotto, colori compresi: il catalogo ne somma le giacenze.
+// Senza i colori cercava "hoodie-m", che non esiste, e segnava "esaurito" (2026-11-03)
+export function skusOf(item: MerchItem): string[] {
+  return variantsOf(item).map(({ color, size }) => skuOf(item.slug, size, color));
+}

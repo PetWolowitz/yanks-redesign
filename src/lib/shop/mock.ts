@@ -33,8 +33,10 @@ const MAX_ORDERS = 20;
 // Giacenze finte: 20 per variante, tranne qualche caso per provare l'interfaccia
 const DEFAULT_STOCK = 20;
 const stockOverrides: Record<string, number> = {
-  // esaurito
+  // esaurita una taglia
   'skull-t-shirt-xl': 0,
+  // esaurito del tutto: nella scheda il pulsante dice "Sold out"
+  beanie: 0,
   // ne restano pochi
   'limited-t-shirt-m': 2,
   'mystery-box': 3,

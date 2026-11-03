@@ -200,6 +200,11 @@ chiede prima a Pietro e si annota qui.
   sopra direttamente (niente spazio chiaro tra le due)
 - **Toast a ordine pagato** (pagina ordine): una volta sola, appena tornati da
   Stripe; si chiude da solo dopo 6 s o con la X; `role="status"`
+- **Prodotto esaurito** (Pietro, 2026-11-03): nella scheda, se non resta niente,
+  il pulsante stesso dice "Esaurito" (`shop.soldOut`) ed è spento; prima restava
+  "Aggiungi al carrello" spento, con la scritta sotto. L'etichetta del catalogo
+  somma le giacenze di tutte le varianti, colori compresi (`skusOf` in
+  `merch.ts`): senza i colori felpa, Ton sur Ton e Clipper risultavano esauriti
 - **L'h1 della hero è visibile subito** (`data-static`): nessuna animazione
   d'ingresso. Gli altri tempi in docs/02 (Movimento); la PR #38 con i tempi più
   lenti è stata chiusa
