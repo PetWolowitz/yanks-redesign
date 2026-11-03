@@ -410,12 +410,48 @@ prima/dopo di tutte le pagine in `.playwright-mcp/pagine/`)_
 
 ## Fase 6P — Proposta al locale
 
-- [ ] Email al locale con il link di prova
-- [ ] Documento in olandese e inglese: cosa è stato fatto, costi di gestione dello
-      shop rispetto a Shopify (prezzi verificati sul web al momento), offerta
-      libera oppure regalo. Testi riletti da Pietro prima dell'invio
-- [ ] Prima di un uso vero: licenze commerciali di Indian e Yankee Clipper,
-      dominio del locale verificato su Resend, account Stripe del locale
+- [ ] Email al locale con il link di prova _(bozze in docs/11; versioni definitive
+      NL ed EN, con le parti personali, nella cartella di consegna fuori dal
+      repository, 2026-11-03. Le manda Pietro, a mano)_
+- [x] Documento in olandese e inglese: cosa è stato fatto, costi di gestione dello
+      shop rispetto a Shopify (prezzi verificati sul web il 2026-10-29 e il
+      2026-11-02, con PayPal), offerta libera oppure regalo _(docs/12; PDF NL ed EN
+      nella cartella di consegna, 2026-11-03)_
+- [ ] Prima di un uso vero: vedi **Lancio**, qui sotto
+
+## Lancio — se il locale accetta (regola del 2026-11-02)
+
+In quest'ordine. Riassunto anche in CLAUDE.md (Prima del lancio vero).
+
+- [ ] **Ok scritto del locale**, e chi del locale decide su testi, prezzi e stock
+- [ ] **Provider di pagamento**: conferma scritta che accetta lo shop, con tutto il
+      catalogo (Stripe; se dice no, PayPal: docs/12). Account a nome di Yanks
+- [ ] **Pulizia del database D1** (remoto): elencare gli ordini di prova (quelli di
+      ottobre, `dea073f7` del 2026-11-02, le sessioni `pending` abbandonate, ed
+      eventuali ordini nati dai controlli del checkout) e le righe collegate;
+      **mostrarli a Pietro e aspettare il suo ok** prima di cancellare; poi stock
+      rifatto dal seed con le quantità vere date dal locale
+- [ ] **Chiavi live** del provider e **webhook nuovo**, con il suo segreto
+- [ ] **`ORDER_TOKEN_SECRET` nuovo**, almeno 32 byte casuali: i link degli ordini
+      di prova smettono di funzionare, ed è voluto
+- [ ] **Resend**: dominio del locale verificato, mittente del locale al posto di
+      `onboarding@resend.dev`
+- [ ] **`SHOP_NOTIFY_EMAIL`** con l'indirizzo del locale
+- [ ] Tutti i segreti **dalla dashboard di Cloudflare**, mai dal prompt (CLAUDE.md)
+- [ ] **Via le scritte "modalità di prova"** in nl, en e de: `shop.testMode`,
+      `email.test`, `legal.intro`, `footer.disclaimer` (che dice anche "concept non
+      affiliato")
+- [ ] **Dati dell'azienda** nella pagina legale (`src/data/legal.ts`): rechtsvorm,
+      KvK, btw, e-mail, retouradres, chi paga il reso, tempi di consegna. Poi
+      controllo di un giurista
+- [ ] **Licenze commerciali** di Indian e Yankee Clipper, oppure altri font
+- [ ] **Rilettura** dei testi nl e de da un madrelingua
+- [ ] **Dominio**: collegare yanks.nl al Worker (DNS del locale) _(aggiunta di
+      Claude del 2026-11-03: la regola di Pietro non lo nomina)_
+- [ ] **`INDEXABLE = true`** in `src/lib/seo.ts` **solo con il loro ok**
+- [ ] Facoltativo: recensioni della home aggiornate da sole con la Google Business
+      Profile API del locale (docs/03, Recensioni)
+- [ ] Un acquisto vero di prova, piccolo, poi rimborsato _(aggiunta di Claude)_
 
 ## Fase 7 — Altre lingue
 

@@ -17,6 +17,66 @@ Ramo/commit:  nome del ramo e messaggio dell'ultimo commit
 
 ---
 
+## 2026-11-03 — Fase 6P: shop e home sistemati, proposta pronta, regola del lancio
+Fatto:        #93 "sold out" corretto: il catalogo sommava SKU senza colore
+              (felpa, Ton sur Ton, Clipper "uitverkocht" anche se disponibili);
+              ora `skusOf`, e nella scheda il pulsante stesso dice "Esaurito",
+              spento, quando non resta niente. #94 colori a quadratini con la
+              tinta vera (misurata sulle foto, `--swatch-*` in tokens.css): nella
+              scheda cambiano la foto, nel catalogo aprono la scheda con quel
+              colore (`?color=`). #95 recensioni della home: le più recenti da
+              Google Maps, testo originale, con mese e anno; la più lunga nella
+              tessera grande. Tutte e tre controllate online. Proposta: docs/12
+              con piano B PayPal (prezzi verificati il 2026-11-02, fonti nelle note
+              di docs/12), "potete cambiare tutto", recensioni; docs/11 con i
+              messaggi definitivi e il nome di Pietro (le parti personali solo
+              nella cartella di consegna, fuori dal repository). PDF NL ed EN
+              della proposta e cartella per il locale (screenshot prima/dopo,
+              prove di design, pagine, loghi), fuori dal repository. Regola "Prima
+              del lancio vero" in CLAUDE.md e checklist "Lancio" in docs/04
+Decisioni:    - recensioni scelte a mano e non dalle API Google: Places (New) dà
+                5 recensioni "più pertinenti" senza ordine per data (la Legacy con
+                `reviews_sort=newest` non si attiva più su progetti nuovi), chiede
+                nomi e foto degli autori e un account con carta (docs/03). Regola
+                più severa: niente prodotti di cannabis, fumo o "qualità"; un test
+                cerca le parole vietate
+              - tinte dei quadratini prodotto per prodotto: lo stesso nome non è
+                la stessa tinta (blu della felpa ≠ blu del Clipper)
+              - nel documento "ruim € 320 / more than € 320" (le differenze sono
+                323 e 332 €), corretto dalla sessione di verifica del mattino
+              - controllo del nome "Yanks-redesign" sul checkout Stripe saltato
+                (Pietro: il nome l'ha cambiato lui; niente altri ordini di prova)
+Problemi:     `info@yanks.nl` non è pubblicato da nessuna parte (il dominio riceve
+              posta): l'indirizzo si chiede nel DM. Commento in `wrangler.jsonc`
+              ("segreti solo in wrangler secret put") in contraddizione con
+              CLAUDE.md (dashboard, mai dal prompt): segnalato, non toccato. In
+              locale l'e2e va in timeout se gira anche il dev server di Pietro;
+              in CI passa. `astro preview` in background resta orfano dopo lo
+              stop: si chiude per PID
+Prossimo:     Pietro manda il DM, poi l'email (bozze Gmail senza destinatario, NL
+              ed EN, PDF allegato a mano). Se il locale accetta: docs/04, Lancio
+Ramo/commit:  docs/consegna-yanks — "Fase 6P: proposta pronta, regola del lancio,
+              diario"
+
+## 2026-11-02 — Fase 6P: aggiornamenti, controllo online, acquisto di prova
+Fatto:        unite #91 (documento per Yanks) e #92 (Dependabot, Astro 7.4.2).
+              Controllo completo del sito online, con i casi attesi. Acquisto di
+              prova con iDEAL riuscito (ordine `dea073f7`, due felpe; avviso al
+              negozio arrivato, conferma al cliente di prova non consegnata per la
+              modalità di prova di Resend, come previsto). Verificati sul web i
+              prezzi di PayPal (piano B se Stripe dice no) e ricontrollati Stripe e
+              Shopify (docs/12)
+Decisioni:    - il venditore nel checkout di Stripe compariva come "Sandbox di
+                freelancer": Pietro l'ha cambiato in "Yanks-redesign" dalla
+                dashboard
+              - cartella di consegna per il locale fuori dal repository pubblico
+Problemi:     nel database ci sono ordini di prova (ottobre, `dea073f7`, sessioni
+              `pending` abbandonate): vanno tolti al lancio, con l'ok di Pietro
+              (docs/04, Lancio). Errore "sold out" nel catalogo (corretto il
+              2026-11-03, #93)
+Prossimo:     Parte 2-6 della proposta (fatte il 2026-11-03)
+Ramo/commit:  main — merge di #91 e #92 (questa voce scritta il 2026-11-03)
+
 ## 2026-10-29 — Fase 6: testi legali, menu su telefono, design congelato
 Fatto:        #83 pagina legale: reclami nelle condizioni (6:230m lid 1 onder g
               BW) e privacy completa (GDPR art. 13: base giuridica, corriere,
