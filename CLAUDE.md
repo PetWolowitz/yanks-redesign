@@ -392,6 +392,21 @@ con il pulsante "Carica contenuto". Così il sito resta senza banner cookie.
 - **Nessun dato di pagamento tocca il nostro codice. Nessuna chiave segreta nel
   codice che arriva al browser.**
 
+## Prima del lancio vero (regola del 2026-11-02)
+Se il locale accetta, prima di andare online davvero. Checklist completa, in ordine,
+in docs/04 (Lancio):
+- **pulire il database D1**: via tutti gli ordini di prova (quelli di ottobre
+  compresi) e le righe collegate; stock rifatto dal seed con le quantità vere date
+  dal locale. **Prima di cancellare si mostra a Pietro cosa e si aspetta il suo ok**
+- **chiavi live** di Stripe (o del nuovo provider: se Stripe dice no, PayPal, vedi
+  docs/12) e **webhook nuovo**; **`ORDER_TOKEN_SECRET` nuovo** (i link degli ordini
+  di prova smettono di funzionare); **dominio del locale verificato su Resend**;
+  **`SHOP_NOTIFY_EMAIL`** con l'indirizzo del locale. Segreti solo dalla dashboard di
+  Cloudflare, mai dal prompt
+- via le scritte "modalità di prova" (sito, email, pagina legale, disclaimer del
+  footer); **`INDEXABLE = true` solo con il loro ok**; dati dell'azienda nella
+  pagina legale; licenze dei font Indian e Yankee Clipper
+
 ## MCP disponibili
 `astro-docs` e `playwright` sono in `.mcp.json`; `stripe` accede all'account di
 Pietro, quindi si installa a livello personale e non sta nel repository (vedi

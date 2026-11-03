@@ -1,9 +1,14 @@
-# Messaggi per Yanks — bozze (2026-10-26, riviste il 2026-10-29)
+# Messaggi per Yanks — bozze (2026-10-26, riviste il 2026-10-29 e il 2026-11-03)
 
 Da rileggere e mandare **a mano** da Pietro. Prima di mandarli:
-- sostituisci `[il tuo nome]` e controlla che il link funzioni da telefono
-- l'email `info@yanks.nl` viene dal sito attuale del locale (docs/03): se rimbalza,
-  si resta su Instagram
+- sostituisci `[telefono / Instagram]` e controlla che il link funzioni da telefono
+- le versioni definitive complete, con le parti personali che qui mancano, stanno
+  nella cartella di consegna, fuori dal repository
+- l'email `info@yanks.nl` sta in docs/03 dall'inizio, senza una fonte. Controllato
+  il 2026-11-03: non è scritta né su yanks.nl né su shop.yanks.nl (lo shop mostra
+  solo l'indirizzo di chi l'ha fatto), né nella bio Instagram; il dominio però
+  riceve posta (MX `mail.yanks.nl`). Meglio chiederla nel DM; se rimbalza, si
+  resta su Instagram
 - l'olandese l'ha scritto Claude: meglio farlo rileggere da chi lo parla
 
 Ordine consigliato: **1 → aspetta risposta → 2**. Su Instagram niente allegati
@@ -17,16 +22,16 @@ Link da usare: https://yanks-redesign.pietro-costa25.workers.dev/nl/
 ## 1. DM Instagram (@yanksindianclub)
 
 ### Nederlands
-Hoi Yanks! Ik ben [il tuo nome], webdesigner. Uit enthousiasme heb ik een nieuw
-ontwerp gemaakt voor jullie website, met een werkende webshop voor de merch
+Hoi Yanks! Ik ben Pietro Costa, webdesigner uit Italië en al sinds 2007 klant bij
+jullie. Uit enthousiasme heb ik een nieuw ontwerp gemaakt voor jullie website, met een werkende webshop voor de merch
 (in testmodus, er wordt niets afgerekend). Hier kun je het bekijken:
 https://yanks-redesign.pietro-costa25.workers.dev/nl/
 
 Mag ik jullie een korte uitleg per e-mail sturen? Naar welk adres kan dat?
 
 ### English
-Hi Yanks! I'm [il tuo nome], a web designer. Out of enthusiasm I made a new
-design for your website, with a working shop for the merch (in test mode,
+Hi Yanks! I'm Pietro Costa, a web designer from Italy and a customer of yours
+since 2007. Out of enthusiasm I made a new design for your website, with a working shop for the merch (in test mode,
 nothing is charged). You can see it here:
 https://yanks-redesign.pietro-costa25.workers.dev/en/
 
@@ -41,8 +46,9 @@ Could I send you a short explanation by email? Which address should I use?
 ### Nederlands
 Beste Yanks,
 
-Ik ben [il tuo nome]. Als persoonlijk project heb ik een nieuw ontwerp gemaakt
-voor jullie website. Het is geen opdracht en het is nog niet openbaar: Google
+_(Qui il paragrafo su chi sono: solo nella versione privata.)_
+
+Als persoonlijk project heb ik een nieuw ontwerp gemaakt voor jullie website. Het is geen opdracht en het is nog niet openbaar: Google
 toont de pagina's niet. Bekijken kan hier:
 https://yanks-redesign.pietro-costa25.workers.dev/nl/
 
@@ -59,30 +65,39 @@ Wat erin zit:
 
 Kosten: de hosting, de server en de database draaien op gratis abonnementen, dus
 er zijn geen maandelijkse kosten. Er is ook geen Shopify-abonnement. Er blijven
-alleen de kosten van Stripe per betaling, de domeinnaam die jullie al hebben, en
-een licentie voor twee lettertypes als de site echt online gaat. In de bijlage
-staat een korte uitleg: de kosten vergeleken met Shopify, en wat er nog nodig is
-voor een echte lancering. Daar staat ook eerlijk een open vraag: of Stripe een
-shop van een coffeeshop accepteert, ook als het alleen om merch gaat.
+alleen de kosten per betaling van Stripe of PayPal, de domeinnaam die jullie al
+hebben, en een licentie voor twee lettertypes als de site echt online gaat. Bij
+honderd bestellingen per jaar kost deze shop ruim € 320 minder dan Shopify.
+
+In de bijlage staat een korte uitleg: de kosten vergeleken met Shopify, en wat er
+nog nodig is voor een echte lancering. Daar staat ook eerlijk het lastige punt:
+Stripe accepteert waarschijnlijk geen shop van een coffeeshop, ook niet als het
+alleen om merch gaat. Het plan B is PayPal, en ook dat staat erin, met de kosten.
 
 Proberen kan zonder risico: de shop staat in testmodus. Bij het betalen kies je
 iDEAL en dan "Authorize test payment". Er wordt niets afgerekend en er wordt
-niets verzonden.
+niets verzonden. De bevestigingsmail komt in testmodus alleen bij mij aan.
 
-Als jullie het leuk vinden, vertel ik graag meer, en ik kan het afstemmen op
-wat jullie willen. Voor de duidelijkheid: het logo, de foto's en de teksten
-blijven van jullie, en zonder jullie toestemming wordt er niets gepubliceerd.
+Als jullie het leuk vinden, vertel ik graag meer. Alles kan anders: teksten,
+foto's, kleuren, producten, prijzen, talen en onderdelen. Op de site staat een
+nieuw logo, maar jullie kunnen ook gewoon jullie eigen logo houden. Het is jullie
+site: het logo, de foto's en de teksten blijven van jullie, en zonder jullie
+toestemming wordt er niets gepubliceerd.
+
+_(Qui il paragrafo finale su di me: solo nella versione privata.)_
 
 Groeten,
-[il tuo nome]
+Pietro Costa
 [telefono / Instagram]
 
 ### English
 Dear Yanks,
 
-I'm [il tuo nome]. As a personal project I made a new design for your website.
-It wasn't commissioned and it isn't public: Google doesn't show the pages. You
-can see it here:
+_(Qui il paragrafo su chi sono: solo nella versione privata.)_
+
+As a personal project I made a new design for your website. It wasn't
+commissioned and it isn't public: Google doesn't show the pages. You can see it
+here:
 https://yanks-redesign.pietro-costa25.workers.dev/en/
 
 What it includes:
@@ -96,22 +111,29 @@ What it includes:
 - fast and easy to read on a phone
 
 Costs: hosting, server and database run on free plans, so there are no monthly
-costs and no Shopify subscription. What remains is Stripe's fee per payment, the
-domain you already have, and a licence for two fonts if the site really goes
-live. The attachment has a short explanation: the costs compared with Shopify,
-and what is still needed for a real launch. It also states an open question
-honestly: whether Stripe accepts a coffeeshop's shop, even if it only sells
-merch.
+costs and no Shopify subscription. What remains is the fee per payment for Stripe
+or PayPal, the domain you already have, and a licence for two fonts if the site
+really goes live. With a hundred orders a year, this shop costs more than € 320
+less than Shopify.
+
+The attachment has a short explanation: the costs compared with Shopify, and what
+is still needed for a real launch. It is also honest about the tricky part:
+Stripe probably won't accept a coffeeshop's shop, even if it only sells merch.
+Plan B is PayPal, and that is in there too, with the costs.
 
 You can try it safely: the shop is in test mode. At checkout choose iDEAL and
-then "Authorize test payment". Nothing is charged and nothing is shipped.
+then "Authorize test payment". Nothing is charged and nothing is shipped. In test
+mode the confirmation email only reaches me.
 
-If you like it, I'm happy to tell you more and adapt it to what you want. To be
-clear: the logo, photos and texts stay yours, and nothing gets published without
-your permission.
+If you like it, I'm happy to tell you more. Everything can change: texts, photos,
+colours, products, prices, languages and sections. The site has a new logo, but
+you can also simply keep your own. It's your site: the logo, photos and texts
+stay yours, and nothing gets published without your permission.
+
+_(Qui il paragrafo finale su di me: solo nella versione privata.)_
 
 Best regards,
-[il tuo nome]
+Pietro Costa
 [telefono / Instagram]
 
 ---
@@ -130,8 +152,9 @@ hear what you think.
 
 ## Note per Pietro (non mandare)
 - allegato all'email: il documento NL/EN di docs/12 (in PDF), con il confronto
-  con Shopify; prezzi verificati il 2026-10-29, fonti in docs/12. Se l'invio
-  slitta di qualche settimana, si ricontrollano
+  con Shopify; prezzi verificati il 2026-10-29 e ricontrollati il 2026-11-02
+  (con PayPal), fonti in docs/12. Se l'invio slitta di qualche settimana, si
+  ricontrollano
 - "Nessun costo mensile" è vero per il concept: Cloudflare Workers, D1 e Resend
   hanno piani gratuiti con limiti alti per un piccolo shop
 - Stripe e Shopify Payments escludono la cannabis e i business collegati: il
@@ -142,4 +165,6 @@ hear what you think.
   locale serve la licenza commerciale, oppure si cambiano
 - la demo: le email di conferma arrivano solo a te (modalità di prova di Resend).
   Se il locale prova un acquisto, il pagamento funziona ma la mail non gli arriva:
-  diglielo, o manda tu gli screenshot delle due email
+  l'email lo dice; se vuoi, manda tu gli screenshot delle due email
+- il "uitverkocht / sold out" sbagliato (hoodie, Ton sur Ton, Clipper) è corretto
+  dal 2026-11-03 (PR #93, controllato online): l'email non ne parla più
