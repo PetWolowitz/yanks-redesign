@@ -1,6 +1,6 @@
 // I dati scritti a mano sono coerenti con i file di lingua e tra loro.
 // Basta controllare en.json: i18n.test.ts garantisce che nl e de abbiano le stesse chiavi.
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { menu } from '../src/data/menu';
 import { merch, skuOf, skusOf, variantsOf } from '../src/data/merch';
@@ -74,6 +74,15 @@ describe('merch.ts', () => {
         expect(productImages(item.slug).length).toBeGreaterThan(colorPhotoIndex(item.slug, color));
         expect(photoColors(item.slug)[colorPhotoIndex(item.slug, color)], `${item.slug} ${color}`).toBe(color);
         expect(en[`shop.color.${color}` as keyof typeof en], color).toBeTruthy();
+      }
+    }
+  });
+
+  it('ogni colore di merch.ts ha il suo quadratino in tokens.css, in esadecimale', () => {
+    const tokens = readFileSync(new URL('../src/styles/tokens.css', import.meta.url), 'utf8');
+    for (const item of merch) {
+      for (const color of item.colors ?? []) {
+        expect(tokens, `${item.slug} ${color}`).toMatch(new RegExp(`--swatch-${item.slug}-${color}: #[0-9A-F]{6};`));
       }
     }
   });

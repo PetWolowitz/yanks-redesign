@@ -7,7 +7,7 @@ import { Image } from 'astro:assets';
 import { skusOf } from '../../data/merch';
 import type { Lang } from '../../i18n/locales';
 import { formatPrice } from '../../lib/format';
-import { productImage } from '../../lib/shop/images';
+import { productImage, swatch } from '../../lib/shop/images';
 import type { MerchItem } from '../../lib/shop/types';
 import { t, type Key } from '../../i18n/t';
 import StockStatus from './StockStatus.astro';
@@ -23,6 +23,10 @@ interface Props {
 const { lang, item, large = false, class: className } = Astro.props;
 const name = t(lang, `shop.products.${item.slug}.name` as Key);
 const skus = skusOf(item);
+// Prodotti con colori: quadratini sotto il nome (Pietro, 2026-11-03). Sono dentro il
+// link della scheda: senza JS portano alla scheda, col JS alla scheda con quel colore
+const colors = item.colors ?? [];
+const colorNames = colors.map((color) => t(lang, `shop.color.${color}` as Key));
 ---
 
 <li data-card class={className}>
@@ -51,10 +55,38 @@ const skus = skusOf(item);
       <StockStatus lang={lang} skus={skus} class="absolute top-3 right-3 rounded-full bg-bg px-3 py-1 empty:hidden" />
     </span>
     <span class="flex flex-1 flex-wrap items-end justify-between gap-3 p-4">
-      <span class="card-title min-w-0 break-words hyphens-auto">{name}</span>
+      <span class:list={['card-title min-w-0 break-words hyphens-auto', colors.length > 0 && 'basis-full']}>{name}</span>
+      {
+        colors.length > 0 && (
+          <span class="flex min-w-0 flex-wrap gap-1.5">
+            <span class="sr-only">{t(lang, 'shop.colorLabel')}: {colorNames.join(', ')}</span>
+            {colors.map((color, index) => (
+              <span
+                data-swatch={color}
+                title={colorNames[index]}
+                aria-hidden="true"
+                class="size-4 rounded-[4px] border-[1.5px] border-text hover:outline-2 hover:outline-offset-2 hover:outline-text"
+                style={`background-color: ${swatch(item.slug, color)}`}
+              />
+            ))}
+          </span>
+        )
+      }
       <span class="shrink-0 rounded-full border-[1.5px] border-text px-3 py-1 text-small tabular-nums transition-colors group-hover:bg-text group-hover:text-bg">
         {formatPrice(item.priceCents, lang)}
       </span>
     </span>
   </a>
 </li>
+
+<script>
+  // Clic su un quadratino del catalogo: la scheda si apre con quel colore già scelto
+  // (AddToCart legge ?color=). Con Ctrl o Cmd resta il link normale, in un'altra scheda
+  document.addEventListener('click', (event) => {
+    const square = (event.target as Element).closest<HTMLElement>('[data-swatch]');
+    const link = square?.closest('a');
+    if (!square || !link || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    event.preventDefault();
+    location.href = `${link.pathname}?color=${square.dataset.swatch}`;
+  });
+</script>

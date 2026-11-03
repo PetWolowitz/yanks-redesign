@@ -63,6 +63,24 @@ test('sold out: the catalogue counts colours, the button says Sold out', async (
   await expect(page.getByRole('button', { name: 'Add to cart' })).toBeEnabled();
 });
 
+// Quadratini dei colori: nel catalogo portano alla scheda con quel colore; nella
+// scheda cambiano la foto grande e il nome accanto a "Colour". Felpa: grigio = foto 5
+test('colour squares: from the catalogue to the product, with the photo of that colour', async ({ page }) => {
+  await page.goto('/en/shop/');
+  const hoodie = page.locator('[data-card]').filter({ has: page.locator('a[href="/en/shop/hoodie/"]') });
+  await expect(hoodie.locator('[data-swatch]')).toHaveCount(4);
+  await hoodie.locator('[data-swatch="grey"]').click();
+
+  await expect(page).toHaveURL(/\/en\/shop\/hoodie\/\?color=grey$/);
+  await expect(page.locator('input[name=color][value=grey]')).toBeChecked();
+  await expect(page.locator('[data-color-name]')).toHaveText('Grey');
+  await expect(page.locator('a[data-main]')).toHaveAttribute('data-zoom', '4');
+
+  await page.locator('label[title="Black"]').click();
+  await expect(page.locator('[data-color-name]')).toHaveText('Black');
+  await expect(page.locator('a[data-main]')).toHaveAttribute('data-zoom', '6');
+});
+
 test('checkout refuses an empty form and a wrong Dutch postal code', async ({ page }) => {
   await addLighter(page);
   await page.goto('/en/shop/checkout/');
