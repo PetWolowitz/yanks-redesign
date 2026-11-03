@@ -3,6 +3,7 @@
 // modulo resta nascosto e c'è il messaggio <noscript>; colori e taglie restano
 // scritti sopra. Il JS disattiva colori e taglie esauriti, non aggiunge più pezzi
 // di quelli rimasti e, scegliendo un colore, mostra la sua foto (ProductGallery).
+// Se non resta niente, il pulsante diventa "Esaurito", spento.
 // Colori a pastiglie come le taglie (Pietro, 2026-10-27)
 import type { Lang } from '../../i18n/locales';
 import { colorPhotoIndex } from '../../lib/shop/images';
@@ -161,12 +162,13 @@ const pill =
       }
       updateSizes();
 
-      // Niente di disponibile: niente pulsante
+      // Niente di disponibile: il pulsante stesso dice "Esaurito" e non si clicca
+      // (Pietro, 2026-11-03; prima restava "Aggiungi" spento con la scritta sotto)
       const colorValues = colors.length > 0 ? colors.map((radio) => radio.value) : [null];
       const soldOut = !colorValues.some((color) => sizeValues.some((size) => available(skuFor(color, size))));
       if (soldOut) {
         button.disabled = true;
-        message.textContent = this.dataset.soldOut ?? '';
+        button.textContent = this.dataset.soldOut ?? '';
       }
     }
   }

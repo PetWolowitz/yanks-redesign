@@ -46,6 +46,23 @@ test('adding to the cart updates the count and the cart page', async ({ page }) 
   await expect(page.getByText('€3.50').first()).toBeVisible();
 });
 
+// Giacenze finte in lib/shop/mock.ts: la felpa ha 20 pezzi per variante, il
+// berretto 0. La felpa ha solo varianti con colore: il catalogo deve contarle
+test('sold out: the catalogue counts colours, the button says Sold out', async ({ page }) => {
+  await page.goto('/en/shop/');
+  const card = (slug: string) => page.locator('[data-card]').filter({ has: page.locator(`a[href="/en/shop/${slug}/"]`) });
+  await expect(card('beanie').locator('stock-status')).toHaveText('Sold out');
+  await expect(card('hoodie').locator('stock-status')).toHaveText('');
+
+  await page.goto('/en/shop/beanie/');
+  const button = page.locator('add-to-cart button[type=submit]');
+  await expect(button).toHaveText('Sold out');
+  await expect(button).toBeDisabled();
+
+  await page.goto('/en/shop/hoodie/');
+  await expect(page.getByRole('button', { name: 'Add to cart' })).toBeEnabled();
+});
+
 test('checkout refuses an empty form and a wrong Dutch postal code', async ({ page }) => {
   await addLighter(page);
   await page.goto('/en/shop/checkout/');

@@ -3,7 +3,7 @@
 import { existsSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { menu } from '../src/data/menu';
-import { merch, skuOf, variantsOf } from '../src/data/merch';
+import { merch, skuOf, skusOf, variantsOf } from '../src/data/merch';
 import { colorPhotoIndex, hasColorPhoto, photoColors, productImages } from '../src/lib/shop/images';
 import en from '../src/i18n/en.json';
 
@@ -32,7 +32,7 @@ describe('merch.ts', () => {
 
   it('slug e SKU sono unici', () => {
     const slugs = merch.map((item) => item.slug);
-    const skus = merch.flatMap(({ slug, sizes }) => (sizes.length > 0 ? sizes : [null]).map((size) => skuOf(slug, size)));
+    const skus = merch.flatMap(skusOf);
     expect(new Set(slugs).size).toBe(slugs.length);
     expect(new Set(skus).size).toBe(skus.length);
   });
@@ -52,6 +52,19 @@ describe('merch.ts', () => {
     const hoodie = merch.find((item) => item.slug === 'hoodie')!;
     expect(variantsOf(hoodie)).toHaveLength(hoodie.colors!.length * hoodie.sizes.length);
     expect(variantsOf(merch.find((item) => item.slug === 'cap')!)).toEqual([{ color: null, size: null }]);
+  });
+
+  // Il catalogo somma le giacenze di questi SKU: senza i colori segnava "esaurito"
+  // felpa, Ton sur Ton e Clipper anche quando c'erano (errore trovato il 2026-11-02)
+  it('skusOf: tutti gli SKU di un prodotto, colori compresi', () => {
+    const find = (slug: string) => merch.find((item) => item.slug === slug)!;
+    const hoodie = skusOf(find('hoodie'));
+    expect(hoodie).toContain('hoodie-black-m');
+    expect(hoodie).not.toContain('hoodie-m');
+    expect(hoodie).toHaveLength(variantsOf(find('hoodie')).length);
+    expect(skusOf(find('clipper-lighter'))).toContain('clipper-lighter-red');
+    expect(skusOf(find('skull-t-shirt'))).toContain('skull-t-shirt-xl');
+    expect(skusOf(find('cap'))).toEqual(['cap']);
   });
 
   it('ogni colore di merch.ts ha la sua foto e il suo nome in ogni lingua', () => {

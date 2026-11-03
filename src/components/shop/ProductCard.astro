@@ -4,7 +4,7 @@
 // Stile (docs/02): angoli arrotondati, etichette a pillola sulla foto, e al
 // passaggio la scheda si solleva con un'ombra piena sfalsata, come un adesivo.
 import { Image } from 'astro:assets';
-import { skuOf } from '../../data/merch';
+import { skusOf } from '../../data/merch';
 import type { Lang } from '../../i18n/locales';
 import { formatPrice } from '../../lib/format';
 import { productImage } from '../../lib/shop/images';
@@ -22,7 +22,7 @@ interface Props {
 
 const { lang, item, large = false, class: className } = Astro.props;
 const name = t(lang, `shop.products.${item.slug}.name` as Key);
-const skus = (item.sizes.length > 0 ? item.sizes : [null]).map((size) => skuOf(item.slug, size));
+const skus = skusOf(item);
 ---
 
 <li data-card class={className}>
